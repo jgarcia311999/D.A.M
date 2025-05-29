@@ -4,6 +4,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './screens/HomeScreen';
 import GameOneScreen from './screens/GameOneScreen';
 import GameTwoScreen from './screens/GameTwoScreen';
+import GameThreeScreen from './screens/GameThreeScreen';
+import GameFourScreen from './screens/GameFourScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,6 +16,8 @@ export default function App() {
         <Stack.Screen name="Inicio" component={HomeScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Juego 1" component={GameOneScreen} />
         <Stack.Screen name="Juego 2" component={GameTwoScreen} />
+        <Stack.Screen name="Juego 3" component={GameThreeScreen} />
+        <Stack.Screen name="Juego 4" component={GameFourScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

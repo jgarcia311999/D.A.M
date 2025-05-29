@@ -1,8 +1,9 @@
-
+const palos = ['copas', 'cigarros', 'oros', 'pollos'];
 
 const generarBarajaCompleta = () => {
   const baraja = [];
-  for (let i = 1; i <= 12; i++) {
+  const valores = [1, 2, 3, 4, 5, 6, 7, 8, 9, 'j', 'q', 'k'];
+  for (let i of valores) {
     for (let palo of palos) {
       baraja.push({ numero: i, palo });
     }
@@ -11,9 +12,59 @@ const generarBarajaCompleta = () => {
 };
 
 import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet, Modal, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, Button, StyleSheet, Modal, TouchableOpacity, ScrollView, Image } from 'react-native';
 
-const palos = ['corazones', 'tréboles', 'diamantes', 'picas'];
+const imagenesCartas = {
+  'cigarros_1': require('../assets/cartas/cigarros/sf/cig-1.png'),
+  'cigarros_2': require('../assets/cartas/cigarros/sf/cig-2.png'),
+  'cigarros_3': require('../assets/cartas/cigarros/sf/cig-3.png'),
+  'cigarros_4': require('../assets/cartas/cigarros/sf/cig-4.png'),
+  'cigarros_5': require('../assets/cartas/cigarros/sf/cig-5.png'),
+  'cigarros_6': require('../assets/cartas/cigarros/sf/cig-6.png'),
+  'cigarros_7': require('../assets/cartas/cigarros/sf/cig-7.png'),
+  'cigarros_8': require('../assets/cartas/cigarros/sf/cig-8.png'),
+  'cigarros_9': require('../assets/cartas/cigarros/sf/cig-9.png'),
+  'cigarros_j': require('../assets/cartas/cigarros/sf/cig-j.png'),
+  'cigarros_q': require('../assets/cartas/cigarros/sf/cig-q.png'),
+  'cigarros_k': require('../assets/cartas/cigarros/sf/cig-k.png'),
+  'copas_1': require('../assets/cartas/copas/sf/cub-1.png'),
+  'copas_2': require('../assets/cartas/copas/sf/cub-2.png'),
+  'copas_3': require('../assets/cartas/copas/sf/cub-3.png'),
+  'copas_4': require('../assets/cartas/copas/sf/cub-4.png'),
+  'copas_5': require('../assets/cartas/copas/sf/cub-5.png'),
+  'copas_6': require('../assets/cartas/copas/sf/cub-6.png'),
+  'copas_7': require('../assets/cartas/copas/sf/cub-7.png'),
+  'copas_8': require('../assets/cartas/copas/sf/cub-8.png'),
+  'copas_9': require('../assets/cartas/copas/sf/cub-9.png'),
+  'copas_j': require('../assets/cartas/copas/sf/cub-j.png'),
+  'copas_q': require('../assets/cartas/copas/sf/cub-q.png'),
+  'copas_k': require('../assets/cartas/copas/sf/cub-k.png'),
+  'oros_1': require('../assets/cartas/oros/sf/oro-1.png'),
+  'oros_2': require('../assets/cartas/oros/sf/oro-2.png'),
+  'oros_3': require('../assets/cartas/oros/sf/oro-3.png'),
+  'oros_4': require('../assets/cartas/oros/sf/oro-4.png'),
+  'oros_5': require('../assets/cartas/oros/sf/oro-5.png'),
+  'oros_6': require('../assets/cartas/oros/sf/oro-6.png'),
+  'oros_7': require('../assets/cartas/oros/sf/oro-7.png'),
+  'oros_8': require('../assets/cartas/oros/sf/oro-8.png'),
+  'oros_9': require('../assets/cartas/oros/sf/oro-9.png'),
+  'oros_j': require('../assets/cartas/oros/sf/oro-j.png'),
+  'oros_q': require('../assets/cartas/oros/sf/oro-q.png'),
+  'oros_k': require('../assets/cartas/oros/sf/oro-k.png'),
+  'pollos_1': require('../assets/cartas/pollos/sf/poll-1.png'),
+  'pollos_2': require('../assets/cartas/pollos/sf/poll-2.png'),
+  'pollos_3': require('../assets/cartas/pollos/sf/poll-3.png'),
+  'pollos_4': require('../assets/cartas/pollos/sf/poll-4.png'),
+  'pollos_5': require('../assets/cartas/pollos/sf/poll-5.png'),
+  'pollos_6': require('../assets/cartas/pollos/sf/poll-6.png'),
+  'pollos_7': require('../assets/cartas/pollos/sf/poll-7.png'),
+  'pollos_8': require('../assets/cartas/pollos/sf/poll-8.png'),
+  'pollos_9': require('../assets/cartas/pollos/sf/poll-9.png'),
+  'pollos_j': require('../assets/cartas/pollos/sf/poll-j.png'),
+  'pollos_q': require('../assets/cartas/pollos/sf/poll-q.png'),
+  'pollos_k': require('../assets/cartas/pollos/sf/poll-k.png'),
+};
+
 const valores = {
   1: 'Elige quién bebe',
   2: 'Tomas tú',
@@ -37,7 +88,8 @@ const tragosPorPalo = {
 };
 
 const generarCarta = () => {
-  const numero = Math.floor(Math.random() * 12) + 1;
+  const valores = [1, 2, 3, 4, 5, 6, 7, 8, 9, 'j', 'q', 'k'];
+  const numero = valores[Math.floor(Math.random() * valores.length)];
   const palo = palos[Math.floor(Math.random() * palos.length)];
   return { numero, palo };
 };
@@ -51,6 +103,7 @@ export default function GameTwoScreen({ route }) {
   const [mazo, setMazo] = useState(generarBarajaCompleta());
   const [modalCartasVisible, setModalCartasVisible] = useState(false);
   const [modalRankingVisible, setModalRankingVisible] = useState(false);
+  const [ultimasCartas, setUltimasCartas] = useState([]);
 
   const sacarCarta = () => {
     if (mazo.length === 0) {
@@ -66,8 +119,12 @@ export default function GameTwoScreen({ route }) {
     const jugador = jugadores[Math.floor(Math.random() * jugadores.length)];
     setJugadorActual(jugador);
     setCarta(nueva);
-    setRegistro(prev => [...prev, { jugador: jugador, carta: nueva }]);
+    setRegistro(prev => [...prev, { jugador: jugador, carta: { numero: nueva.numero, palo: nueva.palo } }]);
     setMazo(nuevoMazo);
+    setUltimasCartas(prev => {
+      const nuevaLista = [{ numero: nueva.numero, palo: nueva.palo }, ...prev];
+      return nuevaLista.slice(0, 4);
+    });
   };
 
   const reiniciar = () => {
@@ -75,10 +132,33 @@ export default function GameTwoScreen({ route }) {
     setJugadorActual('');
     setMazo(generarBarajaCompleta());
     setRegistro([]);
+    setUltimasCartas([]);
   };
 
   return (
     <View style={styles.container}>
+      <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 10 }}>
+        {ultimasCartas.map((c, index) => {
+          let valor = c.numero;
+          let displayValor = valor;
+          if (valor === 'j') {
+            displayValor = 'J';
+          } else if (valor === 'q') {
+            displayValor = 'Q';
+          } else if (valor === 'k') {
+            displayValor = 'K';
+          }
+          const key = `${c.palo}_${valor}`;
+          const source = imagenesCartas[key];
+          return (
+            <Image
+              key={index}
+              source={source}
+              style={{ width: 50, height: 75, marginHorizontal: 4, resizeMode: 'contain' }}
+            />
+          );
+        })}
+      </View>
       <Text style={styles.title}>🍻 Juego 2 - Carta de Acción</Text>
 
       <Button title="Ver registro" onPress={() => setModalVisible(true)} />
@@ -119,15 +199,47 @@ export default function GameTwoScreen({ route }) {
 
       {carta && (
         <>
-          <Text style={styles.carta}>
-            {carta.numero} de {carta.palo}
-          </Text>
+          {(() => {
+            let valor = carta.numero;
+            let displayValor = valor;
+            if (valor === 'j') {
+              displayValor = 'J';
+            } else if (valor === 'q') {
+              displayValor = 'Q';
+            } else if (valor === 'k') {
+              displayValor = 'K';
+            }
+            // Render card name with correct displayValor
+            return (
+              <Text style={styles.carta}>
+                {displayValor} de {carta.palo}
+              </Text>
+            );
+          })()}
           <Text style={styles.accion}>
             {jugadorActual ? `${jugadorActual}, ${valores[carta.numero]}` : valores[carta.numero]}
           </Text>
           <Text style={styles.tragos}>
             {tragosPorPalo[carta.palo]} trago(s) por ser {carta.palo}
           </Text>
+          {/* Mostrar imagen de la carta actual */}
+          {(() => {
+            let valor = carta.numero;
+            if (valor === 'j' || valor === 'q' || valor === 'k') {
+              valor = valor;
+            }
+            const key = `${carta.palo}_${valor}`;
+            const source = imagenesCartas[key];
+            if (source) {
+              return (
+                <Image
+                  source={source}
+                  style={{ width: 100, height: 150, marginVertical: 10, resizeMode: 'contain' }}
+                />
+              );
+            }
+            return null;
+          })()}
           {mazo.length > 0 && (
             <Button title="Sacar otra carta" onPress={sacarCarta} />
           )}
@@ -145,11 +257,22 @@ export default function GameTwoScreen({ route }) {
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>Registro de cartas</Text>
             <ScrollView style={{ maxHeight: 300 }}>
-              {registro.map((item, index) => (
-                <Text key={index} style={styles.modalItem}>
-                  {item.jugador}: {item.carta.numero} de {item.carta.palo}
-                </Text>
-              ))}
+              {registro.map((item, index) => {
+                let valor = item.carta.numero;
+                let displayValor = valor;
+                if (valor === 'j') {
+                  displayValor = 'J';
+                } else if (valor === 'q') {
+                  displayValor = 'Q';
+                } else if (valor === 'k') {
+                  displayValor = 'K';
+                }
+                return (
+                  <Text key={index} style={styles.modalItem}>
+                    {item.jugador}: {displayValor} de {item.carta.palo}
+                  </Text>
+                );
+              })}
             </ScrollView>
             <Button title="Cerrar" onPress={() => setModalVisible(false)} />
           </View>
@@ -175,7 +298,10 @@ export default function GameTwoScreen({ route }) {
                   <View key={palo} style={{ marginBottom: 12 }}>
                     <Text style={{ fontWeight: 'bold', textTransform: 'capitalize' }}>{palo}</Text>
                     <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-                      {Array.from({ length: 12 }, (_, i) => i + 1).map(num => (
+                      {Array.from({ length: 12 }, (_, i) => {
+                        const numMap = i + 1 <= 9 ? i + 1 : ['j', 'q', 'k'][i - 9];
+                        return numMap;
+                      }).map(num => (
                         <Text
                           key={num}
                           style={{
@@ -186,7 +312,7 @@ export default function GameTwoScreen({ route }) {
                             fontSize: 16,
                           }}
                         >
-                          {num}
+                          {typeof num === 'number' ? num : num.toUpperCase()}
                         </Text>
                       ))}
                     </View>
