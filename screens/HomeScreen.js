@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { View, Text, Button, StyleSheet, TextInput, TouchableOpacity, Image, ScrollView, Dimensions, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import Modal from 'react-native-modal';
 
 export default function HomeScreen({ navigation }) {
   const scrollRef = useRef(null);
@@ -7,24 +8,13 @@ export default function HomeScreen({ navigation }) {
   const [mostrarInput, setMostrarInput] = useState(false);
   const [nombre, setNombre] = useState('');
   const [jugadores, setJugadores] = useState([]);
-
-  const [busqueda, setBusqueda] = useState('');
-  const [mostrarBusqueda, setMostrarBusqueda] = useState(false);
+  const [mostrarModalJuegos, setMostrarModalJuegos] = useState(false);
+  const [mostrarModalJugadores, setMostrarModalJugadores] = useState(false);
 
   const juegos = [
-    { id: 1, nombre: 'La Cadena del Crupier', imagen: require('../assets/cartas/oro-user.png'), color: '#fff', ruta: 'Juego 1', textoColor: '#000' },
-    { id: 2, nombre: 'Bebecartas', imagen: require('../assets/cartas/cigarro-user.png'), color: '#d9d9d9', ruta: 'Juego 2', textoColor: '#000' },
-    { id: 3, nombre: 'Juego 3', imagen: require('../assets/cartas/cubata-user.png'), color: '#f24e1e', ruta: 'Juego 3', textoColor: '#fff' },
-    { id: 4, nombre: 'Juego 4', imagen: require('../assets/cartas/pollo-user.png'), color: '#8e44ad', ruta: 'Juego 4', textoColor: '#fff' },
+    { nombre: 'La Cadena del Crupier', color: 'transparent', textoColor: '#000', ruta: 'Juego 1' },
+    { nombre: 'Bebecartas', color: 'transparent', textoColor: '#000', ruta: 'Juego 2' },
   ];
-
-  const juegosFiltrados = juegos.filter(j => j.nombre.toLowerCase().includes(busqueda.toLowerCase()));
-
-  const handleScrollDown = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTo({ y: height, animated: true });
-    }
-  };
 
   const agregarJugador = () => {
     if (nombre.trim() !== '') {
@@ -34,92 +24,142 @@ export default function HomeScreen({ navigation }) {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={() => {
-      Keyboard.dismiss();
-      setMostrarBusqueda(false);
-    }}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ScrollView
         ref={scrollRef}
-        pagingEnabled
         showsVerticalScrollIndicator={false}
         style={{ backgroundColor: '#fdfcf7' }}
         contentContainerStyle={{ backgroundColor: '#fdfcf7' }}
         keyboardShouldPersistTaps="handled"
       >
-        <View style={{ height }}>
-          <TouchableOpacity onPress={handleScrollDown}>
-            <View style={[styles.section, { marginTop: '25%' }]}>
-              <Text style={styles.damText}>D.A.M</Text>
-              <Text style={styles.slogan}>Drink and More</Text>
-              <Image source={require('../assets/munyeco_logo.png')} style={styles.logo} />
-            </View>
+        
+        <View style={{ alignItems: 'center', marginTop: height * 0.1, marginBottom: 10, position: 'relative' }}>
+          <TouchableOpacity onPress={() => navigation.goBack()} style={{ position: 'absolute', left: 20, top: 0 }}>
+            <Text style={{ fontSize: 28, color: '#780000' }}>{'←'}</Text>
           </TouchableOpacity>
+          <Text style={{ fontSize: 28, fontWeight: 'bold', color: '#780000', fontFamily: 'PlayfairDisplaySC-Bold' }}>Selecciona tu juego</Text>
+          <Text style={{ fontSize: 18, color: '#780000', marginTop: 5, fontFamily: 'PlayfairDisplaySC-Regular' }}>¡Comienza la fiesta!</Text>
         </View>
 
         <View style={[styles.section, { paddingBottom: 40 }]}>
           <View style={{ width: '100%', alignItems: 'center' }}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', width: '100%', paddingHorizontal: 20, marginBottom: 10 }}>
-              <View style={{ flex: 1, marginTop: 50 }}>
-                <Text style={{ fontSize: 24, color: '#666' }}>Elige tu juego</Text>
-                <Text style={{ fontSize: 32, fontWeight: 'bold', marginBottom:'20' }}>Para empezar la fiesta</Text>
-              </View>
               <View style={{ marginTop: 20 }}>
                 <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
-                  {mostrarBusqueda ? (
-                    <TextInput
-                      autoFocus
-                      style={[styles.input, { width: 140, height: 30, marginTop: -4 }]}
-                      placeholder="Buscar..."
-                      value={busqueda}
-                      onChangeText={setBusqueda}
-                      onBlur={() => setMostrarBusqueda(false)}
-                    />
-                  ) : (
-                    <Text
-                      style={{ fontSize: 20 }}
-                      onPress={() => setMostrarBusqueda(true)}
-                    >🔍</Text>
-                  )}
-                  <Text style={{ fontSize: 22 }}>➕</Text>
                 </View>
               </View>
             </View>
-            {juegosFiltrados.map(j => (
-              <TouchableOpacity key={j.id} style={[styles.card, { backgroundColor: j.color }]} onPress={() => navigation.navigate(j.ruta, { jugadores })}>
-                <View style={styles.cardContent}>
-                  <View style={styles.cardRow}>
-                    <View style={{ width: '60%' }}>
-                      <Text style={[styles.cardTitle, { color: j.textoColor }]}>{j.nombre}</Text>
-                      <View style={{ width: 32, height: 32, borderRadius: 16, backgroundColor: j.textoColor, justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
-                        <Text style={{ color: j.color, fontSize: 16 }}>→</Text>
-                      </View>
-                    </View>
-                    <Image source={j.imagen} style={{ width: 120, height: 120, resizeMode: 'contain' }} />
-                  </View>
-                </View>
+            <TouchableOpacity style={[styles.card, { backgroundColor: juegos[0].color }]} onPress={() => navigation.navigate(juegos[0].ruta, { jugadores })}>
+              <Text style={styles.cardTitle}>{juegos[0].nombre}</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={[styles.card, { backgroundColor: juegos[1].color }]} onPress={() => navigation.navigate(juegos[1].ruta, { jugadores })}>
+              <Text style={styles.cardTitle}>{juegos[1].nombre}</Text>
+            </TouchableOpacity>
+
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '90%', marginBottom: 10 }}>
+              <TouchableOpacity
+                style={[styles.card, styles.smallCard, { marginRight: 10 }]}
+                onPress={() => setMostrarModalJuegos(true)}
+              >
+                <Text style={styles.cardTitle}> Mas Juegos</Text>
               </TouchableOpacity>
-            ))}
+
+              <TouchableOpacity
+                style={[styles.card, styles.smallCard]}
+                onPress={() => setMostrarModalJugadores(true)}
+              >
+                <Text style={styles.cardTitle}>Añadir Jugadores</Text>
+              </TouchableOpacity>
+            </View>
           </View>
 
           <View style={styles.section}>
-            <Text style={styles.title}>Jugadores</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Nombre del jugador"
-              value={nombre}
-              onChangeText={setNombre}
-            />
-            <Button title="Agregar jugador" onPress={agregarJugador} />
+          </View>
+        </View>
+
+        <Modal 
+          isVisible={mostrarModalJuegos}
+          onBackdropPress={() => setMostrarModalJuegos(false)}
+          onSwipeComplete={() => setMostrarModalJuegos(false)}
+          swipeDirection="down"
+          style={styles.bottomModal}
+        >
+          <View style={styles.modalContent}>
+            <Text style={styles.title}>Más Juegos</Text>
+            <TouchableOpacity
+              style={[styles.card, { backgroundColor: '#ffcc00' }]}
+              onPress={() => {
+                setMostrarModalJuegos(false);
+                navigation.navigate('Juego 3', { jugadores });
+              }}
+            >
+              <Text style={styles.cardTitle}>Juego 3</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.card, { backgroundColor: '#00cccc' }]}
+              onPress={() => {
+                setMostrarModalJuegos(false);
+                navigation.navigate('Juego 4', { jugadores });
+              }}
+            >
+              <Text style={styles.cardTitle}>Juego 4</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
+
+        <Modal 
+          isVisible={mostrarModalJugadores}
+          onBackdropPress={() => setMostrarModalJugadores(false)}
+          onSwipeComplete={() => setMostrarModalJugadores(false)}
+          swipeDirection="down"
+          style={styles.bottomModal}
+        >
+          <View style={styles.modalContent}>
+            <Text style={[styles.title, { color: '#780000' }]}>Añadir Jugadores</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
+              <TextInput
+                style={styles.inputGrande}
+                placeholder="Nombre del jugador"
+                placeholderTextColor="#999"
+                value={nombre}
+                onChangeText={setNombre}
+              />
+              <TouchableOpacity onPress={agregarJugador} style={styles.botonAgregar}>
+                <Text style={{ fontSize: 24, color: '#780000' }}>＋</Text>
+              </TouchableOpacity>
+            </View>
             {jugadores.length > 0 && (
               <View style={styles.lista}>
-                <Text style={styles.listaTitulo}>Jugadores añadidos:</Text>
                 {jugadores.map((j, index) => (
-                  <Text key={index} style={styles.listaItem}>• {j}</Text>
+                  <View
+                    key={index}
+                    style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}
+                  >
+                    <TextInput
+                      style={styles.inputGrande}
+                      value={jugadores[index]}
+                      onChangeText={(text) => {
+                        const nuevos = [...jugadores];
+                        nuevos[index] = text;
+                        setJugadores(nuevos);
+                      }}
+                    />
+                    <TouchableOpacity
+                      onPress={() => {
+                        const nuevos = jugadores.filter((_, i) => i !== index);
+                        setJugadores(nuevos);
+                      }}
+                      style={styles.botonAgregar}
+                    >
+                      <Text style={{ fontSize: 24, color: '#780000' }}>－</Text>
+                    </TouchableOpacity>
+                  </View>
                 ))}
               </View>
             )}
           </View>
-        </View>
+        </Modal>
       </ScrollView>
     </TouchableWithoutFeedback>
   );
@@ -128,74 +168,49 @@ export default function HomeScreen({ navigation }) {
 const { height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fdfcf7',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    paddingTop: 100,
-    gap: 20,
-  },
   damText: {
-    fontSize: 140,
+    fontSize: height * 0.08,
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 0,
+    fontFamily: 'PlayfairDisplaySC-Bold',
   },
   slogan: {
-    fontSize: 24,
+    fontSize: height * 0.025,
     color: '#555',
     textAlign: 'center',
     marginBottom: 20,
+    fontFamily: 'PlayfairDisplaySC-Regular',
   },
-  title: { fontSize: 28, marginBottom: 40, fontWeight: 'bold' },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 30,
-    justifyContent: 'space-between',
-  },
+  title: { fontSize: 28, marginBottom: 40, fontWeight: 'bold', fontFamily: 'PlayfairDisplaySC-Regular' },
   logo: {
-    width: 450,
-    height: 450,
+    width: '80%',
+    height: height * 0.65,
     resizeMode: 'contain',
+    marginTop: 20,
   },
-  dam: {
-    fontSize: 56,
-    fontWeight: 'bold',
-  },
-  drink: {
-    fontSize: 12,
-    color: '#555',
-    textAlign: 'center',
-    textTransform: 'uppercase'
-  },
-  botones: {
-    flexDirection: 'row',
-    gap: 20,
-  },
-  addButton: {
-    position: 'absolute',
-    bottom: 30,
-    right: 30,
-    backgroundColor: '#3498db',
-    borderRadius: 30,
-    padding: 15,
-    elevation: 5,
-  },
-  addButtonText: {
-    color: 'white',
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 8,
-    marginTop: 10,
-    width: 200,
-    borderRadius: 5,
+  // input: eliminado o actualizado, ya no se usa
+  inputGrande: {
+    flex: 1,
+    borderWidth: 2,
+    borderColor: '#780000',
+    padding: 10,
+    paddingHorizontal: 14,
+    borderRadius: 10,
     backgroundColor: 'white',
+    fontSize: 16,
+    fontFamily: 'PlayfairDisplaySC-Regular',
+    color: '#000',
+    marginRight: 10,
+  },
+  botonAgregar: {
+    backgroundColor: '#fdfcf7',
+    padding: 10,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: '#780000',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   lista: {
     marginTop: 20,
@@ -204,30 +219,40 @@ const styles = StyleSheet.create({
   listaTitulo: {
     fontWeight: 'bold',
     marginBottom: 5,
+    fontFamily: 'PlayfairDisplaySC-Regular',
   },
   listaItem: {
     fontSize: 16,
     color: '#333',
+    fontFamily: 'PlayfairDisplaySC-Regular',
   },
   section: {
     justifyContent: 'center',
     alignItems: 'center',
     gap: 0,
-    paddingTop: 30,
+    paddingTop: 10,
   },
   card: {
     width: '90%',
-    backgroundColor: '#fff',
+    backgroundColor: 'transparent',
+    borderWidth: 2,
+    borderColor: '#780000',
     borderRadius: 16,
     padding: 20,
     marginBottom: 20,
     justifyContent: 'center',
+    alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
     height: 200,
+  },
+  smallCard: {
+    width: '48%',
+    height: 200,
+    padding: 10,
   },
   cardContent: {
     flexDirection: 'column',
@@ -237,12 +262,10 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     margin: 6,
-    textTransform: 'uppercase'
-  },
-  cardSubtitle: {
-    fontSize: 14,
-    color: '#444',
-    margin: 6,
+    textTransform: 'uppercase',
+    textAlign: 'center',
+    color: '#780000',
+    fontFamily: 'PlayfairDisplaySC-Bold'
   },
   cardRow: {
     flexDirection: 'row',
@@ -251,8 +274,25 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
   },
-  cardArrow: {
-    fontSize: 28,
-    color: '#000',
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    padding: 30,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    width: '100%',
+    height: '90%',
+    position: 'absolute',
+    bottom: 0,
+    alignItems: 'center',
+  },
+  bottomModal: {
+    justifyContent: 'flex-end',
+    margin: 0,
   },
 });
