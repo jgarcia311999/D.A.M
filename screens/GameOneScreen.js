@@ -210,39 +210,10 @@ export default function GameOneScreen({ route }) {
       setResultado('plantado');
     };
 
-    if (fase === 0) {
-      return (
-        <View style={styles.container}>
-          <View style={styles.imageContainer}>
-                  <Image source={require('../assets/cerveza_blackjack.png')} style={styles.image} resizeMode="contain" />
-          </View>
-          <Text style={styles.imageTitle}>La Cadena del Crupier</Text>
-          <View style={styles.separator} />
-          <ScrollView horizontal pagingEnabled showsHorizontalScrollIndicator={false} style={styles.scrollSection}>
-            <View style={styles.slide}>
-              <Text style={styles.slideText}>
-                Acertar 4 veces seguidas para completar la cadena. Si fallas en cualquier paso… ¡bebes! y si ganas... ¡DESCUBRELO!
-              </Text>
-            </View>
-            <View style={styles.slide}>
-              <Text style={styles.slideText}>
-                1. Color – Adivina si la carta será roja (oros/copas) o negra (espadas/bastos).
-                {"\n"}2. Mayor o menor – Adivina si la siguiente carta será mayor o menor que la anterior.
-              </Text>
-            </View>
-            <View style={styles.slide}>
-              <Text style={styles.slideText}>
-                3. ¿Entre o fuera? – Se revelan dos cartas. Debes decir si la siguiente estará entre sus valores o fuera.
-                {"\n"}4. Palo exacto – Adivina el palo exacto (oros, copas, espadas o bastos) de la siguiente carta.
-              </Text>
-            </View>
-          </ScrollView>
-          <View style={styles.buttonContainer}>
-            <Button title="Empezar" onPress={iniciarJuego} />
-          </View>
-        </View>
-      );
-    }
+
+    useEffect(() => {
+      iniciarJuego();
+    }, []);
 
     // Modal para mostrar la carta y el resultado
     const CartaModal = () => (

@@ -12,13 +12,13 @@ export default function HomeScreen({ navigation }) {
   const [mostrarModalJugadores, setMostrarModalJugadores] = useState(false);
 
   const juegos = [
-    { nombre: 'La Cadena del Crupier', color: 'transparent', textoColor: '#000', ruta: 'Juego 1' },
+    { nombre: 'La Cadena del Crupier', color: 'transparent', textoColor: '#000', ruta: 'Pre juego 1' },
     { nombre: 'Bebecartas', color: 'transparent', textoColor: '#000', ruta: 'Juego 2' },
   ];
 
   const agregarJugador = () => {
     if (nombre.trim() !== '') {
-      setJugadores([...jugadores, nombre.trim()]);
+      setJugadores([nombre.trim(), ...jugadores]);
       setNombre('');
     }
   };
@@ -69,7 +69,7 @@ export default function HomeScreen({ navigation }) {
                 style={[styles.card, styles.smallCard]}
                 onPress={() => setMostrarModalJugadores(true)}
               >
-                <Text style={styles.cardTitle}>Añadir Jugadores</Text>
+                <Text style={styles.cardTitle}>Añadir Borrachos</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -88,7 +88,7 @@ export default function HomeScreen({ navigation }) {
           <View style={styles.modalContent}>
             <Text style={styles.title}>Más Juegos</Text>
             <TouchableOpacity
-              style={[styles.card, { backgroundColor: '#ffcc00' }]}
+              style={[styles.card, { backgroundColor: 'transparent', borderWidth: 2, borderColor: '#780000' }]}
               onPress={() => {
                 setMostrarModalJuegos(false);
                 navigation.navigate('Juego 3', { jugadores });
@@ -97,7 +97,7 @@ export default function HomeScreen({ navigation }) {
               <Text style={styles.cardTitle}>Juego 3</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={[styles.card, { backgroundColor: '#00cccc' }]}
+              style={[styles.card, { backgroundColor: 'transparent', borderWidth: 2, borderColor: '#780000' }]}
               onPress={() => {
                 setMostrarModalJuegos(false);
                 navigation.navigate('Juego 4', { jugadores });
@@ -116,11 +116,11 @@ export default function HomeScreen({ navigation }) {
           style={styles.bottomModal}
         >
           <View style={styles.modalContent}>
-            <Text style={[styles.title, { color: '#780000' }]}>Añadir Jugadores</Text>
+            <Text style={[styles.title, { color: '#780000' }]}>Añadir Borrachos</Text>
             <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
               <TextInput
                 style={styles.inputGrande}
-                placeholder="Nombre del jugador"
+                placeholder="Nombre del borracho"
                 placeholderTextColor="#999"
                 value={nombre}
                 onChangeText={setNombre}
@@ -130,31 +130,18 @@ export default function HomeScreen({ navigation }) {
               </TouchableOpacity>
             </View>
             {jugadores.length > 0 && (
-              <View style={styles.lista}>
+              <View style={[styles.lista, styles.listaFila]}>
                 {jugadores.map((j, index) => (
-                  <View
+                  <TouchableOpacity
                     key={index}
-                    style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}
+                    onPress={() => {
+                      const nuevos = jugadores.filter((_, i) => i !== index);
+                      setJugadores(nuevos);
+                    }}
+                    style={[styles.jugadorTouchable]}
                   >
-                    <TextInput
-                      style={styles.inputGrande}
-                      value={jugadores[index]}
-                      onChangeText={(text) => {
-                        const nuevos = [...jugadores];
-                        nuevos[index] = text;
-                        setJugadores(nuevos);
-                      }}
-                    />
-                    <TouchableOpacity
-                      onPress={() => {
-                        const nuevos = jugadores.filter((_, i) => i !== index);
-                        setJugadores(nuevos);
-                      }}
-                      style={styles.botonAgregar}
-                    >
-                      <Text style={{ fontSize: 24, color: '#780000' }}>－</Text>
-                    </TouchableOpacity>
-                  </View>
+                    <Text style={styles.jugadorNombre}>{j}</Text>
+                  </TouchableOpacity>
                 ))}
               </View>
             )}
@@ -294,5 +281,34 @@ const styles = StyleSheet.create({
   bottomModal: {
     justifyContent: 'flex-end',
     margin: 0,
+  },
+  jugadorItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '48%',
+    marginBottom: 10,
+  },
+  listaFila: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    width: '100%',
+    marginTop: 20,
+  },
+  jugadorTouchable: {
+    backgroundColor: '#fff',
+    borderWidth: 2,
+    borderColor: '#780000',
+    borderRadius: 10,
+    padding: 10,
+    width: '48%',
+    marginBottom: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  jugadorNombre: {
+    fontSize: 16,
+    fontFamily: 'PlayfairDisplaySC-Regular',
+    color: '#000',
   },
 });
