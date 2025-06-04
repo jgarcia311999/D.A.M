@@ -20,6 +20,7 @@
     "expo-updates": "~0.28.13",
     "react": "19.0.0",
     "react-native": "0.79.2",
+    "react-native-deck-swiper": "^2.0.17",
     "react-native-gesture-handler": "~2.24.0",
     "react-native-modal": "^14.0.0-rc.1",
     "react-native-modalize": "^2.1.1",

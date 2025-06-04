@@ -10,6 +10,7 @@ import GameOneScreen from './screens/GameOneScreen';
 import GameTwoScreen from './screens/GameTwoScreen';
 import GameThreeScreen from './screens/GameThreeScreen';
 import GameFourScreen from './screens/GameFourScreen';
+import PruebaGameFourScreen from './screens/PruebaGameFourScreen';
 
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
@@ -41,6 +42,7 @@ export default function App() {
           <Stack.Screen name="Juego 2" component={GameTwoScreen} />
           <Stack.Screen name="Juego 3" component={GameThreeScreen} />
           <Stack.Screen name="Juego 4" component={GameFourScreen} />
+          <Stack.Screen name="Prueba 4" component={PruebaGameFourScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>

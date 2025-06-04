@@ -146,7 +146,7 @@ export default function HomeScreen({ navigation }) {
           <TouchableOpacity
             disabled={keyboardVisible}
             style={[styles.card, { width: '48%' }]}
-            onPress={() => navigation.navigate('Juego 4', { jugadores })}
+            onPress={() => navigation.navigate('Prueba 4', { jugadores })}
           >
             <Text style={styles.cardTitle}>Juego 4</Text>
           </TouchableOpacity>
@@ -320,7 +320,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   cardTitle: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: 'bold',
     margin: 6,
     textTransform: 'uppercase',
