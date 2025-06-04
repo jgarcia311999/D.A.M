@@ -1,4 +1,6 @@
+import 'react-native-gesture-handler';
 import React from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import TittleScreen from './screens/TittleScreen';
@@ -29,16 +31,18 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="TittleScreen">
-        <Stack.Screen name="TittleScreen" component={TittleScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Inicio" component={HomeScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Pre juego 1" component={PreGameOneScreen} />
-        <Stack.Screen name="Juego 1" component={GameOneScreen} />
-        <Stack.Screen name="Juego 2" component={GameTwoScreen} />
-        <Stack.Screen name="Juego 3" component={GameThreeScreen} />
-        <Stack.Screen name="Juego 4" component={GameFourScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="TittleScreen">
+          <Stack.Screen name="TittleScreen" component={TittleScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Inicio" component={HomeScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Pre juego 1" component={PreGameOneScreen} />
+          <Stack.Screen name="Juego 1" component={GameOneScreen} />
+          <Stack.Screen name="Juego 2" component={GameTwoScreen} />
+          <Stack.Screen name="Juego 3" component={GameThreeScreen} />
+          <Stack.Screen name="Juego 4" component={GameFourScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </GestureHandlerRootView>
   );
 }

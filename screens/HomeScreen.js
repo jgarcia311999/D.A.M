@@ -1,15 +1,53 @@
-import React, { useRef, useState } from 'react';
-import { View, Text, Button, StyleSheet, TextInput, TouchableOpacity, Image, ScrollView, Dimensions, Keyboard, TouchableWithoutFeedback } from 'react-native';
-import Modal from 'react-native-modal';
+import React, { useRef, useState, useEffect } from 'react';
+import { View, Text, Button, StyleSheet, TextInput, TouchableOpacity, Image, ScrollView, Dimensions, Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView, Animated } from 'react-native';
+import { Modalize } from 'react-native-modalize';
 
 export default function HomeScreen({ navigation }) {
   const scrollRef = useRef(null);
+  const modalRef = useRef(null);
+  const inputRef = useRef(null);
 
   const [mostrarInput, setMostrarInput] = useState(false);
   const [nombre, setNombre] = useState('');
   const [jugadores, setJugadores] = useState([]);
-  const [mostrarModalJuegos, setMostrarModalJuegos] = useState(false);
-  const [mostrarModalJugadores, setMostrarModalJugadores] = useState(false);
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+
+  // Animación para el input
+  const inputAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+      if (nombre.trim() === '') {
+        setMostrarInput(false);
+      }
+    });
+
+    return () => {
+      keyboardDidHideListener.remove();
+    };
+  }, [nombre]);
+
+  useEffect(() => {
+    Animated.timing(inputAnim, {
+      toValue: mostrarInput ? 1 : 0,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+  }, [mostrarInput]);
+
+  useEffect(() => {
+    const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
+      setKeyboardVisible(true);
+    });
+    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+      setKeyboardVisible(false);
+    });
+
+    return () => {
+      showSubscription.remove();
+      hideSubscription.remove();
+    };
+  }, []);
 
   const juegos = [
     { nombre: 'La Cadena del Crupier', color: 'transparent', textoColor: '#000', ruta: 'Pre juego 1' },
@@ -20,117 +58,125 @@ export default function HomeScreen({ navigation }) {
     if (nombre.trim() !== '') {
       setJugadores([nombre.trim(), ...jugadores]);
       setNombre('');
+      setMostrarInput(false);
+      Keyboard.dismiss();
     }
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <ScrollView
-        ref={scrollRef}
-        showsVerticalScrollIndicator={false}
-        style={{ backgroundColor: '#fdfcf7' }}
-        contentContainerStyle={{ backgroundColor: '#fdfcf7' }}
-        keyboardShouldPersistTaps="handled"
-      >
-        
-        <View style={{ alignItems: 'center', marginTop: height * 0.1, marginBottom: 10, position: 'relative' }}>
-          <TouchableOpacity onPress={() => navigation.goBack()} style={{ position: 'absolute', left: 20, top: 0 }}>
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={{ flex: 1, backgroundColor: '#fdfcf7', justifyContent: 'space-between' }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingHorizontal: 20, marginTop: 80, position: 'relative' }}>
+          <TouchableOpacity onPress={() => navigation.navigate('TittleScreen')} style={{ position: 'absolute', left: 20 }}>
             <Text style={{ fontSize: 28, color: '#780000' }}>{'←'}</Text>
           </TouchableOpacity>
-          <Text style={{ fontSize: 28, fontWeight: 'bold', color: '#780000', fontFamily: 'PlayfairDisplaySC-Bold' }}>Selecciona tu juego</Text>
-          <Text style={{ fontSize: 18, color: '#780000', marginTop: 5, fontFamily: 'PlayfairDisplaySC-Regular' }}>¡Comienza la fiesta!</Text>
+          <Text style={{ fontSize: 28, color: '#780000', fontFamily: 'PlayfairDisplaySC-Bold' }}>D.A.M</Text>
+          <TouchableOpacity
+            style={{ position: 'absolute', right: 20 }}
+            onPress={() => {
+              if (mostrarInput) {
+                setMostrarInput(false);
+                Keyboard.dismiss();
+              } else {
+                setMostrarInput(true);
+                setTimeout(() => {
+                  inputRef.current?.focus();
+                }, 100);
+              }
+            }}
+          >
+            <Text style={{ fontSize: 28, color: '#780000', fontWeight: 'bold' }}>
+              {mostrarInput ? '－' : '＋'}
+            </Text>
+          </TouchableOpacity>
+        </View>
+        {/* Input para añadir jugador */}
+        <Animated.View style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginHorizontal: 20,
+          height: inputAnim.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, 60], // Altura del input visible
+          }),
+          opacity: inputAnim,
+          overflow: 'hidden',
+        }}>
+          <TextInput
+            ref={inputRef}
+            style={styles.inputGrande}
+            value={nombre}
+            onChangeText={setNombre}
+            placeholder="Nombre del jugador"
+            placeholderTextColor="#999"
+            onSubmitEditing={agregarJugador}
+          />
+          <TouchableOpacity style={styles.botonAgregar} onPress={() => {
+            agregarJugador();
+            setMostrarInput(false);
+          }}>
+            <Text style={{ fontSize: 18, color: '#780000' }}>OK</Text>
+          </TouchableOpacity>
+        </Animated.View>
+
+        {/* Four game cards in a 2x2 grid, always visible, disabled when keyboard is visible */}
+        <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', paddingHorizontal: 20, marginTop: 40 }}>
+          <TouchableOpacity
+            disabled={keyboardVisible}
+            style={[styles.card, { width: '48%' }]}
+            onPress={() => navigation.navigate('Pre juego 1', { jugadores })}
+          >
+            <Text style={styles.cardTitle}>La Cadena del Crupier</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            disabled={keyboardVisible}
+            style={[styles.card, { width: '48%' }]}
+            onPress={() => navigation.navigate('Juego 2', { jugadores })}
+          >
+            <Text style={styles.cardTitle}>Bebecartas</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            disabled={keyboardVisible}
+            style={[styles.card, { width: '48%' }]}
+            onPress={() => navigation.navigate('Juego 3', { jugadores })}
+          >
+            <Text style={styles.cardTitle}>Juego 3</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            disabled={keyboardVisible}
+            style={[styles.card, { width: '48%' }]}
+            onPress={() => navigation.navigate('Juego 4', { jugadores })}
+          >
+            <Text style={styles.cardTitle}>Juego 4</Text>
+          </TouchableOpacity>
         </View>
 
-        <View style={[styles.section, { paddingBottom: 40 }]}>
-          <View style={{ width: '100%', alignItems: 'center' }}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', width: '100%', paddingHorizontal: 20, marginBottom: 10 }}>
-              <View style={{ marginTop: 20 }}>
-                <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
-                </View>
-              </View>
-            </View>
-            <TouchableOpacity style={[styles.card, { backgroundColor: juegos[0].color }]} onPress={() => navigation.navigate(juegos[0].ruta, { jugadores })}>
-              <Text style={styles.cardTitle}>{juegos[0].nombre}</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={[styles.card, { backgroundColor: juegos[1].color }]} onPress={() => navigation.navigate(juegos[1].ruta, { jugadores })}>
-              <Text style={styles.cardTitle}>{juegos[1].nombre}</Text>
-            </TouchableOpacity>
-
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '90%', marginBottom: 10 }}>
-              <TouchableOpacity
-                style={[styles.card, styles.smallCard, { marginRight: 10 }]}
-                onPress={() => setMostrarModalJuegos(true)}
-              >
-                <Text style={styles.cardTitle}> Mas Juegos</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={[styles.card, styles.smallCard]}
-                onPress={() => setMostrarModalJugadores(true)}
-              >
-                <Text style={styles.cardTitle}>Añadir Borrachos</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-
-          <View style={styles.section}>
-          </View>
-        </View>
-
-        <Modal 
-          isVisible={mostrarModalJuegos}
-          onBackdropPress={() => setMostrarModalJuegos(false)}
-          onSwipeComplete={() => setMostrarModalJuegos(false)}
-          swipeDirection="down"
-          style={styles.bottomModal}
+        <Modalize
+          ref={modalRef}
+          alwaysOpen={120}
+          modalHeight={height - 50}
+          handlePosition="inside"
+          panGestureEnabled
+          withHandle={true}
+          adjustToContentHeight={false}
+          modalStyle={styles.bottomSheetContainer}
+          scrollViewProps={{ showsVerticalScrollIndicator: false }}
+          keyboardAvoidingBehavior="height"
+          onOpen={() => {
+            // Aquí podrías ajustar la altura si es necesario
+            // Ejemplo: modalRef.current?.setModalHeight(height - 100);
+          }}
         >
-          <View style={styles.modalContent}>
-            <Text style={styles.title}>Más Juegos</Text>
-            <TouchableOpacity
-              style={[styles.card, { backgroundColor: 'transparent', borderWidth: 2, borderColor: '#780000' }]}
-              onPress={() => {
-                setMostrarModalJuegos(false);
-                navigation.navigate('Juego 3', { jugadores });
-              }}
-            >
-              <Text style={styles.cardTitle}>Juego 3</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.card, { backgroundColor: 'transparent', borderWidth: 2, borderColor: '#780000' }]}
-              onPress={() => {
-                setMostrarModalJuegos(false);
-                navigation.navigate('Juego 4', { jugadores });
-              }}
-            >
-              <Text style={styles.cardTitle}>Juego 4</Text>
-            </TouchableOpacity>
-          </View>
-        </Modal>
+          <Text style={styles.title}>Nuestros Borrachos</Text>
 
-        <Modal 
-          isVisible={mostrarModalJugadores}
-          onBackdropPress={() => setMostrarModalJugadores(false)}
-          onSwipeComplete={() => setMostrarModalJugadores(false)}
-          swipeDirection="down"
-          style={styles.bottomModal}
-        >
-          <View style={styles.modalContent}>
-            <Text style={[styles.title, { color: '#780000' }]}>Añadir Borrachos</Text>
-            <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 10 }}>
-              <TextInput
-                style={styles.inputGrande}
-                placeholder="Nombre del borracho"
-                placeholderTextColor="#999"
-                value={nombre}
-                onChangeText={setNombre}
-              />
-              <TouchableOpacity onPress={agregarJugador} style={styles.botonAgregar}>
-                <Text style={{ fontSize: 24, color: '#780000' }}>＋</Text>
-              </TouchableOpacity>
-            </View>
-            {jugadores.length > 0 && (
-              <View style={[styles.lista, styles.listaFila]}>
+          {jugadores.length > 0 && (
+            <ScrollView
+              style={[styles.listaJugadores, { maxHeight: height * 0.32 }]}
+              nestedScrollEnabled
+              contentContainerStyle={{ flexGrow: 1 }}
+            >
+              <View style={styles.listaFila}>
                 {jugadores.map((j, index) => (
                   <TouchableOpacity
                     key={index}
@@ -138,17 +184,18 @@ export default function HomeScreen({ navigation }) {
                       const nuevos = jugadores.filter((_, i) => i !== index);
                       setJugadores(nuevos);
                     }}
-                    style={[styles.jugadorTouchable]}
+                    style={styles.jugadorTouchable}
                   >
                     <Text style={styles.jugadorNombre}>{j}</Text>
                   </TouchableOpacity>
                 ))}
               </View>
-            )}
-          </View>
-        </Modal>
-      </ScrollView>
-    </TouchableWithoutFeedback>
+            </ScrollView>
+          )}
+        </Modalize>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -169,12 +216,41 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontFamily: 'PlayfairDisplaySC-Regular',
   },
-  title: { fontSize: 28, marginBottom: 40, fontWeight: 'bold', fontFamily: 'PlayfairDisplaySC-Regular' },
+  title: {
+    fontSize: 28,
+    marginBottom: 40,
+    fontWeight: 'bold',
+    fontFamily: 'PlayfairDisplaySC-Regular',
+    textAlign: 'center',
+    color: '#780000'
+  },
   logo: {
     width: '80%',
     height: height * 0.65,
     resizeMode: 'contain',
     marginTop: 20,
+  },
+  logoSuperior: {
+    height: 60,
+    resizeMode: 'contain',
+    marginTop: 40,
+    marginBottom: 20,
+    alignSelf: 'center',
+  },
+  lupa: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: '#780000',
+    position: 'absolute',
+    top: 0,
+    right: 20,
+  },
+  cardGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
   },
   // input: eliminado o actualizado, ya no se usa
   inputGrande: {
@@ -220,7 +296,6 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   card: {
-    width: '90%',
     backgroundColor: 'transparent',
     borderWidth: 2,
     borderColor: '#780000',
@@ -234,10 +309,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
-    height: 200,
+    height: 250,
   },
   smallCard: {
-    width: '48%',
     height: 200,
     padding: 10,
   },
@@ -273,9 +347,9 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     width: '100%',
-    height: '90%',
+    height: '40%',
     position: 'absolute',
-    bottom: 0,
+    bottom: -80,
     alignItems: 'center',
   },
   bottomModal: {
@@ -311,4 +385,58 @@ const styles = StyleSheet.create({
     fontFamily: 'PlayfairDisplaySC-Regular',
     color: '#000',
   },
+  bottomSheetContainer: {
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    borderWidth: 2,
+    borderColor: '#780000',
+    padding: 20,
+    paddingBottom: 40,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: -4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 10,
+  },
+
+  listaJugadores: {
+    width: '100%',
+    marginTop: 20,
+    maxHeight: height * 0.25,
+  },
+  jugadorRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderWidth: 2,
+    borderColor: '#780000',
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    marginBottom: 10,
+    width: '100%',
+    justifyContent: 'space-between',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.04,
+    shadowRadius: 2,
+    elevation: 1,
+  },
+  eliminarJugadorBtn: {
+    marginLeft: 12,
+    backgroundColor: '#f8d7da',
+    borderRadius: 12,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  eliminarJugadorTxt: {
+    color: '#780000',
+    fontSize: 18,
+    fontWeight: 'bold',
+    lineHeight: 20,
+  },
+
 });
