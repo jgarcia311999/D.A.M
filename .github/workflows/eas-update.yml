@@ -25,9 +25,9 @@ jobs:
         run: npm install -g eas-cli
 
       - name: Run EAS Update
-        run: eas update --branch preview --non-interactive
+        run: eas update --branch preview --message "${{ github.event.head_commit.message }}" --non-interactive
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
       - name: Confirmación visual
-        run: echo "✅ EAS Update ejecutado correctamente en 'preview'"
+        run: echo "✅ EAS Update ejecutado correctamente con el mensaje del commit"
