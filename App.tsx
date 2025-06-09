@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import TittleScreen from './screens/TittleScreen';
 import HomeScreen from './screens/HomeScreen';
+import PruebaHomeScreen from './screens/PruebaHomeScreen';
 import PreGameOneScreen from './screens/PreGameOneScreen';
 import GameOneScreen from './screens/GameOneScreen';
 import GameTwoScreen from './screens/GameTwoScreen';
@@ -37,6 +38,7 @@ export default function App() {
         <Stack.Navigator initialRouteName="TittleScreen">
           <Stack.Screen name="TittleScreen" component={TittleScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Inicio" component={HomeScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Inicio2" component={PruebaHomeScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Pre juego 1" component={PreGameOneScreen} />
           <Stack.Screen name="Juego 1" component={GameOneScreen} />
           <Stack.Screen name="Juego 2" component={GameTwoScreen} />

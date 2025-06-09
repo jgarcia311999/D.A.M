@@ -45,7 +45,7 @@ export default function TittleScreen({ navigation }) {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={() => navigation.navigate('Inicio')}>
+    <TouchableWithoutFeedback onPress={() => navigation.navigate('Inicio2')}>
       <View style={{ height, width, backgroundColor: '#EFD74A' }}>
         <Svg
           width={width}
