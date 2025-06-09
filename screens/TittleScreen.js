@@ -23,13 +23,13 @@ export default function TittleScreen({ navigation }) {
 
       Animated.parallel([
         Animated.timing(translateY, {
-          toValue: -height * 0.75,
+          toValue: -height * 1,
           duration,
           useNativeDriver: true,
         }),
         Animated.timing(opacity, {
           toValue: 1,
-          duration: duration / 3,
+          duration: duration / 4,
           useNativeDriver: true,
         }),
       ]).start(() => {
@@ -41,7 +41,7 @@ export default function TittleScreen({ navigation }) {
   }, []);
 
   const handleScrollDown = () => {
-    navigation.navigate('Inicio');
+    navigation.navigate('Inicio2');
   };
 
   return (
@@ -85,7 +85,7 @@ export default function TittleScreen({ navigation }) {
             />
           );
         })}
-        <TouchableOpacity onPress={handleScrollDown} style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <TouchableOpacity onPress={handleScrollDown} style={{ flex: 1, justifyContent: 'center', alignItems: 'center', zIndex: 10, position: 'relative' }}>
           <Text style={styles.damText}>D.A.M</Text>
           <Text style={styles.slogan}>Drink and More</Text>
         </TouchableOpacity>
@@ -101,11 +101,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#5C3227',
     fontFamily: 'PlayfairDisplaySC-Bold',
+    zIndex: 50,
   },
   slogan: {
     fontSize: height * 0.025,
     color: '#5C3227',
     textAlign: 'center',
     fontFamily: 'PlayfairDisplaySC-Regular',
+    zIndex: 5,
   },
 });

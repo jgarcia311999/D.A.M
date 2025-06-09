@@ -70,34 +70,31 @@ useEffect(() => {
     <View style={styles.container}>
       {frasesToUse.length > 0 && (
         <Swiper
-          key={cardIndex} // Esto fuerza que el Swiper se reinicie
+          key={cardIndex}
           cards={frasesToUse}
-          renderCard={(card) => {
-            return (
-              <View style={styles.card}>
-                <Text style={styles.text}>{procesarFrase(card) || 'Sin contenido'}</Text>
-              </View>
-            );
-          }}
+          renderCard={(card) => (
+            <View style={styles.card}>
+              <Text style={styles.text}>{procesarFrase(card) || 'Sin contenido'}</Text>
+            </View>
+          )}
           onSwiped={(index) => {
             if (index >= frasesToUse.length - 1) {
               setTimeout(() => {
                 const nuevas = shuffleArray(frasesCombinadas);
                 setFrasesToUse(nuevas);
-                setCardIndex(prev => prev + 1); // fuerza reinicio
+                setCardIndex(prev => prev + 1);
               }, 300);
             }
           }}
           cardIndex={0}
-          backgroundColor={'transparent'}
+          backgroundColor="transparent"
           stackSize={5}
           showSecondCard={true}
-          stackSeparation={20}
-          stackScale={0.9}
-          overlayLabels={null}
+          stackSeparation={15}
+          stackScale={10}
+          animateCardOpacity
           disableTopSwipe
           disableBottomSwipe
-          animateCardOpacity
           infinite={false}
         />
       )}

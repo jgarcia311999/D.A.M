@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
   },
   imageBackground: {
     position: 'absolute',
-    top: -width * 0.25,
+    top: -width * 0.3,
     left: (width - width * 0.5) / 2,
     width: width * 0.5,
     height: width * 0.5,
