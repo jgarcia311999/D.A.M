@@ -7,7 +7,9 @@ import { useEffect } from 'react';
 
 const { width } = Dimensions.get('window');
 
-const PruebaGameFourScreen = () => {
+const PruebaGameFourScreen = ({ route }) => {
+  const { jugadores = [] } = route.params || {};
+  console.log("Jugadores recibidos:", jugadores);
   const [usedFrases, setUsedFrases] = useState([]);
   const [frasesCombinadas, setFrasesCombinadas] = useState([]);
   const [frasesToUse, setFrasesToUse] = useState([]);
@@ -28,7 +30,6 @@ useEffect(() => {
     try {
       const todas = await getTodasLasFrases();
       const mezcladas = shuffleArray(todas);
-      console.log("Frases personalizadas:", todas);
       setFrasesCombinadas(todas);
       setFrasesToUse(mezcladas);
     } catch (error) {
@@ -38,6 +39,26 @@ useEffect(() => {
   cargar();
 }, []);
 
+  const procesarFrase = (frase) => {
+    if (!jugadores.length) return frase;
+
+    let resultado = frase;
+
+    const jugadoresMezclados = shuffleArray(jugadores);
+
+    if (frase.includes('{Jugador1}') || frase.includes('{Jugador2}')) {
+      const [jugador1, jugador2] = jugadoresMezclados.slice(0, 2);
+      resultado = resultado.replaceAll('{Jugador1}', jugador1).replaceAll('{Jugador2}', jugador2);
+    }
+
+    if (frase.includes('{Jugador}')) {
+      const jugador = jugadoresMezclados[2] || jugadoresMezclados[0];
+      resultado = resultado.replaceAll('{Jugador}', jugador);
+    }
+
+    return resultado;
+  };
+
   if (frasesCombinadas.length === 0) {
     return (
       <View style={styles.container}>
@@ -45,8 +66,6 @@ useEffect(() => {
       </View>
     );
   }
-console.log("frasesCombinadas:", frasesCombinadas);
-console.log("frasesToUse:", frasesToUse);
   return (
     <View style={styles.container}>
       {frasesToUse.length > 0 && (
@@ -54,10 +73,9 @@ console.log("frasesToUse:", frasesToUse);
           key={cardIndex} // Esto fuerza que el Swiper se reinicie
           cards={frasesToUse}
           renderCard={(card) => {
-            console.log("Renderizando card:", card);
             return (
               <View style={styles.card}>
-                <Text style={styles.text}>{card || 'Sin contenido'}</Text>
+                <Text style={styles.text}>{procesarFrase(card) || 'Sin contenido'}</Text>
               </View>
             );
           }}

@@ -9,7 +9,7 @@ export default function HomeScreen({ navigation }) {
   const [menuVisible, setMenuVisible] = useState(false);
   const [nombre, setNombre] = useState('');
   const [jugadores, setJugadores] = useState([]);
-  const [tarjetaExpandida, setTarjetaExpandida] = useState(null);
+  // tarjetaExpandida state removed
   const inputRef = useRef(null);
 
   const toggleMenu = () => {
@@ -75,17 +75,10 @@ export default function HomeScreen({ navigation }) {
             {juegos.map((juego, index) => (
               <TouchableOpacity
                 key={index}
-                style={[
-                  styles.gameContainer,
-                  tarjetaExpandida === index && { height: 200 }
-                ]}
-                onPress={() => setTarjetaExpandida(tarjetaExpandida === index ? null : index)}
-                onLongPress={() => navigation.navigate(juego.screen, { jugadores })}
+                style={styles.gameContainer}
+                onPress={() => navigation.navigate(juego.screen, { jugadores })}
               >
                 <Text style={styles.gameText}>{juego.nombre}</Text>
-                {tarjetaExpandida === index && (
-                  <Text style={styles.gameDescription}>{juego.descripcion}</Text>
-                )}
               </TouchableOpacity>
             ))}
           </View>
