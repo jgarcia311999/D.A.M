@@ -69,7 +69,7 @@ export default function HomeScreen({ navigation }) {
               <Ionicons name="add" size={28} color="#000" />
             </TouchableOpacity>
           </View>
-          <Image source={require('../assets/chapas/chapa.png')} style={styles.imageBackground} />
+          <Image source={require('../assets/chapas/chapa_dedo.png')} style={styles.imageBackground} />
           <View style={styles.content}>
             <Text style={styles.title}>D.A.M</Text>
             <View style={styles.gamesWrapper}>
