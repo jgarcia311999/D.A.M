@@ -18,8 +18,8 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install dependencies (ignoring peer conflicts)
+        run: npm install --legacy-peer-deps
 
       - name: Install EAS CLI
         run: npm install -g eas-cli
@@ -28,3 +28,6 @@ jobs:
         run: eas update --branch preview --non-interactive
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Confirmación visual
+        run: echo "✅ EAS Update ejecutado correctamente en 'preview'"
