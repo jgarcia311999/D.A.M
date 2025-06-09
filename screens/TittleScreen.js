@@ -86,7 +86,7 @@ export default function TittleScreen({ navigation }) {
           );
         })}
         <TouchableOpacity onPress={handleScrollDown} style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text style={styles.damText}>Esto funciona????</Text>
+          <Text style={styles.damText}>D.A.M</Text>
           <Text style={styles.slogan}>Drink and More</Text>
         </TouchableOpacity>
       </View>
