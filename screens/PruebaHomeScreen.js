@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image, Animated, Easing, TextInput, FlatList, Keyboard } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image, Animated, Easing, TextInput, FlatList, Keyboard, SafeAreaView, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 const { width } = Dimensions.get('window');
@@ -57,83 +57,85 @@ export default function HomeScreen({ navigation }) {
   ];
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#fdfcf7' }}>
-      <View pointerEvents={menuVisible ? 'none' : 'auto'}>
-        {/* Header row with arrow and plus buttons */}
-        <View style={styles.header}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Ionicons name="arrow-back" size={28} color="#000" />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={toggleMenu}>
-            <Ionicons name="add" size={28} color="#000" />
-          </TouchableOpacity>
-        </View>
-        <Image source={require('../assets/chapas/chapa_flor.png')} style={styles.imageBackground} />
-        <View style={styles.content}>
-          <Text style={styles.title}>D.A.M</Text>
-          <View style={styles.gamesWrapper}>
-            {juegos.map((juego, index) => (
-              <TouchableOpacity
-                key={index}
-                style={styles.gameContainer}
-                onPress={() => navigation.navigate(juego.screen, { jugadores })}
-              >
-                <Text style={styles.gameText}>{juego.nombre}</Text>
-              </TouchableOpacity>
-            ))}
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fdfcf7' }}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <View pointerEvents={menuVisible ? 'none' : 'auto'}>
+          {/* Header row with arrow and plus buttons */}
+          <View style={styles.header}>
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Ionicons name="arrow-back" size={28} color="#000" />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={toggleMenu}>
+              <Ionicons name="add" size={28} color="#000" />
+            </TouchableOpacity>
+          </View>
+          <Image source={require('../assets/chapas/chapa.png')} style={styles.imageBackground} />
+          <View style={styles.content}>
+            <Text style={styles.title}>D.A.M</Text>
+            <View style={styles.gamesWrapper}>
+              {juegos.map((juego, index) => (
+                <TouchableOpacity
+                  key={index}
+                  style={styles.gameContainer}
+                  onPress={() => navigation.navigate(juego.screen, { jugadores })}
+                >
+                  <Text style={styles.gameText}>{juego.nombre}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
           </View>
         </View>
-      </View>
-      {menuVisible && (
-        <TouchableOpacity
-          style={styles.menuOverlay}
-          activeOpacity={1}
-          onPress={toggleMenu}
-        />
-      )}
-      {menuVisible && (
-        <Animated.View style={[
-          styles.sideMenu,
-          {
-            transform: [{
-              translateX: menuAnimation.interpolate({
-                inputRange: [0, 1],
-                outputRange: [Dimensions.get('window').width, Dimensions.get('window').width * 0.1]
-              })
-            }]
-          }
-        ]}>
-          <Text style={styles.menuTitle}>Jugadores</Text>
-          <TextInput
-            ref={inputRef}
-            placeholder="Añadir jugador"
-            value={nombre}
-            onChangeText={setNombre}
-            onSubmitEditing={() => {
-              if (nombre.trim()) {
-                setJugadores([nombre.trim(), ...jugadores]);
-                setNombre('');
-                Keyboard.dismiss();
-              }
-            }}
-            style={styles.input}
-            placeholderTextColor="#999"
+        {menuVisible && (
+          <TouchableOpacity
+            style={styles.menuOverlay}
+            activeOpacity={1}
+            onPress={toggleMenu}
           />
-          <FlatList
-            data={jugadores}
-            keyExtractor={(item, index) => `${item}-${index}`}
-            renderItem={({ item, index }) => (
-              <TouchableOpacity onPress={() => {
-                const nuevos = jugadores.filter((_, i) => i !== index);
-                setJugadores(nuevos);
-              }}>
-                <Text style={styles.menuItem}>{item}</Text>
-              </TouchableOpacity>
-            )}
-          />
-        </Animated.View>
-      )}
-    </View>
+        )}
+        {menuVisible && (
+          <Animated.View style={[
+            styles.sideMenu,
+            {
+              transform: [{
+                translateX: menuAnimation.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [Dimensions.get('window').width, Dimensions.get('window').width * 0.1]
+                })
+              }]
+            }
+          ]}>
+            <Text style={styles.menuTitle}>Jugadores</Text>
+            <TextInput
+              ref={inputRef}
+              placeholder="Añadir jugador"
+              value={nombre}
+              onChangeText={setNombre}
+              onSubmitEditing={() => {
+                if (nombre.trim()) {
+                  setJugadores([nombre.trim(), ...jugadores]);
+                  setNombre('');
+                  Keyboard.dismiss();
+                }
+              }}
+              style={styles.input}
+              placeholderTextColor="#999"
+            />
+            <FlatList
+              data={jugadores}
+              keyExtractor={(item, index) => `${item}-${index}`}
+              renderItem={({ item, index }) => (
+                <TouchableOpacity onPress={() => {
+                  const nuevos = jugadores.filter((_, i) => i !== index);
+                  setJugadores(nuevos);
+                }}>
+                  <Text style={styles.menuItem}>{item}</Text>
+                </TouchableOpacity>
+              )}
+            />
+          </Animated.View>
+        )}
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 

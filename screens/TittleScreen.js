@@ -51,7 +51,7 @@ export default function TittleScreen({ navigation }) {
           width={width}
           height={height * 0.8}
           viewBox={`0 0 ${width} ${height * 0.8}`}
-          style={{ position: 'absolute', top: 0, zIndex: 1 }}
+          style={{ position: 'absolute', top: 0, zIndex: 3 }}
         >
           <Path
             d={`
