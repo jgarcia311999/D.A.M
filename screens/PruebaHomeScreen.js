@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image, Animated, Easing, TextInput, FlatList, Keyboard, SafeAreaView, ScrollView } from 'react-native';
+import { PanResponder } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const { width } = Dimensions.get('window');
 
@@ -11,6 +13,39 @@ export default function HomeScreen({ navigation }) {
   const [jugadores, setJugadores] = useState([]);
   // tarjetaExpandida state removed
   const inputRef = useRef(null);
+
+  const bottomSheetHeight = Dimensions.get('window').height * 0.7;
+  const bottomSheetY = useRef(new Animated.Value(Dimensions.get('window').height - 100)).current;
+
+  const panResponder = useRef(
+    PanResponder.create({
+      onMoveShouldSetPanResponder: (_, gestureState) => Math.abs(gestureState.dy) > 10,
+      onPanResponderMove: (_, gestureState) => {
+        const newY = Dimensions.get('window').height - 100 + gestureState.dy;
+        bottomSheetY.setValue(Math.min(Math.max(newY, Dimensions.get('window').height - bottomSheetHeight), Dimensions.get('window').height - 100));
+      },
+      onPanResponderRelease: (_, gestureState) => {
+        const halfway = Dimensions.get('window').height - (bottomSheetHeight / 2);
+        const currentY = bottomSheetY._value + gestureState.dy;
+
+        if (currentY < halfway) {
+          // expand
+          Animated.timing(bottomSheetY, {
+            toValue: Dimensions.get('window').height - bottomSheetHeight,
+            duration: 200,
+            useNativeDriver: false
+          }).start();
+        } else {
+          // collapse
+          Animated.timing(bottomSheetY, {
+            toValue: Dimensions.get('window').height - 100,
+            duration: 200,
+            useNativeDriver: false
+          }).start();
+        }
+      }
+    })
+  ).current;
 
   const toggleMenu = () => {
     if (!menuVisible) {
@@ -57,85 +92,106 @@ export default function HomeScreen({ navigation }) {
   ];
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#fdfcf7' }}>
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <View pointerEvents={menuVisible ? 'none' : 'auto'}>
-          {/* Header row with arrow and plus buttons */}
-          <View style={styles.header}>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-              <Ionicons name="arrow-back" size={28} color="#000" />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={toggleMenu}>
-              <Ionicons name="add" size={28} color="#000" />
-            </TouchableOpacity>
-          </View>
-          <Image source={require('../assets/chapas/chapa_dedo.png')} style={styles.imageBackground} />
-          <View style={styles.content}>
-            <Text style={styles.title}>D.A.M</Text>
-            <View style={styles.gamesWrapper}>
-              {juegos.map((juego, index) => (
-                <TouchableOpacity
-                  key={index}
-                  style={styles.gameContainer}
-                  onPress={() => navigation.navigate(juego.screen, { jugadores })}
-                >
-                  <Text style={styles.gameText}>{juego.nombre}</Text>
-                </TouchableOpacity>
-              ))}
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#fdfcf7' }}>
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+          <View pointerEvents={menuVisible ? 'none' : 'auto'}>
+            {/* Header row with arrow and plus buttons */}
+            <View style={styles.header}>
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Ionicons name="arrow-back" size={28} color="#000" />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={toggleMenu}>
+                <Ionicons name="add" size={28} color="#000" />
+              </TouchableOpacity>
+            </View>
+            <Image source={require('../assets/chapas/chapa_dedo.png')} style={styles.imageBackground} />
+            <View style={styles.content}>
+              <View style={styles.gamesWrapper}>
+                {juegos.map((juego, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    style={styles.gameContainer}
+                    onPress={() => navigation.navigate(juego.screen, { jugadores })}
+                  >
+                    <Text style={styles.gameText}>{juego.nombre}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
             </View>
           </View>
-        </View>
-        {menuVisible && (
-          <TouchableOpacity
-            style={styles.menuOverlay}
-            activeOpacity={1}
-            onPress={toggleMenu}
-          />
-        )}
-        {menuVisible && (
-          <Animated.View style={[
-            styles.sideMenu,
-            {
-              transform: [{
-                translateX: menuAnimation.interpolate({
-                  inputRange: [0, 1],
-                  outputRange: [Dimensions.get('window').width, Dimensions.get('window').width * 0.1]
-                })
-              }]
-            }
-          ]}>
-            <Text style={styles.menuTitle}>Jugadores</Text>
-            <TextInput
-              ref={inputRef}
-              placeholder="Añadir jugador"
-              value={nombre}
-              onChangeText={setNombre}
-              onSubmitEditing={() => {
-                if (nombre.trim()) {
-                  setJugadores([nombre.trim(), ...jugadores]);
-                  setNombre('');
-                  Keyboard.dismiss();
-                }
-              }}
-              style={styles.input}
-              placeholderTextColor="#999"
+          {menuVisible && (
+            <TouchableOpacity
+              style={styles.menuOverlay}
+              activeOpacity={1}
+              onPress={toggleMenu}
             />
-            <FlatList
-              data={jugadores}
-              keyExtractor={(item, index) => `${item}-${index}`}
-              renderItem={({ item, index }) => (
-                <TouchableOpacity onPress={() => {
-                  const nuevos = jugadores.filter((_, i) => i !== index);
-                  setJugadores(nuevos);
-                }}>
-                  <Text style={styles.menuItem}>{item}</Text>
-                </TouchableOpacity>
-              )}
-            />
-          </Animated.View>
-        )}
-      </ScrollView>
+          )}
+          {menuVisible && (
+            <Animated.View style={[
+              styles.sideMenu,
+              {
+                transform: [{
+                  translateX: menuAnimation.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [Dimensions.get('window').width, Dimensions.get('window').width * 0.1]
+                  })
+                }]
+              }
+            ]}>
+              <Text style={styles.menuTitle}>Jugadores</Text>
+              <TextInput
+                ref={inputRef}
+                placeholder="Añadir jugador"
+                value={nombre}
+                onChangeText={setNombre}
+                onSubmitEditing={() => {
+                  if (nombre.trim()) {
+                    setJugadores([nombre.trim(), ...jugadores]);
+                    setNombre('');
+                    Keyboard.dismiss();
+                  }
+                }}
+                style={styles.input}
+                placeholderTextColor="#999"
+              />
+              <FlatList
+                data={jugadores}
+                keyExtractor={(item, index) => `${item}-${index}`}
+                renderItem={({ item, index }) => (
+                  <TouchableOpacity onPress={() => {
+                    const nuevos = jugadores.filter((_, i) => i !== index);
+                    setJugadores(nuevos);
+                  }}>
+                    <Text style={styles.menuItem}>{item}</Text>
+                  </TouchableOpacity>
+                )}
+              />
+            </Animated.View>
+          )}
+        </ScrollView>
+      {/* Bottom sheet panel */}
+      <Animated.View
+        {...panResponder.panHandlers}
+        style={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          height: bottomSheetHeight,
+          backgroundColor: '#fff',
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          elevation: 8,
+          padding: 20,
+          transform: [{ translateY: bottomSheetY }],
+        }}
+      >
+        <View style={{ width: 40, height: 5, backgroundColor: '#ccc', borderRadius: 2.5, alignSelf: 'center', marginBottom: 10 }} />
+        <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 10 }}>Más opciones</Text>
+        <Text style={{ color: '#333' }}>Aquí puedes mostrar información o botones adicionales.</Text>
+      </Animated.View>
     </SafeAreaView>
+    </GestureHandlerRootView>
   );
 }
 
