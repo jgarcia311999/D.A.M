@@ -1,13 +1,21 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import Swiper from 'react-native-deck-swiper';
 // import { frases as frasesEstáticas } from '../data/frases';
 import { getTodasLasFrases } from '../data/getFrases';
 import { useEffect } from 'react';
 
+const userIcons = [
+  require('../assets/cartas/pollo-user.png'),
+  require('../assets/cartas/oro-user.png'),
+  require('../assets/cartas/cubata-user.png'),
+  require('../assets/cartas/cigarro-user.png'),
+];
+
 const { width } = Dimensions.get('window');
 
-const PruebaGameFourScreen = ({ route }) => {
+const PruebaGameFourScreen = ({ route, navigation }) => {
   const { jugadores = [] } = route.params || {};
   console.log("Jugadores recibidos:", jugadores);
   const [usedFrases, setUsedFrases] = useState([]);
@@ -59,6 +67,10 @@ useEffect(() => {
     return resultado;
   };
 
+  const getRandomUserIcon = () => {
+    return userIcons[Math.floor(Math.random() * userIcons.length)];
+  };
+
   if (frasesCombinadas.length === 0) {
     return (
       <View style={styles.container}>
@@ -68,13 +80,30 @@ useEffect(() => {
   }
   return (
     <View style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Ionicons name="arrow-back" size={28} color="#000" />
+        </TouchableOpacity>
+      </View>
       {frasesToUse.length > 0 && (
         <Swiper
           key={cardIndex}
           cards={frasesToUse}
           renderCard={(card) => (
             <View style={styles.card}>
-              <Text style={styles.text}>{procesarFrase(card) || 'Sin contenido'}</Text>
+              <Text style={styles.label}>{card?.tipo || ''}</Text>
+              <View style={styles.fraseContainer}>
+                <Text style={styles.text}>{procesarFrase(card?.frase) || 'Sin contenido'}</Text>
+              </View>
+              <View style={styles.cardFooter}>
+                <Text style={styles.placeholder}>
+                  {card?.castigo ? `Bebe ${card.castigo} ${card.castigo === '1' ? 'chupito' : 'chupitos'}` : ''}
+                </Text>
+                <Image
+                  source={getRandomUserIcon()}
+                  style={styles.footerImage}
+                />
+              </View>
             </View>
           )}
           onSwiped={(index) => {
@@ -124,7 +153,8 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#780000',
     width: width * 0.8,
-    marginTop: 0,
+    marginTop: 100,
+    marginBottom: 50,
     alignSelf: 'center',
     flex: 0,
   },
@@ -133,6 +163,53 @@ const styles = StyleSheet.create({
     fontFamily: 'PlayfairDisplaySC-Regular',
     color: '#780000',
     textAlign: 'center',
+  },
+  tipo: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#444',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  fraseContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    width: '100%',
+    paddingTop: 50,
+  },
+  label: {
+    position: 'absolute',
+    top: 20,
+    left: 30,
+    right: 30,
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#000',
+    borderBottomWidth: 1,
+    borderColor: '#000',
+    paddingBottom: 5,
+  },
+  cardFooter: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingTop: 20,
+  },
+  placeholder: {
+    fontSize: 12,
+    color: '#888',
+  },
+  footerImage: {
+    width: 80,
+    height: 80,
+    resizeMode: 'contain',
+  },
+  header: {
+    position: 'absolute',
+    top: 50,
+    left: 20,
+    zIndex: 10,
   },
 });
 

@@ -9,12 +9,13 @@ export async function getFrases() {
   for (const entry of data) {
     const tipo = entry["¿Para que tipo de minijuego va?"]?.trim();
     const frase = entry["Escribe tu frase"]?.trim();
+    const castigo = entry["Castigo"]?.trim();
     if (!tipo || !frase) {
       continue;
     }
 
     if (!agrupadas[tipo]) agrupadas[tipo] = [];
-    agrupadas[tipo].push(frase);
+    agrupadas[tipo].push({ tipo, frase, castigo });
   }
 
   return agrupadas;

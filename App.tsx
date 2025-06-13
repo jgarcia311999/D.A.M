@@ -44,7 +44,7 @@ export default function App() {
           <Stack.Screen name="Juego 2" component={GameTwoScreen} />
           <Stack.Screen name="Juego 3" component={GameThreeScreen} />
           <Stack.Screen name="Juego 4" component={GameFourScreen} />
-          <Stack.Screen name="Prueba 4" component={PruebaGameFourScreen} />
+          <Stack.Screen name="Prueba 4" component={PruebaGameFourScreen} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>
