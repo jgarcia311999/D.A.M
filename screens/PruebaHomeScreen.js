@@ -170,7 +170,7 @@ export default function HomeScreen({ navigation }) {
             </Animated.View>
           )}
         </ScrollView>
-      {/* Bottom sheet panel */}
+      {/* 
       <Animated.View
         {...panResponder.panHandlers}
         style={{
@@ -190,6 +190,7 @@ export default function HomeScreen({ navigation }) {
         <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 10 }}>Más opciones</Text>
         <Text style={{ color: '#333' }}>Aquí puedes mostrar información o botones adicionales.</Text>
       </Animated.View>
+      */}
     </SafeAreaView>
     </GestureHandlerRootView>
   );
