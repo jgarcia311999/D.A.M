@@ -1,10 +1,18 @@
-import React, { useState, useRef } from 'react';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image, Animated, Easing, TextInput, FlatList, Keyboard, SafeAreaView, ScrollView } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image, Animated, Easing, TextInput, FlatList, Keyboard, SafeAreaView, ScrollView, ImageBackground } from 'react-native';
 import { PanResponder } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import FlorImage from '../assets/flor.png';
 
 const { width } = Dimensions.get('window');
+
+const CardCornerFlor = () => (
+  <Image
+    source={FlorImage}
+    style={styles.cardCornerImage}
+  />
+);
 
 export default function HomeScreen({ navigation }) {
   const menuAnimation = useRef(new Animated.Value(0)).current;
@@ -13,6 +21,8 @@ export default function HomeScreen({ navigation }) {
   const [jugadores, setJugadores] = useState([]);
   // tarjetaExpandida state removed
   const inputRef = useRef(null);
+  const carouselRef = useRef(null);
+  const scrollAnim = useRef(new Animated.Value(0)).current;
 
   const bottomSheetHeight = Dimensions.get('window').height * 0.7;
   const bottomSheetY = useRef(new Animated.Value(Dimensions.get('window').height - 100)).current;
@@ -91,112 +101,184 @@ export default function HomeScreen({ navigation }) {
     },
   ];
 
+  useEffect(() => {
+    const listenerId = scrollAnim.addListener(({ value }) => {
+      if (carouselRef.current) {
+        carouselRef.current.scrollToOffset({ offset: value, animated: false });
+      }
+    });
+
+    const animateScroll = Animated.sequence([
+      Animated.timing(scrollAnim, {
+        toValue: Dimensions.get('window').width * 0.25,
+        duration: 600,
+        useNativeDriver: false,
+        easing: Easing.inOut(Easing.quad),
+      }),
+      Animated.timing(scrollAnim, {
+        toValue: 0,
+        duration: 600,
+        useNativeDriver: false,
+        easing: Easing.inOut(Easing.quad),
+      }),
+    ]);
+
+    const timeout = setTimeout(() => {
+      animateScroll.start();
+    }, 1000);
+
+    return () => {
+      scrollAnim.removeListener(listenerId);
+      clearTimeout(timeout);
+    };
+  }, []);
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#fdfcf7' }}>
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-          <View pointerEvents={menuVisible ? 'none' : 'auto'}>
-            {/* Header row with arrow and plus buttons */}
-            <View style={styles.header}>
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Ionicons name="arrow-back" size={28} color="#000" />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={toggleMenu}>
-                <Ionicons name="add" size={28} color="#000" />
-              </TouchableOpacity>
-            </View>
-            <Image source={require('../assets/chapas/chapa_dedo.png')} style={styles.imageBackground} />
-            <View style={styles.content}>
-              <View style={styles.gamesWrapper}>
-                {juegos.map((juego, index) => (
-                  <TouchableOpacity
-                    key={index}
-                    style={styles.gameContainer}
-                    onPress={() => navigation.navigate(juego.screen, { jugadores })}
-                  >
-                    <Text style={styles.gameText}>{juego.nombre}</Text>
-                  </TouchableOpacity>
-                ))}
+      <ImageBackground source={require('../assets/background.png')} style={{ flex: 1 }}>
+        
+        <SafeAreaView style={styles.gridBackground}>
+
+          <Image
+            source={FlorImage}
+            style={{
+              position: 'absolute',
+              left: '-30%',
+              top: '31%',
+              height: '30%',
+              resizeMode: 'contain',
+              zIndex: 0,
+            }}
+          />
+          <Image
+            source={FlorImage}
+            style={{
+              position: 'absolute',
+              right: '-30%',
+              top: '70%',
+              height: '35%',
+              resizeMode: 'contain',
+              zIndex: 0,
+            }}
+          />
+          <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+            <View pointerEvents={menuVisible ? 'none' : 'auto'}>
+              {/* Header row with arrow and plus buttons */}
+              <View style={styles.header}>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                  <Ionicons name="arrow-back" size={28} color="#000" />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={toggleMenu}>
+                  <Ionicons name="add" size={28} color="#000" />
+                </TouchableOpacity>
+              </View>
+              <Image source={require('../assets/chapas/chapa_dedo.png')} style={styles.imageBackground} />
+              <View style={styles.content}>
+                <FlatList
+                  ref={carouselRef}
+                  data={juegos}
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  keyExtractor={(item, index) => index.toString()}
+                  contentContainerStyle={styles.carouselWrapper}
+                  renderItem={({ item }) => (
+                    <TouchableOpacity
+                      style={styles.gameContainer}
+                      onPress={() => navigation.navigate(item.screen, { jugadores })}
+                    >
+                      <View style={styles.gameCard}>
+                        <CardCornerFlor />
+                        <View style={styles.cardTextContainer}>
+                          <Text style={styles.gameText}>{item.nombre}</Text>
+                          <Text style={styles.gameDescription}>{item.descripcion}</Text>
+                        </View>
+                      </View>
+                    </TouchableOpacity>
+                  )}
+                />
               </View>
             </View>
-          </View>
-          {menuVisible && (
-            <TouchableOpacity
-              style={styles.menuOverlay}
-              activeOpacity={1}
-              onPress={toggleMenu}
-            />
-          )}
-          {menuVisible && (
-            <Animated.View style={[
-              styles.sideMenu,
-              {
-                transform: [{
-                  translateX: menuAnimation.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [Dimensions.get('window').width, Dimensions.get('window').width * 0.1]
-                  })
-                }]
-              }
-            ]}>
-              <Text style={styles.menuTitle}>Jugadores</Text>
-              <TextInput
-                ref={inputRef}
-                placeholder="Añadir jugador"
-                value={nombre}
-                onChangeText={setNombre}
-                onSubmitEditing={() => {
-                  if (nombre.trim()) {
-                    setJugadores([nombre.trim(), ...jugadores]);
-                    setNombre('');
-                    Keyboard.dismiss();
-                  }
-                }}
-                style={styles.input}
-                placeholderTextColor="#999"
+            {menuVisible && (
+              <TouchableOpacity
+                style={styles.menuOverlay}
+                activeOpacity={1}
+                onPress={toggleMenu}
               />
-              <FlatList
-                data={jugadores}
-                keyExtractor={(item, index) => `${item}-${index}`}
-                renderItem={({ item, index }) => (
-                  <TouchableOpacity onPress={() => {
-                    const nuevos = jugadores.filter((_, i) => i !== index);
-                    setJugadores(nuevos);
-                  }}>
-                    <Text style={styles.menuItem}>{item}</Text>
-                  </TouchableOpacity>
-                )}
-              />
-            </Animated.View>
-          )}
-        </ScrollView>
-      {/* 
-      <Animated.View
-        {...panResponder.panHandlers}
-        style={{
-          position: 'absolute',
-          left: 0,
-          right: 0,
-          height: bottomSheetHeight,
-          backgroundColor: '#fff',
-          borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,
-          elevation: 8,
-          padding: 20,
-          transform: [{ translateY: bottomSheetY }],
-        }}
-      >
-        <View style={{ width: 40, height: 5, backgroundColor: '#ccc', borderRadius: 2.5, alignSelf: 'center', marginBottom: 10 }} />
-        <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 10 }}>Más opciones</Text>
-        <Text style={{ color: '#333' }}>Aquí puedes mostrar información o botones adicionales.</Text>
-      </Animated.View>
-      */}
-    </SafeAreaView>
+            )}
+            {menuVisible && (
+              <Animated.View style={[
+                styles.sideMenu,
+                {
+                  transform: [{
+                    translateX: menuAnimation.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [Dimensions.get('window').width, Dimensions.get('window').width * 0.1]
+                    })
+                  }]
+                }
+              ]}>
+                <Text style={styles.menuTitle}>Jugadores</Text>
+                <TextInput
+                  ref={inputRef}
+                  placeholder="Añadir jugador"
+                  value={nombre}
+                  onChangeText={setNombre}
+                  onSubmitEditing={() => {
+                    if (nombre.trim()) {
+                      setJugadores([nombre.trim(), ...jugadores]);
+                      setNombre('');
+                      Keyboard.dismiss();
+                    }
+                  }}
+                  style={styles.input}
+                  placeholderTextColor="#999"
+                />
+                <FlatList
+                  data={jugadores}
+                  keyExtractor={(item, index) => `${item}-${index}`}
+                  renderItem={({ item, index }) => (
+                    <TouchableOpacity onPress={() => {
+                      const nuevos = jugadores.filter((_, i) => i !== index);
+                      setJugadores(nuevos);
+                    }}>
+                      <Text style={styles.menuItem}>{item}</Text>
+                    </TouchableOpacity>
+                  )}
+                />
+              </Animated.View>
+            )}
+          </ScrollView>
+        {/* 
+        <Animated.View
+          {...panResponder.panHandlers}
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            height: bottomSheetHeight,
+            backgroundColor: '#fff',
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+            elevation: 8,
+            padding: 20,
+            transform: [{ translateY: bottomSheetY }],
+          }}
+        >
+          <View style={{ width: 40, height: 5, backgroundColor: '#ccc', borderRadius: 2.5, alignSelf: 'center', marginBottom: 10 }} />
+          <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 10 }}>Más opciones</Text>
+          <Text style={{ color: '#333' }}>Aquí puedes mostrar información o botones adicionales.</Text>
+        </Animated.View>
+        */}
+      </SafeAreaView>
+      </ImageBackground>
     </GestureHandlerRootView>
   );
 }
 
 const styles = StyleSheet.create({
+  gridBackground: {
+    flex: 1,
+  },
   header: {
     width: '100%',
     paddingHorizontal: 20,
@@ -231,36 +313,57 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#780000'
   },
-  gamesWrapper: {
-    width: '100%',
-    paddingHorizontal: 20,
-    marginTop: 20,
-    flexDirection: 'column',
-    gap: 15,
-    paddingBottom: 40,
+  carouselWrapper: {
+    paddingHorizontal: 0,
+    paddingVertical: 10,
+    flexDirection: 'row',
   },
   gameContainer: {
-    height: 120,
-    borderWidth: 3,
-    borderColor: 'green',
+    width: Dimensions.get('window').width,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 0,
+  },
+  gameCard: {
+    width: '80%',
+    height: 520,
     borderRadius: 12,
     backgroundColor: 'rgba(0, 100, 0, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
-    overflow: 'hidden',
+    borderWidth: 3,
+    borderColor: 'green',
+    position: 'relative',
+  },
+  cardCornerImage: {
+    position: 'absolute',
+    left: '-60%',
+    top: '0%',
+    height: '50%',
+    resizeMode: 'contain',
+    zIndex: 0,
+  },
+  cardTextContainer: {
+    position: 'absolute',
+    bottom: 20,
+    left: 20,
+    right: 20,
+    gap: 2,
+    // Ensure no global textAlign applies; keep left alignment by not adding textAlign here.
   },
   gameText: {
     color: '#fff',
     fontSize: 18,
-    textAlign: 'center',
     fontWeight: 'bold',
-    lineHeight: 120
+    textAlign: 'left',
+    lineHeight: 26,
+    marginBottom: 4,
   },
   gameDescription: {
     color: '#fff',
     fontSize: 14,
     marginTop: 10,
-    textAlign: 'center',
+    textAlign: 'left',
   },
   sideMenu: {
     position: 'absolute',
