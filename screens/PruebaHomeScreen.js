@@ -98,19 +98,20 @@ export default function HomeScreen({ navigation }) {
       imagenEstilo: { left: 0.2 * width, top: -0.017 * height },
     },
     {
+      nombre: 'El Saca Cartas',
+      descripcion: 'Desliza y revela desafíos divertidos carta por carta.',
+      screen: 'Prueba 4',
+      imagen: ImgFumando,
+      imagenEstilo: { left: -0.45 * width, bottom: -0.37 * height },
+    },
+    {
       nombre: 'La Ruleta del Shot',
       descripcion: 'Gira la ruleta y descubre quién se lleva el próximo shot.',
       screen: 'Juego 3',
       imagen: ImgCerveza,
       imagenEstilo: { left: 0.3 * width, top: 0.08 * height },
     },
-    {
-      nombre: 'El Saca Cartas',
-      descripcion: 'Desliza y revela desafíos divertidos carta por carta.',
-      screen: 'Prueba 4',
-      imagen: ImgFumando,
-      imagenEstilo: { left: -0.45 * width, bottom: -0.35 * height },
-    },
+
   ];
 
   useEffect(() => {
@@ -149,88 +150,88 @@ export default function HomeScreen({ navigation }) {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaView style={styles.gridBackground}>
 
-          <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-            <View pointerEvents={menuVisible ? 'none' : 'auto'}>
-              {/* Header row with arrow and plus buttons */}
-              <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                  <Ionicons name="arrow-back" size={28} color="#000" />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={toggleMenu}>
-                  <Ionicons name="add" size={28} color="#000" />
-                </TouchableOpacity>
-              </View>
-              <Image source={require('../assets/chapas/chapa_dedo.png')} style={styles.imageBackground} />
-              <View style={styles.content}>
-                <View style={styles.verticalScrollContainer}>
-                  {juegos.map((item, index) => (
-                    <TouchableOpacity
-                      key={index}
-                      style={styles.gameContainer}
-                      onPress={() => navigation.navigate(item.screen, { jugadores })}
-                    >
-                      <View style={styles.gameCard}>
-                        <Image source={item.imagen} style={[styles.cardCornerImage, item.imagenEstilo]} />
-                        <View style={styles.cardTextContainer}>
-                          <Text style={styles.gameText}>{item.nombre}</Text>
-                          <Text style={styles.gameDescription}>{item.descripcion}</Text>
-                        </View>
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+          <View pointerEvents={menuVisible ? 'none' : 'auto'}>
+            {/* Header row with arrow and plus buttons */}
+            <View style={styles.header}>
+              <TouchableOpacity onPress={() => navigation.goBack()}>
+                <Ionicons name="arrow-back" size={28} color="#000" />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={toggleMenu}>
+                <Ionicons name="add" size={28} color="#000" />
+              </TouchableOpacity>
+            </View>
+            <Image source={require('../assets/chapas/chapa_dedo.png')} style={styles.imageBackground} />
+            <View style={styles.content}>
+              <View style={styles.verticalScrollContainer}>
+                {juegos.map((item, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    style={styles.gameContainer}
+                    onPress={() => navigation.navigate(item.screen, { jugadores })}
+                  >
+                    <View style={styles.gameCard}>
+                      <Image source={item.imagen} style={[styles.cardCornerImage, item.imagenEstilo]} />
+                      <View style={styles.cardTextContainer}>
+                        <Text style={styles.gameText}>{item.nombre}</Text>
+                        <Text style={styles.gameDescription}>{item.descripcion}</Text>
                       </View>
-                    </TouchableOpacity>
-                  ))}
-                </View>
+                    </View>
+                  </TouchableOpacity>
+                ))}
               </View>
             </View>
-            {menuVisible && (
-              <TouchableOpacity
-                style={styles.menuOverlay}
-                activeOpacity={1}
-                onPress={toggleMenu}
+          </View>
+          {menuVisible && (
+            <TouchableOpacity
+              style={styles.menuOverlay}
+              activeOpacity={1}
+              onPress={toggleMenu}
+            />
+          )}
+          {menuVisible && (
+            <Animated.View style={[
+              styles.sideMenu,
+              {
+                transform: [{
+                  translateX: menuAnimation.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [Dimensions.get('window').width, Dimensions.get('window').width * 0.1]
+                  })
+                }]
+              }
+            ]}>
+              <Text style={styles.menuTitle}>Jugadores</Text>
+              <TextInput
+                ref={inputRef}
+                placeholder="Añadir jugador"
+                value={nombre}
+                onChangeText={setNombre}
+                onSubmitEditing={() => {
+                  if (nombre.trim()) {
+                    setJugadores([nombre.trim(), ...jugadores]);
+                    setNombre('');
+                    Keyboard.dismiss();
+                  }
+                }}
+                style={styles.input}
+                placeholderTextColor="#999"
               />
-            )}
-            {menuVisible && (
-              <Animated.View style={[
-                styles.sideMenu,
-                {
-                  transform: [{
-                    translateX: menuAnimation.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [Dimensions.get('window').width, Dimensions.get('window').width * 0.1]
-                    })
-                  }]
-                }
-              ]}>
-                <Text style={styles.menuTitle}>Jugadores</Text>
-                <TextInput
-                  ref={inputRef}
-                  placeholder="Añadir jugador"
-                  value={nombre}
-                  onChangeText={setNombre}
-                  onSubmitEditing={() => {
-                    if (nombre.trim()) {
-                      setJugadores([nombre.trim(), ...jugadores]);
-                      setNombre('');
-                      Keyboard.dismiss();
-                    }
-                  }}
-                  style={styles.input}
-                  placeholderTextColor="#999"
-                />
-                <FlatList
-                  data={jugadores}
-                  keyExtractor={(item, index) => `${item}-${index}`}
-                  renderItem={({ item, index }) => (
-                    <TouchableOpacity onPress={() => {
-                      const nuevos = jugadores.filter((_, i) => i !== index);
-                      setJugadores(nuevos);
-                    }}>
-                      <Text style={styles.menuItem}>{item}</Text>
-                    </TouchableOpacity>
-                  )}
-                />
-              </Animated.View>
-            )}
-          </ScrollView>
+              <FlatList
+                data={jugadores}
+                keyExtractor={(item, index) => `${item}-${index}`}
+                renderItem={({ item, index }) => (
+                  <TouchableOpacity onPress={() => {
+                    const nuevos = jugadores.filter((_, i) => i !== index);
+                    setJugadores(nuevos);
+                  }}>
+                    <Text style={styles.menuItem}>{item}</Text>
+                  </TouchableOpacity>
+                )}
+              />
+            </Animated.View>
+          )}
+        </ScrollView>
         {/* 
         <Animated.View
           {...panResponder.panHandlers}
