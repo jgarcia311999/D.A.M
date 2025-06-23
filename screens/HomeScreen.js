@@ -71,7 +71,7 @@ export default function HomeScreen({ navigation }) {
           <TouchableOpacity onPress={() => navigation.navigate('TittleScreen')} style={{ position: 'absolute', left: 20 }}>
             <Text style={{ fontSize: 28, color: '#780000' }}>{'←'}</Text>
           </TouchableOpacity>
-          <Text style={{ fontSize: 28, color: '#780000', fontFamily: 'PlayfairDisplaySC-Bold' }}>D.A.M</Text>
+          <Text style={{ fontSize: 28, color: '#780000', fontFamily: 'Panchang-Bold' }}>D.A.M</Text>
           <TouchableOpacity
             style={{ position: 'absolute', right: 20 }}
             onPress={() => {
@@ -207,20 +207,20 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginBottom: 0,
-    fontFamily: 'PlayfairDisplaySC-Bold',
+    fontFamily: 'Panchang-Bold',
   },
   slogan: {
     fontSize: height * 0.025,
     color: '#555',
     textAlign: 'center',
     marginBottom: 20,
-    fontFamily: 'PlayfairDisplaySC-Regular',
+    fontFamily: 'Panchang-Regular',
   },
   title: {
     fontSize: 28,
     marginBottom: 40,
     fontWeight: 'bold',
-    fontFamily: 'PlayfairDisplaySC-Regular',
+    fontFamily: 'Panchang-Regular',
     textAlign: 'center',
     color: '#780000'
   },
@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: 'white',
     fontSize: 16,
-    fontFamily: 'PlayfairDisplaySC-Regular',
+    fontFamily: 'Panchang-Regular',
     color: '#000',
     marginRight: 10,
   },
@@ -282,12 +282,12 @@ const styles = StyleSheet.create({
   listaTitulo: {
     fontWeight: 'bold',
     marginBottom: 5,
-    fontFamily: 'PlayfairDisplaySC-Regular',
+    fontFamily: 'Panchang-Regular',
   },
   listaItem: {
     fontSize: 16,
     color: '#333',
-    fontFamily: 'PlayfairDisplaySC-Regular',
+    fontFamily: 'Panchang-Regular',
   },
   section: {
     justifyContent: 'center',
@@ -326,7 +326,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     textAlign: 'center',
     color: '#780000',
-    fontFamily: 'PlayfairDisplaySC-Bold'
+    fontFamily: 'Panchang-Bold'
   },
   cardRow: {
     flexDirection: 'row',
@@ -382,7 +382,7 @@ const styles = StyleSheet.create({
   },
   jugadorNombre: {
     fontSize: 16,
-    fontFamily: 'PlayfairDisplaySC-Regular',
+    fontFamily: 'Panchang-Regular',
     color: '#000',
   },
   bottomSheetContainer: {

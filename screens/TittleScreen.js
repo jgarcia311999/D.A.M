@@ -86,8 +86,11 @@ export default function TittleScreen({ navigation }) {
           );
         })}
         <TouchableOpacity onPress={handleScrollDown} style={{ flex: 1, justifyContent: 'center', alignItems: 'center', zIndex: 10, position: 'relative' }}>
-          <Text style={styles.damText}>D.A.M</Text>
-          <Text style={styles.slogan}>Drink and More</Text>
+          <View style={styles.damTextWrapper}>
+            <Text style={styles.damLineTop}>la</Text>
+            <Text style={styles.damLineBottom}>prv.</Text>
+          </View>
+          {/* <Text style={styles.slogan}>calienta Motores</Text> */}
         </TouchableOpacity>
       </View>
     </TouchableWithoutFeedback>
@@ -95,19 +98,39 @@ export default function TittleScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  damText: {
-    fontSize: height * 0.1,
+  damTextWrapper: {
+    position: 'absolute',
+    bottom: height * 0.1,
+    left: 0,
+    right: 0,
+    zIndex: 10,
+  },
+  damLineTop: {
+    fontSize: height * 0.12,
     fontWeight: 'bold',
-    textAlign: 'center',
     color: '#5C3227',
-    fontFamily: 'PlayfairDisplaySC-Bold',
-    zIndex: 50,
+    fontFamily: 'Panchang-Bold',
+    textAlign: 'left',
+    marginLeft: 0,
+    paddingLeft: 20,
+  },
+  damLineBottom: {
+    fontSize: height * 0.15,
+    fontWeight: 'bold',
+    color: '#5C3227',
+    fontFamily: 'Panchang-Bold',
+    textAlign: 'left',
+    width: '100%',
+    letterSpacing: -2,
+    lineHeight: height * 0.16,
+    marginLeft: 0,
+    paddingLeft: 20,
   },
   slogan: {
     fontSize: height * 0.025,
     color: '#5C3227',
     textAlign: 'center',
-    fontFamily: 'PlayfairDisplaySC-Regular',
+    fontFamily: 'Panchang-Regular',
     zIndex: 5,
   },
 });

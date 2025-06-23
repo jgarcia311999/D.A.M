@@ -309,7 +309,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     marginBottom: 40,
     fontWeight: 'bold',
-    fontFamily: 'PlayfairDisplaySC-Regular',
+    fontFamily: 'Panchang-Regular',
     textAlign: 'center',
     color: '#780000'
   },

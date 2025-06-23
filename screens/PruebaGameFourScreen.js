@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
-    fontFamily: 'PlayfairDisplaySC-Regular',
+    fontFamily: 'Panchang-Regular',
     color: '#780000',
     textAlign: 'center',
   },
