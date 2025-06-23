@@ -4,8 +4,12 @@ import { PanResponder } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import FlorImage from '../assets/flor.png';
+import ImgBailando from '../assets/pj_bailando.png';
+import ImgCartas from '../assets/pj_cartas.png';
+import ImgCerveza from '../assets/pj_cerveza.png';
+import ImgFumando from '../assets/pj_fumando.png';
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const CardCornerFlor = () => (
   <Image
@@ -83,21 +87,29 @@ export default function HomeScreen({ navigation }) {
       nombre: 'La Cadena del Crupier',
       descripcion: 'Reta a tus amigos con preguntas rápidas y pasa la cadena antes que el tiempo se agote.',
       screen: 'Juego 1',
+      imagen: ImgCartas,
+      imagenEstilo: { left: -0.3 * width, top: -0.1 * height },
     },
     {
       nombre: 'Bebecartas',
       descripcion: 'Saca cartas al azar con retos únicos y bebe si no los cumples.',
       screen: 'Juego 2',
+      imagen: ImgBailando,
+      imagenEstilo: { left: 0.2 * width, top: -0.017 * height },
     },
     {
       nombre: 'La Ruleta del Shot',
       descripcion: 'Gira la ruleta y descubre quién se lleva el próximo shot.',
       screen: 'Juego 3',
+      imagen: ImgCerveza,
+      imagenEstilo: { left: 0.3 * width, top: 0.08 * height },
     },
     {
       nombre: 'El Saca Cartas',
       descripcion: 'Desliza y revela desafíos divertidos carta por carta.',
       screen: 'Prueba 4',
+      imagen: ImgFumando,
+      imagenEstilo: { left: -0.45 * width, bottom: -0.35 * height },
     },
   ];
 
@@ -135,32 +147,8 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <ImageBackground source={require('../assets/background.png')} style={{ flex: 1 }}>
-        
-        <SafeAreaView style={styles.gridBackground}>
+      <SafeAreaView style={styles.gridBackground}>
 
-          <Image
-            source={FlorImage}
-            style={{
-              position: 'absolute',
-              left: '-30%',
-              top: '31%',
-              height: '30%',
-              resizeMode: 'contain',
-              zIndex: 0,
-            }}
-          />
-          <Image
-            source={FlorImage}
-            style={{
-              position: 'absolute',
-              right: '-30%',
-              top: '70%',
-              height: '35%',
-              resizeMode: 'contain',
-              zIndex: 0,
-            }}
-          />
           <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <View pointerEvents={menuVisible ? 'none' : 'auto'}>
               {/* Header row with arrow and plus buttons */}
@@ -174,28 +162,23 @@ export default function HomeScreen({ navigation }) {
               </View>
               <Image source={require('../assets/chapas/chapa_dedo.png')} style={styles.imageBackground} />
               <View style={styles.content}>
-                <FlatList
-                  ref={carouselRef}
-                  data={juegos}
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  keyExtractor={(item, index) => index.toString()}
-                  contentContainerStyle={styles.carouselWrapper}
-                  renderItem={({ item }) => (
+                <View style={styles.verticalScrollContainer}>
+                  {juegos.map((item, index) => (
                     <TouchableOpacity
+                      key={index}
                       style={styles.gameContainer}
                       onPress={() => navigation.navigate(item.screen, { jugadores })}
                     >
                       <View style={styles.gameCard}>
-                        <CardCornerFlor />
+                        <Image source={item.imagen} style={[styles.cardCornerImage, item.imagenEstilo]} />
                         <View style={styles.cardTextContainer}>
                           <Text style={styles.gameText}>{item.nombre}</Text>
                           <Text style={styles.gameDescription}>{item.descripcion}</Text>
                         </View>
                       </View>
                     </TouchableOpacity>
-                  )}
-                />
+                  ))}
+                </View>
               </View>
             </View>
             {menuVisible && (
@@ -270,7 +253,6 @@ export default function HomeScreen({ navigation }) {
         </Animated.View>
         */}
       </SafeAreaView>
-      </ImageBackground>
     </GestureHandlerRootView>
   );
 }
@@ -278,6 +260,7 @@ export default function HomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   gridBackground: {
     flex: 1,
+    backgroundColor: '#191716',
   },
   header: {
     width: '100%',
@@ -305,6 +288,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     zIndex: 1,
   },
+  verticalScrollContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: 20,
+    paddingBottom: 40,
+    marginTop: 20,
+  },
   title: {
     fontSize: 28,
     marginBottom: 40,
@@ -322,11 +312,11 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 0,
+    marginBottom: 20,
   },
   gameCard: {
     width: '80%',
-    height: 520,
+    height: 180,
     borderRadius: 12,
     backgroundColor: 'rgba(0, 100, 0, 0.5)',
     justifyContent: 'center',
@@ -339,7 +329,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: '-60%',
     top: '0%',
-    height: '50%',
+    height: '90%',
     resizeMode: 'contain',
     zIndex: 0,
   },
@@ -349,7 +339,6 @@ const styles = StyleSheet.create({
     left: 20,
     right: 20,
     gap: 2,
-    // Ensure no global textAlign applies; keep left alignment by not adding textAlign here.
   },
   gameText: {
     color: '#fff',
