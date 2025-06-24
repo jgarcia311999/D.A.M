@@ -88,28 +88,28 @@ export default function HomeScreen({ navigation }) {
       descripcion: 'Reta a tus amigos con preguntas rápidas y pasa la cadena antes que el tiempo se agote.',
       screen: 'Juego 1',
       imagen: ImgCartas,
-      imagenEstilo: { left: -0.3 * width, top: -0.1 * height },
+      imagenEstilo: { left: '-50%', top: '-57%' },
     },
     {
       nombre: 'Bebecartas',
       descripcion: 'Saca cartas al azar con retos únicos y bebe si no los cumples.',
       screen: 'Juego 2',
       imagen: ImgBailando,
-      imagenEstilo: { left: 0.2 * width, top: -0.017 * height },
+      imagenEstilo: { left: '20%', top: '-2%' },
     },
     {
       nombre: 'El Saca Cartas',
       descripcion: 'Desliza y revela desafíos divertidos carta por carta.',
       screen: 'Prueba 4',
       imagen: ImgFumando,
-      imagenEstilo: { left: -0.45 * width, bottom: -0.37 * height },
+      imagenEstilo: { left: '-45%', bottom: '-37%' },
     },
     {
       nombre: 'La Ruleta del Shot',
       descripcion: 'Gira la ruleta y descubre quién se lleva el próximo shot.',
       screen: 'Juego 3',
       imagen: ImgCerveza,
-      imagenEstilo: { left: 0.3 * width, top: 0.08 * height },
+      imagenEstilo: { left: '30%', top: '8%' },
     },
 
   ];
