@@ -84,7 +84,7 @@ export default function HomeScreen({ navigation }) {
 
   const juegos = [
     {
-      nombre: 'La Cadena del Crupier',
+      nombre: 'La Cadena del Crupier (prueba)',
       descripcion: 'Reta a tus amigos con preguntas rápidas y pasa la cadena antes que el tiempo se agote.',
       screen: 'Juego 1',
       imagen: ImgCartas,
