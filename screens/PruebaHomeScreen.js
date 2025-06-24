@@ -155,10 +155,10 @@ export default function HomeScreen({ navigation }) {
             {/* Header row with arrow and plus buttons */}
             <View style={styles.header}>
               <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Ionicons name="arrow-back" size={28} color="#000" />
+                <Ionicons name="arrow-back" size={28} color="#fff" />
               </TouchableOpacity>
               <TouchableOpacity onPress={toggleMenu}>
-                <Ionicons name="add" size={28} color="#000" />
+                <Ionicons name="add" size={28} color="#fff" />
               </TouchableOpacity>
             </View>
             <Image source={require('../assets/chapas/chapa_dedo.png')} style={styles.imageBackground} />
