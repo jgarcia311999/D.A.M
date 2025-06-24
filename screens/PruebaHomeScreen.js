@@ -43,7 +43,7 @@ export default function HomeScreen({ navigation }) {
     {
       nombre: 'Bebecartas',
       descripcion: 'Saca cartas al azar con retos únicos y bebe si no los cumples.',
-      screen: 'Juego 4',
+      screen: 'Prueba 4',
       imagen: ImgCerveza,
       imagenEstilo: { left: '-50%', top: '-52%' },
     },

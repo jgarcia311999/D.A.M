@@ -74,7 +74,7 @@ useEffect(() => {
   if (frasesCombinadas.length === 0) {
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Cargando frases o no se encontraron.</Text>
+        <Text style={styles.text}>Cargando frases</Text>
       </View>
     );
   }
@@ -82,7 +82,7 @@ useEffect(() => {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={28} color="#000" />
+          <Ionicons name="arrow-back" size={28} color="#fff" />
         </TouchableOpacity>
       </View>
       {frasesToUse.length > 0 && (
@@ -134,40 +134,34 @@ useEffect(() => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fdfcf7',
+    backgroundColor: '#191716',
     alignItems: 'center',
     justifyContent: 'center',
   },
   card: {
-    backgroundColor: 'white',
-    borderRadius: 10,
-    height: 450,
-    padding: 30,
+    width: Dimensions.get('window').width * 0.8,
+    aspectRatio: 0.625,
+    borderRadius: 12,
+    backgroundColor: 'rgba(0, 100, 0, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOpacity: 0.2,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 6,
-    elevation: 5,
-    borderWidth: 2,
-    borderColor: '#780000',
-    width: width * 0.8,
-    marginTop: 100,
-    marginBottom: 50,
+    borderWidth: 3,
+    borderColor: 'green',
+    position: 'relative',
+    marginTop: 'auto',
+    marginBottom: 'auto',
     alignSelf: 'center',
-    flex: 0,
   },
   text: {
     fontSize: 20,
     fontFamily: 'Panchang-Regular',
-    color: '#780000',
+    color: '#fff',
     textAlign: 'center',
   },
   tipo: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#444',
+    color: '#fff',
     marginBottom: 20,
     textAlign: 'center',
   },
@@ -184,9 +178,9 @@ const styles = StyleSheet.create({
     right: 30,
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#000',
+    color: '#fff',
     borderBottomWidth: 1,
-    borderColor: '#000',
+    borderColor: '#fff',
     paddingBottom: 5,
   },
   cardFooter: {
@@ -198,7 +192,7 @@ const styles = StyleSheet.create({
   },
   placeholder: {
     fontSize: 12,
-    color: '#888',
+    color: '#fff',
   },
   footerImage: {
     width: 80,
