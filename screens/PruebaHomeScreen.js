@@ -84,32 +84,32 @@ export default function HomeScreen({ navigation }) {
 
   const juegos = [
     {
-      nombre: 'La Cadena del Crupier',
-      descripcion: 'Reta a tus amigos con preguntas rápidas y pasa la cadena antes que el tiempo se agote.',
+      nombre: 'Bebecartas',
+      descripcion: 'Saca cartas al azar con retos únicos y bebe si no los cumples.',
       screen: 'Juego 1',
       imagen: ImgCerveza,
       imagenEstilo: { left: '-50%', top: '-52%' },
     },
     {
-      nombre: 'Bebecartas',
-      descripcion: 'Saca cartas al azar con retos únicos y bebe si no los cumples.',
+      nombre: 'La Cadena del Crupier',
+      descripcion: 'Reta a tus amigos con preguntas rápidas y pasa la cadena antes que el tiempo se agote.',
       screen: 'Juego 2',
-      imagen: ImgBailando,
-      imagenEstilo: { left: '15%', top: '-8%', transform: [{ scaleX: -1 }] },
+      imagen: ImgCartas,
+      imagenEstilo: { left: '15%', top: '-57%' },
     },
     {
       nombre: 'El Saca Cartas',
       descripcion: 'Desliza y revela desafíos divertidos carta por carta.',
       screen: 'Prueba 4',
       imagen: ImgFumando,
-      imagenEstilo: { left: '-15%', top: '-5%' , transform: [{ scaleX: -1 }] },
+      imagenEstilo: { left: '-50%', top: '-52%', transform: [{ scaleX: -1 }] },
     },
     {
       nombre: 'La Ruleta del Shot',
       descripcion: 'Gira la ruleta y descubre quién se lleva el próximo shot.',
       screen: 'Juego 3',
-      imagen: ImgCartas,
-      imagenEstilo: { left: '15%', top: '-57%' },
+      imagen: ImgBailando,
+      imagenEstilo: { left: '15%', top: '-8%', transform: [{ scaleX: -1 }] },
     },
 
   ];
@@ -163,10 +163,17 @@ export default function HomeScreen({ navigation }) {
             </View>
             <Image source={require('../assets/chapas/chapa_dedo.png')} style={styles.imageBackground} />
             <View style={styles.content}>
-              <View style={styles.verticalScrollContainer}>
-                {juegos.map((item, index) => (
+              <FlatList
+                data={juegos}
+                keyExtractor={(item, index) => index.toString()}
+                horizontal
+                pagingEnabled
+                showsHorizontalScrollIndicator={false}
+                snapToAlignment="center"
+                contentContainerStyle={styles.carouselWrapper}
+                ref={carouselRef}
+                renderItem={({ item }) => (
                   <TouchableOpacity
-                    key={index}
                     style={styles.gameContainer}
                     onPress={() => navigation.navigate(item.screen, { jugadores })}
                   >
@@ -178,8 +185,8 @@ export default function HomeScreen({ navigation }) {
                       </View>
                     </View>
                   </TouchableOpacity>
-                ))}
-              </View>
+                )}
+              />
             </View>
           </View>
           {menuVisible && (
@@ -311,9 +318,9 @@ const styles = StyleSheet.create({
   },
   gameContainer: {
     width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height * 0.7,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 30,
   },
   gameCard: {
     width: '80%',
