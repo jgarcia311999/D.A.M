@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image, SafeAreaView, ImageBackground } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Swiper from 'react-native-deck-swiper';
 // import { frases as frasesEstáticas } from '../data/frases';
@@ -80,63 +80,69 @@ useEffect(() => {
     );
   }
   return (
-    <View style={styles.container}>
-      <Image source={require('../assets/chapas/chapa_flor.png')} style={styles.imageBackground} />
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Ionicons name="arrow-back" size={28} color="#fff" />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={toggleMenu}>
-          <Ionicons name="add" size={28} color="#fff" />
-        </TouchableOpacity>
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        {/* <Image source={require('../assets/chapas/chapa_flor.png')} style={styles.imageBackground} /> */}
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Ionicons name="arrow-back" size={28} color="#fff" />
+          </TouchableOpacity>
+         {/*  <TouchableOpacity onPress={toggleMenu}>
+            <Ionicons name="add" size={28} color="#fff" />
+          </TouchableOpacity> */}
+        </View>
+        {frasesToUse.length > 0 && (
+          <Swiper
+            key={cardIndex}
+            cards={frasesToUse}
+            renderCard={(card) => (
+              <View style={styles.card}>
+                <Text style={styles.label}>{card?.tipo || ''}</Text>
+                <View style={styles.fraseContainer}>
+                  <Text style={styles.text}>{procesarFrase(card?.frase) || 'Sin contenido'}</Text>
+                </View>
+                <View style={styles.cardFooter}>
+                  <Text style={styles.placeholder}>
+                    {card?.castigo ? `Bebe ${card.castigo} ${card.castigo === '1' ? 'chupito' : 'chupitos'}` : ''}
+                  </Text>
+                  <Image
+                    source={getRandomUserIcon()}
+                    style={styles.footerImage}
+                  />
+                </View>
+              </View>
+            )}
+            onSwiped={(index) => {
+              if (index >= frasesToUse.length - 1) {
+                setTimeout(() => {
+                  const nuevas = shuffleArray(frasesCombinadas);
+                  setFrasesToUse(nuevas);
+                  setCardIndex(prev => prev + 1);
+                }, 300);
+              }
+            }}
+            cardIndex={0}
+            backgroundColor="transparent"
+            stackSize={5}
+            showSecondCard={true}
+            stackSeparation={15}
+            stackScale={10}
+            animateCardOpacity
+            disableTopSwipe
+            disableBottomSwipe
+            infinite={false}
+          />
+        )}
       </View>
-      {frasesToUse.length > 0 && (
-        <Swiper
-          key={cardIndex}
-          cards={frasesToUse}
-          renderCard={(card) => (
-            <View style={styles.card}>
-              <Text style={styles.label}>{card?.tipo || ''}</Text>
-              <View style={styles.fraseContainer}>
-                <Text style={styles.text}>{procesarFrase(card?.frase) || 'Sin contenido'}</Text>
-              </View>
-              <View style={styles.cardFooter}>
-                <Text style={styles.placeholder}>
-                  {card?.castigo ? `Bebe ${card.castigo} ${card.castigo === '1' ? 'chupito' : 'chupitos'}` : ''}
-                </Text>
-                <Image
-                  source={getRandomUserIcon()}
-                  style={styles.footerImage}
-                />
-              </View>
-            </View>
-          )}
-          onSwiped={(index) => {
-            if (index >= frasesToUse.length - 1) {
-              setTimeout(() => {
-                const nuevas = shuffleArray(frasesCombinadas);
-                setFrasesToUse(nuevas);
-                setCardIndex(prev => prev + 1);
-              }, 300);
-            }
-          }}
-          cardIndex={0}
-          backgroundColor="transparent"
-          stackSize={5}
-          showSecondCard={true}
-          stackSeparation={15}
-          stackScale={10}
-          animateCardOpacity
-          disableTopSwipe
-          disableBottomSwipe
-          infinite={false}
-        />
-      )}
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#191716',
+  },
   container: {
     flex: 1,
     backgroundColor: '#191716',
