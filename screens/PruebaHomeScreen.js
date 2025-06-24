@@ -84,32 +84,32 @@ export default function HomeScreen({ navigation }) {
 
   const juegos = [
     {
-      nombre: 'La Cadena del Crupier (prueba)',
+      nombre: 'La Cadena del Crupier',
       descripcion: 'Reta a tus amigos con preguntas rápidas y pasa la cadena antes que el tiempo se agote.',
       screen: 'Juego 1',
-      imagen: ImgCartas,
-      imagenEstilo: { left: '-50%', top: '-57%' },
+      imagen: ImgCerveza,
+      imagenEstilo: { left: '-50%', top: '-52%' },
     },
     {
       nombre: 'Bebecartas',
       descripcion: 'Saca cartas al azar con retos únicos y bebe si no los cumples.',
       screen: 'Juego 2',
       imagen: ImgBailando,
-      imagenEstilo: { left: '20%', top: '-2%' },
+      imagenEstilo: { left: '15%', top: '-8%', transform: [{ scaleX: -1 }] },
     },
     {
       nombre: 'El Saca Cartas',
       descripcion: 'Desliza y revela desafíos divertidos carta por carta.',
       screen: 'Prueba 4',
       imagen: ImgFumando,
-      imagenEstilo: { left: '-45%', bottom: '-37%' },
+      imagenEstilo: { left: '-15%', top: '-5%' , transform: [{ scaleX: -1 }] },
     },
     {
       nombre: 'La Ruleta del Shot',
       descripcion: 'Gira la ruleta y descubre quién se lleva el próximo shot.',
       screen: 'Juego 3',
-      imagen: ImgCerveza,
-      imagenEstilo: { left: '30%', top: '8%' },
+      imagen: ImgCartas,
+      imagenEstilo: { left: '15%', top: '-57%' },
     },
 
   ];
@@ -313,11 +313,11 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 30,
   },
   gameCard: {
     width: '80%',
-    height: 180,
+    height: 200,
     borderRadius: 12,
     backgroundColor: 'rgba(0, 100, 0, 0.5)',
     justifyContent: 'center',
