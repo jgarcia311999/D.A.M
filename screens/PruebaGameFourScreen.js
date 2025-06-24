@@ -17,7 +17,6 @@ const { width } = Dimensions.get('window');
 
 const PruebaGameFourScreen = ({ route, navigation }) => {
   const { jugadores = [] } = route.params || {};
-  console.log("Jugadores recibidos:", jugadores);
   const [usedFrases, setUsedFrases] = useState([]);
   const [frasesCombinadas, setFrasesCombinadas] = useState([]);
   const [frasesToUse, setFrasesToUse] = useState([]);
@@ -76,7 +75,7 @@ useEffect(() => {
   if (frasesCombinadas.length === 0) {
     return (
       <View style={styles.container}>
-        <Text style={styles.text}>Cargando frases</Text>
+        <Text style={styles.text}>Rellenando chupitos</Text>
       </View>
     );
   }
