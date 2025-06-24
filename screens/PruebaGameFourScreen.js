@@ -71,6 +71,8 @@ useEffect(() => {
     return userIcons[Math.floor(Math.random() * userIcons.length)];
   };
 
+  const toggleMenu = () => {};
+
   if (frasesCombinadas.length === 0) {
     return (
       <View style={styles.container}>
@@ -80,9 +82,13 @@ useEffect(() => {
   }
   return (
     <View style={styles.container}>
+      <Image source={require('../assets/chapas/chapa_flor.png')} style={styles.imageBackground} />
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={28} color="#fff" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={toggleMenu}>
+          <Ionicons name="add" size={28} color="#fff" />
         </TouchableOpacity>
       </View>
       {frasesToUse.length > 0 && (
@@ -148,7 +154,7 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: 'green',
     position: 'relative',
-    marginTop: 'auto',
+    marginTop: 100,
     marginBottom: 'auto',
     alignSelf: 'center',
   },
@@ -203,7 +209,20 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 50,
     left: 20,
+    right: 20,
     zIndex: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  imageBackground: {
+    position: 'absolute',
+    top: -width * 0.3,
+    left: (width - width * 0.5) / 2,
+    width: width * 0.5,
+    height: width * 0.5,
+    resizeMode: 'contain',
+    zIndex: 0,
   },
 });
 
