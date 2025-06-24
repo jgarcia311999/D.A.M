@@ -9,14 +9,43 @@ import ImgCartas from '../assets/pj_cartas.png';
 import ImgCerveza from '../assets/pj_cerveza.png';
 import ImgFumando from '../assets/pj_fumando.png';
 
+// const CardCornerFlor = () => (
+//   <Image
+//     source={FlorImage}
+//     style={styles.cardCornerImage}
+//   />
+// );
+
 const { width, height } = Dimensions.get('window');
 
-const CardCornerFlor = () => (
-  <Image
-    source={FlorImage}
-    style={styles.cardCornerImage}
-  />
-);
+// const bottomSheetHeight = Dimensions.get('window').height * 0.7;
+// const bottomSheetY = useRef(new Animated.Value(Dimensions.get('window').height - 100)).current;
+// const panResponder = useRef(
+//   PanResponder.create({
+//     onMoveShouldSetPanResponder: (_, gestureState) => Math.abs(gestureState.dy) > 10,
+//     onPanResponderMove: (_, gestureState) => {
+//       const newY = Dimensions.get('window').height - 100 + gestureState.dy;
+//       bottomSheetY.setValue(Math.min(Math.max(newY, Dimensions.get('window').height - bottomSheetHeight), Dimensions.get('window').height - 100));
+//     },
+//     onPanResponderRelease: (_, gestureState) => {
+//       const halfway = Dimensions.get('window').height - (bottomSheetHeight / 2);
+//       const currentY = bottomSheetY._value + gestureState.dy;
+//       if (currentY < halfway) {
+//         Animated.timing(bottomSheetY, {
+//           toValue: Dimensions.get('window').height - bottomSheetHeight,
+//           duration: 200,
+//           useNativeDriver: false
+//         }).start();
+//       } else {
+//         Animated.timing(bottomSheetY, {
+//           toValue: Dimensions.get('window').height - 100,
+//           duration: 200,
+//           useNativeDriver: false
+//         }).start();
+//       }
+//     }
+//   })
+// ).current;
 
 export default function HomeScreen({ navigation }) {
   const menuAnimation = useRef(new Animated.Value(0)).current;
@@ -27,39 +56,6 @@ export default function HomeScreen({ navigation }) {
   const inputRef = useRef(null);
   const carouselRef = useRef(null);
   const scrollAnim = useRef(new Animated.Value(0)).current;
-
-  const bottomSheetHeight = Dimensions.get('window').height * 0.7;
-  const bottomSheetY = useRef(new Animated.Value(Dimensions.get('window').height - 100)).current;
-
-  const panResponder = useRef(
-    PanResponder.create({
-      onMoveShouldSetPanResponder: (_, gestureState) => Math.abs(gestureState.dy) > 10,
-      onPanResponderMove: (_, gestureState) => {
-        const newY = Dimensions.get('window').height - 100 + gestureState.dy;
-        bottomSheetY.setValue(Math.min(Math.max(newY, Dimensions.get('window').height - bottomSheetHeight), Dimensions.get('window').height - 100));
-      },
-      onPanResponderRelease: (_, gestureState) => {
-        const halfway = Dimensions.get('window').height - (bottomSheetHeight / 2);
-        const currentY = bottomSheetY._value + gestureState.dy;
-
-        if (currentY < halfway) {
-          // expand
-          Animated.timing(bottomSheetY, {
-            toValue: Dimensions.get('window').height - bottomSheetHeight,
-            duration: 200,
-            useNativeDriver: false
-          }).start();
-        } else {
-          // collapse
-          Animated.timing(bottomSheetY, {
-            toValue: Dimensions.get('window').height - 100,
-            duration: 200,
-            useNativeDriver: false
-          }).start();
-        }
-      }
-    })
-  ).current;
 
   const toggleMenu = () => {
     if (!menuVisible) {
@@ -84,34 +80,33 @@ export default function HomeScreen({ navigation }) {
 
   const juegos = [
     {
-      nombre: 'La Cadena del Crupier',
-      descripcion: 'Reta a tus amigos con preguntas rápidas y pasa la cadena antes que el tiempo se agote.',
+      nombre: 'Bebecartas',
+      descripcion: 'Saca cartas al azar con retos únicos y bebe si no los cumples.',
       screen: 'Juego 1',
       imagen: ImgCerveza,
       imagenEstilo: { left: '-50%', top: '-52%' },
     },
     {
-      nombre: 'Bebecartas',
-      descripcion: 'Saca cartas al azar con retos únicos y bebe si no los cumples.',
+      nombre: 'La Cadena del Crupier',
+      descripcion: 'Reta a tus amigos con preguntas rápidas y pasa la cadena antes que el tiempo se agote.',
       screen: 'Juego 2',
-      imagen: ImgBailando,
-      imagenEstilo: { left: '15%', top: '-8%', transform: [{ scaleX: -1 }] },
+      imagen: ImgCartas,
+      imagenEstilo: { left: '15%', top: '-57%' },
     },
     {
       nombre: 'El Saca Cartas',
       descripcion: 'Desliza y revela desafíos divertidos carta por carta.',
       screen: 'Prueba 4',
       imagen: ImgFumando,
-      imagenEstilo: { left: '-15%', top: '-5%' , transform: [{ scaleX: -1 }] },
+      imagenEstilo: { left: '-50%', top: '-52%', transform: [{ scaleX: -1 }] },
     },
     {
       nombre: 'La Ruleta del Shot',
       descripcion: 'Gira la ruleta y descubre quién se lleva el próximo shot.',
       screen: 'Juego 3',
-      imagen: ImgCartas,
-      imagenEstilo: { left: '15%', top: '-57%' },
+      imagen: ImgBailando,
+      imagenEstilo: { left: '15%', top: '-8%', transform: [{ scaleX: -1 }] },
     },
-
   ];
 
   useEffect(() => {
@@ -163,10 +158,17 @@ export default function HomeScreen({ navigation }) {
             </View>
             <Image source={require('../assets/chapas/chapa_dedo.png')} style={styles.imageBackground} />
             <View style={styles.content}>
-              <View style={styles.verticalScrollContainer}>
-                {juegos.map((item, index) => (
+              <FlatList
+                data={juegos}
+                keyExtractor={(item, index) => index.toString()}
+                horizontal
+                pagingEnabled
+                showsHorizontalScrollIndicator={false}
+                snapToAlignment="center"
+                contentContainerStyle={styles.carouselWrapper}
+                ref={carouselRef}
+                renderItem={({ item }) => (
                   <TouchableOpacity
-                    key={index}
                     style={styles.gameContainer}
                     onPress={() => navigation.navigate(item.screen, { jugadores })}
                   >
@@ -178,8 +180,8 @@ export default function HomeScreen({ navigation }) {
                       </View>
                     </View>
                   </TouchableOpacity>
-                ))}
-              </View>
+                )}
+              />
             </View>
           </View>
           {menuVisible && (
@@ -311,9 +313,9 @@ const styles = StyleSheet.create({
   },
   gameContainer: {
     width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height * 0.7,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 30,
   },
   gameCard: {
     width: '80%',

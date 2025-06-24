@@ -1,65 +1,22 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image, Animated, Easing, TextInput, FlatList, Keyboard, SafeAreaView, ScrollView, ImageBackground } from 'react-native';
-import { PanResponder } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import FlorImage from '../assets/flor.png';
-import ImgBailando from '../assets/pj_bailando.png';
+import ImgRuleta from '../assets/pj_ruleta.png';
 import ImgCartas from '../assets/pj_cartas.png';
 import ImgCerveza from '../assets/pj_cerveza.png';
 import ImgFumando from '../assets/pj_fumando.png';
 
 const { width, height } = Dimensions.get('window');
 
-const CardCornerFlor = () => (
-  <Image
-    source={FlorImage}
-    style={styles.cardCornerImage}
-  />
-);
-
 export default function HomeScreen({ navigation }) {
   const menuAnimation = useRef(new Animated.Value(0)).current;
   const [menuVisible, setMenuVisible] = useState(false);
   const [nombre, setNombre] = useState('');
   const [jugadores, setJugadores] = useState([]);
-  // tarjetaExpandida state removed
   const inputRef = useRef(null);
   const carouselRef = useRef(null);
   const scrollAnim = useRef(new Animated.Value(0)).current;
-
-  const bottomSheetHeight = Dimensions.get('window').height * 0.7;
-  const bottomSheetY = useRef(new Animated.Value(Dimensions.get('window').height - 100)).current;
-
-  const panResponder = useRef(
-    PanResponder.create({
-      onMoveShouldSetPanResponder: (_, gestureState) => Math.abs(gestureState.dy) > 10,
-      onPanResponderMove: (_, gestureState) => {
-        const newY = Dimensions.get('window').height - 100 + gestureState.dy;
-        bottomSheetY.setValue(Math.min(Math.max(newY, Dimensions.get('window').height - bottomSheetHeight), Dimensions.get('window').height - 100));
-      },
-      onPanResponderRelease: (_, gestureState) => {
-        const halfway = Dimensions.get('window').height - (bottomSheetHeight / 2);
-        const currentY = bottomSheetY._value + gestureState.dy;
-
-        if (currentY < halfway) {
-          // expand
-          Animated.timing(bottomSheetY, {
-            toValue: Dimensions.get('window').height - bottomSheetHeight,
-            duration: 200,
-            useNativeDriver: false
-          }).start();
-        } else {
-          // collapse
-          Animated.timing(bottomSheetY, {
-            toValue: Dimensions.get('window').height - 100,
-            duration: 200,
-            useNativeDriver: false
-          }).start();
-        }
-      }
-    })
-  ).current;
 
   const toggleMenu = () => {
     if (!menuVisible) {
@@ -86,7 +43,7 @@ export default function HomeScreen({ navigation }) {
     {
       nombre: 'Bebecartas',
       descripcion: 'Saca cartas al azar con retos únicos y bebe si no los cumples.',
-      screen: 'Juego 1',
+      screen: 'Juego 4',
       imagen: ImgCerveza,
       imagenEstilo: { left: '-50%', top: '-52%' },
     },
@@ -100,7 +57,7 @@ export default function HomeScreen({ navigation }) {
     {
       nombre: 'El Saca Cartas',
       descripcion: 'Desliza y revela desafíos divertidos carta por carta.',
-      screen: 'Prueba 4',
+      screen: 'Prueba 1',
       imagen: ImgFumando,
       imagenEstilo: { left: '-50%', top: '-52%', transform: [{ scaleX: -1 }] },
     },
@@ -108,10 +65,9 @@ export default function HomeScreen({ navigation }) {
       nombre: 'La Ruleta del Shot',
       descripcion: 'Gira la ruleta y descubre quién se lleva el próximo shot.',
       screen: 'Juego 3',
-      imagen: ImgBailando,
-      imagenEstilo: { left: '15%', top: '-8%', transform: [{ scaleX: -1 }] },
+      imagen: ImgRuleta,
+      imagenEstilo: { left: '5%', top: '-55%'},
     },
-
   ];
 
   useEffect(() => {
@@ -239,27 +195,6 @@ export default function HomeScreen({ navigation }) {
             </Animated.View>
           )}
         </ScrollView>
-        {/* 
-        <Animated.View
-          {...panResponder.panHandlers}
-          style={{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            height: bottomSheetHeight,
-            backgroundColor: '#fff',
-            borderTopLeftRadius: 20,
-            borderTopRightRadius: 20,
-            elevation: 8,
-            padding: 20,
-            transform: [{ translateY: bottomSheetY }],
-          }}
-        >
-          <View style={{ width: 40, height: 5, backgroundColor: '#ccc', borderRadius: 2.5, alignSelf: 'center', marginBottom: 10 }} />
-          <Text style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 10 }}>Más opciones</Text>
-          <Text style={{ color: '#333' }}>Aquí puedes mostrar información o botones adicionales.</Text>
-        </Animated.View>
-        */}
       </SafeAreaView>
     </GestureHandlerRootView>
   );
