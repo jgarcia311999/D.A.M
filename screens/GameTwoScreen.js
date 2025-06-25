@@ -13,6 +13,7 @@ const generarBarajaCompleta = () => {
 
 import React, { useState } from 'react';
 import { View, Text, Button, StyleSheet, Modal, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 const imagenesCartas = {
   'cigarros_1': require('../assets/cartas/cigarros/sf/cig-1.png'),
@@ -94,7 +95,7 @@ const generarCarta = () => {
   return { numero, palo };
 };
 
-export default function GameTwoScreen({ route }) {
+export default function GameTwoScreen({ route, navigation }) {
   const jugadores = route?.params?.jugadores || [];
   const [carta, setCarta] = useState(null);
   const [jugadorActual, setJugadorActual] = useState('');
@@ -104,6 +105,7 @@ export default function GameTwoScreen({ route }) {
   const [modalCartasVisible, setModalCartasVisible] = useState(false);
   const [modalRankingVisible, setModalRankingVisible] = useState(false);
   const [ultimasCartas, setUltimasCartas] = useState([]);
+  const [mostrarOpciones, setMostrarOpciones] = useState(false);
 
   const sacarCarta = () => {
     if (mazo.length === 0) {
@@ -137,6 +139,32 @@ export default function GameTwoScreen({ route }) {
 
   return (
     <View style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Ionicons name="arrow-back" size={28} color="#fff" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => setMostrarOpciones(!mostrarOpciones)}>
+          <Ionicons name="ellipsis-vertical" size={28} color="#fff" />
+        </TouchableOpacity>
+      </View>
+      {mostrarOpciones && (
+        <View style={styles.headerOptions}>
+          <TouchableOpacity style={styles.optionButton} onPress={() => setModalVisible(true)}>
+            <Text style={styles.optionText}>Registro</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.optionButton} onPress={() => setModalCartasVisible(true)}>
+            <Text style={styles.optionText}>Cartas</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.optionButton} onPress={() => setModalRankingVisible(true)}>
+            <Text style={styles.optionText}>Ranking</Text>
+          </TouchableOpacity>
+          {carta && (
+            <TouchableOpacity style={styles.optionButton} onPress={reiniciar}>
+              <Text style={styles.optionText}>Reiniciar</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      )}
       <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 10 }}>
         {ultimasCartas.map((c, index) => {
           let valor = c.numero;
@@ -159,11 +187,7 @@ export default function GameTwoScreen({ route }) {
           );
         })}
       </View>
-      <Text style={styles.title}>🍻 Juego 2 - Carta de Acción</Text>
 
-      <Button title="Ver registro" onPress={() => setModalVisible(true)} />
-      <Button title="Ver cartas restantes" onPress={() => setModalCartasVisible(true)} />
-      <Button title="Ver ranking de tragos" onPress={() => setModalRankingVisible(true)} />
       <Modal
         animationType="slide"
         transparent={true}
@@ -188,14 +212,10 @@ export default function GameTwoScreen({ route }) {
                   </Text>
                 ))}
             </ScrollView>
-            <Button title="Cerrar" onPress={() => setModalRankingVisible(false)} />
+            <Button title="Cerrar" color="#fff" onPress={() => setModalRankingVisible(false)} />
           </View>
         </View>
       </Modal>
-
-      {!carta && (
-        <Button title="Sacar carta" onPress={sacarCarta} />
-      )}
 
       {carta && (
         <>
@@ -240,10 +260,6 @@ export default function GameTwoScreen({ route }) {
             }
             return null;
           })()}
-          {mazo.length > 0 && (
-            <Button title="Sacar otra carta" onPress={sacarCarta} />
-          )}
-          <Button title="Reiniciar" onPress={reiniciar} />
         </>
       )}
 
@@ -274,7 +290,7 @@ export default function GameTwoScreen({ route }) {
                 );
               })}
             </ScrollView>
-            <Button title="Cerrar" onPress={() => setModalVisible(false)} />
+            <Button title="Cerrar" color="#fff" onPress={() => setModalVisible(false)} />
           </View>
         </View>
       </Modal>
@@ -296,7 +312,7 @@ export default function GameTwoScreen({ route }) {
 
                 return (
                   <View key={palo} style={{ marginBottom: 12 }}>
-                    <Text style={{ fontWeight: 'bold', textTransform: 'capitalize' }}>{palo}</Text>
+                    <Text style={{ fontWeight: 'bold', textTransform: 'capitalize', color: '#fff' }}>{palo}</Text>
                     <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
                       {Array.from({ length: 12 }, (_, i) => {
                         const numMap = i + 1 <= 9 ? i + 1 : ['j', 'q', 'k'][i - 9];
@@ -308,7 +324,7 @@ export default function GameTwoScreen({ route }) {
                             width: 30,
                             textAlign: 'center',
                             textDecorationLine: numerosRestantes.includes(num) ? 'none' : 'line-through',
-                            color: numerosRestantes.includes(num) ? 'black' : '#bbb',
+                            color: numerosRestantes.includes(num) ? '#fff' : '#bbb',
                             fontSize: 16,
                           }}
                         >
@@ -320,20 +336,67 @@ export default function GameTwoScreen({ route }) {
                 );
               })}
             </ScrollView>
-            <Button title="Cerrar" onPress={() => setModalCartasVisible(false)} />
+            <Button title="Cerrar" color="#fff" onPress={() => setModalCartasVisible(false)} />
           </View>
         </View>
       </Modal>
+
+      <View style={styles.bottomControls}>
+        <TouchableOpacity style={styles.primaryButton} onPress={sacarCarta}>
+          <Text style={styles.primaryButtonText}>
+            {carta ? 'Sacar otra carta' : 'Sacar carta'}
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20 },
-  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 20 },
-  carta: { fontSize: 32, marginTop: 20 },
-  accion: { fontSize: 18, marginVertical: 10, textAlign: 'center' },
-  tragos: { fontSize: 16, color: '#666', marginBottom: 20 },
+  container: {
+    flex: 1,
+    backgroundColor: '#191716',
+    alignItems: 'center',
+    padding: 20,
+    paddingTop: 100,
+  },
+  header: {
+    width: '100%',
+    paddingHorizontal: 20,
+    paddingTop: 50,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    position: 'absolute',
+    top: 0,
+    zIndex: 2,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    fontFamily: 'Panchang-Regular',
+    color: '#780000',
+  },
+  carta: {
+    fontSize: 32,
+    marginTop: 20,
+    color: '#fff',
+    fontFamily: 'Panchang-Regular',
+  },
+  accion: {
+    fontSize: 18,
+    marginVertical: 10,
+    textAlign: 'center',
+    color: '#fff',
+    fontFamily: 'Panchang-Regular',
+  },
+  tragos: {
+    fontSize: 16,
+    color: '#bbb',
+    marginBottom: 20,
+    fontFamily: 'Panchang-Regular',
+  },
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.5)',
@@ -341,7 +404,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalContent: {
-    backgroundColor: 'white',
+    backgroundColor: '#191716',
     padding: 20,
     borderRadius: 10,
     width: '80%',
@@ -351,9 +414,62 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: '#fff',
+    fontFamily: 'Panchang-Regular',
   },
   modalItem: {
     fontSize: 16,
     marginVertical: 2,
+    color: '#fff',
+    fontFamily: 'Panchang-Regular',
+  },
+  bottomControls: {
+    position: 'absolute',
+    bottom: 20,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  toggleButton: {
+    marginBottom: 10,
+    padding: 8,
+    backgroundColor: 'rgba(255,255,255,0.1)',
+    borderRadius: 20,
+  },
+  optionButtons: {
+    marginBottom: 10,
+    alignItems: 'center',
+  },
+  optionButton: {
+    backgroundColor: 'rgba(0, 100, 0, 0.5)',
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    marginVertical: 3,
+  },
+  optionText: {
+    color: '#fff',
+    fontSize: 14,
+    fontFamily: 'Panchang-Regular',
+  },
+  primaryButton: {
+    backgroundColor: 'green',
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  primaryButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+    fontFamily: 'Panchang-Regular',
+  },
+    headerOptions: {
+    position: 'absolute',
+    top: 90,
+    right: 20,
+    zIndex: 3,
+    alignItems: 'flex-end',
   },
 });
