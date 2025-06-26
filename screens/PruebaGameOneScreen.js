@@ -93,6 +93,15 @@ export default function GameOneScreen({ route, navigation }) {
     const [colorTextoJugador, setColorTextoJugador] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
     const [modalCarta, setModalCarta] = useState(null);
+    const [modalInfoVisible, setModalInfoVisible] = useState(false);
+    const [infoPage, setInfoPage] = useState(0);
+    const infoPages = [
+      `Un juego de cartas para beber... sí, otro más. Pero este por lo menos te obliga a usar una neurona o dos.`,
+      `Son cuatro fases. Aciertas, avanzas. La cagas, bebes.\n¿Demasiado para ti? Siempre puedes rendirte y fingir que repartes los tragos por estrategia.`,
+      `Fase 1 – Color: ¿Roja o negra? Una decisión tan difícil como elegir entre tinto o cerveza.\n\nFase 2 – Mayor o menor: Compara cartas. Decide si sube o baja. Vamos, no es física cuántica.`,
+      `Fase 3 – ¿Entre o fuera?: ¿La carta cae entre las otras dos? Pues di "sí" o "no", a ver si te crees Nostradamus.\n\nFase 4 – Palo: Elige: cigarro, cubata, gallina u oro.`,
+      `¿Te rajas? Genial. Reparte tragos como si fueras el rey de la fiesta… aunque todos sepan que te has cagado.`,
+    ];
     const jugadores = route?.params?.jugadores || [];
 
     const seleccionarJugadorAleatorio = useCallback(() => {
@@ -252,8 +261,11 @@ export default function GameOneScreen({ route, navigation }) {
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Ionicons name="arrow-back" size={28} color="#fff" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => {}}>
-            <Ionicons name="add" size={28} color="#fff" />
+          <TouchableOpacity onPress={() => {
+            setInfoPage(0);
+            setModalInfoVisible(true);
+          }}>
+            <Ionicons name="help-circle-outline" size={28} color="#fff" />
           </TouchableOpacity>
         </View>
         <Text style={[styles.turno, { color: colorTextoJugador || '#2d3436' }]}>{jugadorActual}</Text>
@@ -329,6 +341,34 @@ export default function GameOneScreen({ route, navigation }) {
           <Button title="Reiniciar" onPress={reiniciar} />
         )}
         <CartaModal />
+        <Modal
+          visible={modalInfoVisible}
+          transparent
+          animationType="fade"
+          onRequestClose={() => setModalInfoVisible(false)}
+        >
+          <TouchableWithoutFeedback onPress={() => setModalInfoVisible(false)}>
+            <View style={styles.modalOverlay}>
+              <View style={styles.modalContent}>
+                <View style={{ flex: 1, justifyContent: 'space-between', width: '100%' }}>
+                  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <Text style={styles.modalMessage}>
+                      {infoPages[infoPage]}
+                    </Text>
+                  </View>
+                  <View style={styles.modalFooter}>
+                    <TouchableOpacity onPress={() => setInfoPage(Math.max(infoPage - 1, 0))} disabled={infoPage === 0}>
+                      <Text style={{ color: infoPage === 0 ? '#555' : '#fff', fontSize: 24 }}>{"<"}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => setInfoPage(Math.min(infoPage + 1, infoPages.length - 1))} disabled={infoPage === infoPages.length - 1}>
+                      <Text style={{ color: infoPage === infoPages.length - 1 ? '#555' : '#fff', fontSize: 24 }}>{">"}</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
       </View>
     );
 }
@@ -504,7 +544,16 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 12,
     alignItems: 'center',
+    justifyContent: 'center',
     width: '80%',
+    height: Dimensions.get('window').height * 0.7,
+  },
+  modalFooter: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    marginTop: 20,
   },
   modalCardImage: {
     width: 150,

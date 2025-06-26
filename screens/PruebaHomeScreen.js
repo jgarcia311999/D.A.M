@@ -50,14 +50,14 @@ export default function HomeScreen({ navigation }) {
     {
       nombre: 'La Cadena del Crupier',
       descripcion: 'Reta a tus amigos con preguntas rápidas y pasa la cadena antes que el tiempo se agote.',
-      screen: 'Juego 2',
+      screen: 'Prueba 1',
       imagen: ImgCartas,
       imagenEstilo: { left: width * 0.2, top: height * -0.135 },
     },
     {
       nombre: 'El Saca Cartas',
       descripcion: 'Desliza y revela desafíos divertidos carta por carta.',
-      screen: 'Prueba 1',
+      screen: 'Juego 2',
       imagen: ImgFumando,
       imagenEstilo: { left: width * -0.25, top: height * -0.125, transform: [{ scaleX: -1 }] },
     },
