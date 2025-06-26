@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image, Animated, Easing, TextInput, FlatList, Keyboard, SafeAreaView, ScrollView, ImageBackground } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image, Animated, Easing, TextInput, FlatList, Keyboard, SafeAreaView, ImageBackground } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import ImgRuleta from '../assets/pj_ruleta.png';
@@ -100,48 +102,61 @@ export default function HomeScreen({ navigation }) {
     };
   }, []);
 
+  useEffect(() => {
+  }, [jugadores]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const cargarJugadores = async () => {
+        const data = await AsyncStorage.getItem('jugadores');
+        if (data) {
+          const jugadoresGuardados = JSON.parse(data);
+          setJugadores(jugadoresGuardados);
+        }
+      };
+      cargarJugadores();
+    }, [])
+  );
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
+      <Image source={require('../assets/laprv.png')} style={styles.imageBackground} />
       <SafeAreaView style={styles.gridBackground}>
-
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-          <View>
-            {/* Header row with arrow and plus buttons */}
-            <View style={styles.header}>
-              <View style={{ width: 28 }} /> {/* Espacio reservado donde iba la flecha */}
-              <TouchableOpacity onPress={() => navigation.navigate('Gamer')}>
-                <Ionicons name="add" size={28} color="#fff" />
-              </TouchableOpacity>
-            </View>
-            <Image source={require('../assets/chapas/chapa_dedo.png')} style={styles.imageBackground} />
-            <View style={styles.content}>
-              <FlatList
-                data={juegos}
-                keyExtractor={(item, index) => index.toString()}
-                horizontal
-                pagingEnabled
-                showsHorizontalScrollIndicator={false}
-                snapToAlignment="center"
-                contentContainerStyle={styles.carouselWrapper}
-                ref={carouselRef}
-                renderItem={({ item }) => (
-                  <TouchableOpacity
-                    style={styles.gameContainer}
-                    onPress={() => navigation.navigate(item.screen, { jugadores })}
-                  >
-                    <View style={styles.gameCard}>
-                      <Image source={item.imagen} style={[styles.cardCornerImage, item.imagenEstilo]} />
-                      <View style={styles.cardTextContainer}>
-                        <Text style={styles.gameText}>{item.nombre}</Text>
-                        <Text style={styles.gameDescription}>{item.descripcion}</Text>
-                      </View>
-                    </View>
-                  </TouchableOpacity>
-                )}
-              />
-            </View>
+        <View style={{ flex: 1 }}>
+          {/* Header row with arrow and plus buttons */}
+          <View style={styles.header}>
+            <View style={{ width: 28 }} /> 
+            <TouchableOpacity onPress={() => navigation.navigate('Gamer')}>
+              <Ionicons name="add" size={28} color="#fff" />
+            </TouchableOpacity>
           </View>
-        </ScrollView>
+          <View style={styles.content}>
+            <FlatList
+              data={juegos}
+              keyExtractor={(item, index) => index.toString()}
+              horizontal
+              pagingEnabled
+              showsHorizontalScrollIndicator={false}
+              snapToAlignment="center"
+              contentContainerStyle={styles.carouselWrapper}
+              ref={carouselRef}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  style={styles.gameContainer}
+                  onPress={() => navigation.navigate(item.screen, { jugadores })}
+                >
+                  <View style={styles.gameCard}>
+                    <Image source={item.imagen} style={[styles.cardCornerImage, item.imagenEstilo]} />
+                    <View style={styles.cardTextContainer}>
+                      <Text style={styles.gameText}>{item.nombre}</Text>
+                      <Text style={styles.gameDescription}>{item.descripcion}</Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              )}
+            />
+          </View>
+        </View>
       </SafeAreaView>
     </GestureHandlerRootView>
   );
@@ -165,33 +180,19 @@ const styles = StyleSheet.create({
   },
   imageBackground: {
     position: 'absolute',
-    top: -width * 0.3,
-    left: (width - width * 0.5) / 2,
-    width: width * 0.5,
-    height: width * 0.5,
+    top: -height * 0.06,
+    left: -width * 0.12,
+    width: width * 0.7,
+    height: undefined,
+    aspectRatio: 1,
     resizeMode: 'contain',
-    zIndex: 0,
+    zIndex: 2,
   },
   content: {
     flex: 1,
     paddingTop: 130,
     alignItems: 'center',
     zIndex: 1,
-  },
-  verticalScrollContainer: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: 20,
-    paddingBottom: 40,
-    marginTop: 20,
-  },
-  title: {
-    fontSize: 28,
-    marginBottom: 40,
-    fontWeight: 'bold',
-    fontFamily: 'Panchang-Regular',
-    textAlign: 'center',
-    color: '#780000'
   },
   carouselWrapper: {
     paddingHorizontal: 0,
@@ -244,44 +245,5 @@ const styles = StyleSheet.create({
     marginTop: 10,
     textAlign: 'left',
   },
-  bottomSheet: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    height: height * 0.75,
-    backgroundColor: '#fff',
-    padding: 20,
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
-    zIndex: 10,
-  },
-  menuItem: {
-    fontSize: 18,
-    marginVertical: 10,
-    color: '#000',
-  },
-  menuOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'transparent',
-    zIndex: 2,
-  },
-  input: {
-    height: 40,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    paddingHorizontal: 10,
-    borderRadius: 8,
-    marginBottom: 15,
-    color: '#000',
-  },
-  menuTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    color: '#000',
-  }
+  
 });
