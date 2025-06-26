@@ -10,33 +10,31 @@ import ImgFumando from '../assets/pj_fumando.png';
 const { width, height } = Dimensions.get('window');
 
 export default function HomeScreen({ navigation }) {
-  const menuAnimation = useRef(new Animated.Value(0)).current;
-  const [menuVisible, setMenuVisible] = useState(false);
+  const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
+  const bottomSheetAnim = useRef(new Animated.Value(height)).current;
   const [nombre, setNombre] = useState('');
   const [jugadores, setJugadores] = useState([]);
   const inputRef = useRef(null);
   const carouselRef = useRef(null);
   const scrollAnim = useRef(new Animated.Value(0)).current;
 
-  const toggleMenu = () => {
-    if (!menuVisible) {
-      setMenuVisible(true);
-      Animated.timing(menuAnimation, {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: false,
-        easing: Easing.out(Easing.ease)
-      }).start();
-    } else {
-      Animated.timing(menuAnimation, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: false,
-        easing: Easing.in(Easing.ease)
-      }).start(() => {
-        setMenuVisible(false);
-      });
-    }
+  const openBottomSheet = () => {
+    setBottomSheetVisible(true);
+    Animated.timing(bottomSheetAnim, {
+      toValue: height * 0.25,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const closeBottomSheet = () => {
+    Animated.timing(bottomSheetAnim, {
+      toValue: height,
+      duration: 300,
+      useNativeDriver: false,
+    }).start(() => {
+      setBottomSheetVisible(false);
+    });
   };
 
   const juegos = [
@@ -107,13 +105,11 @@ export default function HomeScreen({ navigation }) {
       <SafeAreaView style={styles.gridBackground}>
 
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-          <View pointerEvents={menuVisible ? 'none' : 'auto'}>
+          <View>
             {/* Header row with arrow and plus buttons */}
             <View style={styles.header}>
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Ionicons name="arrow-back" size={28} color="#fff" />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={toggleMenu}>
+              <View style={{ width: 28 }} /> {/* Espacio reservado donde iba la flecha */}
+              <TouchableOpacity onPress={() => navigation.navigate('Gamer')}>
                 <Ionicons name="add" size={28} color="#fff" />
               </TouchableOpacity>
             </View>
@@ -145,55 +141,6 @@ export default function HomeScreen({ navigation }) {
               />
             </View>
           </View>
-          {menuVisible && (
-            <TouchableOpacity
-              style={styles.menuOverlay}
-              activeOpacity={1}
-              onPress={toggleMenu}
-            />
-          )}
-          {menuVisible && (
-            <Animated.View style={[
-              styles.sideMenu,
-              {
-                transform: [{
-                  translateX: menuAnimation.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [Dimensions.get('window').width, Dimensions.get('window').width * 0.1]
-                  })
-                }]
-              }
-            ]}>
-              <Text style={styles.menuTitle}>Jugadores</Text>
-              <TextInput
-                ref={inputRef}
-                placeholder="Añadir jugador"
-                value={nombre}
-                onChangeText={setNombre}
-                onSubmitEditing={() => {
-                  if (nombre.trim()) {
-                    setJugadores([nombre.trim(), ...jugadores]);
-                    setNombre('');
-                    Keyboard.dismiss();
-                  }
-                }}
-                style={styles.input}
-                placeholderTextColor="#999"
-              />
-              <FlatList
-                data={jugadores}
-                keyExtractor={(item, index) => `${item}-${index}`}
-                renderItem={({ item, index }) => (
-                  <TouchableOpacity onPress={() => {
-                    const nuevos = jugadores.filter((_, i) => i !== index);
-                    setJugadores(nuevos);
-                  }}>
-                    <Text style={styles.menuItem}>{item}</Text>
-                  </TouchableOpacity>
-                )}
-              />
-            </Animated.View>
-          )}
         </ScrollView>
       </SafeAreaView>
     </GestureHandlerRootView>
@@ -297,18 +244,16 @@ const styles = StyleSheet.create({
     marginTop: 10,
     textAlign: 'left',
   },
-  sideMenu: {
+  bottomSheet: {
     position: 'absolute',
-    top: 0,
+    left: 0,
     right: 0,
-    width: '90%',
-    height: '100%',
+    height: height * 0.75,
     backgroundColor: '#fff',
-    borderLeftWidth: 1,
-    borderColor: '#ccc',
     padding: 20,
-    zIndex: 3,
-    elevation: 5,
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+    zIndex: 10,
   },
   menuItem: {
     fontSize: 18,

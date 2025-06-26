@@ -13,6 +13,7 @@ import GameTwoScreen from './screens/GameTwoScreen';
 import GameThreeScreen from './screens/GameThreeScreen';
 import GameFourScreen from './screens/GameFourScreen';
 import PruebaGameFourScreen from './screens/PruebaGameFourScreen';
+import GamerScreen from './screens/GamerScreen';
 
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
@@ -49,6 +50,7 @@ export default function App() {
         <Stack.Navigator initialRouteName="TittleScreen">
           <Stack.Screen name="TittleScreen" component={TittleScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Inicio" component={HomeScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Gamer" component={GamerScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Inicio2" component={PruebaHomeScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Pre juego 1" component={PreGameOneScreen} />
           <Stack.Screen name="Juego 1" component={GameOneScreen} />
