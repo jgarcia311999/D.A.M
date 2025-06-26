@@ -89,7 +89,7 @@ export default function GamerScreen({ route }) {
           <TouchableOpacity
             onPress={async () => {
               await AsyncStorage.setItem('jugadores', JSON.stringify(jugadores));
-              navigation.navigate('Inicio2', { jugadores });
+              navigation.goBack();
             }}
           >
             <Ionicons name="arrow-back" size={28} color="#fff" />
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontFamily: 'Panchang-Regular',
     position: 'absolute',
-    bottom: 10,
+    bottom: 25,
     width: '100%',
   },
 });

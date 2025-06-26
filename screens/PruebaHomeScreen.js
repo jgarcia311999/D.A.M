@@ -112,6 +112,7 @@ export default function HomeScreen({ navigation }) {
         if (data) {
           const jugadoresGuardados = JSON.parse(data);
           setJugadores(jugadoresGuardados);
+          console.log('Jugadores recibidos en Inicio2:', jugadoresGuardados);
         }
       };
       cargarJugadores();
