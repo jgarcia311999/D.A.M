@@ -11,7 +11,11 @@ export default function GamerScreen({ route }) {
   const { jugadores: jugadoresParam = [] } = route.params || {};
   const navigation = useNavigation();
   const [nombre, setNombre] = useState('');
-  const [jugadores, setJugadores] = useState(jugadoresParam);
+  const [jugadores, setJugadores] = useState(
+    jugadoresParam.length > 0
+      ? jugadoresParam
+      : []
+  );
   const [filas, setFilas] = useState([]);
   const [textoScroll, setTextoScroll] = useState('Scrolea hacia arriba');
 
@@ -19,7 +23,13 @@ export default function GamerScreen({ route }) {
     const cargarJugadores = async () => {
       if (jugadoresParam.length === 0) {
         const data = await AsyncStorage.getItem('jugadores');
-        if (data) setJugadores(JSON.parse(data));
+        if (data) {
+          setJugadores(JSON.parse(data));
+        } else {
+          const jugadoresMock = ['Jesus', 'Carla', 'Cepas', 'Nuria', 'Ana', 'Alex', 'Amador', 'Tito'];
+          setJugadores(jugadoresMock);
+          await AsyncStorage.setItem('jugadores', JSON.stringify(jugadoresMock));
+        }
       }
     };
     cargarJugadores();
