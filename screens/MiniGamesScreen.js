@@ -5,8 +5,27 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const { width, height } = Dimensions.get('window');
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen({ navigation, route }) {
+    const { jugadores } = route.params || {};
     const [mostrarOpciones, setMostrarOpciones] = React.useState(false);
+
+    const juegos = [
+      {
+        nombre: 'Ranking Salvaje',
+        descripcion: 'Ordena elementos inusuales según tu criterio personal.',
+        screen: 'MiniGame1',
+      },
+      {
+        nombre: 'Hot Take',
+        descripcion: 'Comparte opiniones polémicas y defiéndelas con argumentos.',
+        screen: 'MiniGame2',
+      },
+      {
+        nombre: 'Asociación rápida',
+        descripcion: 'Relaciona palabras lo más rápido posible en rondas cronometradas.',
+        screen: 'MiniGame3',
+      },
+    ];
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
@@ -22,16 +41,11 @@ export default function HomeScreen({ navigation }) {
                             </TouchableOpacity>
                         </View>
                         <View style={styles.cardsContainer}>
-                            {[
-                                { nombre: 'Adivina la Palabra', descripcion: 'Pon a prueba tu vocabulario adivinando la palabra secreta.' },
-                                { nombre: 'Memoria Visual', descripcion: 'Recuerda las secuencias y mejora tu memoria.' },
-                                { nombre: 'Rompecabezas Lógico', descripcion: 'Resuelve acertijos con lógica y pensamiento crítico.' },
-                                { nombre: 'Trivia Rápida', descripcion: 'Responde preguntas contra el reloj en múltiples categorías.' },
-                            ].map((juego, index) => (
+                            {juegos.map((juego, index) => (
                                 <TouchableOpacity
                                     key={index}
                                     style={styles.gameCard}
-                                    onPress={() => navigation.navigate('Games', { juego })}
+                                    onPress={() => navigation.navigate(juego.screen, { jugadores })}
                                 >
                                     <View style={styles.cardTextContainer}>
                                         <Text style={styles.gameText}>{juego.nombre}</Text>

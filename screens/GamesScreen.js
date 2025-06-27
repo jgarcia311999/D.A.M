@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-const GamesScreen = ({ route }) => {
-  const { juego } = route.params;
+const GamesScreen = () => {
   const navigation = useNavigation();
   const [mostrarOpciones, setMostrarOpciones] = useState(false);
 
@@ -18,8 +17,7 @@ const GamesScreen = ({ route }) => {
           <Ionicons name="ellipsis-vertical" size={28} color="#fff" />
         </TouchableOpacity>
       </View>
-      <Text style={styles.title}>{juego.nombre}</Text>
-      <Text style={styles.description}>{juego.descripcion}</Text>
+      <View />
     </View>
   );
 };
@@ -30,23 +28,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
-  },
-  text: {
-    fontSize: 18,
-    color: '#333',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#222',
-    marginBottom: 12,
-    textAlign: 'center',
-  },
-  description: {
-    fontSize: 16,
-    color: '#555',
-    textAlign: 'center',
-    paddingHorizontal: 20,
   },
   header: {
     width: '100%',
