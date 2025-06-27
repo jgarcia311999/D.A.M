@@ -41,6 +41,13 @@ export default function HomeScreen({ navigation }) {
 
   const juegos = [
     {
+      nombre: 'MiniGamesss',
+      descripcion: 'Una variedad de minijuegos.',
+      screen: 'MiniGames',
+      imagen: ImgRuleta,
+      imagenEstilo: { left: width * 0.1, top: height * -0.127 },
+    },
+    {
       nombre: 'Bebecartas',
       descripcion: 'Saca cartas al azar con retos únicos y bebe si no los cumples.',
       screen: 'Prueba 4',
@@ -68,13 +75,7 @@ export default function HomeScreen({ navigation }) {
       imagen: ImgRuleta,
       imagenEstilo: { left: width * 0.1, top: height * -0.127 },
     },
-    {
-      nombre: 'MiniGamesss',
-      descripcion: 'Una variedad de minijuegos.',
-      screen: 'MiniGames',
-      imagen: ImgRuleta,
-      imagenEstilo: { left: width * 0.1, top: height * -0.127 },
-    },
+    
   ];
 
   useEffect(() => {
