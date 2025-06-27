@@ -465,7 +465,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontFamily: 'Panchang-Regular',
   },
-    headerOptions: {
+  headerOptions: {
     position: 'absolute',
     top: 90,
     right: 20,

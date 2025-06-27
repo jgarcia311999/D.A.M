@@ -68,6 +68,13 @@ export default function HomeScreen({ navigation }) {
       imagen: ImgRuleta,
       imagenEstilo: { left: width * 0.1, top: height * -0.127 },
     },
+    {
+      nombre: 'MiniGamesss',
+      descripcion: 'Una variedad de minijuegos.',
+      screen: 'MiniGames',
+      imagen: ImgRuleta,
+      imagenEstilo: { left: width * 0.1, top: height * -0.127 },
+    },
   ];
 
   useEffect(() => {
@@ -126,7 +133,7 @@ export default function HomeScreen({ navigation }) {
         <View style={{ flex: 1 }}>
           {/* Header row with arrow and plus buttons */}
           <View style={styles.header}>
-            <View style={{ width: 28 }} /> 
+            <View style={{ width: 28 }} />
             <TouchableOpacity onPress={() => navigation.navigate('Gamer')}>
               <Ionicons name="add" size={28} color="#fff" />
             </TouchableOpacity>
@@ -246,5 +253,5 @@ const styles = StyleSheet.create({
     marginTop: 10,
     textAlign: 'left',
   },
-  
+
 });

@@ -19,17 +19,17 @@ export default function GamerScreen({ route }) {
   const [filas, setFilas] = useState([]);
   const [textoScroll, setTextoScroll] = useState('Scrolea hacia arriba');
 
-useEffect(() => {
-  const cargarJugadores = async () => {
-    await AsyncStorage.removeItem('jugadores'); // Borrar siempre al abrir
-    if (jugadoresParam.length === 0) {
-      const jugadoresMock = ['Jesus', 'Carla', 'Cepas', 'Nuria', 'Ana', 'Alex', 'Amador', 'Tito'];
-      setJugadores(jugadoresMock);
-      await AsyncStorage.setItem('jugadores', JSON.stringify(jugadoresMock));
-    }
-  };
-  cargarJugadores();
-}, []);
+  useEffect(() => {
+    const cargarJugadores = async () => {
+      await AsyncStorage.removeItem('jugadores'); // Borrar siempre al abrir
+      if (jugadoresParam.length === 0) {
+        const jugadoresMock = ['Jesus', 'Carla', 'Cepas', 'Nuria', 'Ana', 'Alex', 'Amador', 'Tito'];
+        setJugadores(jugadoresMock);
+        await AsyncStorage.setItem('jugadores', JSON.stringify(jugadoresMock));
+      }
+    };
+    cargarJugadores();
+  }, []);
 
   useEffect(() => {
     AsyncStorage.setItem('jugadores', JSON.stringify(jugadores));
@@ -40,9 +40,9 @@ useEffect(() => {
   }, [jugadores]);
 
   useEffect(() => {
-    const PADDING = 40; 
-    const ITEM_PADDING = 45; 
-    const CHAR_WIDTH = 10; 
+    const PADDING = 40;
+    const ITEM_PADDING = 45;
+    const CHAR_WIDTH = 10;
 
     const anchoDisponible = screenWidth - PADDING;
     let filaActual = [];
@@ -101,7 +101,7 @@ useEffect(() => {
             <Ionicons name="arrow-back" size={28} color="#fff" />
           </TouchableOpacity>
           <TouchableOpacity>
-            
+
           </TouchableOpacity>
         </View>
         <Text style={[styles.title, { marginTop: 100 }]}>Gestión de Borrachos</Text>

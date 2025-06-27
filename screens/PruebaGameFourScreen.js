@@ -32,19 +32,19 @@ const PruebaGameFourScreen = ({ route, navigation }) => {
     return shuffled;
   };
 
-useEffect(() => {
-  const cargar = async () => {
-    try {
-      const todas = await getTodasLasFrases();
-      const mezcladas = shuffleArray(todas);
-      setFrasesCombinadas(todas);
-      setFrasesToUse(mezcladas);
-    } catch (error) {
-      console.error("Error al cargar frases dinámicas:", error);
-    }
-  };
-  cargar();
-}, []);
+  useEffect(() => {
+    const cargar = async () => {
+      try {
+        const todas = await getTodasLasFrases();
+        const mezcladas = shuffleArray(todas);
+        setFrasesCombinadas(todas);
+        setFrasesToUse(mezcladas);
+      } catch (error) {
+        console.error("Error al cargar frases dinámicas:", error);
+      }
+    };
+    cargar();
+  }, []);
 
   const procesarFrase = (frase) => {
     if (!jugadores.length) return frase;
@@ -70,7 +70,7 @@ useEffect(() => {
     return userIcons[Math.floor(Math.random() * userIcons.length)];
   };
 
-  const toggleMenu = () => {};
+  const toggleMenu = () => { };
 
   if (frasesCombinadas.length === 0) {
     return (
@@ -87,7 +87,7 @@ useEffect(() => {
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Ionicons name="arrow-back" size={28} color="#fff" />
           </TouchableOpacity>
-         {/*  <TouchableOpacity onPress={toggleMenu}>
+          {/*  <TouchableOpacity onPress={toggleMenu}>
             <Ionicons name="add" size={28} color="#fff" />
           </TouchableOpacity> */}
         </View>
