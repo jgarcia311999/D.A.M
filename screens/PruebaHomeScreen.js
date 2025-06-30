@@ -254,5 +254,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
     textAlign: 'left',
   },
-
+  jugadorTexto: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 10,
+  },
 });

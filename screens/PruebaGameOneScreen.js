@@ -54,7 +54,7 @@ const cartasImagenes = {
 };
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, Button, StyleSheet, Image, ScrollView, Dimensions, TouchableOpacity, Modal, TouchableWithoutFeedback, Pressable, SafeAreaView } from 'react-native';
+import { View, Text, Button, StyleSheet, Image, ScrollView, Dimensions, TouchableOpacity, Modal, TouchableWithoutFeedback, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function GameOneScreen({ route, navigation }) {
@@ -256,7 +256,7 @@ export default function GameOneScreen({ route, navigation }) {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <ScrollView contentContainerStyle={styles.scrollContainer} style={styles.scrollView}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={28} color="#fff" />
@@ -268,7 +268,7 @@ export default function GameOneScreen({ route, navigation }) {
           <Ionicons name="help-circle-outline" size={28} color="#fff" />
         </TouchableOpacity>
       </View>
-      <Text style={[styles.turno, { color: colorTextoJugador || '#2d3436' }]}>{jugadorActual}</Text>
+      <Text style={[styles.turno, { color: '#fff' }]}>{jugadorActual}</Text>
       <View style={styles.cardGrid}>
         {[0, 1, 2, 3].map((i) => (
           <Image key={i} source={obtenerImagenCarta(cartas[i])} style={styles.cardImage} resizeMode="contain" />
@@ -369,7 +369,7 @@ export default function GameOneScreen({ route, navigation }) {
           </View>
         </TouchableWithoutFeedback>
       </Modal>
-    </SafeAreaView>
+    </ScrollView>
   );
 }
 
@@ -387,9 +387,16 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#191716',
-    paddingTop: 50,
+    paddingTop: 0,
     position: 'relative',
+  },
+  scrollView: {
+    backgroundColor: '#191716',
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    backgroundColor: '#191716',
+    paddingTop: 0,
   },
   cardGrid: {
     flexDirection: 'row',
@@ -397,7 +404,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 10,
     paddingHorizontal: 10,
-    marginTop: 80, // para que no tape el header
+    marginTop: 10, // para que no tape el header
   },
   cardImage: {
     width: '20%',
@@ -415,6 +422,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     textAlign: 'center',
     fontFamily: 'Panchang-Regular',
+    marginTop: 100,
   },
   question: {
     fontSize: 22,
