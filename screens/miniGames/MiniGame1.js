@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, Pressable, ScrollView, PanResponder, Animated } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, Pressable, ScrollView, LayoutAnimation, Platform, UIManager } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function MiniGame1({ route, navigation }) {
@@ -11,43 +11,10 @@ export default function MiniGame1({ route, navigation }) {
   const [jugadorSeleccionado, setJugadorSeleccionado] = useState(null);
   const dropZoneRefs = useRef({ 1: null, 2: null, 3: null });
 
-  const [draggingJugador, setDraggingJugador] = useState(null);
-  const dragPosition = useRef(new Animated.ValueXY()).current;
-
-  const podiumLayouts = useRef({});
-
-  const panResponder = useRef(
-    PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
-      onPanResponderGrant: () => {
-        dragPosition.setOffset({
-          x: dragPosition.x._value,
-          y: dragPosition.y._value,
-        });
-        dragPosition.setValue({ x: 0, y: 0 });
-      },
-      onPanResponderMove: Animated.event(
-        [null, { dx: dragPosition.x, dy: dragPosition.y }],
-        { useNativeDriver: false }
-      ),
-      onPanResponderRelease: (_, gesture) => {
-        dragPosition.flattenOffset();
-        const { moveX, moveY } = gesture;
-        Object.entries(podiumLayouts.current).forEach(([pos, layout]) => {
-          if (
-            moveX >= layout.pageX &&
-            moveX <= layout.pageX + layout.width &&
-            moveY >= layout.pageY &&
-            moveY <= layout.pageY + layout.height
-          ) {
-            asignarTop(Number(pos));
-          }
-        });
-        setDraggingJugador(null);
-        dragPosition.setValue({ x: 0, y: 0 });
-      },
-    })
-  ).current;
+  // Enable LayoutAnimation on Android
+  if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+  }
 
   const frases = [
     'Personajes de Disney',
@@ -74,6 +41,7 @@ export default function MiniGame1({ route, navigation }) {
 
   useFocusEffect(
     React.useCallback(() => {
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
       setTop({ 1: null, 2: null, 3: null });
       setAsignados([]);
       setJugadorSeleccionado(null);
@@ -82,21 +50,20 @@ export default function MiniGame1({ route, navigation }) {
   );
 
   const asignarTop = (pos) => {
-    if (!draggingJugador && !jugadorSeleccionado) return;
-    const jugador = draggingJugador || jugadorSeleccionado;
+    if (!jugadorSeleccionado) return;
     setTop((prevTop) => {
       const anterior = prevTop[pos];
       setAsignados((prevAsignados) => {
         let nuevos = [...prevAsignados];
-        if (anterior && anterior !== jugador) {
+        if (anterior && anterior !== jugadorSeleccionado) {
           nuevos = nuevos.filter((j) => j !== anterior);
         }
-        if (!nuevos.includes(jugador)) {
-          nuevos.push(jugador);
+        if (!nuevos.includes(jugadorSeleccionado)) {
+          nuevos.push(jugadorSeleccionado);
         }
         return nuevos;
       });
-      return { ...prevTop, [pos]: jugador };
+      return { ...prevTop, [pos]: jugadorSeleccionado };
     });
     setJugadorSeleccionado(null);
   };
@@ -108,13 +75,6 @@ export default function MiniGame1({ route, navigation }) {
         <TouchableOpacity
           onPress={() => asignarTop(2)}
           style={[styles.podiumBox, styles.podiumSecond]}
-          onLayout={(e) => {
-            podiumLayouts.current['2'] = e.nativeEvent.layout;
-            // Add pageX and pageY for absolute positioning
-            e.target.measure((x, y, width, height, pageX, pageY) => {
-              podiumLayouts.current['2'] = { x, y, width, height, pageX, pageY };
-            });
-          }}
         >
           {top[2] && <Text style={styles.jugadorTexto}>{top[2]}</Text>}
         </TouchableOpacity>
@@ -124,12 +84,6 @@ export default function MiniGame1({ route, navigation }) {
         <TouchableOpacity
           onPress={() => asignarTop(1)}
           style={[styles.podiumBox, styles.podiumFirst]}
-          onLayout={(e) => {
-            podiumLayouts.current['1'] = e.nativeEvent.layout;
-            e.target.measure((x, y, width, height, pageX, pageY) => {
-              podiumLayouts.current['1'] = { x, y, width, height, pageX, pageY };
-            });
-          }}
         >
           {top[1] && <Text style={styles.jugadorTexto}>{top[1]}</Text>}
         </TouchableOpacity>
@@ -139,12 +93,6 @@ export default function MiniGame1({ route, navigation }) {
         <TouchableOpacity
           onPress={() => asignarTop(3)}
           style={[styles.podiumBox, styles.podiumThird]}
-          onLayout={(e) => {
-            podiumLayouts.current['3'] = e.nativeEvent.layout;
-            e.target.measure((x, y, width, height, pageX, pageY) => {
-              podiumLayouts.current['3'] = { x, y, width, height, pageX, pageY };
-            });
-          }}
         >
           {top[3] && <Text style={styles.jugadorTexto}>{top[3]}</Text>}
         </TouchableOpacity>
@@ -179,29 +127,30 @@ export default function MiniGame1({ route, navigation }) {
             </Text>
           )}
           <View style={styles.jugadoresWrapper}>
-            {jugadores
-              .filter((nombre) => !asignados.includes(nombre))
-              .map((nombre) => {
-                return (
-                  <TouchableOpacity
-                    key={nombre}
-                    onLongPress={() => setDraggingJugador(nombre)}
-                    onPress={() => setJugadorSeleccionado(nombre)}
-                    style={[
-                      styles.jugador,
-                      jugadorSeleccionado === nombre && { backgroundColor: 'rgba(0, 150, 0, 0.6)' }
-                    ]}
-                  >
-                    <Text style={styles.jugadorTexto}>{nombre}</Text>
-                  </TouchableOpacity>
-                );
-              })}
+            {jugadores.map((nombre) => {
+              const asignado = asignados.includes(nombre);
+              return (
+                <TouchableOpacity
+                  key={nombre}
+                  onPress={() => setJugadorSeleccionado(nombre)}
+                  disabled={asignado}
+                  style={[
+                    styles.jugador,
+                    jugadorSeleccionado === nombre && { backgroundColor: 'rgba(0, 150, 0, 0.6)' },
+                    asignado && { opacity: 0.4 }
+                  ]}
+                >
+                  <Text style={styles.jugadorTexto}>{nombre}</Text>
+                </TouchableOpacity>
+              );
+            })}
           </View>
           <Modal
             animationType="slide"
             transparent={true}
             visible={modalVisible}
             onRequestClose={() => {
+              LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
               setModalVisible(false);
               setTop({ 1: null, 2: null, 3: null });
               setAsignados([]);
@@ -218,6 +167,7 @@ export default function MiniGame1({ route, navigation }) {
                 <Pressable
                   style={styles.botonCerrar}
                   onPress={() => {
+                    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
                     setModalVisible(false);
                     setTop({ 1: null, 2: null, 3: null });
                     setAsignados([]);
@@ -230,22 +180,6 @@ export default function MiniGame1({ route, navigation }) {
               </View>
             </View>
           </Modal>
-          {draggingJugador && (
-            <Animated.View
-              {...panResponder.panHandlers}
-              style={[
-                styles.jugador,
-                {
-                  position: 'absolute',
-                  zIndex: 1000,
-                  transform: dragPosition.getTranslateTransform(),
-                  backgroundColor: 'rgba(0, 100, 0, 0.8)',
-                },
-              ]}
-            >
-              <Text style={styles.jugadorTexto}>{draggingJugador}</Text>
-            </Animated.View>
-          )}
         </View>
       </ScrollView>
     </View>
