@@ -1,134 +1,65 @@
-import React, { useState, useRef, useMemo } from 'react';
+import React, { useState, useRef } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-import { View, Text, StyleSheet, PanResponder, Animated, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function MiniGame1({ route, navigation }) {
   const { jugadores = [] } = route.params || {};
   const [top, setTop] = useState({ 1: null, 2: null, 3: null });
   const [asignados, setAsignados] = useState([]);
+  const [jugadorSeleccionado, setJugadorSeleccionado] = useState(null);
   const dropZoneRefs = useRef({ 1: null, 2: null, 3: null });
 
-useFocusEffect(
-  React.useCallback(() => {
-    setTop({ 1: null, 2: null, 3: null });
-    setAsignados([]);
-    // Reiniciar animaciones de cada jugador al volver a la pantalla
-    jugadoresRefs.forEach(j => {
-      j.pan.setValue({ x: 0, y: 0 });
-      j.pan.setOffset({ x: 0, y: 0 });
-    });
-  }, [])
-);
-
-  const checkDropZones = (gestureState) => {
-    return new Promise((resolve) => {
-      let matchedZone = null;
-      let pending = 3;
-      for (let i = 1; i <= 3; i++) {
-        dropZoneRefs.current[i]?.measureInWindow((x, y, width, height) => {
-          const inside =
-            gestureState.moveY >= y &&
-            gestureState.moveY <= y + height &&
-            gestureState.moveX >= x &&
-            gestureState.moveX <= x + width;
-
-          if (inside && !matchedZone) {
-            matchedZone = i;
-          }
-          if (--pending === 0) {
-            resolve(matchedZone);
-          }
-        });
-      }
-    });
-  };
-
-  const jugadoresRefs = useMemo(() => {
-    return jugadores.map((nombre, index) => {
-      const pan = new Animated.ValueXY();
-      const row = Math.floor(index / 3);
-      const col = index % 3;
-      const initialLeft = 20 + col * 110;
-      const initialTop = 20 + row * 80;
-      const initialPos = { x: initialLeft, y: initialTop };
-
-      pan.setValue({ x: 0, y: 0 });
-
-      const panResponder = PanResponder.create({
-        onStartShouldSetPanResponder: () => true,
-        onPanResponderGrant: () => {
-          pan.setOffset(pan.__getValue());
-          pan.setValue({ x: 0, y: 0 });
-        },
-        onPanResponderMove: Animated.event(
-          [null, { dx: pan.x, dy: pan.y }],
-          { useNativeDriver: false }
-        ),
-        onPanResponderRelease: async (_, gestureState) => {
-          const zona = await checkDropZones(gestureState);
-          console.log(`[${nombre}] soltado. Zona detectada:`, zona);
-          if (zona) {
-            console.log(`[${nombre}] intentando entrar en TOP ${zona}`);
-            setTop((prev) => {
-              const anterior = prev[zona];
-              if (anterior && anterior !== nombre) {
-                console.log(`[${nombre}] reemplaza a ${anterior} en TOP ${zona}`);
-                const reemplazado = jugadoresRefs.find(j => j.nombre === anterior);
-                if (reemplazado) {
-                  reemplazado.pan.flattenOffset();
-                  Animated.spring(reemplazado.pan, {
-                    toValue: { x: 0, y: 0 },
-                    useNativeDriver: false,
-                  }).start();
-                }
-                setAsignados((prevAsignados) =>
-                  prevAsignados.filter((j) => j !== anterior)
-                );
-              }
-              console.log(`[${nombre}] asignado a TOP ${zona}. Estado anterior:`, anterior);
-              return { ...prev, [zona]: nombre };
-            });
-            setAsignados((prev) => [...prev, nombre]);
-            pan.setOffset(pan.__getValue());
-            pan.setValue({ x: 0, y: 0 });
-          } else {
-            console.log(`[${nombre}] no cayó en zona válida. Vuelve a posición original`);
-            pan.flattenOffset();
-            Animated.spring(pan, {
-              toValue: { x: 0, y: 0 },
-              useNativeDriver: false,
-            }).start();
-          }
-        },
-      });
-
-      return { nombre, pan, panResponder, initialLeft, initialTop, initialPos };
-    });
-  }, [jugadores]);
+  useFocusEffect(
+    React.useCallback(() => {
+      setTop({ 1: null, 2: null, 3: null });
+      setAsignados([]);
+      setJugadorSeleccionado(null);
+    }, [])
+  );
 
   const renderDropZones = () => (
     <View style={styles.topContainer}>
       {[1, 2, 3].map((pos) => {
-        const jugadorTop = jugadoresRefs.find(j => j.nombre === top[pos]);
+        const jugadorTop = asignados.includes(top[pos]) ? top[pos] : null;
         return (
           <View key={pos} style={styles.dropZoneWrapper}>
             <Text style={styles.topItem}>TOP {pos}:</Text>
-            <View
-              ref={(ref) => (dropZoneRefs.current[pos] = ref)}
+            <TouchableOpacity
+              ref={(ref) => {
+                if (ref) dropZoneRefs.current[pos] = ref;
+              }}
               style={styles.dropZone}
+              onPress={() => {
+                if (!jugadorSeleccionado) return;
+                setTop((prevTop) => {
+                  const anterior = prevTop[pos];
+                  setAsignados((prevAsignados) => {
+                    let nuevos = [...prevAsignados];
+                    if (anterior && anterior !== jugadorSeleccionado) {
+                      nuevos = nuevos.filter((j) => j !== anterior);
+                    }
+                    if (!nuevos.includes(jugadorSeleccionado)) {
+                      nuevos.push(jugadorSeleccionado);
+                    }
+                    return nuevos;
+                  });
+                  return { ...prevTop, [pos]: jugadorSeleccionado };
+                });
+                setJugadorSeleccionado(null);
+              }}
             >
               {jugadorTop && (
-                <Animated.View
+                <View
                   style={[
                     { position: 'relative' },
                     styles.jugador
                   ]}
                 >
-                  <Text style={styles.jugadorTexto}>{jugadorTop.nombre}</Text>
-                </Animated.View>
+                  <Text style={styles.jugadorTexto}>{jugadorTop}</Text>
+                </View>
               )}
-            </View>
+            </TouchableOpacity>
           </View>
         );
       })}
@@ -141,27 +72,37 @@ useFocusEffect(
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={28} color="#fff" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => setMostrarOpciones(!mostrarOpciones)}>
+        <TouchableOpacity onPress={() => {}}>
           <Ionicons name="ellipsis-vertical" size={28} color="#fff" />
         </TouchableOpacity>
       </View>
       {renderDropZones()}
       <View style={styles.jugadoresWrapper}>
-        {jugadoresRefs
-          .filter((j) => !asignados.includes(j.nombre))
-          .map(({ nombre, pan, panResponder, initialLeft, initialTop }, index) => (
-            <Animated.View
-              key={index}
-              {...panResponder.panHandlers}
-              style={[
-                { position: 'absolute', left: initialLeft, top: initialTop },
-                { transform: pan.getTranslateTransform() },
-                styles.jugador
-              ]}
-            >
-              <Text style={styles.jugadorTexto}>{nombre}</Text>
-            </Animated.View>
-          ))}
+        {jugadores
+          .filter((nombre) => !asignados.includes(nombre))
+          .map((nombre, index) => {
+            const row = Math.floor(index / 3);
+            const col = index % 3;
+            const initialLeft = 20 + col * 110;
+            const initialTop = 20 + row * 80;
+            return (
+              <TouchableOpacity
+                key={nombre}
+                onPress={() => setJugadorSeleccionado(nombre)}
+                style={[
+                  {
+                    position: 'absolute',
+                    left: initialLeft,
+                    top: initialTop,
+                  },
+                  styles.jugador,
+                  jugadorSeleccionado === nombre && { backgroundColor: 'rgba(0, 150, 0, 0.6)' }
+                ]}
+              >
+                <Text style={styles.jugadorTexto}>{nombre}</Text>
+              </TouchableOpacity>
+            );
+          })}
       </View>
     </View>
   );
