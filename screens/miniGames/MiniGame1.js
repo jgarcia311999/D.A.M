@@ -17,13 +17,36 @@ export default function MiniGame1({ route, navigation }) {
   }
 
   const frases = [
-    'Personajes de Disney',
-    'Tipos de ex',
-    'Cosas que odias en una cita',
-    'Excusas malas para llegar tarde',
-    'Bebidas que arruinan tu noche',
-    'Canciones para llorar',
-    'Peores regalos que te han hecho'
+    'TOP 3 que mas cerveza beben',
+    'TOP 3 que mas salen de fiesta',
+    'TOP 3 que mas ligan de fiesta',
+    'TOP 3 que mas nudes suyos tengan',
+    'TOP 3 que mas haya f*llado esta semana',
+    'TOP 3 que más rápido acaban',
+    'TOP 3 que más usan Tinder',
+    'TOP 3 que tienen un OnlyFans secreto',
+    'TOP 3 que más juguetes tienen en la mesita de noche',
+    'TOP 3 que más fantasías raras tienen',
+    'TOP 3 que más veces lo han hecho en sitios públicos',
+    'TOP 3 que tienen el historial de navegación más turbio',
+    'TOP 3 que nunca dicen que no a un chupito',
+    'TOP 3 que más han vomitado en una noche',
+    'TOP 3 que más se han quedado dormidos en fiestas',
+    'TOP 3 que más han hecho el ridículo bailando',
+    'TOP 3 que han sido echados de un local',
+    'TOP 3 que peor aguantan el alcohol',
+    'TOP 3 que mas pesados se ponen cuando beben',
+    'TOP 3 que más drama montan en fiestas',
+    'TOP 3 que más han mentido para ligar',
+    'TOP 3 que más hablan de los demás',
+    'TOP 3 mas chismosos',
+    'TOP 3 mas pedorros',
+    'TOP 3 que más stickers suyos circulan',
+    'TOP 3 que más han enviado mensajes calientes borrachos',
+    'TOP 3 que ligarian con alguien mucho mas mayor que el',
+    'TOP 3 que han salido de fiesta un martes “porque sí”',
+    'TOP 3 que más se han liado con gente del mismo grupo',
+    'TOP 3 que más veces han terminado abrazando al váter'
   ];
 
   const getNuevaFrase = () => {
