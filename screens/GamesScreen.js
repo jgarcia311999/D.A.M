@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { SafeAreaView, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
@@ -8,7 +8,7 @@ const GamesScreen = () => {
   const [mostrarOpciones, setMostrarOpciones] = useState(false);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={28} color="#fff" />
@@ -18,13 +18,14 @@ const GamesScreen = () => {
         </TouchableOpacity>
       </View>
       <View />
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 50,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',

@@ -54,7 +54,7 @@ const cartasImagenes = {
 };
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, Button, StyleSheet, Image, ScrollView, Dimensions, TouchableOpacity, Modal, TouchableWithoutFeedback, Pressable } from 'react-native';
+import { View, Text, Button, StyleSheet, Image, ScrollView, Dimensions, TouchableOpacity, Modal, TouchableWithoutFeedback, Pressable, SafeAreaView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function GameOneScreen({ route, navigation }) {
@@ -256,7 +256,7 @@ export default function GameOneScreen({ route, navigation }) {
   );
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={28} color="#fff" />
@@ -369,7 +369,7 @@ export default function GameOneScreen({ route, navigation }) {
           </View>
         </TouchableWithoutFeedback>
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -388,7 +388,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#191716',
-    paddingTop: 0,
+    paddingTop: 50,
     position: 'relative',
   },
   cardGrid: {

@@ -12,7 +12,7 @@ const generarBarajaCompleta = () => {
 };
 
 import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet, Modal, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { View, Text, Button, StyleSheet, Modal, TouchableOpacity, ScrollView, Image, SafeAreaView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 const imagenesCartas = {
@@ -138,7 +138,7 @@ export default function GameTwoScreen({ route, navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={28} color="#fff" />
@@ -348,7 +348,7 @@ export default function GameTwoScreen({ route, navigation }) {
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -358,7 +358,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#191716',
     alignItems: 'center',
     padding: 20,
-    paddingTop: 100,
+    paddingTop: 50,
   },
   header: {
     width: '100%',

@@ -53,7 +53,7 @@ const cartasImagenes = {
 };
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, Button, StyleSheet, Image, ScrollView, Dimensions, TouchableOpacity, Modal, TouchableWithoutFeedback, Pressable } from 'react-native';
+import { View, Text, Button, StyleSheet, Image, ScrollView, Dimensions, TouchableOpacity, Modal, TouchableWithoutFeedback, Pressable, SafeAreaView } from 'react-native';
 
 export default function GameOneScreen({ route }) {
     const { height } = Dimensions.get('window');
@@ -245,7 +245,7 @@ export default function GameOneScreen({ route }) {
     );
 
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={[styles.container, { paddingTop: 50 }]}>
         <Text style={[styles.turno, { color: colorTextoJugador || '#2d3436' }]}>{jugadorActual}</Text>
         <View style={styles.cardGrid}>
           {[0, 1, 2, 3].map((i) => (
@@ -319,7 +319,7 @@ export default function GameOneScreen({ route }) {
           <Button title="Reiniciar" onPress={reiniciar} />
         )}
         <CartaModal />
-      </View>
+      </SafeAreaView>
     );
 }
 

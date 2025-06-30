@@ -79,7 +79,7 @@ export default function GamerScreen({ route }) {
   };
 
   return (
-    <SafeAreaView style={styles.gridBackground}>
+    <SafeAreaView style={[styles.gridBackground, { paddingTop: 50 }]}>
       <ScrollView
         contentContainerStyle={styles.scrollContainer}
         onScroll={(event) => {

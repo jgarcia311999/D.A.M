@@ -1,11 +1,33 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableWithoutFeedback, SafeAreaView } from 'react-native';
+
+const frases = [
+  'Nunca he...',
+  'Bebe quien haya mentido hoy',
+  'Quien se haya enamorado este año, bebe',
+  'Bebe el más fiestero del grupo',
+  'Quien tenga el móvil con menos batería, bebe',
+];
 
 export default function MiniGame2() {
+  const [fraseActual, setFraseActual] = React.useState(() => {
+    return frases[Math.floor(Math.random() * frases.length)];
+  });
+
+  const cambiarFrase = () => {
+    let nueva;
+    do {
+      nueva = frases[Math.floor(Math.random() * frases.length)];
+    } while (nueva === fraseActual);
+    setFraseActual(nueva);
+  };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Hello World</Text>
-    </View>
+    <TouchableWithoutFeedback onPress={cambiarFrase}>
+      <SafeAreaView style={[styles.container, { paddingTop: 50 }]}>
+        <Text style={styles.text}>{fraseActual}</Text>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 }
 

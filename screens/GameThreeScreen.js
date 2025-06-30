@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Animated, Easing, Dimensions, TouchableWithoutFeedback, PanResponder } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Animated, Easing, Dimensions, TouchableWithoutFeedback, PanResponder, SafeAreaView } from 'react-native';
 import Svg, { G, Path } from 'react-native-svg';
 
 const { width } = Dimensions.get('window');
@@ -93,7 +93,7 @@ export default function GameThreeScreen() {
 
   return (
     <TouchableWithoutFeedback disabled={!isSpinning}>
-      <View style={styles.container}>
+      <SafeAreaView style={[styles.container, { paddingTop: 50 }]}>
         <Text style={styles.title}>Ruleta de los Traguitos</Text>
         <View style={styles.pointer} />
         <Animated.View style={{ transform: [{ rotate: spin }] }} {...panResponder.panHandlers}>
@@ -113,7 +113,7 @@ export default function GameThreeScreen() {
           <Text style={styles.buttonText}>🎯 GIRAR</Text>
         </TouchableOpacity>
         {selected && <Text style={styles.result}>Resultado: {selected}</Text>}
-      </View>
+      </SafeAreaView>
     </TouchableWithoutFeedback>
   );
 }

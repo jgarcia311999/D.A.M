@@ -74,13 +74,13 @@ const PruebaGameFourScreen = ({ route, navigation }) => {
 
     if (frasesCombinadas.length === 0) {
         return (
-            <SafeAreaView style={styles.container}>
+            <SafeAreaView style={[styles.container, { paddingTop: 50 }]}>
                 <Text style={styles.text}>Rellenando chupitos</Text>
             </SafeAreaView>
         );
     }
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={[styles.container, { paddingTop: 50 }]}>
             <Image source={require('../assets/chapas/chapa_flor.png')} style={styles.imageBackground} />
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>

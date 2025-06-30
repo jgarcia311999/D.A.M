@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 
 export default function MiniGame3() {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.text}>Hello World</Text>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#191716',
+    paddingTop: 50,
   },
   text: {
     fontSize: 20,

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, Pressable, ScrollView, LayoutAnimation, Platform, UIManager } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, Pressable, ScrollView, LayoutAnimation, Platform, UIManager, SafeAreaView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function MiniGame1({ route, navigation }) {
@@ -46,6 +46,7 @@ export default function MiniGame1({ route, navigation }) {
     'TOP 3 que ligarian con alguien mucho mas mayor que el',
     'TOP 3 que han salido de fiesta un martes “porque sí”',
     'TOP 3 que más se han liado con gente del mismo grupo',
+    'TOP 3 que menos han bebido hoy',
     'TOP 3 que más veces han terminado abrazando al váter'
   ];
 
@@ -124,7 +125,7 @@ export default function MiniGame1({ route, navigation }) {
   );
 
   return (
-    <View style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#191716', paddingTop: 50 }}>
       <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
         <View style={styles.innerContainer}>
           <View style={styles.header}>
@@ -183,10 +184,10 @@ export default function MiniGame1({ route, navigation }) {
           >
             <View style={styles.modalOverlay}>
               <View style={styles.modalContent}>
-                <Text style={styles.text}>Tema: {tema}</Text>
-                <Text style={styles.text}>TOP 1: {top[1] || '---'}</Text>
-                <Text style={styles.text}>TOP 2: {top[2] || '---'}</Text>
-                <Text style={styles.text}>TOP 3: {top[3] || '---'}</Text>
+                <Text style={styles.text}>{tema}</Text>
+                <Text style={styles.text}>TOP 1: {top[1] || '---'}, 3 tragos</Text>
+                <Text style={styles.text}>TOP 2: {top[2] || '---'}, 2 tragos</Text>
+                <Text style={styles.text}>TOP 3: {top[3] || '---'}, 1 trago</Text>
                 <Pressable
                   style={styles.botonCerrar}
                   onPress={() => {
@@ -205,7 +206,7 @@ export default function MiniGame1({ route, navigation }) {
           </Modal>
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -276,7 +277,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     marginBottom: 10,
     textAlign: 'center',
-    marginTop: 40,
   },
   botonContinuar: {
     backgroundColor: '#6a0dad',
