@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, Pressable, LayoutAnimation, Platform, UIManager, SafeAreaView, TouchableWithoutFeedback, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import * as Haptics from 'expo-haptics';
 
 export default function MiniGame1({ route, navigation }) {
   const { jugadores = [] } = route.params || {};
@@ -141,7 +142,10 @@ export default function MiniGame1({ route, navigation }) {
       <View style={styles.scrollView}>
         <View style={styles.innerContainer}>
           <View style={styles.header}>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
+            <TouchableOpacity onPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+              navigation.goBack();
+            }}>
               <Ionicons name="arrow-back" size={28} color="#fff" />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => {
