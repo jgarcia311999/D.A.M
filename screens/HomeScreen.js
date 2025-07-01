@@ -2,20 +2,21 @@ import React, { useRef, useState } from 'react';
 import { View, Image, FlatList, ScrollView, Dimensions, StyleSheet, SafeAreaView, TouchableOpacity, Animated, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import ImgCerveza from '../assets/pj_cerveza.png';
-import ImgCartas from '../assets/pj_cartas.png';
-import ImgFumando from '../assets/pj_fumando.png';
-import ImgRuleta from '../assets/pj_ruleta.png';
+import ImgSamurai from '../assets/personajes/personaje_samurai.png';
+import ImgRobot from '../assets/personajes/personaje_robot.png';
+import ImgMusico from '../assets/personajes/personaje_musico.png';
+import ImgMago from '../assets/personajes/personaje_mago.png';
+import ImgDJ from '../assets/personajes/personaje_dj.png';
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 const juegos = [
   {
     id: 1,
     nombre: 'Bebecartas',
     descripcion: 'Saca cartas al azar con retos únicos y bebe si no los cumples.',
     screen: 'Prueba 4',
-    imagen: ImgCerveza,
-    imagenEstilo: { width: 230, height: 230, resizeMode: 'contain' },
+    imagen: ImgSamurai,
+    imagenEstilo: { width: '80%', height: height * 0.35, resizeMode: 'contain' },
     color: '#bfa3ff',
   },
   {
@@ -23,8 +24,8 @@ const juegos = [
     nombre: 'La Cadena del Crupier',
     descripcion: 'Reta a tus amigos con preguntas rápidas y pasa la cadena antes que el tiempo se agote.',
     screen: 'Prueba 1',
-    imagen: ImgCartas,
-    imagenEstilo: { width: 230, height: 230, resizeMode: 'contain' },
+    imagen: ImgRobot,
+    imagenEstilo: { width: '80%', height: height * 0.35, resizeMode: 'contain' },
     color: '#ffc8a3',
   },
   {
@@ -32,8 +33,8 @@ const juegos = [
     nombre: 'El Saca Cartas',
     descripcion: 'Desliza y revela desafíos divertidos carta por carta.',
     screen: 'Juego 2',
-    imagen: ImgFumando,
-    imagenEstilo: { width: 230, height: 230, resizeMode: 'contain' },
+    imagen: ImgMusico,
+    imagenEstilo: { width: '80%', height: height * 0.35, resizeMode: 'contain' },
     color: '#d5c385',
   },
   {
@@ -41,8 +42,8 @@ const juegos = [
     nombre: 'MiniGamesss',
     descripcion: 'Una variedad de minijuegos.',
     screen: 'MiniGames',
-    imagen: ImgRuleta,
-    imagenEstilo: { width: 230, height: 230, resizeMode: 'contain' },
+    imagen: ImgMago,
+    imagenEstilo: { width: '80%', height: height * 0.35, resizeMode: 'contain' },
     color: '#a3ffd9',
   },
   {
@@ -50,8 +51,8 @@ const juegos = [
     nombre: 'Home de prueba',
     descripcion: 'en fase de desarrollo.',
     screen: 'Inicio2',
-    imagen: ImgFumando,
-    imagenEstilo: { width: 230, height: 230, resizeMode: 'contain' },
+    imagen: ImgDJ,
+    imagenEstilo: { width: '80%', height: height * 0.35, resizeMode: 'contain' },
     color: '#ffa3d1',
   },
 ];
@@ -75,8 +76,10 @@ export default function HomeScreen({ navigation }) {
       onPress={() => navigation.navigate(item.screen)}
       activeOpacity={0.9}
     >
-      <Text style={styles.slideTitle}>{item.nombre}</Text>
-      <Text style={styles.slideDescription}>{item.descripcion}</Text>
+      <View style={styles.slideTextContainer}>
+        <Text style={styles.slideTitle}>{item.nombre}</Text>
+        <Text style={styles.slideDescription}>{item.descripcion}</Text>
+      </View>
       <Image source={item.imagen} style={item.imagenEstilo} />
     </TouchableOpacity>
   );
@@ -102,7 +105,13 @@ export default function HomeScreen({ navigation }) {
         >
           <Ionicons name="menu" size={28} color="#fff" />
         </TouchableOpacity>
-        {/* Only show dots and Jugadores button in carousel mode */}
+        <TouchableOpacity
+          style={[styles.jugadoresButtonTopRight, { top: insets.top + 10 }]}
+          onPress={() => console.log('Jugadores')}
+        >
+          <Text style={styles.jugadoresButtonText}>Jugadores</Text>
+        </TouchableOpacity>
+        {/* Only show dots in carousel mode */}
         <View
           pointerEvents="box-none"
           style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 5 }}
@@ -120,12 +129,6 @@ export default function HomeScreen({ navigation }) {
                   />
                 ))}
               </View>
-              <TouchableOpacity
-                style={styles.jugadoresButtonInline}
-                onPress={() => console.log('Jugadores')}
-              >
-                <Text style={styles.jugadoresButtonText}>Jugadores</Text>
-              </TouchableOpacity>
             </View>
           )}
         </View>
@@ -176,6 +179,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
   },
+  slideTextContainer: {
+    position: 'absolute',
+    top: '18%',
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+  },
   slideTitle: {
     fontSize: 22,
     fontWeight: 'bold',
@@ -189,7 +199,7 @@ const styles = StyleSheet.create({
   },
   topRightButton: {
     position: 'absolute',
-    right: 20,
+    left: 20,
     zIndex: 10,
   },
   dot: {
@@ -230,6 +240,7 @@ const styles = StyleSheet.create({
     color: '#000',
     textAlign: 'center',
     marginBottom: 10,
+    paddingHorizontal: 60,
   },
   cardDescription: {
     fontSize: 14,
@@ -243,21 +254,24 @@ const styles = StyleSheet.create({
     left: 20,
     right: 20,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
     zIndex: 10,
   },
   dotsInline: {
     flexDirection: 'row',
   },
-  jugadoresButtonInline: {
+  jugadoresButtonText: {
+    color: '#000',
+    fontWeight: 'bold',
+  },
+  jugadoresButtonTopRight: {
+    position: 'absolute',
+    right: 20,
     backgroundColor: '#fff',
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 8,
-  },
-  jugadoresButtonText: {
-    color: '#000',
-    fontWeight: 'bold',
+    zIndex: 10,
   },
 });

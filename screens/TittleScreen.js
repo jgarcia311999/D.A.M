@@ -41,11 +41,11 @@ export default function TittleScreen({ navigation }) {
   }, []);
 
   const handleScrollDown = () => {
-    navigation.navigate('Inicio2');
+    navigation.navigate('Inicio');
   };
 
   return (
-    <TouchableWithoutFeedback onPress={() => navigation.navigate('Inicio2')}>
+    <TouchableWithoutFeedback onPress={() => navigation.navigate('Inicio')}>
       <View style={{ height, width, backgroundColor: '#EFD74A' }}>
         <Svg
           width={width}
