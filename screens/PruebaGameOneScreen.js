@@ -99,8 +99,8 @@ export default function GameOneScreen({ route, navigation }) {
   const infoPages = [
     `Un juego de cartas para beber... sí, otro más. Pero este por lo menos te obliga a usar una neurona o dos.`,
     `Son cuatro fases. Aciertas, avanzas. La cagas, bebes.\n¿Demasiado para ti? Siempre puedes rendirte y fingir que repartes los tragos por estrategia.`,
-    `Fase 1 – Color: ¿Roja o negra? Una decisión tan difícil como elegir entre tinto o cerveza.\n\nFase 2 – Mayor o menor: Compara cartas. Decide si sube o baja. Vamos, no es física cuántica.`,
-    `Fase 3 – ¿Entre o fuera?: ¿La carta cae entre las otras dos? Pues di "sí" o "no", a ver si te crees Nostradamus.\n\nFase 4 – Palo: Elige: cigarro, cubata, gallina u oro.`,
+    `Fase 1 - Color: ¿Roja o negra? Una decisión tan difícil como elegir entre tinto o cerveza.\n\nFase 2 - Mayor o menor: Compara cartas. Decide si sube o baja. Vamos, no es física cuántica.`,
+    `Fase 3 - ¿Entre o fuera?: ¿La carta cae entre las otras dos? Pues di "sí" o "no", a ver si te crees Nostradamus.\n\nFase 4 - Palo: Elige: cigarro, cubata, gallina u oro.`,
     `¿Te rajas? Genial. Reparte tragos como si fueras el rey de la fiesta… aunque todos sepan que te has cagado.`,
   ];
   const jugadores = route?.params?.jugadores || [];
@@ -265,6 +265,7 @@ export default function GameOneScreen({ route, navigation }) {
         }}>
           <Ionicons name="arrow-back" size={28} color="#fff" />
         </TouchableOpacity>
+        <Text style={styles.turno}>{jugadorActual}</Text>
         <TouchableOpacity onPress={() => {
           setInfoPage(0);
           setModalInfoVisible(true);
@@ -272,7 +273,6 @@ export default function GameOneScreen({ route, navigation }) {
           <Ionicons name="help-circle-outline" size={28} color="#fff" />
         </TouchableOpacity>
       </View>
-      <Text style={[styles.turno, { color: '#fff' }]}>{jugadorActual}</Text>
       <View style={styles.cardGrid}>
         {[0, 1, 2, 3].map((i) => (
           <Image key={i} source={obtenerImagenCarta(cartas[i])} style={styles.cardImage} resizeMode="contain" />
@@ -382,12 +382,11 @@ const styles = StyleSheet.create({
   header: {
     width: '100%',
     paddingHorizontal: 20,
-    paddingTop: 50,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     position: 'absolute',
-    top: 0,
+    top: 50,
     zIndex: 2,
   },
   container: {
@@ -401,7 +400,7 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flexGrow: 1,
     backgroundColor: '#191716',
-    paddingTop: 0,
+    paddingTop: 140,
   },
   cardGrid: {
     flexDirection: 'row',
@@ -423,11 +422,11 @@ const styles = StyleSheet.create({
   turno: {
     fontSize: 22,
     fontWeight: '700',
-    marginBottom: 5,
     color: '#fff',
     textAlign: 'center',
     fontFamily: 'Panchang-Regular',
-    marginTop: 100,
+    marginLeft: 10,
+    marginRight: 10,
   },
   question: {
     fontSize: 22,

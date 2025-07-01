@@ -20,7 +20,8 @@ export default function HomeScreen({ navigation }) {
   const inputRef = useRef(null);
   const carouselRef = useRef(null);
   const scrollAnim = useRef(new Animated.Value(0)).current;
-  const animationRef = useRef(null);
+
+  let scrollAnimation = null;
 
   const openBottomSheet = () => {
     setBottomSheetVisible(true);
@@ -43,13 +44,6 @@ export default function HomeScreen({ navigation }) {
 
   const juegos = [
     {
-      nombre: 'MiniGamesss',
-      descripcion: 'Una variedad de minijuegos.',
-      screen: 'MiniGames',
-      imagen: ImgRuleta,
-      imagenEstilo: { left: width * 0.1, top: height * -0.127 },
-    },
-    {
       nombre: 'Bebecartas',
       descripcion: 'Saca cartas al azar con retos únicos y bebe si no los cumples.',
       screen: 'Prueba 4',
@@ -71,23 +65,18 @@ export default function HomeScreen({ navigation }) {
       imagenEstilo: { left: width * -0.25, top: height * -0.125, transform: [{ scaleX: -1 }] },
     },
     {
-      nombre: 'La Ruleta del Shot',
-      descripcion: 'Gira la ruleta y descubre quién se lleva el próximo shot.',
-      screen: 'Juego 3',
+      nombre: 'MiniGamesss',
+      descripcion: 'Una variedad de minijuegos.',
+      screen: 'MiniGames',
       imagen: ImgRuleta,
       imagenEstilo: { left: width * 0.1, top: height * -0.127 },
     },
     
+    
   ];
 
   useEffect(() => {
-    const listenerId = scrollAnim.addListener(({ value }) => {
-      if (carouselRef.current) {
-        carouselRef.current.scrollToOffset({ offset: value, animated: false });
-      }
-    });
-
-    const animation = Animated.sequence([
+    scrollAnimation = Animated.sequence([
       Animated.timing(scrollAnim, {
         toValue: Dimensions.get('window').width * 0.25,
         duration: 600,
@@ -102,17 +91,20 @@ export default function HomeScreen({ navigation }) {
       }),
     ]);
 
-    animationRef.current = animation;
+    const listenerId = scrollAnim.addListener(({ value }) => {
+      if (carouselRef.current) {
+        carouselRef.current.scrollToOffset({ offset: value, animated: false });
+      }
+    });
 
-    const timeoutId = setTimeout(() => {
-      animation.start();
+    const timeout = setTimeout(() => {
+      scrollAnimation.start();
     }, 1000);
 
-    animationRef.current.timeoutId = timeoutId;
-
     return () => {
+      scrollAnimation.stop();
       scrollAnim.removeListener(listenerId);
-      clearTimeout(timeoutId);
+      clearTimeout(timeout);
     };
   }, []);
 
@@ -133,57 +125,60 @@ export default function HomeScreen({ navigation }) {
     }, [])
   );
 
+  const cancelAnimation = () => {
+    if (scrollAnimation) {
+      scrollAnimation.stop();
+    }
+  };
+
   return (
-    <TouchableWithoutFeedback onPress={() => {
-      if (animationRef.current) {
-        animationRef.current.stop();
-        clearTimeout(animationRef.current.timeoutId);
-      }
-    }}>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <Image source={require('../assets/laprv.png')} style={styles.imageBackground} />
-        <SafeAreaView style={styles.gridBackground}>
-          <View style={{ flex: 1 }}>
-            {/* Header row with arrow and plus buttons */}
-            <View style={styles.header}>
-              <View style={{ width: 28 }} />
-              <TouchableOpacity onPress={() => {
-                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                navigation.navigate('Gamer');
-              }}>
-                <Ionicons name="add" size={28} color="#fff" />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.content}>
-              <FlatList
-                data={juegos}
-                keyExtractor={(item, index) => index.toString()}
-                horizontal
-                pagingEnabled
-                showsHorizontalScrollIndicator={false}
-                snapToAlignment="center"
-                contentContainerStyle={styles.carouselWrapper}
-                ref={carouselRef}
-                renderItem={({ item }) => (
-                  <TouchableOpacity
-                    style={styles.gameContainer}
-                    onPress={() => navigation.navigate(item.screen, { jugadores })}
-                  >
-                    <View style={styles.gameCard}>
-                      <Image source={item.imagen} style={[styles.cardCornerImage, item.imagenEstilo]} />
-                      <View style={styles.cardTextContainer}>
-                        <Text style={styles.gameText}>{item.nombre}</Text>
-                        <Text style={styles.gameDescription}>{item.descripcion}</Text>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <TouchableWithoutFeedback onPress={cancelAnimation}>
+        <View style={{ flex: 1 }}>
+          <Image source={require('../assets/laprv.png')} style={styles.imageBackground} />
+          <SafeAreaView style={styles.gridBackground}>
+            <View style={{ flex: 1 }}>
+              {/* Header row with arrow and plus buttons */}
+              <View style={styles.header}>
+                <View style={{ width: 28 }} />
+                <TouchableOpacity onPress={() => {
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                  navigation.navigate('Gamer');
+                }}>
+                  <Ionicons name="add" size={28} color="#fff" />
+                </TouchableOpacity>
+              </View>
+              <View style={styles.content}>
+                <FlatList
+                  data={juegos}
+                  keyExtractor={(item, index) => index.toString()}
+                  horizontal
+                  pagingEnabled
+                  showsHorizontalScrollIndicator={false}
+                  snapToAlignment="center"
+                  contentContainerStyle={styles.carouselWrapper}
+                  ref={carouselRef}
+                  renderItem={({ item }) => (
+                    <TouchableOpacity
+                      style={styles.gameContainer}
+                      onPress={() => navigation.navigate(item.screen, { jugadores })}
+                    >
+                      <View style={styles.gameCard}>
+                        <Image source={item.imagen} style={[styles.cardCornerImage, item.imagenEstilo]} />
+                        <View style={styles.cardTextContainer}>
+                          <Text style={styles.gameText}>{item.nombre}</Text>
+                          <Text style={styles.gameDescription}>{item.descripcion}</Text>
+                        </View>
                       </View>
-                    </View>
-                  </TouchableOpacity>
-                )}
-              />
+                    </TouchableOpacity>
+                  )}
+                />
+              </View>
             </View>
-          </View>
-        </SafeAreaView>
-      </GestureHandlerRootView>
-    </TouchableWithoutFeedback>
+          </SafeAreaView>
+        </View>
+      </TouchableWithoutFeedback>
+    </GestureHandlerRootView>
   );
 }
 
