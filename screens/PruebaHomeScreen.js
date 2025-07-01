@@ -71,6 +71,13 @@ export default function HomeScreen({ navigation }) {
       imagen: ImgRuleta,
       imagenEstilo: { left: width * 0.1, top: height * -0.127 },
     },
+    {
+      nombre: 'Home de prueba',
+      descripcion: 'en fase de desarrollo.',
+      screen: 'Inicio',
+      imagen: ImgFumando,
+      imagenEstilo: { left: width * 0.1, top: height * -0.127 },
+    },
     
     
   ];
