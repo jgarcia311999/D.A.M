@@ -107,9 +107,9 @@ export default function HomeScreen({ navigation }) {
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.jugadoresButtonTopRight, { top: insets.top + 10 }]}
-          onPress={() => console.log('Jugadores')}
+          onPress={() => navigation.navigate('Gamer')}
         >
-          <Text style={styles.jugadoresButtonText}>Jugadores</Text>
+          <Text style={styles.jugadoresButtonText}>Borrachos</Text>
         </TouchableOpacity>
         {/* Only show dots in carousel mode */}
         <View
@@ -187,10 +187,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   slideTitle: {
-    fontSize: 22,
+    fontSize: 28,
     fontWeight: 'bold',
+    fontFamily: 'Panchang-Bold',
     color: '#000',
     marginBottom: 10,
+    textTransform: 'uppercase',
+    paddingHorizontal: 60,
   },
   image: {
     width: 250,
@@ -227,8 +230,11 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 18,
     fontWeight: 'bold',
+    fontFamily: 'Panchang-Bold',
     color: '#000',
     marginBottom: 10,
+    textTransform: 'uppercase',
+    paddingHorizontal: 20,
   },
   imageSmall: {
     width: 150,
@@ -236,7 +242,8 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   slideDescription: {
-    fontSize: 16,
+    fontSize: 18,
+    fontFamily: 'Panchang-Regular',
     color: '#000',
     textAlign: 'center',
     marginBottom: 10,
@@ -244,9 +251,11 @@ const styles = StyleSheet.create({
   },
   cardDescription: {
     fontSize: 14,
+    fontFamily: 'Panchang-Regular',
     color: '#000',
     textAlign: 'center',
     marginBottom: 10,
+    paddingHorizontal: 20,
   },
   bottomControls: {
     position: 'absolute',
@@ -262,16 +271,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   jugadoresButtonText: {
-    color: '#000',
+    color: '#fff',
     fontWeight: 'bold',
+    fontFamily: 'Panchang-Bold',
   },
   jugadoresButtonTopRight: {
     position: 'absolute',
     right: 20,
-    backgroundColor: '#fff',
+    backgroundColor: 'transparent',
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#fff',
     zIndex: 10,
   },
 });
