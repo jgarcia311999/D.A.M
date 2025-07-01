@@ -54,9 +54,9 @@ const cartasImagenes = {
 };
 
 import React, { useState, useEffect, useCallback } from 'react';
+import * as Haptics from 'expo-haptics';
 import { View, Text, Button, StyleSheet, Image, ScrollView, Dimensions, TouchableOpacity, Modal, TouchableWithoutFeedback, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import * as Haptics from 'expo-haptics';
 
 export default function GameOneScreen({ route, navigation }) {
   const { height } = Dimensions.get('window');
@@ -149,7 +149,6 @@ export default function GameOneScreen({ route, navigation }) {
 
   const elegirColor = (colorElegido) => {
     const carta = generarCarta();
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setCartas([carta]);
     if (carta.color === colorElegido) {
       setModalCarta({ carta, acierto: true });
@@ -165,7 +164,6 @@ export default function GameOneScreen({ route, navigation }) {
   const elegirMayorMenor = (opcion) => {
     const cartaAnterior = cartas[0];
     const nuevaCarta = generarCarta();
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setCartas([...cartas, nuevaCarta]);
 
     const comparacion = nuevaCarta.numero > cartaAnterior.numero ? 'mayor' : (nuevaCarta.numero < cartaAnterior.numero ? 'menor' : 'igual');
@@ -184,7 +182,6 @@ export default function GameOneScreen({ route, navigation }) {
   const elegirEntre = (opcion) => {
     const [c1, c2] = cartas;
     const nuevaCarta = generarCarta();
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setCartas([...cartas, nuevaCarta]);
 
     const min = Math.min(c1.numero, c2.numero);
@@ -204,7 +201,6 @@ export default function GameOneScreen({ route, navigation }) {
 
   const elegirPalo = (paloElegido) => {
     const nuevaCarta = generarCarta();
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setCartas([...cartas, nuevaCarta]);
 
     if (nuevaCarta.palo === paloElegido) {
@@ -263,7 +259,10 @@ export default function GameOneScreen({ route, navigation }) {
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer} style={styles.scrollView}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity onPress={() => {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+          navigation.goBack();
+        }}>
           <Ionicons name="arrow-back" size={28} color="#fff" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => {
