@@ -1,3 +1,4 @@
+import * as Haptics from 'expo-haptics';
 import React, { useRef, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Animated, Easing, Dimensions, TouchableWithoutFeedback, PanResponder, SafeAreaView } from 'react-native';
 import Svg, { G, Path } from 'react-native-svg';
@@ -68,6 +69,7 @@ export default function GameThreeScreen() {
   ).current;
 
   const spinWheel = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy); // vibración al girar
     setIsSpinning(true);
     const segmentAngle = 360 / options.length;
     const randomIndex = Math.floor(Math.random() * options.length);

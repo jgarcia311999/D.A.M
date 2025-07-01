@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image, Animated, 
 import { PanResponder } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import * as Haptics from 'expo-haptics';
 import FlorImage from '../assets/flor.png';
 import ImgBailando from '../assets/pj_bailando.png';
 import ImgCartas from '../assets/pj_cartas.png';
@@ -149,7 +150,10 @@ export default function HomeScreen({ navigation }) {
           <View pointerEvents={menuVisible ? 'none' : 'auto'}>
             {/* Header row with arrow and plus buttons */}
             <View style={styles.header}>
-              <TouchableOpacity onPress={() => navigation.goBack()}>
+              <TouchableOpacity onPress={() => {
+                Haptics.selectionAsync();
+                navigation.goBack();
+              }}>
                 <Ionicons name="arrow-back" size={28} color="#fff" />
               </TouchableOpacity>
               <TouchableOpacity onPress={toggleMenu}>

@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import * as Haptics from 'expo-haptics';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image, Animated, Easing, TextInput, FlatList, Keyboard, SafeAreaView, ImageBackground } from 'react-native';
@@ -135,7 +136,10 @@ export default function HomeScreen({ navigation }) {
           {/* Header row with arrow and plus buttons */}
           <View style={styles.header}>
             <View style={{ width: 28 }} />
-            <TouchableOpacity onPress={() => navigation.navigate('Gamer')}>
+            <TouchableOpacity onPress={() => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+              navigation.navigate('Gamer');
+            }}>
               <Ionicons name="add" size={28} color="#fff" />
             </TouchableOpacity>
           </View>

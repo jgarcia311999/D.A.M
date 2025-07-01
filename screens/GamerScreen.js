@@ -4,6 +4,7 @@ import { Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Haptics from 'expo-haptics';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -94,6 +95,7 @@ export default function GamerScreen({ route }) {
         <View style={styles.header}>
           <TouchableOpacity
             onPress={async () => {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
               await AsyncStorage.setItem('jugadores', JSON.stringify(jugadores));
               navigation.goBack();
             }}

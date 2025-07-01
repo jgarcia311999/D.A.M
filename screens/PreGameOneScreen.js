@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet, Image, ScrollView, Dimensions } from 'react-native';
+import * as Haptics from 'expo-haptics';
 
 export default function GameOneScreen({ navigation }) {
   return (
@@ -29,7 +30,13 @@ export default function GameOneScreen({ navigation }) {
         </View>
       </ScrollView>
       <View style={styles.buttonContainer}>
-        <Button title="Empezar" onPress={() => navigation.navigate('Juego 1')} />
+        <Button
+          title="Empezar"
+          onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            navigation.navigate('Juego 1');
+          }}
+        />
       </View>
     </View>
   );

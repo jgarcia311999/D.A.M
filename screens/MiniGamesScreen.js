@@ -2,6 +2,7 @@ import React from 'react';
 import { ScrollView, View, StyleSheet, Dimensions, TouchableOpacity, Image, SafeAreaView, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import * as Haptics from 'expo-haptics';
 
 const { width, height } = Dimensions.get('window');
 
@@ -33,7 +34,10 @@ export default function HomeScreen({ navigation, route }) {
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                     <View style={{ flex: 1 }}>
                         <View style={styles.header}>
-                            <TouchableOpacity onPress={() => navigation.goBack()}>
+                            <TouchableOpacity onPress={() => {
+                                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                                navigation.goBack();
+                            }}>
                                 <Ionicons name="arrow-back" size={28} color="#fff" />
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => setMostrarOpciones(!mostrarOpciones)}>

@@ -1,3 +1,4 @@
+import * as Haptics from 'expo-haptics';
 import React, { useState } from 'react';
 import { SafeAreaView, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -10,7 +11,10 @@ const GamesScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity onPress={() => {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+          navigation.goBack();
+        }}>
           <Ionicons name="arrow-back" size={28} color="#fff" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => setMostrarOpciones(!mostrarOpciones)}>

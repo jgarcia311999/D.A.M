@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableWithoutFeedback, SafeAreaView } from 'react-native';
+import * as Haptics from 'expo-haptics';
+import { View, Text, StyleSheet, TouchableWithoutFeedback, SafeAreaView, TouchableOpacity } from 'react-native';
 
 const frases = [
   'No estaria con una gorda',
@@ -31,7 +32,7 @@ const frases = [
   "No eres directa, eres gilipollas.",
 ];
 
-export default function MiniGame2() {
+export default function MiniGame2({ navigation }) {
   const [fraseActual, setFraseActual] = React.useState(() => {
     return frases[Math.floor(Math.random() * frases.length)];
   });
@@ -45,20 +46,39 @@ export default function MiniGame2() {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={cambiarFrase}>
-      <SafeAreaView style={[styles.container, { paddingTop: 50 }]}>
-        <Text style={styles.text}>{fraseActual}</Text>
-      </SafeAreaView>
-    </TouchableWithoutFeedback>
+    <SafeAreaView style={[styles.container, { paddingTop: 50 }]}>
+      <TouchableOpacity onPress={() => {
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        navigation.goBack();
+      }} style={styles.backButton}>
+        <Text style={styles.backButtonText}>Volver</Text>
+      </TouchableOpacity>
+      <TouchableWithoutFeedback onPress={cambiarFrase}>
+        <View style={styles.content}>
+          <Text style={styles.text}>{fraseActual}</Text>
+        </View>
+      </TouchableWithoutFeedback>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#191716',
+  },
+  backButton: {
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+  },
+  backButtonText: {
+    color: '#fff',
+    fontSize: 18,
+  },
+  content: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#191716',
   },
   text: {
     fontSize: 20,

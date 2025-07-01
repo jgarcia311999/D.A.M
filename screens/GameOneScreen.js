@@ -1,3 +1,4 @@
+import * as Haptics from 'expo-haptics';
 const cartasImagenes = {
   'oro_1': require('../assets/cartas/GameOneCards/oro/1.png'),
   'oro_2': require('../assets/cartas/GameOneCards/oro/2.png'),
@@ -316,7 +317,13 @@ export default function GameOneScreen({ route }) {
           </TouchableOpacity>
         )}
         {resultado && (
-          <Button title="Reiniciar" onPress={reiniciar} />
+          <Button
+            title="Reiniciar"
+            onPress={() => {
+              Haptics.selectionAsync();
+              reiniciar();
+            }}
+          />
         )}
         <CartaModal />
       </SafeAreaView>

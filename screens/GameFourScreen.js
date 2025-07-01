@@ -5,6 +5,7 @@ import Swiper from 'react-native-deck-swiper';
 // import { frases as frasesEstáticas } from '../data/frases';
 import { getTodasLasFrases } from '../data/getFrases';
 import { useEffect } from 'react';
+import * as Haptics from 'expo-haptics';
 
 const userIcons = [
     require('../assets/cartas/pollo-user.png'),
@@ -83,7 +84,10 @@ const PruebaGameFourScreen = ({ route, navigation }) => {
         <SafeAreaView style={[styles.container, { paddingTop: 50 }]}>
             <Image source={require('../assets/chapas/chapa_flor.png')} style={styles.imageBackground} />
             <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
+                <TouchableOpacity onPress={() => {
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                    navigation.goBack();
+                }}>
                     <Ionicons name="arrow-back" size={28} color="#fff" />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={toggleMenu}>

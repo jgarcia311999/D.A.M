@@ -12,6 +12,7 @@ const generarBarajaCompleta = () => {
 };
 
 import React, { useState } from 'react';
+import * as Haptics from 'expo-haptics';
 import { View, Text, Button, StyleSheet, Modal, TouchableOpacity, ScrollView, Image, SafeAreaView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -140,7 +141,10 @@ export default function GameTwoScreen({ route, navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity onPress={() => {
+          Haptics.selectionAsync();
+          navigation.goBack();
+        }}>
           <Ionicons name="arrow-back" size={28} color="#fff" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => setMostrarOpciones(!mostrarOpciones)}>

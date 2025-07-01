@@ -54,6 +54,7 @@ const cartasImagenes = {
 };
 
 import React, { useState, useEffect, useCallback } from 'react';
+import * as Haptics from 'expo-haptics';
 import { View, Text, Button, StyleSheet, Image, ScrollView, Dimensions, TouchableOpacity, Modal, TouchableWithoutFeedback, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -258,7 +259,10 @@ export default function GameOneScreen({ route, navigation }) {
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer} style={styles.scrollView}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity onPress={() => {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+          navigation.goBack();
+        }}>
           <Ionicons name="arrow-back" size={28} color="#fff" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => {
