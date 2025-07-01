@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, Pressable, ScrollView, LayoutAnimation, Platform, UIManager, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, Pressable, LayoutAnimation, Platform, UIManager, SafeAreaView, TouchableWithoutFeedback, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function MiniGame1({ route, navigation }) {
@@ -10,6 +10,18 @@ export default function MiniGame1({ route, navigation }) {
   const [asignados, setAsignados] = useState([]);
   const [jugadorSeleccionado, setJugadorSeleccionado] = useState(null);
   const dropZoneRefs = useRef({ 1: null, 2: null, 3: null });
+
+  const [modalInfoVisible, setModalInfoVisible] = useState(false);
+  const [infoPage, setInfoPage] = useState(0);
+
+  const infoPages = [
+  'Un juego de cartas para beber... sí, otro más. Pero este por lo menos te obliga a usar una neurona o dos.',
+  'Son cuatro fases. Aciertas, avanzas. La cagas, bebes.\n¿Demasiado para ti? Siempre puedes rendirte y fingir que repartes los tragos por estrategia.',
+  'Fase 1 – Color: ¿Roja o negra? Una decisión tan difícil como elegir entre tinto o cerveza.\n\nFase 2 – Mayor o menor: Compara cartas. Decide si sube o baja. Vamos, no es física cuántica.',
+  'Fase 3 – ¿Entre o fuera?: ¿La carta cae entre las otras dos? Pues di "sí" o "no", a ver si te crees Nostradamus.\n\nFase 4 – Palo: Elige: cigarro, cubata, gallina u oro.',
+  '¿Te rajas? Genial. Reparte tragos como si fueras el rey de la fiesta… aunque todos sepan que te has cagado.',
+  'Pulsa sobre el nombre del jugador y luego en el top que quieras ponerlo.',
+];
 
   // Enable LayoutAnimation on Android
   if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
@@ -126,30 +138,21 @@ export default function MiniGame1({ route, navigation }) {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#191716', paddingTop: 50 }}>
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContainer}>
+      <View style={styles.scrollView}>
         <View style={styles.innerContainer}>
           <View style={styles.header}>
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <Ionicons name="arrow-back" size={28} color="#fff" />
             </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                styles.botonContinuar,
-                Object.values(top).some(t => !t) && { opacity: 0.4 }
-              ]}
-              onPress={() => setModalVisible(true)}
-              disabled={Object.values(top).some(t => !t)}
-            >
-              <Text style={styles.botonTexto}>Confirmar TOP</Text>
+            <TouchableOpacity onPress={() => {
+              setInfoPage(0);
+              setModalInfoVisible(true);
+            }}>
+              <Ionicons name="help-circle-outline" size={28} color="#fff" />
             </TouchableOpacity>
           </View>
           <Text style={styles.tema}>{tema}</Text>
           {renderPodium()}
-          {jugadorSeleccionado && (
-            <Text style={{ color: '#fff', marginBottom: 16 }}>
-              Jugador seleccionado: {jugadorSeleccionado}
-            </Text>
-          )}
           <View style={styles.jugadoresWrapper}>
             {jugadores.map((nombre) => {
               const asignado = asignados.includes(nombre);
@@ -204,8 +207,49 @@ export default function MiniGame1({ route, navigation }) {
               </View>
             </View>
           </Modal>
+          <Modal
+            visible={modalInfoVisible}
+            transparent
+            animationType="fade"
+            onRequestClose={() => setModalInfoVisible(false)}
+          >
+            <View style={styles.modalOverlay}>
+              <TouchableWithoutFeedback onPress={() => setModalInfoVisible(false)}>
+                <View style={StyleSheet.absoluteFill} />
+              </TouchableWithoutFeedback>
+              <View style={styles.modalContent}>
+                <View style={{ flex: 1, justifyContent: 'space-between', width: '100%' }}>
+                  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                    <Text style={styles.modalMessage}>
+                      {infoPages[infoPage]}
+                    </Text>
+                  </View>
+                  <View style={styles.modalFooter}>
+                    <TouchableOpacity onPress={() => setInfoPage(Math.max(infoPage - 1, 0))} disabled={infoPage === 0}>
+                      <Text style={{ color: infoPage === 0 ? '#555' : '#fff', fontSize: 24 }}>{"<"}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => setInfoPage(Math.min(infoPage + 1, infoPages.length - 1))} disabled={infoPage === infoPages.length - 1}>
+                      <Text style={{ color: infoPage === infoPages.length - 1 ? '#555' : '#fff', fontSize: 24 }}>{">"}</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </Modal>
         </View>
-      </ScrollView>
+        <View style={{ marginVertical: 20, marginBottom: 40, alignItems: 'center' }}>
+          <TouchableOpacity
+            style={[
+              styles.botonContinuar,
+              Object.values(top).some(t => !t) && { opacity: 0.4 }
+            ]}
+            onPress={() => setModalVisible(true)}
+            disabled={Object.values(top).some(t => !t)}
+          >
+            <Text style={styles.botonTexto}>Confirmar TOP</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </SafeAreaView>
   );
 }
@@ -289,6 +333,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 16,
+    
   },
   modalOverlay: {
     flex: 1,
@@ -302,6 +347,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: 'center',
     width: '80%',
+    justifyContent: 'center',
+    minHeight: 250,
   },
   botonCerrar: {
     marginTop: 20,
@@ -350,5 +397,19 @@ const styles = StyleSheet.create({
     height: 90,
     borderColor: '#CD7F32', // bronce
     backgroundColor: '#444',
+  },
+  modalMessage: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#fff',
+    // fontFamily: 'Panchang-Regular',
+  },
+  modalFooter: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    marginTop: 20,
   },
   });

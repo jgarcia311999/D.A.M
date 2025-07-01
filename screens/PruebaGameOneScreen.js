@@ -347,27 +347,28 @@ export default function GameOneScreen({ route, navigation }) {
         animationType="fade"
         onRequestClose={() => setModalInfoVisible(false)}
       >
-        <TouchableWithoutFeedback onPress={() => setModalInfoVisible(false)}>
-          <View style={styles.modalOverlay}>
-            <View style={styles.modalContent}>
-              <View style={{ flex: 1, justifyContent: 'space-between', width: '100%' }}>
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                  <Text style={styles.modalMessage}>
-                    {infoPages[infoPage]}
-                  </Text>
-                </View>
-                <View style={styles.modalFooter}>
-                  <TouchableOpacity onPress={() => setInfoPage(Math.max(infoPage - 1, 0))} disabled={infoPage === 0}>
-                    <Text style={{ color: infoPage === 0 ? '#555' : '#fff', fontSize: 24 }}>{"<"}</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => setInfoPage(Math.min(infoPage + 1, infoPages.length - 1))} disabled={infoPage === infoPages.length - 1}>
-                    <Text style={{ color: infoPage === infoPages.length - 1 ? '#555' : '#fff', fontSize: 24 }}>{">"}</Text>
-                  </TouchableOpacity>
-                </View>
+        <View style={styles.modalOverlay}>
+          <TouchableWithoutFeedback onPress={() => setModalInfoVisible(false)}>
+            <View style={StyleSheet.absoluteFill} />
+          </TouchableWithoutFeedback>
+          <View style={styles.modalContent}>
+            <View style={{ flex: 1, justifyContent: 'space-between', width: '100%' }}>
+              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <Text style={styles.modalMessage}>
+                  {infoPages[infoPage]}
+                </Text>
+              </View>
+              <View style={styles.modalFooter}>
+                <TouchableOpacity onPress={() => setInfoPage(Math.max(infoPage - 1, 0))} disabled={infoPage === 0}>
+                  <Text style={{ color: infoPage === 0 ? '#555' : '#fff', fontSize: 24 }}>{"<"}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => setInfoPage(Math.min(infoPage + 1, infoPages.length - 1))} disabled={infoPage === infoPages.length - 1}>
+                  <Text style={{ color: infoPage === infoPages.length - 1 ? '#555' : '#fff', fontSize: 24 }}>{">"}</Text>
+                </TouchableOpacity>
               </View>
             </View>
           </View>
-        </TouchableWithoutFeedback>
+        </View>
       </Modal>
     </ScrollView>
   );
