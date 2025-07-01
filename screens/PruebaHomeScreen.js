@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import * as Haptics from 'expo-haptics';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image, Animated, Easing, TextInput, FlatList, Keyboard, SafeAreaView, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image, Animated, Easing, TextInput, FlatList, Keyboard, SafeAreaView, ImageBackground, TouchableWithoutFeedback } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import ImgRuleta from '../assets/pj_ruleta.png';
@@ -20,6 +20,7 @@ export default function HomeScreen({ navigation }) {
   const inputRef = useRef(null);
   const carouselRef = useRef(null);
   const scrollAnim = useRef(new Animated.Value(0)).current;
+  const animationRef = useRef(null);
 
   const openBottomSheet = () => {
     setBottomSheetVisible(true);
@@ -86,7 +87,7 @@ export default function HomeScreen({ navigation }) {
       }
     });
 
-    const animateScroll = Animated.sequence([
+    const animation = Animated.sequence([
       Animated.timing(scrollAnim, {
         toValue: Dimensions.get('window').width * 0.25,
         duration: 600,
@@ -101,13 +102,17 @@ export default function HomeScreen({ navigation }) {
       }),
     ]);
 
-    const timeout = setTimeout(() => {
-      animateScroll.start();
+    animationRef.current = animation;
+
+    const timeoutId = setTimeout(() => {
+      animation.start();
     }, 1000);
+
+    animationRef.current.timeoutId = timeoutId;
 
     return () => {
       scrollAnim.removeListener(listenerId);
-      clearTimeout(timeout);
+      clearTimeout(timeoutId);
     };
   }, []);
 
@@ -129,49 +134,56 @@ export default function HomeScreen({ navigation }) {
   );
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <Image source={require('../assets/laprv.png')} style={styles.imageBackground} />
-      <SafeAreaView style={styles.gridBackground}>
-        <View style={{ flex: 1 }}>
-          {/* Header row with arrow and plus buttons */}
-          <View style={styles.header}>
-            <View style={{ width: 28 }} />
-            <TouchableOpacity onPress={() => {
-              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-              navigation.navigate('Gamer');
-            }}>
-              <Ionicons name="add" size={28} color="#fff" />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.content}>
-            <FlatList
-              data={juegos}
-              keyExtractor={(item, index) => index.toString()}
-              horizontal
-              pagingEnabled
-              showsHorizontalScrollIndicator={false}
-              snapToAlignment="center"
-              contentContainerStyle={styles.carouselWrapper}
-              ref={carouselRef}
-              renderItem={({ item }) => (
-                <TouchableOpacity
-                  style={styles.gameContainer}
-                  onPress={() => navigation.navigate(item.screen, { jugadores })}
-                >
-                  <View style={styles.gameCard}>
-                    <Image source={item.imagen} style={[styles.cardCornerImage, item.imagenEstilo]} />
-                    <View style={styles.cardTextContainer}>
-                      <Text style={styles.gameText}>{item.nombre}</Text>
-                      <Text style={styles.gameDescription}>{item.descripcion}</Text>
+    <TouchableWithoutFeedback onPress={() => {
+      if (animationRef.current) {
+        animationRef.current.stop();
+        clearTimeout(animationRef.current.timeoutId);
+      }
+    }}>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <Image source={require('../assets/laprv.png')} style={styles.imageBackground} />
+        <SafeAreaView style={styles.gridBackground}>
+          <View style={{ flex: 1 }}>
+            {/* Header row with arrow and plus buttons */}
+            <View style={styles.header}>
+              <View style={{ width: 28 }} />
+              <TouchableOpacity onPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                navigation.navigate('Gamer');
+              }}>
+                <Ionicons name="add" size={28} color="#fff" />
+              </TouchableOpacity>
+            </View>
+            <View style={styles.content}>
+              <FlatList
+                data={juegos}
+                keyExtractor={(item, index) => index.toString()}
+                horizontal
+                pagingEnabled
+                showsHorizontalScrollIndicator={false}
+                snapToAlignment="center"
+                contentContainerStyle={styles.carouselWrapper}
+                ref={carouselRef}
+                renderItem={({ item }) => (
+                  <TouchableOpacity
+                    style={styles.gameContainer}
+                    onPress={() => navigation.navigate(item.screen, { jugadores })}
+                  >
+                    <View style={styles.gameCard}>
+                      <Image source={item.imagen} style={[styles.cardCornerImage, item.imagenEstilo]} />
+                      <View style={styles.cardTextContainer}>
+                        <Text style={styles.gameText}>{item.nombre}</Text>
+                        <Text style={styles.gameDescription}>{item.descripcion}</Text>
+                      </View>
                     </View>
-                  </View>
-                </TouchableOpacity>
-              )}
-            />
+                  </TouchableOpacity>
+                )}
+              />
+            </View>
           </View>
-        </View>
-      </SafeAreaView>
-    </GestureHandlerRootView>
+        </SafeAreaView>
+      </GestureHandlerRootView>
+    </TouchableWithoutFeedback>
   );
 }
 
