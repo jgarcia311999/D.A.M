@@ -1,4 +1,5 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, Image, FlatList, ScrollView, Dimensions, StyleSheet, SafeAreaView, TouchableOpacity, Animated, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -15,7 +16,7 @@ const juegos = [
     id: 1,
     nombre: 'Bebecartas',
     descripcion: 'Saca cartas al azar con retos únicos y bebe si no los cumples.',
-    screen: 'Prueba 4',
+    screen: 'Juego 4',
     imagen: ImgSamurai,
     imagenEstilo: { width: '80%', height: height * 0.35, resizeMode: 'contain' },
     color: '#bfa3ff',
@@ -58,7 +59,20 @@ const juegos = [
   },
 ];
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen({ navigation, route }) {
+  const [jugadores, setJugadores] = useState(route?.params?.jugadores || []);
+  console.log('Jugadores:', jugadores);
+  useEffect(() => {
+    const cargarJugadores = async () => {
+      if (jugadores.length === 0) {
+        const almacenados = await AsyncStorage.getItem('jugadores');
+        if (almacenados) {
+          setJugadores(JSON.parse(almacenados));
+        }
+      }
+    };
+    cargarJugadores();
+  }, []);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [modoLista, setModoLista] = useState(false);
   const flatListRef = useRef(null);
@@ -74,7 +88,7 @@ export default function HomeScreen({ navigation }) {
   const renderItem = ({ item, index }) => (
     <TouchableOpacity
       style={[styles.slide, { backgroundColor: item.color }]}
-      onPress={() => navigation.navigate(item.screen)}
+      onPress={() => navigation.navigate(item.screen, { jugadores })}
       activeOpacity={0.9}
     >
       <Text
@@ -158,7 +172,7 @@ export default function HomeScreen({ navigation }) {
               <TouchableOpacity
                 key={item.id}
                 style={[styles.card, { backgroundColor: item.color }]}
-                onPress={() => navigation.navigate(item.screen)}
+                onPress={() => navigation.navigate(item.screen, { jugadores })}
                 activeOpacity={0.9}
               >
                 <Text style={styles.cardTitle}>{item.nombre}</Text>

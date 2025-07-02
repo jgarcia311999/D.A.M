@@ -57,11 +57,11 @@ export default function App() {
           <Stack.Screen name="Gamer" component={GamerScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Inicio2" component={PruebaHomeScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Pre juego 1" component={PreGameOneScreen} />
-          <Stack.Screen name="Juego 1" component={GameOneScreen} />
+          <Stack.Screen name="Juego 1" component={GameOneScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Prueba 1" component={PruebaGameOneScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Juego 2" component={GameTwoScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Juego 3" component={GameThreeScreen} />
-          <Stack.Screen name="Juego 4" component={GameFourScreen} />
+          <Stack.Screen name="Juego 4" component={GameFourScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Prueba 4" component={PruebaGameFourScreen} options={{ headerShown: false }} />
           <Stack.Screen name="MiniGames" component={MiniGamesScreen} options={{ headerShown: false }} />
           <Stack.Screen name="MiniGame1" component={MiniGame1} options={{ headerShown: false }} />

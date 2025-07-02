@@ -9,24 +9,23 @@ import * as Haptics from 'expo-haptics';
 const screenWidth = Dimensions.get('window').width;
 
 export default function GamerScreen({ route }) {
-  const { jugadores: jugadoresParam = [] } = route.params || {};
+  const [jugadores, setJugadores] = useState(route?.params?.jugadores || []);
   const navigation = useNavigation();
   const [nombre, setNombre] = useState('');
-  const [jugadores, setJugadores] = useState(
-    jugadoresParam.length > 0
-      ? jugadoresParam
-      : []
-  );
   const [filas, setFilas] = useState([]);
   const [textoScroll, setTextoScroll] = useState('Scrolea hacia arriba');
 
   useEffect(() => {
     const cargarJugadores = async () => {
-      await AsyncStorage.removeItem('jugadores'); // Borrar siempre al abrir
-      if (jugadoresParam.length === 0) {
-        const jugadoresMock = ['Jesus', 'Carla', 'Cepas', 'Nuria', 'Ana', 'Alex', 'Amador', 'Tito'];
-        setJugadores(jugadoresMock);
-        await AsyncStorage.setItem('jugadores', JSON.stringify(jugadoresMock));
+      if (jugadores.length === 0) {
+        const almacenados = await AsyncStorage.getItem('jugadores');
+        if (almacenados) {
+          setJugadores(JSON.parse(almacenados));
+        } else {
+          const jugadoresMock = ['Jesus', 'Carla', 'Cepas', 'Nuria', 'Ana', 'Alex', 'Amador', 'Tito'];
+          setJugadores(jugadoresMock);
+          await AsyncStorage.setItem('jugadores', JSON.stringify(jugadoresMock));
+        }
       }
     };
     cargarJugadores();

@@ -18,6 +18,7 @@ const { width } = Dimensions.get('window');
 
 const PruebaGameFourScreen = ({ route, navigation }) => {
   const { jugadores = [] } = route.params || {};
+  console.log('Jugadores en PruebaGameFourScreen:', jugadores);
   const [usedFrases, setUsedFrases] = useState([]);
   const [frasesCombinadas, setFrasesCombinadas] = useState([]);
   const [frasesToUse, setFrasesToUse] = useState([]);
