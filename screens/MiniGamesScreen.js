@@ -3,12 +3,14 @@ import { ScrollView, View, StyleSheet, Dimensions, TouchableOpacity, Image, Safe
 import { Ionicons } from '@expo/vector-icons';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as Haptics from 'expo-haptics';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { width, height } = Dimensions.get('window');
 
 export default function HomeScreen({ navigation, route }) {
     const { jugadores } = route.params || {};
     const [mostrarOpciones, setMostrarOpciones] = React.useState(false);
+    const insets = useSafeAreaInsets();
 
     const juegos = [
       {
@@ -36,19 +38,41 @@ export default function HomeScreen({ navigation, route }) {
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             <SafeAreaView style={styles.gridBackground}>
+                <TouchableOpacity
+                  style={[{ position: 'absolute', top: insets.top + 10, left: 20, zIndex: 10 }]}
+                  onPress={() => {
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                    navigation.goBack();
+                  }}
+                >
+                  <Ionicons name="arrow-back" size={28} color="#fff" />
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={[
+                    {
+                      position: 'absolute',
+                      top: insets.top + 10,
+                      right: 20,
+                      zIndex: 10,
+                      backgroundColor: 'transparent',
+                      paddingHorizontal: 16,
+                      paddingVertical: 8,
+                      borderRadius: 8,
+                      borderWidth: 1,
+                      borderColor: '#fff',
+                    },
+                  ]}
+                  onPress={() => {
+                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                    navigation.navigate('Jugadores');
+                  }}
+                >
+                  <Text style={{ color: '#fff', fontWeight: 'bold', fontFamily: 'Panchang-Bold' }}>Borrachos</Text>
+                </TouchableOpacity>
+
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
                     <View style={{ flex: 1 }}>
-                        <View style={styles.header}>
-                            <TouchableOpacity onPress={() => {
-                                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                                navigation.goBack();
-                            }}>
-                                <Ionicons name="arrow-back" size={28} color="#fff" />
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => setMostrarOpciones(!mostrarOpciones)}>
-                                <Ionicons name="ellipsis-vertical" size={28} color="#fff" />
-                            </TouchableOpacity>
-                        </View>
                         <View style={styles.cardsContainer}>
                             {juegos.map((juego, index) => (
                                 <TouchableOpacity
@@ -74,17 +98,6 @@ const styles = StyleSheet.create({
     gridBackground: {
         flex: 1,
         backgroundColor: '#191716',
-    },
-    header: {
-        width: '100%',
-        paddingHorizontal: 20,
-        paddingTop: 50,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        position: 'absolute',
-        top: 0,
-        zIndex: 2,
     },
     imageBackground: {
         position: 'absolute',
@@ -134,11 +147,13 @@ const styles = StyleSheet.create({
         textAlign: 'left',
         lineHeight: 26,
         marginBottom: 4,
+        fontFamily: 'Panchang-Bold',
     },
     gameDescription: {
         color: 'white',
         fontSize: 14,
         textAlign: 'left',
         marginTop: 10,
+        fontFamily: 'Panchang-Regular',
     },
 });
