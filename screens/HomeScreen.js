@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   slideTitle: {
-    fontSize: 28,
+    fontSize: 26,
     fontWeight: 'bold',
     fontFamily: 'Panchang-Bold',
     color: '#000',
