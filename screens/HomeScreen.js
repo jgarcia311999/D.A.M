@@ -79,7 +79,7 @@ export default function HomeScreen({ navigation }) {
     >
       <Text
         style={styles.slideTitle}
-        numberOfLines={1}
+        numberOfLines={2}
         adjustsFontSizeToFit
         minimumFontScale={0.8}
       >
@@ -163,7 +163,6 @@ export default function HomeScreen({ navigation }) {
               >
                 <Text style={styles.cardTitle}>{item.nombre}</Text>
                 <Text style={styles.cardDescription}>{item.descripcion}</Text>
-                <Image source={item.imagen} style={item.imagenEstilo} />
               </TouchableOpacity>
             ))}
           </ScrollView>
@@ -193,6 +192,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textTransform: 'uppercase',
     paddingHorizontal: isSmallDevice ? 20 : 60,
+    textAlign: 'center',
   },
   image: {
     width: 250,
@@ -225,6 +225,7 @@ const styles = StyleSheet.create({
     padding: 20,
     marginBottom: 20,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   cardTitle: {
     fontSize: 18,
@@ -234,6 +235,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textTransform: 'uppercase',
     paddingHorizontal: 20,
+    textAlign: 'center',
   },
   imageSmall: {
     width: 150,
@@ -246,7 +248,7 @@ const styles = StyleSheet.create({
     color: '#000',
     textAlign: 'center',
     marginBottom: 10,
-    paddingHorizontal: 60,
+    paddingHorizontal: 20,
   },
   cardDescription: {
     fontSize: 14,
