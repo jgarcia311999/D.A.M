@@ -57,9 +57,11 @@ import React, { useState, useEffect, useCallback } from 'react';
 import * as Haptics from 'expo-haptics';
 import { View, Text, Button, StyleSheet, Image, ScrollView, Dimensions, TouchableOpacity, Modal, TouchableWithoutFeedback, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function GameOneScreen({ route, navigation }) {
   const { height } = Dimensions.get('window');
+  const insets = useSafeAreaInsets();
 
   const palos = ['oro', 'cubata', 'pollo', 'cigarro'];
   const colores = {
@@ -70,7 +72,7 @@ export default function GameOneScreen({ route, navigation }) {
   };
 
   const obtenerImagenCarta = (carta) => {
-    if (!carta) return require('../assets/cartas/carta-trasera.png');
+    if (!carta) return require('../assets/cartas/carta-user-oro-br.png');
     let valor = carta.numero;
     if (valor === 10) valor = 'j';
     else if (valor === 11) valor = 'q';
@@ -256,23 +258,231 @@ export default function GameOneScreen({ route, navigation }) {
     </Modal>
   );
 
+  // Mover scrollContainer aquí para poder usar insets.top dinámicamente
+  const styles = StyleSheet.create({
+    header: {
+      // eliminado, ya no se usa
+    },
+    container: {
+      flex: 1,
+      paddingTop: 0,
+      position: 'relative',
+    },
+    scrollView: {
+      backgroundColor: '#ffc8a3',
+    },
+    scrollContainer: {
+      flexGrow: 1,
+      backgroundColor: '#ffc8a3',
+      paddingTop: insets.top + 60,
+    },
+    cardGrid: {
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      alignItems: 'center',
+      marginVertical: 10,
+      paddingHorizontal: 10,
+      marginTop: 10, // para que no tape el header
+    },
+    cardImage: {
+      width: '20%',
+      aspectRatio: 0.625,
+      marginHorizontal: 5,
+      borderRadius: 12,
+    },
+    turno: {
+      fontSize: 22,
+      fontWeight: '700',
+      color: '#fff',
+      textAlign: 'center',
+      fontFamily: 'Panchang-Regular',
+      marginLeft: 10,
+      marginRight: 10,
+    },
+    question: {
+      fontSize: 22,
+      marginBottom: 20,
+      textAlign: 'center',
+      color: '#fff',
+      fontFamily: 'Panchang-Regular',
+    },
+    colorRow: {
+      flexDirection: 'row',
+      flex: 1,
+      marginHorizontal: 20,
+      marginVertical: 20,
+      overflow: 'hidden',
+    },
+    colorLeft: {
+      flex: 1,
+      backgroundColor: '#A52019',
+      borderRadius: 20,
+      marginRight: 10,
+    },
+    colorRight: {
+      flex: 1,
+      backgroundColor: 'black',
+      borderRadius: 20,
+      marginLeft: 10,
+    },
+    verticalStack: {
+      marginHorizontal: 20,
+      marginVertical: 20,
+    },
+    fullWidthBox: {
+      width: '100%',
+      height: 100, // reducido
+      backgroundColor: '#E2D6FF',
+      borderRadius: 12,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginBottom: 10,
+    },
+    choiceText: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      color: '#fff',
+      fontFamily: 'Panchang-Regular',
+    },
+    centeredCircleWrapper: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginVertical: 40,
+      position: 'relative',
+    },
+    outerCircle: {
+      width: 250, // reducido
+      height: 250,
+      borderRadius: 30,
+      backgroundColor: '#E2D6FF',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    innerCircleOverlay: {
+      width: 120, // reducido
+      height: 120,
+      borderRadius: 30,
+      backgroundColor: '#4CAF50',
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: [{ translateX: -60 }, { translateY: -60 }],
+      zIndex: 2,
+    },
+    gridContainer: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      justifyContent: 'space-around',
+      alignItems: 'center',
+      marginTop: 20,
+    },
+    gridItem: {
+      width: '40%', // reducido
+      aspectRatio: 0.9, // ajustado
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#E2D6FF',
+      borderRadius: 10,
+      marginVertical: 10,
+    },
+    gridImage: {
+      width: '80%',
+      height: '80%',
+      resizeMode: 'contain',
+    },
+    message: {
+      fontSize: 16,
+      marginTop: 20,
+      marginBottom: 10,
+      textAlign: 'center',
+      color: '#fff',
+      fontFamily: 'Panchang-Regular',
+    },
+    plantarmeButton: {
+      backgroundColor: 'transparent',
+      borderWidth: 2,
+      borderColor: '#fff',
+      padding: 12,
+      marginHorizontal: 20,
+      marginBottom: 20,
+      borderRadius: 10,
+      alignItems: 'center',
+    },
+    plantarmeText: {
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: '900',
+      fontFamily: 'Panchang-Regular',
+    },
+    modalOverlay: {
+      flex: 1,
+      backgroundColor: 'rgba(0,0,0,0.6)',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    modalContent: {
+      backgroundColor: '#191716',
+      padding: 20,
+      borderRadius: 12,
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '80%',
+      height: Dimensions.get('window').height * 0.7,
+    },
+    modalFooter: {
+      width: '100%',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      paddingHorizontal: 20,
+      marginTop: 20,
+    },
+    modalCardImage: {
+      width: 150,
+      height: 220,
+      marginBottom: 20,
+      borderRadius: 12,
+      backgroundColor: '#E2D6FF',
+    },
+    modalMessage: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      textAlign: 'center',
+      color: '#fff',
+      fontFamily: 'Panchang-Regular',
+    },
+    fixedBackButton: {
+      position: 'absolute',
+      left: 20,
+      zIndex: 10,
+    },
+    fixedHelpButton: {
+      position: 'absolute',
+      right: 20,
+      zIndex: 10,
+    },
+  });
+
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer} style={styles.scrollView}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => {
+      {/* Botones fijos de back y ayuda */}
+      <TouchableOpacity
+        style={[styles.fixedBackButton, { top: insets.top + 10 }]}
+        onPress={() => {
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
           navigation.goBack();
-        }}>
-          <Ionicons name="arrow-back" size={28} color="#fff" />
-        </TouchableOpacity>
-        <Text style={styles.turno}>{jugadorActual}</Text>
-        <TouchableOpacity onPress={() => {
+        }}
+      >
+        <Ionicons name="arrow-back" size={28} color="#fff" />
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[styles.fixedHelpButton, { top: insets.top + 10 }]}
+        onPress={() => {
           setInfoPage(0);
           setModalInfoVisible(true);
-        }}>
-          <Ionicons name="help-circle-outline" size={28} color="#fff" />
-        </TouchableOpacity>
-      </View>
+        }}
+      >
+        <Ionicons name="help-circle-outline" size={28} color="#fff" />
+      </TouchableOpacity>
       <View style={styles.cardGrid}>
         {[0, 1, 2, 3].map((i) => (
           <Image key={i} source={obtenerImagenCarta(cartas[i])} style={styles.cardImage} resizeMode="contain" />
@@ -378,209 +588,3 @@ export default function GameOneScreen({ route, navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
-  header: {
-    width: '100%',
-    paddingHorizontal: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    position: 'absolute',
-    top: 50,
-    zIndex: 2,
-  },
-  container: {
-    flex: 1,
-    paddingTop: 0,
-    position: 'relative',
-  },
-  scrollView: {
-    backgroundColor: '#191716',
-  },
-  scrollContainer: {
-    flexGrow: 1,
-    backgroundColor: '#191716',
-    paddingTop: 140,
-  },
-  cardGrid: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    marginVertical: 10,
-    paddingHorizontal: 10,
-    marginTop: 10, // para que no tape el header
-  },
-  cardImage: {
-    width: '20%',
-    aspectRatio: 0.625,
-    marginHorizontal: 5,
-    borderWidth: 3,
-    borderColor: 'green',
-    borderRadius: 12,
-    backgroundColor: 'rgba(0, 100, 0, 0.5)',
-  },
-  turno: {
-    fontSize: 22,
-    fontWeight: '700',
-    color: '#fff',
-    textAlign: 'center',
-    fontFamily: 'Panchang-Regular',
-    marginLeft: 10,
-    marginRight: 10,
-  },
-  question: {
-    fontSize: 22,
-    marginBottom: 20,
-    textAlign: 'center',
-    color: '#fff',
-    fontFamily: 'Panchang-Regular',
-  },
-  colorRow: {
-    flexDirection: 'row',
-    flex: 1,
-    marginHorizontal: 20,
-    marginVertical: 20,
-    overflow: 'hidden',
-  },
-  colorLeft: {
-    flex: 1,
-    backgroundColor: '#A52019',
-    borderRadius: 20,
-    marginRight: 10,
-    borderWidth: 3,
-    borderColor: 'green',
-  },
-  colorRight: {
-    flex: 1,
-    backgroundColor: 'black',
-    borderRadius: 20,
-    marginLeft: 10,
-    borderWidth: 3,
-    borderColor: 'green',
-  },
-  verticalStack: {
-    marginHorizontal: 20,
-    marginVertical: 20,
-  },
-  fullWidthBox: {
-    width: '100%',
-    height: 100, // reducido
-    backgroundColor: 'rgba(0, 100, 0, 0.5)',
-    borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  choiceText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#fff',
-    fontFamily: 'Panchang-Regular',
-  },
-  centeredCircleWrapper: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginVertical: 40,
-    position: 'relative',
-  },
-  outerCircle: {
-    width: 250, // reducido
-    height: 250,
-    borderRadius: 30,
-    backgroundColor: 'rgba(0, 100, 0, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  innerCircleOverlay: {
-    width: 120, // reducido
-    height: 120,
-    borderRadius: 30,
-    backgroundColor: 'green',
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: [{ translateX: -60 }, { translateY: -60 }],
-    zIndex: 2,
-  },
-  gridContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  gridItem: {
-    width: '40%', // reducido
-    aspectRatio: 0.9, // ajustado
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 100, 0, 0.5)',
-    borderRadius: 10,
-    marginVertical: 10,
-  },
-  gridImage: {
-    width: '80%',
-    height: '80%',
-    resizeMode: 'contain',
-  },
-  message: {
-    fontSize: 16,
-    marginTop: 20,
-    marginBottom: 10,
-    textAlign: 'center',
-    color: '#fff',
-    fontFamily: 'Panchang-Regular',
-  },
-  plantarmeButton: {
-    backgroundColor: 'green',
-    padding: 12,
-    marginHorizontal: 20,
-    marginBottom: 20,
-    borderRadius: 10,
-    alignItems: 'center',
-  },
-  plantarmeText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: '900',
-    fontFamily: 'Panchang-Regular',
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.6)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContent: {
-    backgroundColor: '#191716',
-    padding: 20,
-    borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '80%',
-    height: Dimensions.get('window').height * 0.7,
-  },
-  modalFooter: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    marginTop: 20,
-  },
-  modalCardImage: {
-    width: 150,
-    height: 220,
-    marginBottom: 20,
-    borderWidth: 3,
-    borderColor: 'green',
-    borderRadius: 12,
-    backgroundColor: 'rgba(0, 100, 0, 0.5)',
-  },
-  modalMessage: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: '#fff',
-    fontFamily: 'Panchang-Regular',
-  },
-});

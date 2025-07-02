@@ -225,6 +225,30 @@ export default function GameTwoScreen({ route, navigation }) {
         <>
           {(() => {
             let valor = carta.numero;
+            if (valor === 'j' || valor === 'q' || valor === 'k') {
+              valor = valor;
+            }
+            const key = `${carta.palo}_${valor}`;
+            const source = imagenesCartas[key];
+            if (source) {
+              return (
+                <Image
+                  source={source}
+                  style={{
+                    width: 150,
+                    height: 225,
+                    marginVertical: 10,
+                    resizeMode: 'contain',
+                    backgroundColor: 'transparent',
+                    borderRadius: 12,
+                  }}
+                />
+              );
+            }
+            return null;
+          })()}
+          {(() => {
+            let valor = carta.numero;
             let displayValor = valor;
             if (valor === 'j') {
               displayValor = 'J';
@@ -233,7 +257,6 @@ export default function GameTwoScreen({ route, navigation }) {
             } else if (valor === 'k') {
               displayValor = 'K';
             }
-            // Render card name with correct displayValor
             return (
               <Text style={styles.carta}>
                 {displayValor} de {carta.palo}
@@ -246,24 +269,6 @@ export default function GameTwoScreen({ route, navigation }) {
           <Text style={styles.tragos}>
             {tragosPorPalo[carta.palo]} trago(s) por ser {carta.palo}
           </Text>
-          {/* Mostrar imagen de la carta actual */}
-          {(() => {
-            let valor = carta.numero;
-            if (valor === 'j' || valor === 'q' || valor === 'k') {
-              valor = valor;
-            }
-            const key = `${carta.palo}_${valor}`;
-            const source = imagenesCartas[key];
-            if (source) {
-              return (
-                <Image
-                  source={source}
-                  style={{ width: 100, height: 150, marginVertical: 10, resizeMode: 'contain' }}
-                />
-              );
-            }
-            return null;
-          })()}
         </>
       )}
 
@@ -359,7 +364,7 @@ export default function GameTwoScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#191716',
+    backgroundColor: '#d5c385',
     alignItems: 'center',
     padding: 20,
     paddingTop: 50,
@@ -385,19 +390,19 @@ const styles = StyleSheet.create({
   carta: {
     fontSize: 32,
     marginTop: 20,
-    color: '#fff',
+    color: '#000',
     fontFamily: 'Panchang-Regular',
   },
   accion: {
     fontSize: 18,
     marginVertical: 10,
     textAlign: 'center',
-    color: '#fff',
+    color: '#000',
     fontFamily: 'Panchang-Regular',
   },
   tragos: {
     fontSize: 16,
-    color: '#bbb',
+    color: '#000',
     marginBottom: 20,
     fontFamily: 'Panchang-Regular',
   },
@@ -408,7 +413,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalContent: {
-    backgroundColor: '#191716',
+    backgroundColor: '#E2D6FF',
     padding: 20,
     borderRadius: 10,
     width: '80%',
@@ -418,13 +423,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
-    color: '#fff',
+    color: '#000',
     fontFamily: 'Panchang-Regular',
   },
   modalItem: {
     fontSize: 16,
     marginVertical: 2,
-    color: '#fff',
+    color: '#000',
     fontFamily: 'Panchang-Regular',
   },
   bottomControls: {
@@ -445,19 +450,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   optionButton: {
-    backgroundColor: 'rgba(0, 100, 0, 0.5)',
+    backgroundColor: '#E2D6FF',
     paddingVertical: 6,
     paddingHorizontal: 12,
     borderRadius: 8,
     marginVertical: 3,
   },
   optionText: {
-    color: '#fff',
+    color: '#000',
     fontSize: 14,
     fontFamily: 'Panchang-Regular',
   },
   primaryButton: {
-    backgroundColor: 'green',
+    backgroundColor: 'transparent',
+    borderWidth: 2,
+    borderColor: '#fff',
     paddingVertical: 12,
     paddingHorizontal: 30,
     borderRadius: 10,
