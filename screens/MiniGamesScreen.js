@@ -77,7 +77,13 @@ export default function HomeScreen({ navigation, route }) {
                             {juegos.map((juego, index) => (
                                 <TouchableOpacity
                                     key={index}
-                                    style={styles.gameCard}
+                                    style={[styles.gameCard, {
+                                      backgroundColor:
+                                        index === 0 ? '#bfa3ff' :
+                                        index === 1 ? '#ffc8a3' :
+                                        index === 2 ? '#d5c385' :
+                                        '#a3ffd9'
+                                    }]}
                                     onPress={() => navigation.navigate(juego.screen, { jugadores })}
                                 >
                                     <View style={styles.cardTextContainer}>
@@ -110,21 +116,22 @@ const styles = StyleSheet.create({
         zIndex: 2,
     },
     cardsContainer: {
-        marginTop: 120,
-        paddingHorizontal: 20,
-        paddingBottom: 40,
-        gap: 20,
+      paddingTop: 60,
+      paddingBottom: 20,
+      alignItems: 'center',
     },
     gameCard: {
-        width: width * 0.85,
-        height: height * 0.25,
+        width: '90%',
         borderRadius: 12,
-        backgroundColor: 'rgba(0, 100, 0, 0.5)',
-        justifyContent: 'center',
+        padding: 20,
+        marginBottom: 20,
         alignItems: 'center',
-        borderWidth: 3,
-        borderColor: 'green',
-        position: 'relative',
+        justifyContent: 'center',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 2,
     },
     cardImage: {
         width: '100%',
@@ -134,26 +141,25 @@ const styles = StyleSheet.create({
         resizeMode: 'cover',
     },
     cardTextContainer: {
-        position: 'absolute',
-        bottom: 20,
-        left: 20,
-        right: 20,
         gap: 2,
+        alignItems: 'center',
     },
     gameText: {
-        color: 'white',
         fontSize: 18,
         fontWeight: 'bold',
-        textAlign: 'left',
-        lineHeight: 26,
-        marginBottom: 4,
         fontFamily: 'Panchang-Bold',
+        color: '#000',
+        marginBottom: 10,
+        textTransform: 'uppercase',
+        paddingHorizontal: 20,
+        textAlign: 'center',
     },
     gameDescription: {
-        color: 'white',
         fontSize: 14,
-        textAlign: 'left',
-        marginTop: 10,
         fontFamily: 'Panchang-Regular',
+        color: '#000',
+        textAlign: 'center',
+        marginBottom: 10,
+        paddingHorizontal: 20,
     },
 });
