@@ -9,6 +9,7 @@ import ImgMago from '../assets/personajes/personaje_mago.png';
 import ImgDJ from '../assets/personajes/personaje_dj.png';
 
 const { width, height } = Dimensions.get('window');
+const isSmallDevice = width < 360;
 const juegos = [
   {
     id: 1,
@@ -76,11 +77,16 @@ export default function HomeScreen({ navigation }) {
       onPress={() => navigation.navigate(item.screen)}
       activeOpacity={0.9}
     >
-      <View style={styles.slideTextContainer}>
-        <Text style={styles.slideTitle}>{item.nombre}</Text>
-        <Text style={styles.slideDescription}>{item.descripcion}</Text>
-      </View>
+      <Text
+        style={styles.slideTitle}
+        numberOfLines={1}
+        adjustsFontSizeToFit
+        minimumFontScale={0.8}
+      >
+        {item.nombre}
+      </Text>
       <Image source={item.imagen} style={item.imagenEstilo} />
+      <Text style={styles.slideDescription}>{item.descripcion}</Text>
     </TouchableOpacity>
   );
 
@@ -179,13 +185,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
   },
-  slideTextContainer: {
-    position: 'absolute',
-    top: '18%',
-    left: 0,
-    right: 0,
-    alignItems: 'center',
-  },
   slideTitle: {
     fontSize: 28,
     fontWeight: 'bold',
@@ -193,7 +192,7 @@ const styles = StyleSheet.create({
     color: '#000',
     marginBottom: 10,
     textTransform: 'uppercase',
-    paddingHorizontal: 60,
+    paddingHorizontal: isSmallDevice ? 20 : 60,
   },
   image: {
     width: 250,
