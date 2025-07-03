@@ -10,6 +10,7 @@ import ImgMago from '../assets/personajes/personaje_mago.png';
 import ImgDJ from '../assets/personajes/personaje_dj.png';
 
 const { width, height } = Dimensions.get('window');
+const scaleFont = (size) => (width / 375) * size;
 const isSmallDevice = width < 360;
 const juegos = [
   {
@@ -91,16 +92,24 @@ export default function HomeScreen({ navigation, route }) {
       onPress={() => navigation.navigate(item.screen, { jugadores })}
       activeOpacity={0.9}
     >
-      <Text
-        style={styles.slideTitle}
-        numberOfLines={2}
-        adjustsFontSizeToFit
-        minimumFontScale={0.8}
-      >
-        {item.nombre}
-      </Text>
-      <Image source={item.imagen} style={item.imagenEstilo} />
-      <Text style={styles.slideDescription}>{item.descripcion}</Text>
+      <View style={styles.slideTop}>
+        <Text
+          style={styles.slideTitle}
+          numberOfLines={2}
+          adjustsFontSizeToFit
+          minimumFontScale={0.8}
+        >
+          {item.nombre}
+        </Text>
+      </View>
+
+      <View style={styles.slideMiddle}>
+        <Image source={item.imagen} style={styles.slideImage} resizeMode="contain" />
+      </View>
+
+      <View style={styles.slideBottom}>
+        <Text style={styles.slideDescription}>{item.descripcion}</Text>
+      </View>
     </TouchableOpacity>
   );
 
@@ -167,7 +176,7 @@ export default function HomeScreen({ navigation, route }) {
         </Animated.View>
 
         <Animated.View style={{ flex: 1, opacity: fadeLista }}>
-          <ScrollView contentContainerStyle={styles.scrollList}>
+          <View style={styles.scrollList}>
             {juegos.map((item) => (
               <TouchableOpacity
                 key={item.id}
@@ -175,11 +184,18 @@ export default function HomeScreen({ navigation, route }) {
                 onPress={() => navigation.navigate(item.screen, { jugadores })}
                 activeOpacity={0.9}
               >
-                <Text style={styles.cardTitle}>{item.nombre}</Text>
+                <Text
+                  style={styles.cardTitle}
+                  numberOfLines={2}
+                  adjustsFontSizeToFit
+                  minimumFontScale={0.8}
+                >
+                  {item.nombre}
+                </Text>
                 <Text style={styles.cardDescription}>{item.descripcion}</Text>
               </TouchableOpacity>
             ))}
-          </ScrollView>
+          </View>
         </Animated.View>
       </SafeAreaView>
     </View>
@@ -194,9 +210,29 @@ const styles = StyleSheet.create({
   slide: {
     width: width,
     height: '100%',
+    paddingHorizontal: 20,
+    paddingTop: 80,
+    paddingBottom: 80,
+  },
+  slideTop: {
+    alignItems: 'center',
+    marginBottom: 10,
+    paddingHorizontal: 20,
+  },
+  slideMiddle: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
+  },
+  slideImage: {
+    width: '100%',
+    height: '100%',
+    maxHeight: height * 0.4,
+  },
+  slideBottom: {
+    alignItems: 'center',
+    marginBottom: 10,
+    paddingHorizontal: 20,
   },
   slideTitle: {
     fontSize: 26,
@@ -205,7 +241,6 @@ const styles = StyleSheet.create({
     color: '#000',
     marginBottom: 10,
     textTransform: 'uppercase',
-    paddingHorizontal: isSmallDevice ? 20 : 60,
     textAlign: 'center',
   },
   image: {
@@ -229,20 +264,24 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   scrollList: {
-    paddingTop: 60,
-    paddingBottom: 20,
+    flex: 1,
+    justifyContent: 'space-evenly',
     alignItems: 'center',
+    paddingVertical: 20,
+    // Agrega espacio superior para no solapar los botones
+    paddingTop: 60,
   },
   card: {
     width: '90%',
     borderRadius: 12,
     padding: 20,
-    marginBottom: 20,
+    height: '20%',
     alignItems: 'center',
     justifyContent: 'center',
   },
   cardTitle: {
-    fontSize: 18,
+    fontSize: scaleFont(18),
+    maxFontSizeMultiplier: 1.2,
     fontWeight: 'bold',
     fontFamily: 'Panchang-Bold',
     color: '#000',
@@ -265,7 +304,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   cardDescription: {
-    fontSize: 14,
+    fontSize: scaleFont(14),
     fontFamily: 'Panchang-Regular',
     color: '#000',
     textAlign: 'center',
