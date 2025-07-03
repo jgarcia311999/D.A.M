@@ -80,6 +80,7 @@ export default function HomeScreen({ navigation, route }) {
   const fadeCarrusel = useRef(new Animated.Value(1)).current;
   const fadeLista = useRef(new Animated.Value(0)).current;
   const insets = useSafeAreaInsets();
+  const topPadding = insets.top + 70;
 
   const handleScroll = (event) => {
     const index = Math.round(event.nativeEvent.contentOffset.x / width);
@@ -176,7 +177,7 @@ export default function HomeScreen({ navigation, route }) {
         </Animated.View>
 
         <Animated.View style={{ flex: 1, opacity: fadeLista }}>
-          <View style={styles.scrollList}>
+          <View style={[styles.scrollList, { paddingTop: topPadding }]}>
             {juegos.map((item) => (
               <TouchableOpacity
                 key={item.id}
@@ -269,7 +270,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 20,
     // Agrega espacio superior para no solapar los botones
-    paddingTop: 60,
+    // paddingTop eliminado, usar prop dinámico
   },
   card: {
     width: '90%',
