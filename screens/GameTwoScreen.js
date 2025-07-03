@@ -84,10 +84,10 @@ const valores = {
 };
 
 const tragosPorPalo = {
-  corazones: 1,
-  tréboles: 2,
-  diamantes: 3,
-  picas: 4,
+  copas: 1,
+  cigarros: 2,
+  oros: 3,
+  pollos: 4,
 };
 
 const generarCarta = () => {
@@ -136,8 +136,12 @@ export default function GameTwoScreen({ route, navigation }) {
     setRegistro(prev => [...prev, { jugador: jugador, carta: { numero: nueva.numero, palo: nueva.palo } }]);
     setMazo(nuevoMazo);
     setUltimasCartas(prev => {
-      const nuevaLista = [{ numero: nueva.numero, palo: nueva.palo }, ...prev];
-      return nuevaLista.slice(0, 4);
+      // Excluir la carta actual y mantener secuencia sin duplicados
+      const nuevaLista = [
+        ...prev.filter(c => !(c.numero === nueva.numero && c.palo === nueva.palo)),
+        { numero: nueva.numero, palo: nueva.palo }
+      ];
+      return nuevaLista.slice(-4);
     });
   };
 
@@ -172,44 +176,58 @@ export default function GameTwoScreen({ route, navigation }) {
       ]}>
         {mostrarOpciones && (
           <>
-            <TouchableOpacity style={styles.primaryButton} onPress={() => setModalVisible(true)}>
+            <TouchableOpacity style={styles.primaryButton} onPress={() => {
+              setMostrarOpciones(false);
+              setModalVisible(true);
+            }}>
               <Text style={styles.primaryButtonText}>Registro</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.primaryButton} onPress={() => setModalCartasVisible(true)}>
+            <TouchableOpacity style={styles.primaryButton} onPress={() => {
+              setMostrarOpciones(false);
+              setModalCartasVisible(true);
+            }}>
               <Text style={styles.primaryButtonText}>Cartas</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.primaryButton} onPress={() => setModalRankingVisible(true)}>
+            <TouchableOpacity style={styles.primaryButton} onPress={() => {
+              setMostrarOpciones(false);
+              setModalRankingVisible(true);
+            }}>
               <Text style={styles.primaryButtonText}>Ranking</Text>
             </TouchableOpacity>
             {carta && (
-              <TouchableOpacity style={styles.optionButton} onPress={reiniciar}>
-                <Text style={styles.optionText}>Reiniciar</Text>
+              <TouchableOpacity style={styles.primaryButton} onPress={() => {
+                setMostrarOpciones(false);
+                reiniciar();
+              }}>
+                <Text style={styles.primaryButtonText}>Reiniciar</Text>
               </TouchableOpacity>
             )}
           </>
         )}
       </Animated.View>
       <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 10 }}>
-        {ultimasCartas.map((c, index) => {
-          let valor = c.numero;
-          let displayValor = valor;
-          if (valor === 'j') {
-            displayValor = 'J';
-          } else if (valor === 'q') {
-            displayValor = 'Q';
-          } else if (valor === 'k') {
-            displayValor = 'K';
-          }
-          const key = `${c.palo}_${valor}`;
-          const source = imagenesCartas[key];
-          return (
-            <Image
-              key={index}
-              source={source}
-              style={{ width: 50, height: 75, marginHorizontal: 4, resizeMode: 'contain' }}
-            />
-          );
-        })}
+        {ultimasCartas
+          .filter(c => !(c.numero === carta?.numero && c.palo === carta?.palo))
+          .map((c, index) => {
+            let valor = c.numero;
+            let displayValor = valor;
+            if (valor === 'j') {
+              displayValor = 'J';
+            } else if (valor === 'q') {
+              displayValor = 'Q';
+            } else if (valor === 'k') {
+              displayValor = 'K';
+            }
+            const key = `${c.palo}_${valor}`;
+            const source = imagenesCartas[key];
+            return (
+              <Image
+                key={index}
+                source={source}
+                style={{ width: 50, height: 75, marginHorizontal: 4, resizeMode: 'contain' }}
+              />
+            );
+          })}
       </View>
 
       <Modal
@@ -287,7 +305,7 @@ export default function GameTwoScreen({ route, navigation }) {
             {jugadorActual ? `${jugadorActual}, ${valores[carta.numero]}` : valores[carta.numero]}
           </Text>
           <Text style={styles.tragos}>
-            {tragosPorPalo[carta.palo]} trago(s) por ser {carta.palo}
+            {tragosPorPalo[carta.palo]} {carta.palo === 'copas' ? 'trago' : 'tragos'} por ser {carta.palo}
           </Text>
         </>
       )}
@@ -373,12 +391,15 @@ export default function GameTwoScreen({ route, navigation }) {
       {!carta && (
         <View style={styles.introWrapper}>
           <Text style={styles.introText}>
-            Dale al botón para comenzar el juego 🎉
+            Prepara chupitos para empezar 
           </Text>
         </View>
       )}
       <View style={styles.bottomControls}>
-        <TouchableOpacity style={styles.primaryButton} onPress={sacarCarta}>
+        <TouchableOpacity style={styles.primaryButton} onPress={() => {
+          setMostrarOpciones(false);
+          sacarCarta();
+        }}>
           <Text style={styles.primaryButtonText}>
             {carta ? 'Sacar otra carta' : 'Sacar carta'}
           </Text>
@@ -441,14 +462,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalContent: {
-    backgroundColor: '#E2D6FF',
+    backgroundColor: '#B29D55',
     padding: 20,
-    borderRadius: 10,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: 'black',
     width: '80%',
     alignItems: 'center',
   },
   modalTitle: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: 'bold',
     marginBottom: 10,
     color: '#000',
@@ -456,7 +479,7 @@ const styles = StyleSheet.create({
   },
   modalItem: {
     fontSize: 16,
-    marginVertical: 2,
+    marginVertical: 4,
     color: '#000',
     fontFamily: 'Panchang-Regular',
   },
