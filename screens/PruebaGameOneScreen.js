@@ -153,9 +153,13 @@ export default function GameOneScreen({ route, navigation }) {
     const carta = generarCarta();
     setCartas([carta]);
     if (carta.color === colorElegido) {
-      setModalCarta({ carta, acierto: true });
-      setModalVisible(true);
+      // setModalCarta({ carta, acierto: true });
+      // setModalVisible(true);
+      setModalCarta(null);
+      setModalVisible(false);
+      setTimeout(() => setFase(fase + 1), 200);
     } else {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       setModalCarta({ carta, acierto: false });
       setModalVisible(true);
       setMensaje(`😵 Fallaste. Tienes que beber ${fase} trago${fase > 1 ? 's' : ''}.`);
@@ -171,9 +175,13 @@ export default function GameOneScreen({ route, navigation }) {
     const comparacion = nuevaCarta.numero > cartaAnterior.numero ? 'mayor' : (nuevaCarta.numero < cartaAnterior.numero ? 'menor' : 'igual');
 
     if (comparacion === opcion) {
-      setModalCarta({ carta: nuevaCarta, acierto: true });
-      setModalVisible(true);
+      // setModalCarta({ carta: nuevaCarta, acierto: true });
+      // setModalVisible(true);
+      setModalCarta(null);
+      setModalVisible(false);
+      setTimeout(() => setFase(fase + 1), 200);
     } else {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       setModalCarta({ carta: nuevaCarta, acierto: false });
       setModalVisible(true);
       setMensaje(`😵 Fallaste. Tienes que beber ${fase} trago${fase > 1 ? 's' : ''}.`);
@@ -191,9 +199,13 @@ export default function GameOneScreen({ route, navigation }) {
     const estaEntre = nuevaCarta.numero > min && nuevaCarta.numero < max;
 
     if ((estaEntre && opcion === 'sí') || (!estaEntre && opcion === 'no')) {
-      setModalCarta({ carta: nuevaCarta, acierto: true });
-      setModalVisible(true);
+      // setModalCarta({ carta: nuevaCarta, acierto: true });
+      // setModalVisible(true);
+      setModalCarta(null);
+      setModalVisible(false);
+      setTimeout(() => setFase(fase + 1), 200);
     } else {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       setModalCarta({ carta: nuevaCarta, acierto: false });
       setModalVisible(true);
       setMensaje(`😵 Fallaste. Tienes que beber ${fase} trago${fase > 1 ? 's' : ''}.`);
@@ -206,10 +218,13 @@ export default function GameOneScreen({ route, navigation }) {
     setCartas([...cartas, nuevaCarta]);
 
     if (nuevaCarta.palo === paloElegido) {
-      setModalCarta({ carta: nuevaCarta, acierto: true });
-      setModalVisible(true);
-      setResultado('ganaste');
+      // setModalCarta({ carta: nuevaCarta, acierto: true });
+      // setModalVisible(true);
+      setModalCarta(null);
+      setModalVisible(false);
+      setTimeout(() => setResultado('ganaste'), 200);
     } else {
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       setModalCarta({ carta: nuevaCarta, acierto: false });
       setModalVisible(true);
       setMensaje(`😵 Fallaste. Tienes que beber ${fase} trago${fase > 1 ? 's' : ''}.`);
@@ -250,6 +265,9 @@ export default function GameOneScreen({ route, navigation }) {
                 <Text style={styles.modalMessage}>
                   {modalCarta.acierto ? '¡Correcto!' : 'Fallaste'}
                 </Text>
+                <TouchableOpacity onPress={cerrarModal} style={{ marginTop: 20, padding: 10, backgroundColor: '#ff4d4d', borderRadius: 8 }}>
+                  <Text style={{ color: 'white', fontWeight: 'bold' }}>Aceptar</Text>
+                </TouchableOpacity>
               </>
             )}
           </View>
@@ -289,11 +307,14 @@ export default function GameOneScreen({ route, navigation }) {
       aspectRatio: 0.625,
       marginHorizontal: 5,
       borderRadius: 12,
+      borderWidth: 1.5,
+      borderColor: 'black',
+      backgroundColor: '#D89568',
     },
     turno: {
       fontSize: 22,
       fontWeight: '700',
-      color: '#fff',
+      color: 'black',
       textAlign: 'center',
       fontFamily: 'Panchang-Regular',
       marginLeft: 10,
@@ -303,7 +324,7 @@ export default function GameOneScreen({ route, navigation }) {
       fontSize: 22,
       marginBottom: 20,
       textAlign: 'center',
-      color: '#fff',
+      color: 'black',
       fontFamily: 'Panchang-Regular',
     },
     colorRow: {
@@ -318,12 +339,16 @@ export default function GameOneScreen({ route, navigation }) {
       backgroundColor: '#A52019',
       borderRadius: 20,
       marginRight: 10,
+      borderWidth: 2,
+      borderColor: 'black',
     },
     colorRight: {
       flex: 1,
       backgroundColor: 'black',
       borderRadius: 20,
       marginLeft: 10,
+      borderWidth: 2,
+      borderColor: 'black',
     },
     verticalStack: {
       marginHorizontal: 20,
@@ -332,7 +357,7 @@ export default function GameOneScreen({ route, navigation }) {
     fullWidthBox: {
       width: '100%',
       height: 100, // reducido
-      backgroundColor: '#E2D6FF',
+      backgroundColor: '#D89568',
       borderRadius: 12,
       justifyContent: 'center',
       alignItems: 'center',
@@ -341,7 +366,7 @@ export default function GameOneScreen({ route, navigation }) {
     choiceText: {
       fontSize: 20,
       fontWeight: 'bold',
-      color: '#fff',
+      color: 'black',
       fontFamily: 'Panchang-Regular',
     },
     centeredCircleWrapper: {
@@ -354,7 +379,7 @@ export default function GameOneScreen({ route, navigation }) {
       width: 250, // reducido
       height: 250,
       borderRadius: 30,
-      backgroundColor: '#E2D6FF',
+      backgroundColor: '#D89568',
       justifyContent: 'center',
       alignItems: 'center',
     },
@@ -362,7 +387,7 @@ export default function GameOneScreen({ route, navigation }) {
       width: 120, // reducido
       height: 120,
       borderRadius: 30,
-      backgroundColor: '#4CAF50',
+      backgroundColor: '#AD6737',
       position: 'absolute',
       top: '50%',
       left: '50%',
@@ -389,19 +414,20 @@ export default function GameOneScreen({ route, navigation }) {
       width: '80%',
       height: '80%',
       resizeMode: 'contain',
+      backgroundColor: '#D89568',
     },
     message: {
       fontSize: 16,
       marginTop: 20,
       marginBottom: 10,
       textAlign: 'center',
-      color: '#fff',
+      color: 'black',
       fontFamily: 'Panchang-Regular',
     },
     plantarmeButton: {
-      backgroundColor: 'transparent',
+      backgroundColor: '#D89568',
       borderWidth: 2,
-      borderColor: '#fff',
+      borderColor: '#000000',
       padding: 12,
       marginHorizontal: 20,
       marginBottom: 20,
@@ -409,19 +435,19 @@ export default function GameOneScreen({ route, navigation }) {
       alignItems: 'center',
     },
     plantarmeText: {
-      color: '#fff',
+      color: 'black',
       fontSize: 18,
       fontWeight: '900',
       fontFamily: 'Panchang-Regular',
     },
     modalOverlay: {
       flex: 1,
-      backgroundColor: 'rgba(0,0,0,0.6)',
+      backgroundColor: 'rgba(200, 0, 0, 0.8)',
       justifyContent: 'center',
       alignItems: 'center',
     },
     modalContent: {
-      backgroundColor: '#191716',
+      backgroundColor: '#400000',
       padding: 20,
       borderRadius: 12,
       alignItems: 'center',
@@ -442,12 +468,14 @@ export default function GameOneScreen({ route, navigation }) {
       marginBottom: 20,
       borderRadius: 12,
       backgroundColor: '#E2D6FF',
+      borderWidth: 2,
+      borderColor: '#ff4d4d',
     },
     modalMessage: {
       fontSize: 20,
       fontWeight: 'bold',
       textAlign: 'center',
-      color: '#fff',
+      color: 'black',
       fontFamily: 'Panchang-Regular',
     },
     fixedBackButton: {
@@ -459,6 +487,21 @@ export default function GameOneScreen({ route, navigation }) {
       position: 'absolute',
       right: 20,
       zIndex: 10,
+    },
+    resultBox: {
+      backgroundColor: '#ffcccc',
+      borderColor: 'red',
+      borderWidth: 2,
+      borderRadius: 12,
+      padding: 20,
+      marginHorizontal: 20,
+      alignItems: 'center',
+    },
+    resultText: {
+      color: 'black',
+      fontSize: 18,
+      fontWeight: 'bold',
+      textAlign: 'center',
     },
   });
 
@@ -472,7 +515,7 @@ export default function GameOneScreen({ route, navigation }) {
           navigation.goBack();
         }}
       >
-        <Ionicons name="arrow-back" size={28} color="#fff" />
+        <Ionicons name="arrow-back" size={28} color="#000000" />
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.fixedHelpButton, { top: insets.top + 10 }]}
@@ -481,7 +524,7 @@ export default function GameOneScreen({ route, navigation }) {
           setModalInfoVisible(true);
         }}
       >
-        <Ionicons name="help-circle-outline" size={28} color="#fff" />
+        <Ionicons name="help-circle-outline" size={28} color="#000000" />
       </TouchableOpacity>
       <View style={styles.cardGrid}>
         {[0, 1, 2, 3].map((i) => (
@@ -544,7 +587,6 @@ export default function GameOneScreen({ route, navigation }) {
           </View>
         </>
       )}
-      <Text style={styles.message}>{mensaje}</Text>
       {/* Botón Plantarme solo si no ha fallado y no hay resultado */}
       {!resultado && (
         <TouchableOpacity style={styles.plantarmeButton} onPress={handlePlantarme}>
@@ -552,7 +594,12 @@ export default function GameOneScreen({ route, navigation }) {
         </TouchableOpacity>
       )}
       {resultado && (
-        <Button title="Reiniciar" onPress={reiniciar} />
+        <>
+          <Text style={styles.message}>{mensaje}</Text>
+          <TouchableOpacity style={styles.plantarmeButton} onPress={reiniciar}>
+            <Text style={styles.plantarmeText}>Intentar otra vez</Text>
+          </TouchableOpacity>
+        </>
       )}
       <CartaModal />
       <Modal
@@ -574,10 +621,10 @@ export default function GameOneScreen({ route, navigation }) {
               </View>
               <View style={styles.modalFooter}>
                 <TouchableOpacity onPress={() => setInfoPage(Math.max(infoPage - 1, 0))} disabled={infoPage === 0}>
-                  <Text style={{ color: infoPage === 0 ? '#555' : '#fff', fontSize: 24 }}>{"<"}</Text>
+                  <Text style={{ color: infoPage === 0 ? 'gray' : 'black', fontSize: 24 }}>{"<"}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => setInfoPage(Math.min(infoPage + 1, infoPages.length - 1))} disabled={infoPage === infoPages.length - 1}>
-                  <Text style={{ color: infoPage === infoPages.length - 1 ? '#555' : '#fff', fontSize: 24 }}>{">"}</Text>
+                  <Text style={{ color: infoPage === infoPages.length - 1 ? 'gray' : 'black', fontSize: 24 }}>{">"}</Text>
                 </TouchableOpacity>
               </View>
             </View>

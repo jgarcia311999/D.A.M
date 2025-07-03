@@ -11,9 +11,10 @@ const generarBarajaCompleta = () => {
   return baraja;
 };
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Animated } from 'react-native';
 import * as Haptics from 'expo-haptics';
-import { View, Text, Button, StyleSheet, Modal, TouchableOpacity, ScrollView, Image, SafeAreaView } from 'react-native';
+import { View, Text, Button, StyleSheet, Modal, TouchableOpacity, ScrollView, Image, SafeAreaView, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 const imagenesCartas = {
@@ -107,6 +108,16 @@ export default function GameTwoScreen({ route, navigation }) {
   const [modalRankingVisible, setModalRankingVisible] = useState(false);
   const [ultimasCartas, setUltimasCartas] = useState([]);
   const [mostrarOpciones, setMostrarOpciones] = useState(false);
+  // Animación para las opciones del header (deslizamiento vertical y opacidad)
+  const slideAnim = useRef(new Animated.Value(-20)).current;
+
+  useEffect(() => {
+    Animated.timing(slideAnim, {
+      toValue: mostrarOpciones ? 0 : -20,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  }, [mostrarOpciones]);
 
   const sacarCarta = () => {
     if (mazo.length === 0) {
@@ -139,7 +150,8 @@ export default function GameTwoScreen({ route, navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <TouchableWithoutFeedback onPress={() => setMostrarOpciones(false)}>
+      <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => {
           Haptics.selectionAsync();
@@ -151,24 +163,32 @@ export default function GameTwoScreen({ route, navigation }) {
           <Ionicons name="ellipsis-vertical" size={28} color="#fff" />
         </TouchableOpacity>
       </View>
-      {mostrarOpciones && (
-        <View style={styles.headerOptions}>
-          <TouchableOpacity style={styles.optionButton} onPress={() => setModalVisible(true)}>
-            <Text style={styles.optionText}>Registro</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.optionButton} onPress={() => setModalCartasVisible(true)}>
-            <Text style={styles.optionText}>Cartas</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.optionButton} onPress={() => setModalRankingVisible(true)}>
-            <Text style={styles.optionText}>Ranking</Text>
-          </TouchableOpacity>
-          {carta && (
-            <TouchableOpacity style={styles.optionButton} onPress={reiniciar}>
-              <Text style={styles.optionText}>Reiniciar</Text>
+      <Animated.View style={[
+        styles.headerOptions,
+        {
+          transform: [{ translateY: slideAnim }],
+          opacity: mostrarOpciones ? 1 : 0,
+        }
+      ]}>
+        {mostrarOpciones && (
+          <>
+            <TouchableOpacity style={styles.primaryButton} onPress={() => setModalVisible(true)}>
+              <Text style={styles.primaryButtonText}>Registro</Text>
             </TouchableOpacity>
-          )}
-        </View>
-      )}
+            <TouchableOpacity style={styles.primaryButton} onPress={() => setModalCartasVisible(true)}>
+              <Text style={styles.primaryButtonText}>Cartas</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.primaryButton} onPress={() => setModalRankingVisible(true)}>
+              <Text style={styles.primaryButtonText}>Ranking</Text>
+            </TouchableOpacity>
+            {carta && (
+              <TouchableOpacity style={styles.optionButton} onPress={reiniciar}>
+                <Text style={styles.optionText}>Reiniciar</Text>
+              </TouchableOpacity>
+            )}
+          </>
+        )}
+      </Animated.View>
       <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 10 }}>
         {ultimasCartas.map((c, index) => {
           let valor = c.numero;
@@ -350,6 +370,13 @@ export default function GameTwoScreen({ route, navigation }) {
         </View>
       </Modal>
 
+      {!carta && (
+        <View style={styles.introWrapper}>
+          <Text style={styles.introText}>
+            Dale al botón para comenzar el juego 🎉
+          </Text>
+        </View>
+      )}
       <View style={styles.bottomControls}>
         <TouchableOpacity style={styles.primaryButton} onPress={sacarCarta}>
           <Text style={styles.primaryButtonText}>
@@ -357,7 +384,8 @@ export default function GameTwoScreen({ route, navigation }) {
           </Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 }
 
@@ -462,16 +490,17 @@ const styles = StyleSheet.create({
     fontFamily: 'Panchang-Regular',
   },
   primaryButton: {
-    backgroundColor: 'transparent',
-    borderWidth: 2,
-    borderColor: '#fff',
+    backgroundColor: '#B29D55',
     paddingVertical: 12,
     paddingHorizontal: 30,
     borderRadius: 10,
     alignItems: 'center',
+    borderWidth: 2,
+    borderColor: 'black',
+    marginVertical: 6,
   },
   primaryButtonText: {
-    color: '#fff',
+    color: 'black',
     fontSize: 16,
     fontWeight: 'bold',
     fontFamily: 'Panchang-Regular',
@@ -482,5 +511,18 @@ const styles = StyleSheet.create({
     right: 20,
     zIndex: 3,
     alignItems: 'flex-end',
+  },
+  introText: {
+    fontSize: 22,
+    color: '#000',
+    textAlign: 'center',
+    marginBottom: 20,
+    paddingHorizontal: 30,
+    fontFamily: 'Panchang-Regular',
+  },
+  introWrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
