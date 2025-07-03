@@ -203,12 +203,12 @@ export default function MiniGame1({ route, navigation }) {
           >
             <View style={styles.modalOverlay}>
               <View style={styles.modalContent}>
-                <Text style={styles.text}>{tema}</Text>
-                <Text style={styles.text}>TOP 1: {top[1] || '---'}, 3 tragos</Text>
-                <Text style={styles.text}>TOP 2: {top[2] || '---'}, 2 tragos</Text>
-                <Text style={styles.text}>TOP 3: {top[3] || '---'}, 1 trago</Text>
+                <Text style={[styles.text, { marginBottom: 18 }]}>{tema}</Text>
+                <Text style={styles.topTextModal}>TOP 1: {top[1] || '---'}, 3 tragos</Text>
+                <Text style={styles.topTextModal}>TOP 2: {top[2] || '---'}, 2 tragos</Text>
+                <Text style={[styles.topTextModal, { marginBottom: 0 }]}>TOP 3: {top[3] || '---'}, 1 trago</Text>
                 <Pressable
-                  style={styles.botonCerrar}
+                  style={[styles.botonContinuar, { marginTop: 28 }]}
                   onPress={() => {
                     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
                     setModalVisible(false);
@@ -241,10 +241,18 @@ export default function MiniGame1({ route, navigation }) {
                     </Text>
                   </View>
                   <View style={styles.modalFooter}>
-                    <TouchableOpacity onPress={() => setInfoPage(Math.max(infoPage - 1, 0))} disabled={infoPage === 0}>
+                    <TouchableOpacity
+                      onPress={() => setInfoPage(Math.max(infoPage - 1, 0))}
+                      disabled={infoPage === 0}
+                      style={infoPage === 0 ? { opacity: 0.4 } : null}
+                    >
                       <Text style={{ color: infoPage === 0 ? '#555' : '#000', fontSize: 24, fontFamily: 'Panchang-Bold' }}>{"<"}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => setInfoPage(Math.min(infoPage + 1, infoPages.length - 1))} disabled={infoPage === infoPages.length - 1}>
+                    <TouchableOpacity
+                      onPress={() => setInfoPage(Math.min(infoPage + 1, infoPages.length - 1))}
+                      disabled={infoPage === infoPages.length - 1}
+                      style={infoPage === infoPages.length - 1 ? { opacity: 0.4 } : null}
+                    >
                       <Text style={{ color: infoPage === infoPages.length - 1 ? '#555' : '#000', fontSize: 24, fontFamily: 'Panchang-Bold' }}>{">"}</Text>
                     </TouchableOpacity>
                   </View>
@@ -372,9 +380,10 @@ const styles = StyleSheet.create({
     padding: 24,
     borderRadius: 20,
     alignItems: 'center',
-    width: '80%',
+    width: '95%',
+    maxWidth: 480,
     justifyContent: 'center',
-    minHeight: 250,
+    minHeight: 350,
     borderWidth: 2, // añadido
     borderColor: '#ffffff44', // añadido
     shadowColor: '#000', // añadido sombra suave
@@ -450,5 +459,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 20,
     marginTop: 20,
+  },
+
+  topTextModal: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#000',
+    marginBottom: 10,
+    fontFamily: 'Panchang-Bold',
   },
 });
