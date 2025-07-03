@@ -3,8 +3,10 @@ import { useFocusEffect } from '@react-navigation/native';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, Pressable, LayoutAnimation, Platform, UIManager, SafeAreaView, TouchableWithoutFeedback, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function MiniGame1({ route, navigation }) {
+  const insets = useSafeAreaInsets();
   const { jugadores = [] } = route.params || {};
   const [frasesUsadas, setFrasesUsadas] = useState([]);
   const [top, setTop] = useState({ 1: null, 2: null, 3: null });
@@ -16,13 +18,13 @@ export default function MiniGame1({ route, navigation }) {
   const [infoPage, setInfoPage] = useState(0);
 
   const infoPages = [
-  'Un juego de cartas para beber... sí, otro más. Pero este por lo menos te obliga a usar una neurona o dos.',
-  'Son cuatro fases. Aciertas, avanzas. La cagas, bebes.\n¿Demasiado para ti? Siempre puedes rendirte y fingir que repartes los tragos por estrategia.',
-  'Fase 1 – Color: ¿Roja o negra? Una decisión tan difícil como elegir entre tinto o cerveza.\n\nFase 2 – Mayor o menor: Compara cartas. Decide si sube o baja. Vamos, no es física cuántica.',
-  'Fase 3 – ¿Entre o fuera?: ¿La carta cae entre las otras dos? Pues di "sí" o "no", a ver si te crees Nostradamus.\n\nFase 4 – Palo: Elige: cigarro, cubata, gallina u oro.',
-  '¿Te rajas? Genial. Reparte tragos como si fueras el rey de la fiesta… aunque todos sepan que te has cagado.',
-  'Pulsa sobre el nombre del jugador y luego en el top que quieras ponerlo.',
-];
+    'Un juego de cartas para beber... sí, otro más. Pero este por lo menos te obliga a usar una neurona o dos.',
+    'Son cuatro fases. Aciertas, avanzas. La cagas, bebes.\n¿Demasiado para ti? Siempre puedes rendirte y fingir que repartes los tragos por estrategia.',
+    'Fase 1 – Color: ¿Roja o negra? Una decisión tan difícil como elegir entre tinto o cerveza.\n\nFase 2 – Mayor o menor: Compara cartas. Decide si sube o baja. Vamos, no es física cuántica.',
+    'Fase 3 – ¿Entre o fuera?: ¿La carta cae entre las otras dos? Pues di "sí" o "no", a ver si te crees Nostradamus.\n\nFase 4 – Palo: Elige: cigarro, cubata, gallina u oro.',
+    '¿Te rajas? Genial. Reparte tragos como si fueras el rey de la fiesta… aunque todos sepan que te has cagado.',
+    'Pulsa sobre el nombre del jugador y luego en el top que quieras ponerlo.',
+  ];
 
   // Enable LayoutAnimation on Android
   if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
@@ -108,53 +110,64 @@ export default function MiniGame1({ route, navigation }) {
   const renderPodium = () => (
     <View style={styles.podiumContainer}>
       <View style={styles.podiumSlot}>
-        <Text style={styles.topLabel}>TOP 2</Text>
+        <Text style={[styles.topLabel, { fontFamily: 'Panchang-Bold', color: '#000' }]}>TOP 2</Text>
         <TouchableOpacity
           onPress={() => asignarTop(2)}
           style={[styles.podiumBox, styles.podiumSecond]}
         >
-          {top[2] && <Text style={styles.jugadorTexto}>{top[2]}</Text>}
+          {top[2] && <Text style={[styles.jugadorTexto, { color: '#000', fontFamily: 'Panchang-Bold' }]}>{top[2]}</Text>}
         </TouchableOpacity>
       </View>
       <View style={styles.podiumSlot}>
-        <Text style={styles.topLabel}>TOP 1</Text>
+        <Text style={[styles.topLabel, { fontFamily: 'Panchang-Bold', color: '#000' }]}>TOP 1</Text>
         <TouchableOpacity
           onPress={() => asignarTop(1)}
           style={[styles.podiumBox, styles.podiumFirst]}
         >
-          {top[1] && <Text style={styles.jugadorTexto}>{top[1]}</Text>}
+          {top[1] && <Text style={[styles.jugadorTexto, { color: '#000', fontFamily: 'Panchang-Bold' }]}>{top[1]}</Text>}
         </TouchableOpacity>
       </View>
       <View style={styles.podiumSlot}>
-        <Text style={styles.topLabel}>TOP 3</Text>
+        <Text style={[styles.topLabel, { fontFamily: 'Panchang-Bold', color: '#000' }]}>TOP 3</Text>
         <TouchableOpacity
           onPress={() => asignarTop(3)}
           style={[styles.podiumBox, styles.podiumThird]}
         >
-          {top[3] && <Text style={styles.jugadorTexto}>{top[3]}</Text>}
+          {top[3] && <Text style={[styles.jugadorTexto, { color: '#000', fontFamily: 'Panchang-Bold' }]}>{top[3]}</Text>}
         </TouchableOpacity>
       </View>
     </View>
   );
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#191716', paddingTop: 50 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#bfa3ff', paddingTop: 50 }}>
       <View style={styles.scrollView}>
         <View style={styles.innerContainer}>
-          <View style={styles.header}>
+          <View style={[
+            styles.header,
+            {
+              position: 'absolute',
+              top: insets.top + 10,
+              left: 0,
+              right: 0,
+              paddingHorizontal: 20,
+              zIndex: 10,
+            }
+          ]}>
             <TouchableOpacity onPress={() => {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
               navigation.goBack();
             }}>
-              <Ionicons name="arrow-back" size={28} color="#fff" />
+              <Ionicons name="arrow-back" size={28} color="#7c58c5" />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => {
               setInfoPage(0);
               setModalInfoVisible(true);
             }}>
-              <Ionicons name="help-circle-outline" size={28} color="#fff" />
+              <Ionicons name="help-circle-outline" size={28} color="#7c58c5" />
             </TouchableOpacity>
           </View>
+          <View style={{ height: insets.top + 58 }} />
           <Text style={styles.tema}>{tema}</Text>
           {renderPodium()}
           <View style={styles.jugadoresWrapper}>
@@ -167,10 +180,9 @@ export default function MiniGame1({ route, navigation }) {
                   disabled={asignado}
                   style={[
                     styles.jugador,
-                    jugadorSeleccionado === nombre && { backgroundColor: 'rgba(0, 150, 0, 0.6)' },
+                    jugadorSeleccionado === nombre && { backgroundColor: '#d8c7fa' },
                     asignado && { opacity: 0.4 }
-                  ]}
-                >
+                  ]}>
                   <Text style={styles.jugadorTexto}>{nombre}</Text>
                 </TouchableOpacity>
               );
@@ -206,7 +218,7 @@ export default function MiniGame1({ route, navigation }) {
                     setTema(getNuevaFrase());
                   }}
                 >
-                  <Text style={styles.botonTexto}>Cerrar</Text>
+                  <Text style={[styles.botonTexto, { color: '#000' }]}>Cerrar</Text>
                 </Pressable>
               </View>
             </View>
@@ -230,10 +242,10 @@ export default function MiniGame1({ route, navigation }) {
                   </View>
                   <View style={styles.modalFooter}>
                     <TouchableOpacity onPress={() => setInfoPage(Math.max(infoPage - 1, 0))} disabled={infoPage === 0}>
-                      <Text style={{ color: infoPage === 0 ? '#555' : '#fff', fontSize: 24 }}>{"<"}</Text>
+                      <Text style={{ color: infoPage === 0 ? '#555' : '#000', fontSize: 24, fontFamily: 'Panchang-Bold' }}>{"<"}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => setInfoPage(Math.min(infoPage + 1, infoPages.length - 1))} disabled={infoPage === infoPages.length - 1}>
-                      <Text style={{ color: infoPage === infoPages.length - 1 ? '#555' : '#fff', fontSize: 24 }}>{">"}</Text>
+                      <Text style={{ color: infoPage === infoPages.length - 1 ? '#555' : '#000', fontSize: 24, fontFamily: 'Panchang-Bold' }}>{">"}</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -259,14 +271,15 @@ export default function MiniGame1({ route, navigation }) {
 }
 
 const styles = StyleSheet.create({
+  // Cambios para sincronizar diseño visual con pantalla de juego de cartas
   scrollView: {
     flex: 1,
-    backgroundColor: '#191716',
+    backgroundColor: '#bfa3ff', // cambiado de '#191716'
   },
   innerContainer: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#191716',
+    backgroundColor: '#bfa3ff', // cambiado de '#191716'
     paddingBottom: 100,
   },
   scrollContainer: {
@@ -275,7 +288,8 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#fff'
+    color: '#000', // cambiado de '#fff'
+    fontFamily: 'Panchang-Bold', // añadido para texto principal
   },
   jugadoresWrapper: {
     flexDirection: 'row',
@@ -287,34 +301,37 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   jugador: {
-    backgroundColor: 'rgba(0, 100, 0, 0.5)',
-    borderColor: 'green',
-    borderWidth: 2,
+    backgroundColor: '#E2D6FF', // cambiado de 'rgba(0, 100, 0, 0.5)'
+    borderColor: '#bfa3ff', // cambiado de 'green'
+    borderWidth: 2, // asegurando que es 2
     borderRadius: 20,
     paddingVertical: 10,
     paddingHorizontal: 16,
     margin: 6,
     minWidth: 80,
     alignItems: 'center',
+    shadowColor: '#000', // añadido sombra suave
+    shadowOpacity: 0.08,
+    shadowRadius: 6,
+    elevation: 3,
   },
   jugadorTexto: {
-    color: '#fff',
+    color: '#000', // cambiado de '#fff'
     fontSize: 16,
     fontWeight: 'bold',
+    fontFamily: 'Panchang-Bold', // añadido
   },
-  // Eliminado topContainer si no es usado
   topItem: {
-    color: '#fff',
+    color: '#000', // cambiado de '#fff'
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 8,
+    fontFamily: 'Panchang-Bold',
   },
-  // Eliminados dropZoneWrapper y dropZone si ya no se usan
   header: {
     width: '100%',
-    paddingTop: 40,
-    paddingHorizontal: 20,
-    paddingBottom: 10,
+    // paddings eliminados para fondo transparente
+    backgroundColor: 'transparent', // cambiado de fondo oscuro
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -322,22 +339,27 @@ const styles = StyleSheet.create({
   tema: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: '#fff',
+    color: '#000', // cambiado de '#fff'
     marginBottom: 10,
     textAlign: 'center',
+    fontFamily: 'Panchang-Bold',
   },
   botonContinuar: {
-    backgroundColor: '#6a0dad',
+    backgroundColor: '#7c58c5', // cambiado de '#6a0dad'
     paddingVertical: 12,
     paddingHorizontal: 24,
-    borderRadius: 10,
+    borderRadius: 16, // cambiado de 10
     marginTop: 0,
+    shadowColor: '#000', // añadido sombra suave
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    elevation: 5,
   },
   botonTexto: {
-    color: '#fff',
+    color: '#000', // cambiado de '#fff'
     fontWeight: 'bold',
     fontSize: 16,
-    
+    fontFamily: 'Panchang-Bold', // añadido
   },
   modalOverlay: {
     flex: 1,
@@ -346,20 +368,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalContent: {
-    backgroundColor: '#333',
+    backgroundColor: '#E2D6FF', // cambiado de '#333'
     padding: 24,
     borderRadius: 20,
     alignItems: 'center',
     width: '80%',
     justifyContent: 'center',
     minHeight: 250,
+    borderWidth: 2, // añadido
+    borderColor: '#ffffff44', // añadido
+    shadowColor: '#000', // añadido sombra suave
+    shadowOpacity: 0.10,
+    shadowRadius: 8,
+    elevation: 6,
   },
   botonCerrar: {
     marginTop: 20,
-    backgroundColor: '#cc0000',
+    backgroundColor: '#ff9e9e', // cambiado de '#cc0000'
     paddingVertical: 10,
     paddingHorizontal: 20,
-    borderRadius: 10,
+    borderRadius: 14, // cambiado de 10
   },
   podiumContainer: {
     flexDirection: 'row',
@@ -374,10 +402,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   topLabel: {
-    color: '#fff',
+    color: '#000', // cambiado de '#fff'
     fontSize: 16,
     marginBottom: 8,
     textAlign: 'center',
+    fontFamily: 'Panchang-Bold',
   },
   podiumBox: {
     borderWidth: 2,
@@ -386,27 +415,33 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 10,
     width: '100%',
+    backgroundColor: '#E2D6FF', // cambiado de '#333'
+    shadowColor: '#000', // añadido sombra suave
+    shadowOpacity: 0.08,
+    shadowRadius: 6,
+    elevation: 3,
   },
   podiumFirst: {
     height: 120,
-    borderColor: '#FFD700', // oro
-    backgroundColor: '#333',
+    borderColor: '#ffd700', // oro, cambiado de '#FFD700' para consistencia
+    backgroundColor: '#E2D6FF', // asegurar mismo fondo
   },
   podiumSecond: {
     height: 90,
-    borderColor: '#C0C0C0', // plata
-    backgroundColor: '#444',
+    borderColor: '#c0c0c0', // plata, cambiado de '#C0C0C0'
+    backgroundColor: '#E2D6FF',
   },
   podiumThird: {
     height: 90,
-    borderColor: '#CD7F32', // bronce
-    backgroundColor: '#444',
+    borderColor: '#cd7f32', // bronce, cambiado de '#CD7F32'
+    backgroundColor: '#E2D6FF',
   },
   modalMessage: {
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#fff',
+    color: '#000', // cambiado de '#fff'
+    fontFamily: 'Panchang-Bold',
     // fontFamily: 'Panchang-Regular',
   },
   modalFooter: {
@@ -416,4 +451,4 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginTop: 20,
   },
-  });
+});
