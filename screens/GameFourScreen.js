@@ -85,17 +85,16 @@ const PruebaGameFourScreen = ({ route, navigation }) => {
   }
   return (
     <SafeAreaView style={styles.safeArea}>
-      <View style={styles.container}>
-        {/* <Image source={require('../assets/chapas/chapa_flor.png')} style={styles.imageBackground} /> */}
-        <TouchableOpacity
-          style={[styles.backButton, { top: insets.top + 10 }]}
-          onPress={() => {
-            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-            navigation.goBack();
-          }}
-        >
+      <View style={{ position: 'absolute', top: insets.top + 10, left: 0, right: 0, flexDirection: 'row', justifyContent: 'flex-start', paddingHorizontal: 20, zIndex: 10 }}>
+        <TouchableOpacity onPress={() => {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+          navigation.goBack();
+        }}>
           <Ionicons name="arrow-back" size={28} color="#fff" />
         </TouchableOpacity>
+      </View>
+      <View style={styles.container}>
+        {/* <Image source={require('../assets/chapas/chapa_flor.png')} style={styles.imageBackground} /> */}
         {frasesToUse.length > 0 && (
           <Swiper
             key={cardIndex}
