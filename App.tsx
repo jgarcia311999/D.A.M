@@ -17,7 +17,7 @@ import GamerScreen from './screens/GamerScreen';
 import MiniGamesScreen from './screens/MiniGamesScreen';
 import MiniGame1 from './screens/miniGames/MiniGame1';
 import MiniGame2 from './screens/miniGames/MiniGame2';
-import MiniGame3 from './screens/miniGames/MiniGame3/MiniGame3';
+import MiniGame3Root from './screens/miniGames/MiniGame3';
 import CreaTuFrase from './screens/CreaTuFrase';
 
 import * as Font from 'expo-font';
@@ -68,7 +68,7 @@ export default function App() {
           <Stack.Screen name="MiniGames" component={MiniGamesScreen} options={{ headerShown: false }} />
           <Stack.Screen name="MiniGame1" component={MiniGame1} options={{ headerShown: false }} />
           <Stack.Screen name="MiniGame2" component={MiniGame2} />
-          <Stack.Screen name="MiniGame3" component={MiniGame3} />
+          <Stack.Screen name="MiniGame3" component={MiniGame3Root} />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>

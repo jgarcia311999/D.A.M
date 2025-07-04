@@ -1,28 +1,45 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
+import { getFirestore, doc, onSnapshot } from 'firebase/firestore';
+import { app } from '../../../utils/firebaseConfig'; // Ajusta la ruta según tu proyecto
 
-export default function MiniGame3Room({ route, navigation }) {
-  const { roomCode } = route.params || {};
+const db = getFirestore(app);
+
+export default function MiniGame3Room({ salaInfo, setStep, navigation }) {
   const [players, setPlayers] = useState([
-    // Esto es solo ejemplo, después se rellenará desde Firebase
-    { id: '1', name: 'Tú (Host)' },
-    // { id: '2', name: 'Jugador2' }
+    { id: '1', name: 'Tú (Host)' }, // jugador host por defecto
   ]);
 
   useEffect(() => {
-    // Aquí después se podrá hacer la suscripción a la sala en Firestore para actualizar jugadores en tiempo real
-  }, []);
+    if (!salaInfo?.code) return;
+
+    const unsubscribe = onSnapshot(
+      doc(db, 'salas', salaInfo.code),
+      (docSnap) => {
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          if (data.jugadores && Array.isArray(data.jugadores)) {
+            setPlayers(data.jugadores);
+          }
+        }
+      },
+      (error) => {
+        console.error('Error escuchando sala:', error);
+      }
+    );
+
+    return () => unsubscribe();
+  }, [salaInfo?.code]);
 
   const handleStartGame = () => {
-    // Aquí iría la lógica para comenzar la partida (más adelante)
-    alert('¡Juego empezará pronto!');
+    setStep(3);
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Sala de Juego</Text>
       <Text style={styles.label}>Código de Sala:</Text>
-      <Text selectable style={styles.code}>{roomCode ? roomCode : '---'}</Text>
+      <Text selectable style={styles.code}>{salaInfo?.code ?? '---'}</Text>
       <Text style={[styles.label, { marginTop: 20 }]}>Jugadores:</Text>
       <FlatList
         data={players}
@@ -37,7 +54,7 @@ export default function MiniGame3Room({ route, navigation }) {
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.button, { backgroundColor: '#c84d4d', marginTop: 10 }]}
-        onPress={() => navigation.goBack()}
+        onPress={() => setStep(0)}
       >
         <Text style={styles.buttonText}>Salir</Text>
       </TouchableOpacity>

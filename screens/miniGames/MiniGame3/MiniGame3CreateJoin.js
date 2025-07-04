@@ -1,20 +1,68 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, TextInput, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, StyleSheet, Alert } from 'react-native';
+import { getFirestore, collection, addDoc, doc, getDoc } from 'firebase/firestore';
+import { getApp } from 'firebase/app';
+import { query, where, getDocs } from 'firebase/firestore';
 
-export default function MiniGame3CreateJoin({ navigation }) {
+
+export default function MiniGame3CreateJoin({ setSalaInfo, setStep }) {
   const [roomCode, setRoomCode] = useState('');
+  const db = getFirestore(getApp());
 
-  const handleCreateRoom = () => {
-    // Aquí más adelante iría la lógica para crear sala (ejemplo: llamar a Firebase)
-    navigation.navigate('MiniGame3Room', { roomCode: null }); // de momento, solo navega
+  // Función para generar código aleatorio de 6 caracteres (puedes cambiar la lógica)
+  const generateCode = () => {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let code = '';
+    for (let i = 0; i < 6; i++) {
+      code += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return code;
   };
 
-  const handleJoinRoom = () => {
-    // Aquí más adelante iría la lógica para comprobar sala
-    if (roomCode.trim()) {
-      navigation.navigate('MiniGame3Room', { roomCode });
-    } else {
-      alert('Introduce un código de sala');
+  // Crear sala en Firestore con código generado
+  const handleCreateRoom = async () => {
+    const code = generateCode();
+    try {
+      // Guardar sala en Firestore
+      const docRef = await addDoc(collection(db, 'salas'), {
+        code,
+        createdAt: new Date(),
+        jugadores: [], // aquí puedes añadir jugador host si quieres
+      });
+      // Pasar el código real y host true
+      setSalaInfo({ code, isHost: true, docId: docRef.id });
+      setStep(1);
+    } catch (error) {
+      Alert.alert('Error', 'No se pudo crear la sala. Inténtalo más tarde.');
+      console.error('Error creando sala:', error);
+    }
+  };
+
+  // Unirse a sala comprobando que exista en Firestore
+  const handleJoinRoom = async () => {
+    if (!roomCode.trim()) {
+      Alert.alert('Aviso', 'Introduce un código de sala');
+      return;
+    }
+    try {
+      // Buscar sala con código introducido
+      const salasRef = collection(db, 'salas');
+      // Aquí no podemos buscar directo por 'code', hay que usar query (simplifico)
+      // Para esto usarías query con where, pero por simplicidad lo hacemos getDoc con docId si lo tienes
+      // Aquí te dejo ejemplo con query:
+      const q = query(salasRef, where('code', '==', roomCode.toUpperCase()));
+      const querySnapshot = await getDocs(q);
+      if (querySnapshot.empty) {
+        Alert.alert('Error', 'No existe ninguna sala con ese código.');
+        return;
+      }
+      // Tomamos la primera sala que coincida
+      const salaDoc = querySnapshot.docs[0];
+      setSalaInfo({ code: roomCode.toUpperCase(), isHost: false, docId: salaDoc.id });
+      setStep(1);
+    } catch (error) {
+      Alert.alert('Error', 'No se pudo unir a la sala. Inténtalo más tarde.');
+      console.error('Error uniendo a sala:', error);
     }
   };
 
