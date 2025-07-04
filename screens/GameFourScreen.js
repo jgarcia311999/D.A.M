@@ -85,12 +85,28 @@ const PruebaGameFourScreen = ({ route, navigation }) => {
   }
   return (
     <SafeAreaView style={styles.safeArea}>
-      <View style={{ position: 'absolute', top: insets.top + 10, left: 0, right: 0, flexDirection: 'row', justifyContent: 'flex-start', paddingHorizontal: 20, zIndex: 10 }}>
+      <View style={{
+        position: 'absolute',
+        top: insets.top + 10,
+        left: 0,
+        right: 0,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+        zIndex: 10
+      }}>
         <TouchableOpacity onPress={() => {
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
           navigation.goBack();
         }}>
           <Ionicons name="arrow-back" size={28} color="#fff" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.tuFraseBtn}
+          onPress={() => navigation.navigate('CreaFrase')}
+        >
+          <Text style={styles.tuFraseBtnText}>Tu frase</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.container}>
@@ -220,6 +236,18 @@ const styles = StyleSheet.create({
     height: width * 0.5,
     resizeMode: 'contain',
     zIndex: 0,
+  },
+  tuFraseBtn: {
+    backgroundColor: '#E2D6FF',
+    borderRadius: 14,
+    paddingHorizontal: 18,
+    paddingVertical: 8,
+    marginLeft: 10,
+  },
+  tuFraseBtnText: {
+    fontFamily: 'Panchang-Bold',
+    color: '#fff',
+    fontSize: 16,
   },
 });
 

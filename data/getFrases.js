@@ -5,16 +5,46 @@ function agruparFrases(data) {
   const agrupadas = {};
 
   for (const entry of data) {
-    const tipo = entry["¿Para que tipo de minijuego va?"]?.trim();
+    const ok = entry["¿OK?"]?.trim();
+    if (ok !== "1") continue;
+
+    let tipo = entry["¿Para que tipo de minijuego va?"]?.trim();
     const frase = entry["Escribe tu frase"]?.trim();
     const castigo = entry["Castigo"]?.trim();
-    if (!tipo || !frase) continue;
+
+    if (!frase) continue;
+    if (!tipo) tipo = "N/A";
 
     if (!agrupadas[tipo]) agrupadas[tipo] = [];
     agrupadas[tipo].push({ tipo, frase, castigo });
   }
 
   return agrupadas;
+}
+
+async function getFrasesPersonalizadas() {
+  try {
+    const stored = await AsyncStorage.getItem('frasesPersonalizadas');
+    if (!stored) return {};
+
+    const data = JSON.parse(stored);
+    const agrupadas = {};
+
+    for (const entry of data) {
+      const tipo = entry.tipo?.trim();
+      const frase = entry.frase?.trim();
+      const castigo = entry.castigo?.trim();
+      if (!tipo || !frase) continue;
+
+      if (!agrupadas[tipo]) agrupadas[tipo] = [];
+      agrupadas[tipo].push({ tipo, frase, castigo });
+    }
+
+    return agrupadas;
+  } catch (e) {
+    console.error('❌ Error al cargar frases personalizadas', e);
+    return {};
+  }
 }
 
 export async function getFrases() {
@@ -25,13 +55,34 @@ export async function getFrases() {
     // Guarda una copia en caché local
     await AsyncStorage.setItem('frasesCache', JSON.stringify(data));
 
-    return agruparFrases(data);
+    const frasesGlobales = agruparFrases(data);
+    const frasesPersonalizadas = await getFrasesPersonalizadas();
+
+    // Unir frases globales y personalizadas
+    const frasesCombinadas = { ...frasesGlobales };
+    for (const tipo in frasesPersonalizadas) {
+      if (!frasesCombinadas[tipo]) frasesCombinadas[tipo] = [];
+      frasesCombinadas[tipo] = frasesCombinadas[tipo].concat(frasesPersonalizadas[tipo]);
+    }
+
+    console.log("Frases combinadas:", JSON.stringify(frasesCombinadas, null, 2));
+    return frasesCombinadas;
   } catch (error) {
     console.warn('⚠️ No se pudo cargar desde internet. Intentando usar caché local...');
 
     const fallback = await AsyncStorage.getItem('frasesCache');
     if (fallback) {
-      return agruparFrases(JSON.parse(fallback));
+      const frasesGlobales = agruparFrases(JSON.parse(fallback));
+      const frasesPersonalizadas = await getFrasesPersonalizadas();
+
+      const frasesCombinadas = { ...frasesGlobales };
+      for (const tipo in frasesPersonalizadas) {
+        if (!frasesCombinadas[tipo]) frasesCombinadas[tipo] = [];
+        frasesCombinadas[tipo] = frasesCombinadas[tipo].concat(frasesPersonalizadas[tipo]);
+      }
+
+      console.log("Frases combinadas:", JSON.stringify(frasesCombinadas, null, 2));
+      return frasesCombinadas;
     } else {
       console.error('❌ No hay datos en caché disponibles');
       return {};
@@ -41,5 +92,6 @@ export async function getFrases() {
 
 export async function getTodasLasFrases() {
   const frasesPorTipo = await getFrases();
+  console.log("Todas las frases (array):", JSON.stringify(Object.values(frasesPorTipo).flat(), null, 2));
   return Object.values(frasesPorTipo).flat();
 }
