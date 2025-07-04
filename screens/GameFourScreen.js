@@ -161,7 +161,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowRadius: 6,
     elevation: 4,
-    paddingVertical: 30,
+    paddingVertical: 10,
     paddingHorizontal: 20,
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     width: '100%',
-    paddingTop: 50,
+    paddingTop: 20,
   },
   label: {
     fontSize: 28,
