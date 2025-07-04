@@ -89,7 +89,7 @@ export default function HomeScreen({ navigation, route }) {
 
   const renderItem = ({ item, index }) => (
     <TouchableOpacity
-      style={[styles.slide, { backgroundColor: item.color }]}
+      style={[styles.slide, { backgroundColor: item.color, paddingTop: topPadding }]}
       onPress={() => navigation.navigate(item.screen, { jugadores })}
       activeOpacity={0.9}
     >
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
     width: width,
     height: '100%',
     paddingHorizontal: 20,
-    paddingTop: 80,
+    // paddingTop: 80,
     paddingBottom: 80,
   },
   slideTop: {
