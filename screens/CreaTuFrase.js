@@ -1,6 +1,7 @@
-
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const tiposMinijuego = [
   "N/A",
@@ -13,9 +14,24 @@ export default function CreaTuFrase({ navigation }) {
   const [frase, setFrase] = useState('');
   const [tipo, setTipo] = useState('N/A');
   const [castigo, setCastigo] = useState('');
+  const insets = useSafeAreaInsets();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {paddingTop: insets.top}]}>
+      <View style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: 16,
+        height: 48,
+        backgroundColor: '#fff',
+        borderBottomWidth: 1,
+        borderBottomColor: '#ececec'
+      }}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={{padding: 4, paddingRight: 16}}>
+          <Ionicons name="arrow-back" size={28} color="#5E1DE6" />
+        </TouchableOpacity>
+        <View style={{flex: 1}} />
+      </View>
       <Text style={styles.titulo}>Crea tu frase</Text>
       <TextInput
         style={styles.input}
