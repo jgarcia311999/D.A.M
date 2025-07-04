@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -14,7 +15,56 @@ export default function CreaTuFrase({ navigation }) {
   const [frase, setFrase] = useState('');
   const [tipo, setTipo] = useState('N/A');
   const [castigo, setCastigo] = useState('');
+  const [enviando, setEnviando] = useState(false);
   const insets = useSafeAreaInsets();
+
+  const guardarFraseLocal = async (nuevaFrase) => {
+    try {
+      const key = 'frases_usuario';
+      const guardadas = await AsyncStorage.getItem(key);
+      let frases = guardadas ? JSON.parse(guardadas) : [];
+      frases.unshift(nuevaFrase);
+      await AsyncStorage.setItem(key, JSON.stringify(frases));
+    } catch (e) {
+      console.error('No se pudo guardar en local', e);
+    }
+  };
+
+  const endpoint = 'https://script.google.com/macros/s/AKfycbysEcOrGSi9FxUoj62QJjF6gaE9MYZbcxnXcIcKgMMIOTMhKqW2P4r78XgyHilNK8Z8UQ/exec';
+
+  const enviarFrase = async () => {
+    if (!frase.trim()) return;
+    setEnviando(true);
+    const payload = {
+      tipo,
+      frase,
+      castigo,
+    };
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: { 'Content-Type': 'application/json' },
+      });
+      const data = await res.json();
+      await guardarFraseLocal({
+        tipo,
+        frase,
+        castigo,
+        timestamp: Date.now(),
+        ok: '0',
+      });
+      if (data.result === 'success') {
+        alert('¡Frase enviada!\nAparecerá en tu partida aunque esté pendiente de revisión.');
+        navigation.goBack();
+      } else {
+        alert('Error: Hubo un error enviando la frase.');
+      }
+    } catch (err) {
+      alert('Error de conexión: ' + err.message);
+    }
+    setEnviando(false);
+  };
 
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
@@ -62,14 +112,10 @@ export default function CreaTuFrase({ navigation }) {
       />
       <TouchableOpacity
         style={styles.enviarBtn}
-        onPress={() => {
-          // La lógica la añades más adelante
-          alert('¡Frase enviada!\n\n' + frase);
-          navigation.goBack();
-        }}
-        disabled={!frase.trim()}
+        onPress={enviarFrase}
+        disabled={!frase.trim() || enviando}
       >
-        <Text style={styles.enviarBtnTxt}>Añadir frase</Text>
+        <Text style={styles.enviarBtnTxt}>{enviando ? 'Enviando...' : 'Añadir frase'}</Text>
       </TouchableOpacity>
     </View>
   );
