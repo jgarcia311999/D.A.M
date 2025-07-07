@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Modal, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Modal, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 
 import { db } from '../../utils/firebaseConfig';
 import { doc, setDoc, updateDoc, increment } from 'firebase/firestore';
@@ -21,8 +21,9 @@ const MiniGame4 = ({ route }) => {
   const [jugadorSeleccionado, setJugadorSeleccionado] = useState('');
   const [resultadoVisible, setResultadoVisible] = useState(false);
   const [usedPhrases, setUsedPhrases] = useState([]);
+  const [nombreJugador, setNombreJugador] = useState('');
 
-  const { jugadores = [] } = route.params || {};
+  const jugadores = nombreJugador ? [nombreJugador] : [];
   console.log('Jugadores recibidos:', jugadores);
   const phrases = [
     "Esto es la frase de prueba 1",
@@ -38,6 +39,8 @@ const MiniGame4 = ({ route }) => {
   ];
 
   useEffect(() => {
+    if (!nombreJugador) return;
+
     const iniciarSala = async () => {
       const code = generateRoomCode();
       setRoomCode(code);
@@ -65,7 +68,7 @@ const MiniGame4 = ({ route }) => {
       }
     };
     iniciarSala();
-  }, []);
+  }, [nombreJugador]);
 
   const handleStartGame = () => {
     setModalVisible(false);
@@ -118,7 +121,18 @@ const MiniGame4 = ({ route }) => {
           <View style={styles.modalContainer}>
             <Text style={styles.modalTitle}>Código de Sala</Text>
             <Text style={styles.roomCode}>{roomCode}</Text>
-            <TouchableOpacity style={styles.button} onPress={handleStartGame}>
+            <TextInput
+              placeholder="Introduce tu nombre"
+              placeholderTextColor="#888"
+              style={styles.input}
+              value={nombreJugador}
+              onChangeText={setNombreJugador}
+            />
+            <TouchableOpacity
+              style={[styles.button, !nombreJugador && { backgroundColor: 'gray' }]}
+              onPress={handleStartGame}
+              disabled={!nombreJugador}
+            >
               <Text style={styles.buttonText}>Comenzar</Text>
             </TouchableOpacity>
           </View>
@@ -273,6 +287,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
     borderRadius: 10,
     alignSelf: 'center',
+  },
+  input: {
+    width: '100%',
+    padding: 12,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    marginTop: 15,
+    fontSize: 16,
+    backgroundColor: '#f9f9f9',
+    color: '#000',
   },
 });
 
