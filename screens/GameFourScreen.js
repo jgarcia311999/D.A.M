@@ -40,6 +40,10 @@ const PruebaGameFourScreen = ({ route, navigation }) => {
     const cargar = async () => {
       try {
         const todas = await getTodasLasFrases();
+        if (!Array.isArray(todas)) {
+          console.error("getTodasLasFrases no devolvió un array:", todas);
+          return;
+        }
         const mezcladas = shuffleArray(todas);
         setFrasesCombinadas(todas);
         setFrasesToUse(mezcladas);

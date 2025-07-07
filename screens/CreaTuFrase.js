@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from '../utils/firebaseConfig';
 
 const tiposMinijuego = [
   "N/A",
@@ -30,8 +32,6 @@ export default function CreaTuFrase({ navigation }) {
     }
   };
 
-  const endpoint = 'https://script.google.com/macros/s/AKfycbysEcOrGSi9FxUoj62QJjF6gaE9MYZbcxnXcIcKgMMIOTMhKqW2P4r78XgyHilNK8Z8UQ/exec';
-
   const enviarFrase = async () => {
     if (!frase.trim()) return;
     setEnviando(true);
@@ -39,27 +39,17 @@ export default function CreaTuFrase({ navigation }) {
       tipo,
       frase,
       castigo,
+      visible: false,
     };
     try {
-      const res = await fetch(endpoint, {
-        method: 'POST',
-        body: JSON.stringify(payload),
-        headers: { 'Content-Type': 'application/json' },
-      });
-      const data = await res.json();
+      const docRef = await addDoc(collection(db, 'frases'), payload);
       await guardarFraseLocal({
-        tipo,
-        frase,
-        castigo,
+        ...payload,
         timestamp: Date.now(),
         ok: '0',
       });
-      if (data.result === 'success') {
-        alert('¡Frase enviada!\nAparecerá en tu partida aunque esté pendiente de revisión.');
-        navigation.goBack();
-      } else {
-        alert('Error: Hubo un error enviando la frase.');
-      }
+      alert('¡Frase enviada!\nAparecerá en tu partida aunque esté pendiente de revisión.');
+      navigation.goBack();
     } catch (err) {
       alert('Error de conexión: ' + err.message);
     }
