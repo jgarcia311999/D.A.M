@@ -31,7 +31,7 @@ export default function HomeScreen({ navigation, route }) {
       {
         nombre: 'Asociación rápida',
         descripcion: 'Relaciona palabras lo más rápido posible en rondas cronometradas.',
-        screen: 'MiniGame3',
+        screen: 'MiniGame4',
       },
     ];
 
