@@ -1,77 +1,102 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, Modal, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 
 import { db } from '../../utils/firebaseConfig';
-import { doc, setDoc, updateDoc, increment } from 'firebase/firestore';
+import { doc, setDoc, updateDoc, increment, onSnapshot, getDoc } from 'firebase/firestore';
 
 const generateRoomCode = () => {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let code = '';
-  for (let i = 0; i < 6; i++) {
-    code += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return code;
+  return Math.floor(1000 + Math.random() * 9000).toString(); // código de 4 dígitos
 };
 
 const MiniGame4 = ({ route }) => {
   const [modalVisible, setModalVisible] = useState(true);
-  const [roomCode, setRoomCode] = useState('');
+  const roomCodeRef = useRef(generateRoomCode());
+  const [roomCode, setRoomCode] = useState(roomCodeRef.current);
   const [selectedPhrase, setSelectedPhrase] = useState('');
   const [selectedPlayer, setSelectedPlayer] = useState('');
   const [jugadorSeleccionado, setJugadorSeleccionado] = useState('');
   const [resultadoVisible, setResultadoVisible] = useState(false);
   const [usedPhrases, setUsedPhrases] = useState([]);
   const [nombreJugador, setNombreJugador] = useState('');
+  const [votos, setVotos] = useState({});
+  const [votosModalVisible, setVotosModalVisible] = useState(false);
 
-  const jugadores = nombreJugador ? [nombreJugador] : [];
+  const [jugadores, setJugadores] = useState([]);
   console.log('Jugadores recibidos:', jugadores);
-  const phrases = [
-    "Esto es la frase de prueba 1",
-    "Esto es la frase de prueba 2",
-    "Esto es la frase de prueba 3",
-    "Esto es la frase de prueba 4",
-    "Esto es la frase de prueba 5",
-    "Esto es la frase de prueba 6",
-    "Esto es la frase de prueba 7",
-    "Esto es la frase de prueba 8",
-    "Esto es la frase de prueba 9",
-    "Esto es la frase de prueba 10"
-  ];
+const phrases = [
+  "¿Quién es el que más ha ligado este mes?",
+  "¿Quién tiene más probabilidades de tener un OnlyFans?",
+  "¿Quién es el más probable en acabar en la cama de alguien esta noche?",
+  "¿Quién ha tenido sexo en lugares públicos?",
+  "¿Quién se ha despertado en una casa desconocida después de una fiesta?",
+  "¿Quién ha tenido más 'amigos con derecho'?",
+  "¿Quién tiene más capturas comprometedoras en el móvil?",
+  "¿Quién ha enviado más nudes este año?",
+  "¿Quién es el más stalker en redes después de conocer a alguien?",
+  "¿Quién ha usado frases cliché para ligar y le ha funcionado?",
+  "¿Quién tiene historias sexuales tan locas que nadie se las cree?",
+  "¿Quién ha mentido sobre su número de parejas sexuales?",
+  "¿Quién tiene el historial amoroso más random?",
+  "¿Quién se ha acostado con alguien que conoció esa misma noche?",
+  "¿Quién ha estado con más de una persona en el mismo grupo de amigos?",
+  "¿Quién ha hecho ghosting después de una noche de pasión?",
+  "¿Quién se ha grabado haciendo cosas subidas de tono?",
+  "¿Quién ha probado cosas raras en la cama y lo volvería a hacer?",
+  "¿Quién sería el más probable en tener una noche con su ex?",
+  "¿Quién ha tenido sexo en un lugar público sin que lo pillaran?"
+];
+
+  // Removed crearSalaUnica and its call from here.
 
   useEffect(() => {
-    if (!nombreJugador) return;
+    if (!roomCode) return;
 
-    const iniciarSala = async () => {
-      const code = generateRoomCode();
-      setRoomCode(code);
-
-      const randomIndex = Math.floor(Math.random() * phrases.length);
-      setSelectedPhrase(phrases[randomIndex]);
-      setUsedPhrases([phrases[randomIndex]]);
-
-      // Crear objeto de votos vacío por jugador
-      const votosIniciales = {};
-      jugadores.forEach(j => votosIniciales[j] = 0);
-
-      try {
-        await setDoc(doc(db, 'salas', code), {
-          fraseActual: phrases[randomIndex],
-          frasesUsadas: [phrases[randomIndex]],
-          jugadorCreador: 'app',
-          ronda: 1,
-          estado: 'esperando',
-          votos: votosIniciales,
-          jugadores: jugadores,
-        });
-      } catch (e) {
-        console.error('Error creando la sala en Firestore:', e);
+    const salaRef = doc(db, 'salas', roomCode);
+    const unsubscribe = onSnapshot(salaRef, (snapshot) => {
+      const data = snapshot.data();
+      if (data?.votos) {
+        setVotos(data.votos);
       }
-    };
-    iniciarSala();
-  }, [nombreJugador]);
+      if (data?.jugadores) {
+        setJugadores(data.jugadores);
+      }
+    });
 
-  const handleStartGame = () => {
+    return () => unsubscribe();
+  }, [roomCode]);
+
+  const handleStartGame = async () => {
     setModalVisible(false);
+    // Crear sala única aquí, después de cerrar el modal y con nombreJugador definitivo
+    let codigo = roomCode;
+    let salaDoc = await getDoc(doc(db, 'salas', codigo));
+    while (salaDoc.exists()) {
+      codigo = generateRoomCode();
+      roomCodeRef.current = codigo;
+      setRoomCode(codigo);
+      salaDoc = await getDoc(doc(db, 'salas', codigo));
+    }
+
+    const randomIndex = Math.floor(Math.random() * phrases.length);
+    setSelectedPhrase(phrases[randomIndex]);
+    setUsedPhrases([phrases[randomIndex]]);
+
+    const votosIniciales = {};
+    [nombreJugador].forEach(j => votosIniciales[j] = 0);
+
+    try {
+      await setDoc(doc(db, 'salas', codigo), {
+        fraseActual: phrases[randomIndex],
+        frasesUsadas: [phrases[randomIndex]],
+        jugadorCreador: 'app',
+        ronda: 1,
+        estado: 'esperando',
+        votos: votosIniciales,
+        jugadores: [nombreJugador],
+      });
+    } catch (e) {
+      console.error('Error creando la sala en Firestore:', e);
+    }
   };
 
   return (
@@ -90,10 +115,14 @@ const MiniGame4 = ({ route }) => {
                   setJugadorSeleccionado(nombre);
                   try {
                     const salaRef = doc(db, 'salas', roomCode);
-                    await updateDoc(salaRef, {
-                      [`votos.${nombre}`]: increment(1)
+                    const nuevaVotacion = {};
+
+                    jugadores.forEach(j => {
+                      nuevaVotacion[`votos.${j}`] = j === nombre ? 1 : 0;
                     });
-                    console.log(`Voto registrado para ${nombre}`);
+
+                    await updateDoc(salaRef, nuevaVotacion);
+                    console.log(`Voto actualizado: ${nombre}`);
                   } catch (error) {
                     console.error('Error al registrar voto:', error);
                   }
@@ -106,11 +135,14 @@ const MiniGame4 = ({ route }) => {
               </TouchableOpacity>
             ))}
           </View>
-          <TouchableOpacity style={styles.roundButton} onPress={() => setResultadoVisible(true)}>
+          <TouchableOpacity
+            style={styles.roundButton}
+            onPress={() => setVotosModalVisible(true)}
+          >
             <Text style={styles.buttonText}>Pasar de ronda</Text>
           </TouchableOpacity>
         </>
-      )}
+      )}  
 
       <Modal
         animationType="slide"
@@ -135,6 +167,42 @@ const MiniGame4 = ({ route }) => {
             >
               <Text style={styles.buttonText}>Comenzar</Text>
             </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={votosModalVisible}
+        onRequestClose={() => setVotosModalVisible(false)}
+      >
+        <View style={styles.modalBackground}>
+          <View style={styles.modalContainer}>
+            <Text style={styles.modalTitle}>Esperando votos...</Text>
+            <Text style={styles.roomCode}>
+              Votos {Object.values(votos).reduce((a, b) => a + b, 0)}/{jugadores.length}
+            </Text>
+            {Object.values(votos).reduce((a, b) => a + b, 0) === jugadores.length && (
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => {
+                  const max = Math.max(...Object.values(votos));
+                  const empatados = Object.keys(votos).filter((k) => votos[k] === max);
+
+                  if (empatados.length === 1) {
+                    setJugadorSeleccionado(empatados[0]);
+                  } else {
+                    setJugadorSeleccionado(`Empate entre: ${empatados.join(', ')}`);
+                  }
+
+                  setVotosModalVisible(false);
+                  setResultadoVisible(true);
+                }}
+              >
+                <Text style={styles.buttonText}>Mostrar resultado</Text>
+              </TouchableOpacity>
+            )}
           </View>
         </View>
       </Modal>
