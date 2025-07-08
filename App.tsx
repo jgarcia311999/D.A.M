@@ -26,15 +26,6 @@ import AppLoading from 'expo-app-loading';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  /* const [fontsLoaded] = Font.useFonts({
-    'PlayfairDisplaySC-Regular': require('./assets/fonts/PlayfairDisplaySC-Regular.ttf'),
-    'PlayfairDisplaySC-Bold': require('./assets/fonts/PlayfairDisplaySC-Bold.ttf'),
-    'PlayfairDisplaySC-Italic': require('./assets/fonts/PlayfairDisplaySC-Italic.ttf'),
-    'PlayfairDisplaySC-BoldItalic': require('./assets/fonts/PlayfairDisplaySC-BoldItalic.ttf'),
-    'PlayfairDisplaySC-Black': require('./assets/fonts/PlayfairDisplaySC-Black.ttf'),
-    'PlayfairDisplaySC-BlackItalic': require('./assets/fonts/PlayfairDisplaySC-BlackItalic.ttf'),
-  }); */
-
   const [fontsLoaded] = Font.useFonts({
   'Panchang-Bold': require('./assets/fonts/Panchang-Bold.otf'),
   'Panchang-Extrabold': require('./assets/fonts/Panchang-Extrabold.otf'),
