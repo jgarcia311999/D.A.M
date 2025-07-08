@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { View, Image, FlatList, ScrollView, Dimensions, StyleSheet, SafeAreaView, TouchableOpacity, Animated, Text } from 'react-native';
+import { View, Image, FlatList, ScrollView, Dimensions, StyleSheet, SafeAreaView, TouchableOpacity, Animated, Text, TextInput } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ImgSamurai from '../assets/personajes/personaje_samurai.png';
@@ -62,7 +62,15 @@ const juegos = [
 
 export default function HomeScreen({ navigation, route }) {
   const [jugadores, setJugadores] = useState(route?.params?.jugadores || []);
-  console.log('Jugadores:', jugadores);
+  const [newJugador, setNewJugador] = useState('');
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [modoLista, setModoLista] = useState(false);
+  const flatListRef = useRef(null);
+  const fadeCarrusel = useRef(new Animated.Value(1)).current;
+  const fadeLista = useRef(new Animated.Value(0)).current;
+  const insets = useSafeAreaInsets();
+  const topPadding = insets.top + 70;
+
   useEffect(() => {
     const cargarJugadores = async () => {
       if (jugadores.length === 0) {
@@ -74,13 +82,23 @@ export default function HomeScreen({ navigation, route }) {
     };
     cargarJugadores();
   }, []);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [modoLista, setModoLista] = useState(false);
-  const flatListRef = useRef(null);
-  const fadeCarrusel = useRef(new Animated.Value(1)).current;
-  const fadeLista = useRef(new Animated.Value(0)).current;
-  const insets = useSafeAreaInsets();
-  const topPadding = insets.top + 70;
+
+  useEffect(() => {
+    AsyncStorage.setItem('jugadores', JSON.stringify(jugadores));
+  }, [jugadores]);
+
+  const agregarJugador = () => {
+    if (newJugador.trim() !== '') {
+      setJugadores([...jugadores, newJugador.trim()]);
+      setNewJugador('');
+    }
+  };
+
+  const eliminarJugador = (index) => {
+    const nuevosJugadores = [...jugadores];
+    nuevosJugadores.splice(index, 1);
+    setJugadores(nuevosJugadores);
+  };
 
   const handleScroll = (event) => {
     const index = Math.round(event.nativeEvent.contentOffset.x / width);
@@ -177,26 +195,36 @@ export default function HomeScreen({ navigation, route }) {
         </Animated.View>
 
         <Animated.View style={{ flex: 1, opacity: fadeLista }}>
-          <View style={[styles.scrollList, { paddingTop: topPadding }]}>
-            {juegos.map((item) => (
-              <TouchableOpacity
-                key={item.id}
-                style={[styles.card, { backgroundColor: item.color }]}
-                onPress={() => navigation.navigate(item.screen, { jugadores })}
-                activeOpacity={0.9}
-              >
-                <Text
-                  style={styles.cardTitle}
-                  numberOfLines={2}
-                  adjustsFontSizeToFit
-                  minimumFontScale={0.8}
-                >
-                  {item.nombre}
-                </Text>
-                <Text style={styles.cardDescription}>{item.descripcion}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
+          <ScrollView
+            style={{ flex: 1 }}
+            contentContainerStyle={{ ...styles.scrollList, paddingTop: 0, marginTop: 0 }}
+          >
+            <Image source={ImgSamurai} style={styles.imageSmall} />
+            <TextInput
+              style={styles.input}
+              placeholder="Añadir jugador"
+              placeholderTextColor="#888"
+              value={newJugador}
+              onChangeText={setNewJugador}
+              onSubmitEditing={agregarJugador}
+              returnKeyType="done"
+            />
+            <View style={styles.contenedorJugadores}>
+              {jugadores.length === 0 ? (
+                <Text style={styles.footerText}>No hay jugadores añadidos</Text>
+              ) : (
+                jugadores.map((jugador, index) => (
+                  <View key={index} style={styles.fila}>
+                    <Text style={styles.item}>{jugador}</Text>
+                    <TouchableOpacity onPress={() => eliminarJugador(index)}>
+                      <Ionicons name="trash" size={24} color="#fff" />
+                    </TouchableOpacity>
+                  </View>
+                ))
+              )}
+            </View>
+            <Text style={styles.footerText}>Agrega jugadores para comenzar a jugar</Text>
+          </ScrollView>
         </Animated.View>
       </SafeAreaView>
     </View>
@@ -265,12 +293,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   scrollList: {
-    flex: 1,
-    justifyContent: 'space-evenly',
+    flexGrow: 1,
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    paddingVertical: 20,
-    // Agrega espacio superior para no solapar los botones
-    // paddingTop eliminado, usar prop dinámico
+    paddingTop: 0,
   },
   card: {
     width: '90%',
@@ -295,6 +321,8 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     resizeMode: 'contain',
+    marginBottom: 0,
+    marginTop: 0, // Elimina cualquier espacio adicional encima de la imagen
   },
   slideDescription: {
     fontSize: 18,
@@ -340,5 +368,46 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#fff',
     zIndex: 10,
+  },
+  input: {
+    width: '90%',
+    height: 40,
+    borderColor: 'green',
+    borderWidth: 1,
+    borderRadius: 8,
+    color: '#fff',
+    paddingHorizontal: 10,
+    marginBottom: 20,
+    fontFamily: 'Panchang-Regular',
+    fontSize: 16,
+    marginTop: 0,
+  },
+  contenedorJugadores: {
+    width: '90%',
+    marginBottom: 20,
+  },
+  fila: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 100, 0, 0.5)',
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 8,
+    marginBottom: 10,
+    borderColor: 'green',
+    borderWidth: 2,
+  },
+  item: {
+    color: '#fff',
+    fontSize: 18,
+    fontFamily: 'Panchang-Regular',
+  },
+  footerText: {
+    color: '#aaa',
+    fontSize: 14,
+    fontFamily: 'Panchang-Regular',
+    textAlign: 'center',
+    marginTop: 10,
   },
 });
