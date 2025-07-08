@@ -371,7 +371,7 @@ const styles = StyleSheet.create({
   },
   jugadoresButtonTopRight: {
     position: 'absolute',
-    left: 20,
+    right: 20,
     backgroundColor: 'transparent',
     paddingHorizontal: 16,
     paddingVertical: 8,
