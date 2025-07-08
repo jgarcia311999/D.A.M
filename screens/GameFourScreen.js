@@ -120,35 +120,40 @@ const PruebaGameFourScreen = ({ route, navigation }) => {
             key={cardIndex}
             cards={frasesToUse}
             renderCard={(card) => (
-              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <View style={styles.card}>
-                  <Text style={styles.label}>{card?.tipo || ''}</Text>
-                  <View style={styles.fraseContainer}>
-                    <Text style={styles.text}>{procesarFrase(card?.frase) || 'Sin contenido'}</Text>
-                  </View>
-                  <View style={styles.cardFooter}>
-                    <Text style={styles.placeholder}>
-                      {card?.castigo ? `Bebe ${card.castigo} ${card.castigo === '1' ? 'chupito' : 'chupitos'}` : ''}
-                    </Text>
-                  </View>
+              <View style={styles.card}>
+                <Text style={styles.label}>{card?.tipo || ''}</Text>
+                <View style={styles.fraseContainer}>
+                  <Text style={styles.text}>{procesarFrase(card?.frase) || 'Sin contenido'}</Text>
+                </View>
+                <View style={styles.cardFooter}>
+                  <Text style={styles.placeholder}>
+                    {card?.castigo ? `Bebe ${card.castigo} ${card.castigo === '1' ? 'chupito' : 'chupitos'}` : ''}
+                  </Text>
                 </View>
               </View>
             )}
-            onSwiped={(index) => {
+            onSwipedRight={(index) => {
               if (index >= frasesToUse.length - 1) {
                 setTimeout(() => {
                   const nuevas = shuffleArray(frasesCombinadas);
                   setFrasesToUse(nuevas);
-                  setCardIndex(prev => prev + 1);
+                  setCardIndex(0);
                 }, 300);
+              } else {
+                setCardIndex(index + 1);
               }
             }}
-            cardIndex={0}
+            onSwipedLeft={(index) => {
+              if (index > 0) {
+                setCardIndex(index - 1);
+              }
+            }}
+            cardIndex={cardIndex}
             backgroundColor="transparent"
-            stackSize={5}
+            stackSize={3}
+            stackSeparation={30}
+            stackScale={20}
             showSecondCard={true}
-            stackSeparation={15}
-            stackScale={10}
             animateCardOpacity
             disableTopSwipe
             disableBottomSwipe
