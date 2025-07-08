@@ -3,8 +3,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, Image, FlatList, ScrollView, Dimensions, StyleSheet, SafeAreaView, TouchableOpacity, Animated, Text, TextInput } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import ImgSamurai from '../assets/personajes/personaje_samurai.png';
-import ImgRobot from '../assets/personajes/personaje_robot.png';
+import PjCartas from '../assets/nuevos_personajes/cartas_pj.png';
+import PjPollo from '../assets/nuevos_personajes/pollo_pj.png';
 import ImgMusico from '../assets/personajes/personaje_musico.png';
 import ImgMago from '../assets/personajes/personaje_mago.png';
 import PjTabaco from '../assets/nuevos_personajes/tabaco_pj.png';
@@ -27,7 +27,7 @@ const juegos = [
     nombre: 'La Cadena del Crupier',
     descripcion: 'Reta a tus amigos con preguntas rápidas y pasa la cadena antes que el tiempo se agote.',
     screen: 'Prueba 1',
-    imagen: ImgRobot,
+    imagen: PjCartas,
     imagenEstilo: { width: '80%', height: height * 0.35, resizeMode: 'contain' },
     color: '#ffc8a3',
   },
@@ -36,7 +36,7 @@ const juegos = [
     nombre: 'El Saca Cartas',
     descripcion: 'Desliza y revela desafíos divertidos carta por carta.',
     screen: 'Juego 2',
-    imagen: ImgMusico,
+    imagen: PjPollo,
     imagenEstilo: { width: '80%', height: height * 0.35, resizeMode: 'contain' },
     color: '#d5c385',
   },
