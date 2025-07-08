@@ -5,8 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import PjCartas from '../assets/nuevos_personajes/cartas_pj.png';
 import PjPollo from '../assets/nuevos_personajes/pollo_pj.png';
-import ImgMusico from '../assets/personajes/personaje_musico.png';
-import ImgMago from '../assets/personajes/personaje_mago.png';
+import PjsBotellines from '../assets/nuevos_personajes/botellines_pj.png';
 import PjTabaco from '../assets/nuevos_personajes/tabaco_pj.png';
 
 const { width, height } = Dimensions.get('window');
@@ -45,7 +44,7 @@ const juegos = [
     nombre: 'MiniGamesss',
     descripcion: 'Una variedad de minijuegos.',
     screen: 'MiniGames',
-    imagen: ImgMago,
+    imagen: PjsBotellines,
     imagenEstilo: { width: '80%', height: height * 0.35, resizeMode: 'contain' },
     color: '#a3ffd9',
   },

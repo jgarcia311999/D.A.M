@@ -1,281 +1,422 @@
-import React, { useState, useRef, useEffect } from 'react';
-import * as Haptics from 'expo-haptics';
+import React, { useRef, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useFocusEffect } from '@react-navigation/native';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image, Animated, Easing, TextInput, FlatList, Keyboard, SafeAreaView, ImageBackground, TouchableWithoutFeedback } from 'react-native';
+import { View, Image, FlatList, ScrollView, Dimensions, StyleSheet, SafeAreaView, TouchableOpacity, Animated, Text, TextInput } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import ImgRuleta from '../assets/pj_ruleta.png';
-import ImgCartas from '../assets/pj_cartas.png';
-import ImgCerveza from '../assets/pj_cerveza.png';
-import ImgFumando from '../assets/pj_fumando.png';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import PjCartas from '../assets/nuevos_personajes/cartas_pj.png';
+import PjPollo from '../assets/nuevos_personajes/pollo_pj.png';
+import PjsBotellines from '../assets/nuevos_personajes/botellines_pj.png';
+import PjTabaco from '../assets/nuevos_personajes/tabaco_pj.png';
 
 const { width, height } = Dimensions.get('window');
+const scaleFont = (size) => (width / 375) * size;
+const isSmallDevice = width < 360;
+const juegos = [
+  {
+    id: 1,
+    nombre: 'Bebecartas',
+    descripcion: 'Saca cartas al azar con retos únicos y bebe si no los cumples.',
+    screen: 'Juego 4',
+    imagen: PjTabaco,
+    imagenEstilo: { width: '80%', height: height * 0.35, resizeMode: 'contain' },
+    color: '#bfa3ff',
+  },
+  {
+    id: 2,
+    nombre: 'La Cadena del Crupier',
+    descripcion: 'Reta a tus amigos con preguntas rápidas y pasa la cadena antes que el tiempo se agote.',
+    screen: 'Prueba 1',
+    imagen: PjCartas,
+    imagenEstilo: { width: '80%', height: height * 0.35, resizeMode: 'contain' },
+    color: '#ffc8a3',
+  },
+  {
+    id: 3,
+    nombre: 'El Saca Cartas',
+    descripcion: 'Desliza y revela desafíos divertidos carta por carta.',
+    screen: 'Juego 2',
+    imagen: PjPollo,
+    imagenEstilo: { width: '80%', height: height * 0.35, resizeMode: 'contain' },
+    color: '#d5c385',
+  },
+  {
+    id: 4,
+    nombre: 'MiniGamesss',
+    descripcion: 'Una variedad de minijuegos.',
+    screen: 'MiniGames',
+    imagen: PjsBotellines,
+    imagenEstilo: { width: '80%', height: height * 0.35, resizeMode: 'contain' },
+    color: '#a3ffd9',
+  },
+  /* {
+    id: 5,
+    nombre: 'Home de prueba',
+    descripcion: 'en fase de desarrollo.',
+    screen: 'Inicio2',
+    imagen: ImgDJ,
+    imagenEstilo: { width: '80%', height: height * 0.35, resizeMode: 'contain' },
+    color: '#ffa3d1',
+  }, */
+];
 
-export default function HomeScreen({ navigation }) {
-  const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
-  const bottomSheetAnim = useRef(new Animated.Value(height)).current;
-  const [nombre, setNombre] = useState('');
-  const [jugadores, setJugadores] = useState([]);
-  const inputRef = useRef(null);
-  const carouselRef = useRef(null);
-  const scrollAnim = useRef(new Animated.Value(0)).current;
-
-  let scrollAnimation = null;
-
-  const openBottomSheet = () => {
-    setBottomSheetVisible(true);
-    Animated.timing(bottomSheetAnim, {
-      toValue: height * 0.25,
-      duration: 300,
-      useNativeDriver: false,
-    }).start();
-  };
-
-  const closeBottomSheet = () => {
-    Animated.timing(bottomSheetAnim, {
-      toValue: height,
-      duration: 300,
-      useNativeDriver: false,
-    }).start(() => {
-      setBottomSheetVisible(false);
-    });
-  };
-
-  const juegos = [
-    {
-      nombre: 'Bebecartas',
-      descripcion: 'Saca cartas al azar con retos únicos y bebe si no los cumples.',
-      screen: 'Prueba 4',
-      imagen: ImgCerveza,
-      imagenEstilo: { left: width * -0.25, top: height * -0.13 },
-    },
-    {
-      nombre: 'La Cadena del Crupier',
-      descripcion: 'Reta a tus amigos con preguntas rápidas y pasa la cadena antes que el tiempo se agote.',
-      screen: 'Prueba 1',
-      imagen: ImgCartas,
-      imagenEstilo: { left: width * 0.2, top: height * -0.135 },
-    },
-    {
-      nombre: 'El Saca Cartas',
-      descripcion: 'Desliza y revela desafíos divertidos carta por carta.',
-      screen: 'Juego 2',
-      imagen: ImgFumando,
-      imagenEstilo: { left: width * -0.25, top: height * -0.125, transform: [{ scaleX: -1 }] },
-    },
-    {
-      nombre: 'MiniGamesss',
-      descripcion: 'Una variedad de minijuegos.',
-      screen: 'MiniGames',
-      imagen: ImgRuleta,
-      imagenEstilo: { left: width * 0.1, top: height * -0.127 },
-    },
-    {
-      nombre: 'Home de prueba',
-      descripcion: 'en fase de desarrollo.',
-      screen: 'Inicio',
-      imagen: ImgFumando,
-      imagenEstilo: { left: width * 0.1, top: height * -0.127 },
-    },
-    
-    
-  ];
+export default function HomeScreen({ navigation, route }) {
+  const [jugadores, setJugadores] = useState(route?.params?.jugadores || []);
+  const [newJugador, setNewJugador] = useState('');
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [modoLista, setModoLista] = useState(false);
+  const [modoPendiente, setModoPendiente] = useState(false);
+  const flatListRef = useRef(null);
+  const fadeCarrusel = useRef(new Animated.Value(1)).current;
+  const fadeLista = useRef(new Animated.Value(0)).current;
+  const insets = useSafeAreaInsets();
+  const topPadding = insets.top + 70;
 
   useEffect(() => {
-    scrollAnimation = Animated.sequence([
-      Animated.timing(scrollAnim, {
-        toValue: Dimensions.get('window').width * 0.25,
-        duration: 600,
-        useNativeDriver: false,
-        easing: Easing.inOut(Easing.quad),
-      }),
-      Animated.timing(scrollAnim, {
-        toValue: 0,
-        duration: 600,
-        useNativeDriver: false,
-        easing: Easing.inOut(Easing.quad),
-      }),
-    ]);
-
-    const listenerId = scrollAnim.addListener(({ value }) => {
-      if (carouselRef.current) {
-        carouselRef.current.scrollToOffset({ offset: value, animated: false });
+    const cargarJugadores = async () => {
+      if (jugadores.length === 0) {
+        const almacenados = await AsyncStorage.getItem('jugadores');
+        if (almacenados) {
+          setJugadores(JSON.parse(almacenados));
+        }
       }
-    });
-
-    const timeout = setTimeout(() => {
-      scrollAnimation.start();
-    }, 1000);
-
-    return () => {
-      scrollAnimation.stop();
-      scrollAnim.removeListener(listenerId);
-      clearTimeout(timeout);
     };
+    cargarJugadores();
   }, []);
 
   useEffect(() => {
+    AsyncStorage.setItem('jugadores', JSON.stringify(jugadores));
   }, [jugadores]);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      const cargarJugadores = async () => {
-        const data = await AsyncStorage.getItem('jugadores');
-        if (data) {
-          const jugadoresGuardados = JSON.parse(data);
-          setJugadores(jugadoresGuardados);
-          console.log('Jugadores recibidos en Inicio2:', jugadoresGuardados);
-        }
-      };
-      cargarJugadores();
-    }, [])
-  );
-
-  const cancelAnimation = () => {
-    if (scrollAnimation) {
-      scrollAnimation.stop();
+  const agregarJugador = () => {
+    if (newJugador.trim() !== '') {
+      setJugadores([...jugadores, newJugador.trim()]);
+      setNewJugador('');
     }
   };
 
+  const eliminarJugador = (index) => {
+    const nuevosJugadores = [...jugadores];
+    nuevosJugadores.splice(index, 1);
+    setJugadores(nuevosJugadores);
+  };
+
+  const handleScroll = (event) => {
+    const index = Math.round(event.nativeEvent.contentOffset.x / width);
+    setCurrentIndex(index);
+  };
+
+  const renderItem = ({ item, index }) => (
+    <TouchableOpacity
+      style={[styles.slide, { backgroundColor: item.color, paddingTop: topPadding }]}
+      onPress={() => navigation.navigate(item.screen, { jugadores })}
+      activeOpacity={0.9}
+    >
+      <View style={styles.slideTop}>
+        <Text
+          style={styles.slideTitle}
+          numberOfLines={2}
+          adjustsFontSizeToFit
+          minimumFontScale={0.8}
+        >
+          {item.nombre}
+        </Text>
+      </View>
+
+      <View style={styles.slideMiddle}>
+        <Image source={item.imagen} style={styles.slideImage} resizeMode="contain" />
+      </View>
+
+      <View style={styles.slideBottom}>
+        <Text style={styles.slideDescription}>{item.descripcion}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <TouchableWithoutFeedback onPress={cancelAnimation}>
-        <View style={{ flex: 1 }}>
-          <Image source={require('../assets/laprv.png')} style={styles.imageBackground} />
-          <SafeAreaView style={styles.gridBackground}>
-            <View style={{ flex: 1 }}>
-              {/* Header row with arrow and plus buttons */}
-              <View style={styles.header}>
-                <View style={{ width: 28 }} />
-                <TouchableOpacity onPress={() => {
-                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                  navigation.navigate('Gamer');
-                }}>
-                  <Ionicons name="add" size={28} color="#fff" />
-                </TouchableOpacity>
-              </View>
-              <View style={styles.content}>
-                <FlatList
-                  data={juegos}
-                  keyExtractor={(item, index) => index.toString()}
-                  horizontal
-                  pagingEnabled
-                  showsHorizontalScrollIndicator={false}
-                  snapToAlignment="center"
-                  contentContainerStyle={styles.carouselWrapper}
-                  ref={carouselRef}
-                  renderItem={({ item }) => (
-                    <TouchableOpacity
-                      style={styles.gameContainer}
-                      onPress={() => navigation.navigate(item.screen, { jugadores })}
-                    >
-                      <View style={styles.gameCard}>
-                        <Image source={item.imagen} style={[styles.cardCornerImage, item.imagenEstilo]} />
-                        <View style={styles.cardTextContainer}>
-                          <Text style={styles.gameText}>{item.nombre}</Text>
-                          <Text style={styles.gameDescription}>{item.descripcion}</Text>
-                        </View>
-                      </View>
-                    </TouchableOpacity>
-                  )}
-                />
+    <View style={[styles.container, {
+      backgroundColor: modoPendiente
+        ? '#a3c8ff'
+        : juegos[currentIndex]?.color || '#191716'
+    }]}>
+      <SafeAreaView style={{ flex: 1 }}>
+        <TouchableOpacity
+          style={[styles.jugadoresButtonTopRight, { top: insets.top + 10 }]}
+          onPress={() => {
+            setModoPendiente(!modoLista);
+            if (modoLista) {
+              Animated.parallel([
+                Animated.timing(fadeCarrusel, { toValue: 1, duration: 200, useNativeDriver: true }),
+                Animated.timing(fadeLista, { toValue: 0, duration: 200, useNativeDriver: true }),
+              ]).start(() => {
+                setModoLista(false);
+              });
+            } else {
+              Animated.parallel([
+                Animated.timing(fadeCarrusel, { toValue: 0, duration: 200, useNativeDriver: true }),
+                Animated.timing(fadeLista, { toValue: 1, duration: 200, useNativeDriver: true }),
+              ]).start(() => {
+                setModoLista(true);
+              });
+            }
+          }}
+        >
+          <Text style={styles.jugadoresButtonText}>
+            {modoPendiente ? 'Juegos' : 'Borrachos'}
+          </Text>
+        </TouchableOpacity>
+        {/* Espacio reservado para el botón de menú hamburguesa */}
+        <TouchableOpacity
+          style={[styles.topRightButton, { top: insets.top + 10 }]}
+          // Sin onPress ni contenido para reservar espacio
+        />
+        {/* Only show dots in carousel mode */}
+        <View
+          pointerEvents="box-none"
+          style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 5 }}
+        >
+          {!modoLista && (
+            <View style={styles.bottomControls}>
+              <View style={styles.dotsInline}>
+                {juegos.map((_, i) => (
+                  <View
+                    key={i}
+                    style={[
+                      styles.dot,
+                      currentIndex === i && styles.dotActive,
+                    ]}
+                  />
+                ))}
               </View>
             </View>
-          </SafeAreaView>
+          )}
         </View>
-      </TouchableWithoutFeedback>
-    </GestureHandlerRootView>
+        <Animated.View style={{ flex: 1, opacity: fadeCarrusel, position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
+          <FlatList
+            data={juegos}
+            ref={flatListRef}
+            renderItem={renderItem}
+            horizontal
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+            onScroll={handleScroll}
+            scrollEventThrottle={16}
+            keyExtractor={(item) => item.id.toString()}
+          />
+        </Animated.View>
+
+        <Animated.View style={{ flex: 1, opacity: fadeLista }}>
+          <ScrollView
+            style={{ flex: 1 }}
+            contentContainerStyle={{ ...styles.scrollList, paddingTop: 0, marginTop: 0 }}
+          >
+            <TextInput
+              style={styles.input}
+              placeholder="Añadir jugador"
+              placeholderTextColor="#ffffff"
+              value={newJugador}
+              onChangeText={setNewJugador}
+              onSubmitEditing={agregarJugador}
+              returnKeyType="done"
+            />
+            <View style={styles.contenedorJugadores}>
+              {jugadores.length === 0 ? (
+                <Text style={styles.footerText}>No hay jugadores añadidos</Text>
+              ) : (
+                jugadores.map((jugador, index) => (
+                  <View key={index} style={styles.fila}>
+                    <Text style={styles.item}>{jugador}</Text>
+                    <TouchableOpacity onPress={() => eliminarJugador(index)}>
+                      <Ionicons name="trash" size={24} color="#fff" />
+                    </TouchableOpacity>
+                  </View>
+                ))
+              )}
+            </View>
+            <Text style={styles.footerText}>Agrega jugadores para comenzar a jugar</Text>
+          </ScrollView>
+        </Animated.View>
+      </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  gridBackground: {
+  container: {
     flex: 1,
-    backgroundColor: '#191716',
+    // backgroundColor removed to allow dynamic override in component
   },
-  header: {
-    width: '100%',
+  slide: {
+    width: width,
+    height: '100%',
     paddingHorizontal: 20,
-    paddingTop: 50,
+    // paddingTop: 80,
+    paddingBottom: 80,
+  },
+  slideTop: {
+    alignItems: 'center',
+    marginBottom: 10,
+    paddingHorizontal: 20,
+  },
+  slideMiddle: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  slideImage: {
+    width: '100%',
+    height: '100%',
+    maxHeight: height * 0.4,
+  },
+  slideBottom: {
+    alignItems: 'center',
+    marginBottom: 10,
+    paddingHorizontal: 20,
+  },
+  slideTitle: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    fontFamily: 'Panchang-Bold',
+    color: '#000',
+    marginBottom: 10,
+    textTransform: 'uppercase',
+    textAlign: 'center',
+  },
+  image: {
+    width: 250,
+    height: 250,
+    resizeMode: 'contain',
+  },
+  topRightButton: {
+    position: 'absolute',
+    right: 20,
+    zIndex: 10,
+  },
+  dot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#444',
+    marginHorizontal: 5,
+  },
+  dotActive: {
+    backgroundColor: '#fff',
+  },
+  scrollList: {
+    flexGrow: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    paddingTop: 0,
+    // backgroundColor removed to avoid duplication or conflicts
+  },
+  card: {
+    width: '90%',
+    borderRadius: 12,
+    padding: 20,
+    height: '20%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  cardTitle: {
+    fontSize: scaleFont(18),
+    maxFontSizeMultiplier: 1.2,
+    fontWeight: 'bold',
+    fontFamily: 'Panchang-Bold',
+    color: '#000',
+    marginBottom: 10,
+    textTransform: 'uppercase',
+    paddingHorizontal: 20,
+    textAlign: 'center',
+  },
+  imageSmall: {
+    width: 150,
+    height: 150,
+    resizeMode: 'contain',
+    marginBottom: 0,
+    marginTop: 0,
+  },
+  slideDescription: {
+    fontSize: 18,
+    fontFamily: 'Panchang-Regular',
+    color: '#000',
+    textAlign: 'center',
+    marginBottom: 10,
+    paddingHorizontal: 20,
+  },
+  cardDescription: {
+    fontSize: scaleFont(14),
+    fontFamily: 'Panchang-Regular',
+    color: '#000',
+    textAlign: 'center',
+    marginBottom: 10,
+    paddingHorizontal: 20,
+  },
+  bottomControls: {
+    position: 'absolute',
+    bottom: 40,
+    left: 20,
+    right: 20,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 10,
+  },
+  dotsInline: {
+    flexDirection: 'row',
+  },
+  jugadoresButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontFamily: 'Panchang-Bold',
+  },
+  jugadoresButtonTopRight: {
+    position: 'absolute',
+    right: 20,
+    backgroundColor: 'transparent',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#fff',
+    zIndex: 10,
+  },
+  input: {
+    width: '90%',
+    height: 60,
+    borderColor: 'black',
+    borderWidth: 2,
+    borderRadius: 8,
+    color: '#fff',
+    paddingHorizontal: 10,
+    marginBottom: 20,
+    fontFamily: 'Panchang-Regular',
+    fontSize: 16,
+    marginTop: height * 0.1,
+  },
+  contenedorJugadores: {
+    width: '90%',
+    marginBottom: 20,
+  },
+  fila: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    position: 'absolute',
-    top: 0,
-    zIndex: 2,
-  },
-  imageBackground: {
-    position: 'absolute',
-    top: -height * 0.06,
-    left: -width * 0.12,
-    width: width * 0.7,
-    height: undefined,
-    aspectRatio: 1,
-    resizeMode: 'contain',
-    zIndex: 2,
-  },
-  content: {
-    flex: 1,
-    paddingTop: 130,
-    alignItems: 'center',
-    zIndex: 1,
-  },
-  carouselWrapper: {
-    paddingHorizontal: 0,
+    backgroundColor: '#79AFFF',
     paddingVertical: 10,
-    flexDirection: 'row',
+    paddingHorizontal: 15,
+    borderRadius: 8,
+    marginBottom: 10,
+    borderColor: 'black',
+    borderWidth: 2,
   },
-  gameContainer: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height * 0.7,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  gameCard: {
-    width: width * 0.85,
-    height: height * 0.45,
-    borderRadius: 12,
-    backgroundColor: 'rgba(0, 100, 0, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 3,
-    borderColor: 'green',
-    position: 'relative',
-  },
-  cardCornerImage: {
-    position: 'absolute',
-    left: '-60%',
-    top: '0%',
-    height: '50%',
-    resizeMode: 'contain',
-    zIndex: 0,
-  },
-  cardTextContainer: {
-    position: 'absolute',
-    bottom: 20,
-    left: 20,
-    right: 20,
-    gap: 2,
-  },
-  gameText: {
+  item: {
     color: '#fff',
     fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'left',
-    lineHeight: 26,
-    marginBottom: 4,
+    fontFamily: 'Panchang-Regular',
   },
-  gameDescription: {
-    color: '#fff',
+  footerText: {
+    color: '#aaa',
     fontSize: 14,
-    marginTop: 10,
-    textAlign: 'left',
-  },
-  jugadorTexto: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontFamily: 'Panchang-Regular',
     textAlign: 'center',
     marginTop: 10,
   },
