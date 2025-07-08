@@ -9,6 +9,7 @@ import PruebaHomeScreen from './screens/PruebaHomeScreen';
 import GameOneScreen from './screens/GameOneScreen';
 import PruebaGameOneScreen from './screens/PruebaGameOneScreen';
 import GameTwoScreen from './screens/GameTwoScreen';
+import PruebaGameTwoScreen from './screens/PruebaGameTwoScreen';
 import GameThreeScreen from './screens/GameThreeScreen';
 import GameFourScreen from './screens/GameFourScreen';
 import PruebaGameFourScreen from './screens/PruebaGameFourScreen';
@@ -50,6 +51,7 @@ export default function App() {
           <Stack.Screen name="Juego 1" component={GameOneScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Prueba 1" component={PruebaGameOneScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Juego 2" component={GameTwoScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Prueba 2" component={PruebaGameTwoScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Juego 3" component={GameThreeScreen} />
           <Stack.Screen name="Juego 4" component={GameFourScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Prueba 4" component={PruebaGameFourScreen} options={{ headerShown: false }} />

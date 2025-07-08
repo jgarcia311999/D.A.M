@@ -155,7 +155,7 @@ export default function GameTwoScreen({ route, navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={() => setMostrarOpciones(false)}>
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#d5c385' }}>
+      <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => {
           Haptics.selectionAsync();
@@ -176,6 +176,12 @@ export default function GameTwoScreen({ route, navigation }) {
       ]}>
         {mostrarOpciones && (
           <>
+            <TouchableOpacity style={styles.primaryButton} onPress={() => {
+              setMostrarOpciones(false);
+              navigation.navigate('Prueba 2');
+            }}>
+              <Text style={styles.primaryButtonText}>Ir a Prueba 2</Text>
+            </TouchableOpacity>
             <TouchableOpacity style={styles.primaryButton} onPress={() => {
               setMostrarOpciones(false);
               setModalVisible(true);
@@ -260,49 +266,54 @@ export default function GameTwoScreen({ route, navigation }) {
       </Modal>
 
       {carta && (
-        <View style={{ justifyContent: 'center', alignItems: 'center', backgroundColor: '#d5c385', paddingVertical: 20 }}>
-          <Image
-            source={(() => {
-              const valor = carta.numero;
-              const key = `${carta.palo}_${valor}`;
-              return imagenesCartas[key];
-            })()}
-            style={{
-              height: '80%',
-              aspectRatio: 0.7,
-              resizeMode: 'contain',
-              borderRadius: 12,
-            }}
-          />
-          <View style={{
-            position: 'absolute',
-            top: 0,
-            bottom: 0,
-            left: 0,
-            right: 0,
-            justifyContent: 'center',
-            alignItems: 'center',
-            paddingHorizontal: 10,
-            overflow: 'hidden',
-          }}>
-            <Text style={{ fontSize: 32, color: '#fff', fontWeight: 'bold', textAlign: 'center', textShadowColor: '#000', textShadowOffset: { width: 2, height: 2 }, textShadowRadius: 3 }}>
-              {(() => {
-                let valor = carta.numero;
-                let displayValor = valor;
-                if (valor === 'j') displayValor = 'J';
-                else if (valor === 'q') displayValor = 'Q';
-                else if (valor === 'k') displayValor = 'K';
-                return `${displayValor} de ${carta.palo}`;
-              })()}
-            </Text>
-            <Text style={{ fontSize: 22, color: '#fff', marginTop: 12, textAlign: 'center', textShadowColor: '#000', textShadowOffset: { width: 1, height: 1 }, textShadowRadius: 2 }}>
-              {jugadorActual ? `${jugadorActual}, ${valores[carta.numero]}` : valores[carta.numero]}
-            </Text>
-            <Text style={{ fontSize: 18, color: '#fff', marginTop: 8, textAlign: 'center', textShadowColor: '#000', textShadowOffset: { width: 1, height: 1 }, textShadowRadius: 2 }}>
-              {tragosPorPalo[carta.palo]} {carta.palo === 'copas' ? 'trago' : 'tragos'} por ser {carta.palo}
-            </Text>
-          </View>
-        </View>
+        <>
+          {(() => {
+            let valor = carta.numero;
+            if (valor === 'j' || valor === 'q' || valor === 'k') {
+              valor = valor;
+            }
+            const key = `${carta.palo}_${valor}`;
+            const source = imagenesCartas[key];
+            if (source) {
+              return (
+                <Image
+                  source={source}
+                  style={{
+                    width: 150,
+                    height: 225,
+                    marginVertical: 10,
+                    resizeMode: 'contain',
+                    backgroundColor: 'transparent',
+                    borderRadius: 12,
+                  }}
+                />
+              );
+            }
+            return null;
+          })()}
+          {(() => {
+            let valor = carta.numero;
+            let displayValor = valor;
+            if (valor === 'j') {
+              displayValor = 'J';
+            } else if (valor === 'q') {
+              displayValor = 'Q';
+            } else if (valor === 'k') {
+              displayValor = 'K';
+            }
+            return (
+              <Text style={styles.carta}>
+                {displayValor} de {carta.palo}
+              </Text>
+            );
+          })()}
+          <Text style={styles.accion}>
+            {jugadorActual ? `${jugadorActual}, ${valores[carta.numero]}` : valores[carta.numero]}
+          </Text>
+          <Text style={styles.tragos}>
+            {tragosPorPalo[carta.palo]} {carta.palo === 'copas' ? 'trago' : 'tragos'} por ser {carta.palo}
+          </Text>
+        </>
       )}
 
       <Modal
