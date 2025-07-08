@@ -65,6 +65,7 @@ export default function HomeScreen({ navigation, route }) {
   const [newJugador, setNewJugador] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [modoLista, setModoLista] = useState(false);
+  const [modoPendiente, setModoPendiente] = useState(false);
   const flatListRef = useRef(null);
   const fadeCarrusel = useRef(new Animated.Value(1)).current;
   const fadeLista = useRef(new Animated.Value(0)).current;
@@ -137,25 +138,32 @@ export default function HomeScreen({ navigation, route }) {
       <SafeAreaView style={{ flex: 1 }}>
         <TouchableOpacity
           style={[styles.jugadoresButtonTopRight, { top: insets.top + 10 }]}
-          onPress={() => navigation.navigate('Gamer')}
-        >
-          <Text style={styles.jugadoresButtonText}>Borrachos</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.topRightButton, { top: insets.top + 10 }]}
           onPress={() => {
+            setModoPendiente(!modoLista);
             if (modoLista) {
               Animated.parallel([
                 Animated.timing(fadeCarrusel, { toValue: 1, duration: 200, useNativeDriver: true }),
                 Animated.timing(fadeLista, { toValue: 0, duration: 200, useNativeDriver: true }),
-              ]).start(() => setModoLista(false));
+              ]).start(() => {
+                setModoLista(false);
+              });
             } else {
               Animated.parallel([
                 Animated.timing(fadeCarrusel, { toValue: 0, duration: 200, useNativeDriver: true }),
                 Animated.timing(fadeLista, { toValue: 1, duration: 200, useNativeDriver: true }),
-              ]).start(() => setModoLista(true));
+              ]).start(() => {
+                setModoLista(true);
+              });
             }
           }}
+        >
+          <Text style={styles.jugadoresButtonText}>
+            {modoPendiente ? 'Juegos' : 'Borrachos'}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.topRightButton, { top: insets.top + 10 }]}
+          onPress={() => navigation.navigate('Gamer')}
         >
           <Ionicons name="menu" size={28} color="#fff" />
         </TouchableOpacity>
