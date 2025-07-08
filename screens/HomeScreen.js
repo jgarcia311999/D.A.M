@@ -136,6 +136,12 @@ export default function HomeScreen({ navigation, route }) {
     <View style={styles.container}>
       <SafeAreaView style={{ flex: 1 }}>
         <TouchableOpacity
+          style={[styles.jugadoresButtonTopRight, { top: insets.top + 10 }]}
+          onPress={() => navigation.navigate('Gamer')}
+        >
+          <Text style={styles.jugadoresButtonText}>Borrachos</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
           style={[styles.topRightButton, { top: insets.top + 10 }]}
           onPress={() => {
             if (modoLista) {
@@ -152,12 +158,6 @@ export default function HomeScreen({ navigation, route }) {
           }}
         >
           <Ionicons name="menu" size={28} color="#fff" />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.jugadoresButtonTopRight, { top: insets.top + 10 }]}
-          onPress={() => navigation.navigate('Gamer')}
-        >
-          <Text style={styles.jugadoresButtonText}>Borrachos</Text>
         </TouchableOpacity>
         {/* Only show dots in carousel mode */}
         <View
@@ -203,7 +203,7 @@ export default function HomeScreen({ navigation, route }) {
             <TextInput
               style={styles.input}
               placeholder="Añadir jugador"
-              placeholderTextColor="#888"
+              placeholderTextColor="#6fdf6f"
               value={newJugador}
               onChangeText={setNewJugador}
               onSubmitEditing={agregarJugador}
@@ -279,7 +279,7 @@ const styles = StyleSheet.create({
   },
   topRightButton: {
     position: 'absolute',
-    left: 20,
+    right: 20,
     zIndex: 10,
   },
   dot: {
@@ -322,7 +322,7 @@ const styles = StyleSheet.create({
     height: 150,
     resizeMode: 'contain',
     marginBottom: 0,
-    marginTop: 0, // Elimina cualquier espacio adicional encima de la imagen
+    marginTop: 0,
   },
   slideDescription: {
     fontSize: 18,
@@ -360,7 +360,7 @@ const styles = StyleSheet.create({
   },
   jugadoresButtonTopRight: {
     position: 'absolute',
-    right: 20,
+    left: 20,
     backgroundColor: 'transparent',
     paddingHorizontal: 16,
     paddingVertical: 8,
@@ -373,7 +373,7 @@ const styles = StyleSheet.create({
     width: '90%',
     height: 40,
     borderColor: 'green',
-    borderWidth: 1,
+    borderWidth: 2,
     borderRadius: 8,
     color: '#fff',
     paddingHorizontal: 10,
