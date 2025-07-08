@@ -7,7 +7,7 @@ import ImgSamurai from '../assets/personajes/personaje_samurai.png';
 import ImgRobot from '../assets/personajes/personaje_robot.png';
 import ImgMusico from '../assets/personajes/personaje_musico.png';
 import ImgMago from '../assets/personajes/personaje_mago.png';
-import ImgDJ from '../assets/personajes/personaje_dj.png';
+import PjTabaco from '../assets/nuevos_personajes/tabaco_pj.png';
 
 const { width, height } = Dimensions.get('window');
 const scaleFont = (size) => (width / 375) * size;
@@ -18,7 +18,7 @@ const juegos = [
     nombre: 'Bebecartas',
     descripcion: 'Saca cartas al azar con retos únicos y bebe si no los cumples.',
     screen: 'Juego 4',
-    imagen: ImgSamurai,
+    imagen: PjTabaco,
     imagenEstilo: { width: '80%', height: height * 0.35, resizeMode: 'contain' },
     color: '#bfa3ff',
   },
