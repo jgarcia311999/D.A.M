@@ -120,15 +120,17 @@ const PruebaGameFourScreen = ({ route, navigation }) => {
             key={cardIndex}
             cards={frasesToUse}
             renderCard={(card) => (
-              <View style={styles.card}>
-                <Text style={styles.label}>{card?.tipo || ''}</Text>
-                <View style={styles.fraseContainer}>
-                  <Text style={styles.text}>{procesarFrase(card?.frase) || 'Sin contenido'}</Text>
-                </View>
-                <View style={styles.cardFooter}>
-                  <Text style={styles.placeholder}>
-                    {card?.castigo ? `Bebe ${card.castigo} ${card.castigo === '1' ? 'chupito' : 'chupitos'}` : ''}
-                  </Text>
+              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <View style={styles.card}>
+                  <Text style={styles.label}>{card?.tipo || ''}</Text>
+                  <View style={styles.fraseContainer}>
+                    <Text style={styles.text}>{procesarFrase(card?.frase) || 'Sin contenido'}</Text>
+                  </View>
+                  <View style={styles.cardFooter}>
+                    <Text style={styles.placeholder}>
+                      {card?.castigo ? `Bebe ${card.castigo} ${card.castigo === '1' ? 'chupito' : 'chupitos'}` : ''}
+                    </Text>
+                  </View>
                 </View>
               </View>
             )}
@@ -195,12 +197,12 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   text: {
-    fontSize: 18,
+    fontSize: 22,
     fontFamily: 'Panchang-Regular',
     color: '#000',
     textAlign: 'center',
     paddingHorizontal: 20,
-    lineHeight: 26,
+    lineHeight: 30,
   },
   fraseContainer: {
     flex: 1,
