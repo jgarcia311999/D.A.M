@@ -134,7 +134,11 @@ export default function HomeScreen({ navigation, route }) {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {
+      backgroundColor: modoPendiente
+        ? '#a3c8ff'
+        : juegos[currentIndex]?.color || '#191716'
+    }]}>
       <SafeAreaView style={{ flex: 1 }}>
         <TouchableOpacity
           style={[styles.jugadoresButtonTopRight, { top: insets.top + 10 }]}
@@ -161,12 +165,11 @@ export default function HomeScreen({ navigation, route }) {
             {modoPendiente ? 'Juegos' : 'Borrachos'}
           </Text>
         </TouchableOpacity>
+        {/* Espacio reservado para el botón de menú hamburguesa */}
         <TouchableOpacity
           style={[styles.topRightButton, { top: insets.top + 10 }]}
-          onPress={() => navigation.navigate('Gamer')}
-        >
-          <Ionicons name="menu" size={28} color="#fff" />
-        </TouchableOpacity>
+          // Sin onPress ni contenido para reservar espacio
+        />
         {/* Only show dots in carousel mode */}
         <View
           pointerEvents="box-none"
@@ -207,11 +210,10 @@ export default function HomeScreen({ navigation, route }) {
             style={{ flex: 1 }}
             contentContainerStyle={{ ...styles.scrollList, paddingTop: 0, marginTop: 0 }}
           >
-            <Image source={ImgSamurai} style={styles.imageSmall} />
             <TextInput
               style={styles.input}
               placeholder="Añadir jugador"
-              placeholderTextColor="#6fdf6f"
+              placeholderTextColor="#ffffff"
               value={newJugador}
               onChangeText={setNewJugador}
               onSubmitEditing={agregarJugador}
@@ -242,7 +244,7 @@ export default function HomeScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#191716',
+    // backgroundColor removed to allow dynamic override in component
   },
   slide: {
     width: width,
@@ -305,6 +307,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     paddingTop: 0,
+    // backgroundColor removed to avoid duplication or conflicts
   },
   card: {
     width: '90%',
@@ -379,8 +382,8 @@ const styles = StyleSheet.create({
   },
   input: {
     width: '90%',
-    height: 40,
-    borderColor: 'green',
+    height: 60,
+    borderColor: 'black',
     borderWidth: 2,
     borderRadius: 8,
     color: '#fff',
@@ -388,7 +391,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontFamily: 'Panchang-Regular',
     fontSize: 16,
-    marginTop: 0,
+    marginTop: height * 0.1,
   },
   contenedorJugadores: {
     width: '90%',
@@ -398,12 +401,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 100, 0, 0.5)',
+    backgroundColor: '#79AFFF',
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderRadius: 8,
     marginBottom: 10,
-    borderColor: 'green',
+    borderColor: 'black',
     borderWidth: 2,
   },
   item: {
