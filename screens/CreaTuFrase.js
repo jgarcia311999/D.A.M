@@ -36,11 +36,17 @@ export default function CreaTuFrase({ navigation }) {
 
   const enviarFrase = async () => {
     if (!frase.trim()) return;
+    // Si el castigo está vacío, ponerlo a "1"
+    let castigoFinal = castigo;
+    if (!castigoFinal.trim()) {
+      castigoFinal = "1";
+      setCastigo("1");
+    }
     setEnviando(true);
     const payload = {
       tipo,
       frase,
-      castigo,
+      castigo: castigoFinal,
       visible: false,
       timestamp: serverTimestamp(),
     };
@@ -52,7 +58,8 @@ export default function CreaTuFrase({ navigation }) {
         ok: '0',
       });
       alert('¡Frase enviada!\nAparecerá en tu partida aunque esté pendiente de revisión.');
-      navigation.goBack();
+      // navigation.goBack(); // No navegar atrás tras crear la frase
+      setFrase(''); // Limpiar input de frase tras enviar
     } catch (err) {
       alert('Error de conexión: ' + err.message);
     }

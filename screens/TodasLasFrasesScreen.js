@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, TouchableOpacity, FlatList, ActivityIndicator, TextInput, Modal, Alert } from 'react-native';
+// Si no tienes instalado react-native-gesture-handler, instálalo con: npm install react-native-gesture-handler
+import { Swipeable } from 'react-native-gesture-handler';
 // Si no tienes instalado @react-native-picker/picker, instálalo con: npm install @react-native-picker/picker
 import { Picker } from '@react-native-picker/picker';
 import { Ionicons } from '@expo/vector-icons';
@@ -236,23 +238,74 @@ export default function TodasLasFrasesScreen() {
           <FlatList
             data={orderedFrases}
             keyExtractor={(item) => item.id}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                activeOpacity={0.7}
-                onPress={() => {
-                  setSelectedFrase(item);
-                  setModalVisible(true);
-                  setEditMode(false);
-                }}
-              >
-                <View style={[
-                  styles.fraseContainer,
-                  { backgroundColor: item.visible === false ? '#ffeaea' : '#fff' }
-                ]}>
-                  <Text style={styles.fraseText}>{item.frase}</Text>
+            renderItem={({ item }) => {
+              // Render right actions for swipe (delete)
+              const renderRightActions = () => (
+                <View style={{
+                  justifyContent: 'center',
+                  alignItems: 'flex-end',
+                  flex: 1,
+                  backgroundColor: '#ff3b30',
+                  borderRadius: 10,
+                  marginBottom: 12,
+                  marginTop: 0,
+                }}>
+                  <View style={{
+                    width: 70,
+                    height: '100%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                    <Ionicons name="trash" size={28} color="#fff" />
+                  </View>
                 </View>
-              </TouchableOpacity>
-            )}
+              );
+              // On swipe open, show alert for delete confirmation
+              const handleSwipeOpen = () => {
+                Alert.alert(
+                  'Confirmar borrado',
+                  '¿Seguro que quieres borrar esta frase? No se podrá recuperar después',
+                  [
+                    { text: 'Cancelar', style: 'cancel' },
+                    {
+                      text: 'Borrar',
+                      style: 'destructive',
+                      onPress: async () => {
+                        try {
+                          await deleteDoc(doc(db, 'frases', item.id));
+                          refrescarFrases();
+                        } catch (err) {
+                          Alert.alert('Error', 'No se pudo borrar la frase.');
+                        }
+                      }
+                    }
+                  ]
+                );
+              };
+              return (
+                <Swipeable
+                  renderRightActions={renderRightActions}
+                  onSwipeableOpen={handleSwipeOpen}
+                  overshootRight={false}
+                >
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    onPress={() => {
+                      setSelectedFrase(item);
+                      setModalVisible(true);
+                      setEditMode(false);
+                    }}
+                  >
+                    <View style={[
+                      styles.fraseContainer,
+                      { backgroundColor: item.visible === false ? '#ffeaea' : '#fff' }
+                    ]}>
+                      <Text style={styles.fraseText}>{item.frase}</Text>
+                    </View>
+                  </TouchableOpacity>
+                </Swipeable>
+              );
+            }}
           />
         )}
       </View>
