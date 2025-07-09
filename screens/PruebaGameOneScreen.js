@@ -82,9 +82,12 @@ export default function GameOneScreen({ route, navigation }) {
     return cartasImagenes[clave] || require('../assets/cartas/carta-trasera.png');
   };
 
-  const generarCarta = () => {
+  const generarCarta = (prohibidos = []) => {
     const palo = palos[Math.floor(Math.random() * palos.length)];
-    const numero = Math.floor(Math.random() * 12) + 1;
+    let numero;
+    do {
+      numero = Math.floor(Math.random() * 12) + 1;
+    } while (prohibidos.includes(numero));
     return { palo, numero, color: colores[palo] };
   };
 
@@ -98,6 +101,43 @@ export default function GameOneScreen({ route, navigation }) {
   const [modalCarta, setModalCarta] = useState(null);
   const [modalInfoVisible, setModalInfoVisible] = useState(false);
   const [infoPage, setInfoPage] = useState(0);
+  // --- Parpadeo de carta en fallo ---
+  const [cartaFallidaIndex, setCartaFallidaIndex] = useState(null);
+  const [parpadeoRojo, setParpadeoRojo] = useState(false);
+  // --- Parpadeo de carta en acierto (verde) ---
+  const [cartaAciertoIndex, setCartaAciertoIndex] = useState(null);
+  const [parpadeoVerde, setParpadeoVerde] = useState(false);
+  const [cartasAcertadas, setCartasAcertadas] = useState([]);
+  // Parpadeo visual de carta al fallar
+  const parpadearRojoCarta = (idx) => {
+    setCartaFallidaIndex(idx);
+    let count = 0;
+    setParpadeoRojo(true);
+    const interval = setInterval(() => {
+      setParpadeoRojo(p => !p);
+      count++;
+      if (count === 4) { // 2 ciclos de parpadeo
+        setParpadeoRojo(true); // Termina en rojo fijo
+        clearInterval(interval);
+      }
+    }, 150);
+  };
+
+  // Parpadeo visual de carta al acertar (verde)
+  const parpadearVerdeCarta = (idx) => {
+    setCartaAciertoIndex(idx);
+    let count = 0;
+    setParpadeoVerde(true);
+    const interval = setInterval(() => {
+      setParpadeoVerde(p => !p);
+      count++;
+      if (count === 4) { // 2 ciclos de parpadeo
+        setParpadeoVerde(true);
+        setCartasAcertadas(prev => [...prev, idx]);
+        clearInterval(interval);
+      }
+    }, 150);
+  };
   const infoPages = [
     `Un juego de cartas para beber... sí, otro más. Pero este por lo menos te obliga a usar una neurona o dos.`,
     `Son cuatro fases. Aciertas, avanzas. La cagas, bebes.\n¿Demasiado para ti? Siempre puedes rendirte y fingir que repartes los tragos por estrategia.`,
@@ -130,6 +170,11 @@ export default function GameOneScreen({ route, navigation }) {
   };
 
   const reiniciar = () => {
+    setCartaFallidaIndex(null);
+    setParpadeoRojo(false);
+    setCartaAciertoIndex(null);
+    setParpadeoVerde(false);
+    setCartasAcertadas([]);
     iniciarJuego();
   };
 
@@ -139,7 +184,10 @@ export default function GameOneScreen({ route, navigation }) {
     const interval = setInterval(() => {
       setColorTextoJugador((prev) => (prev === color ? null : color));
       count++;
-      if (count === 4) clearInterval(interval);
+      if (count === 4) {
+        clearInterval(interval);
+        setColorTextoJugador(null); // ← Siempre vuelve al color original
+      }
     }, 150);
   };
 
@@ -150,7 +198,10 @@ export default function GameOneScreen({ route, navigation }) {
       return;
     }
     if (resultado) return;
-    if (fase < 4) setFase(fase + 1);
+    if (fase < 4) {
+      parpadearVerdeCarta(fase - 1);
+      setFase(fase + 1);
+    }
   };
 
   const elegirColor = (colorElegido) => {
@@ -159,22 +210,24 @@ export default function GameOneScreen({ route, navigation }) {
     if (carta.color === colorElegido) {
       // setModalCarta({ carta, acierto: true });
       // setModalVisible(true);
+      parpadear('green');
       setModalCarta(null);
       setModalVisible(false);
+      parpadearVerdeCarta(fase - 1);
       setTimeout(() => setFase(fase + 1), 200);
     } else {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       setModalCarta({ carta, acierto: false });
-      setModalVisible(true);
       setMensaje(`😵 Fallaste. Tienes que beber ${fase} trago${fase > 1 ? 's' : ''}.`);
       setResultado('perdiste');
-      reiniciar();
+      parpadearRojoCarta(fase - 1);
+      // reiniciar(); // Eliminado: ya no se reinicia automáticamente al perder
     }
   };
 
   const elegirMayorMenor = (opcion) => {
     const cartaAnterior = cartas[0];
-    const nuevaCarta = generarCarta();
+    const nuevaCarta = generarCarta([cartas[0].numero]);
     setCartas([...cartas, nuevaCarta]);
 
     const comparacion = nuevaCarta.numero > cartaAnterior.numero ? 'mayor' : (nuevaCarta.numero < cartaAnterior.numero ? 'menor' : 'igual');
@@ -182,22 +235,24 @@ export default function GameOneScreen({ route, navigation }) {
     if (comparacion === opcion) {
       // setModalCarta({ carta: nuevaCarta, acierto: true });
       // setModalVisible(true);
+      parpadear('green');
       setModalCarta(null);
       setModalVisible(false);
+      parpadearVerdeCarta(fase - 1);
       setTimeout(() => setFase(fase + 1), 200);
     } else {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       setModalCarta({ carta: nuevaCarta, acierto: false });
-      setModalVisible(true);
       setMensaje(`😵 Fallaste. Tienes que beber ${fase} trago${fase > 1 ? 's' : ''}.`);
       setResultado('perdiste');
-      reiniciar();
+      parpadearRojoCarta(fase - 1);
+      // reiniciar(); // Eliminado: ya no se reinicia automáticamente al perder
     }
   };
 
   const elegirEntre = (opcion) => {
     const [c1, c2] = cartas;
-    const nuevaCarta = generarCarta();
+    const nuevaCarta = generarCarta([cartas[0].numero, cartas[1].numero]);
     setCartas([...cartas, nuevaCarta]);
 
     const min = Math.min(c1.numero, c2.numero);
@@ -207,16 +262,18 @@ export default function GameOneScreen({ route, navigation }) {
     if ((estaEntre && opcion === 'sí') || (!estaEntre && opcion === 'no')) {
       // setModalCarta({ carta: nuevaCarta, acierto: true });
       // setModalVisible(true);
+      parpadear('green');
       setModalCarta(null);
       setModalVisible(false);
+      parpadearVerdeCarta(fase - 1);
       setTimeout(() => setFase(fase + 1), 200);
     } else {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       setModalCarta({ carta: nuevaCarta, acierto: false });
-      setModalVisible(true);
       setMensaje(`😵 Fallaste. Tienes que beber ${fase} trago${fase > 1 ? 's' : ''}.`);
       setResultado('perdiste');
-      reiniciar();
+      parpadearRojoCarta(fase - 1);
+      // reiniciar(); // Eliminado: ya no se reinicia automáticamente al perder
     }
   };
 
@@ -227,16 +284,18 @@ export default function GameOneScreen({ route, navigation }) {
     if (nuevaCarta.palo === paloElegido) {
       // setModalCarta({ carta: nuevaCarta, acierto: true });
       // setModalVisible(true);
+      parpadear('green');
       setModalCarta(null);
       setModalVisible(false);
+      parpadearVerdeCarta(fase - 1);
       setTimeout(() => setResultado('ganaste'), 200);
     } else {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       setModalCarta({ carta: nuevaCarta, acierto: false });
-      setModalVisible(true);
       setMensaje(`😵 Fallaste. Tienes que beber ${fase} trago${fase > 1 ? 's' : ''}.`);
       setResultado('perdiste');
-      reiniciar();
+      parpadearRojoCarta(fase - 1);
+      // reiniciar(); // Eliminado: ya no se reinicia automáticamente al perder
     }
   };
 
@@ -252,6 +311,13 @@ export default function GameOneScreen({ route, navigation }) {
     iniciarJuego();
   }, []);
 
+  // Parpadear en verde el nombre del jugador cuando cambia la fase (avanza y no hay resultado)
+  useEffect(() => {
+    if (fase > 1 && !resultado) {
+      parpadear('green');
+    }
+  }, [fase]);
+
   // Modal para mostrar la carta y el resultado
   const CartaModal = () => (
     <Modal
@@ -263,7 +329,7 @@ export default function GameOneScreen({ route, navigation }) {
       <TouchableWithoutFeedback onPress={cerrarModal}>
         <View style={styles.modalOverlay}>
           <View style={styles.modalContent}>
-            {modalCarta && modalCarta.carta && (
+            {modalCarta && modalCarta.carta && modalCarta.acierto && (
               <>
                 <Image
                   source={obtenerImagenCarta(modalCarta.carta)}
@@ -271,7 +337,7 @@ export default function GameOneScreen({ route, navigation }) {
                   resizeMode="contain"
                 />
                 <Text style={styles.modalMessage}>
-                  {modalCarta.acierto ? '¡Correcto!' : 'Fallaste'}
+                  {'¡Correcto!'}
                 </Text>
                 <TouchableOpacity onPress={cerrarModal} style={{ marginTop: 20, padding: 10, backgroundColor: '#ff4d4d', borderRadius: 8 }}>
                   <Text style={{ color: 'white', fontWeight: 'bold' }}>Aceptar</Text>
@@ -515,28 +581,57 @@ export default function GameOneScreen({ route, navigation }) {
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer} style={styles.scrollView}>
-      {/* Botones fijos de back y ayuda */}
-      <TouchableOpacity
-        style={[styles.fixedBackButton, { top: insets.top + 10 }]}
-        onPress={() => {
+      {/* Header absolute */}
+      <View style={{
+        position: 'absolute',
+        top: insets.top + 10,
+        left: 0,
+        right: 0,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: 20,
+        zIndex: 20,
+      }}>
+        {/* Botón Back */}
+        <TouchableOpacity onPress={() => {
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
           navigation.goBack();
-        }}
-      >
-        <Ionicons name="arrow-back" size={28} color="#000000" />
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={[styles.fixedHelpButton, { top: insets.top + 10 }]}
-        onPress={() => {
+        }}>
+          <Ionicons name="arrow-back" size={28} color="#000000" />
+        </TouchableOpacity>
+        {/* Nombre jugador */}
+        <Text style={{
+          color: '#000',
+          fontWeight: 'bold',
+          fontSize: 22,
+          fontFamily: 'Panchang-Regular',
+          flex: 1,
+          textAlign: 'center',
+        }}>
+          {jugadorActual}
+        </Text>
+        {/* Botón ayuda */}
+        <TouchableOpacity onPress={() => {
           setInfoPage(0);
           setModalInfoVisible(true);
-        }}
-      >
-        <Ionicons name="help-circle-outline" size={28} color="#000000" />
-      </TouchableOpacity>
+        }}>
+          <Ionicons name="help-circle-outline" size={28} color="#000000" />
+        </TouchableOpacity>
+      </View>
       <View style={styles.cardGrid}>
         {[0, 1, 2, 3].map((i) => (
-          <Image key={i} source={obtenerImagenCarta(cartas[i])} style={styles.cardImage} resizeMode="contain" />
+          <Image
+            key={i}
+            source={obtenerImagenCarta(cartas[i])}
+            style={[
+              styles.cardImage,
+              i === cartaFallidaIndex && { borderColor: parpadeoRojo ? 'red' : 'black', borderWidth: 3 },
+              (i === cartaAciertoIndex && parpadeoVerde) && { borderColor: 'green', borderWidth: 3 },
+              cartasAcertadas.includes(i) && { borderColor: 'green', borderWidth: 3 },
+            ]}
+            resizeMode="contain"
+          />
         ))}
       </View>
       {fase === 1 && !resultado && (
