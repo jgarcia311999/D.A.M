@@ -1,11 +1,12 @@
 
-# D.A.M
+  
+# LA PREVIA
 
-Aplicación de juegos y retos sociales, perfecta para reuniones entre amigos.
+Aplicación de juegos y retos sociales, perfecta para hacer LA PREVIA antes de salir de fiesta.
 
 ## Descripción General
 
-D.A.M es una app que reúne una colección de minijuegos y dinámicas para grupos, pensada para romper el hielo, divertirse y compartir retos únicos en cualquier ocasión social. Incluye juegos de cartas, retos aleatorios, creación y visualización de frases, y mucho más.
+LA PREVIA es una app que reúne una colección de minijuegos y dinámicas para grupos, pensada para calentar motores antes de salir de fiesta. Dicha app incluye juegos de cartas, preguntas y mucho alcohol.
 
 ## Tecnologías Utilizadas
 
@@ -32,19 +33,16 @@ D.A.M es una app que reúne una colección de minijuegos y dinámicas para grupo
    Agrega tus credenciales de Firebase en los archivos correspondientes (`firebase.json` o la configuración en el proyecto).
 
 4. **Ejecuta la app:**  
+  
    ```bash
-   npm start
-   ```
-   o
-   ```bash
-   expo start
+   npx expo start --clear
    ```
 
 5. **Abre en tu emulador o con la app Expo Go en tu dispositivo.**
 
 ## Uso General de la App
 
-Al iniciar D.A.M, el usuario puede navegar entre diferentes modos de juego, retos y minijuegos. La navegación es intuitiva y cada pantalla tiene una función bien definida.
+Al iniciar LA PREVIA, el usuario puede navegar entre diferentes modos de juego, retos y minijuegos. La navegación es intuitiva y cada pantalla tiene una función bien definida.
 
 ---
 
@@ -56,7 +54,7 @@ Al iniciar D.A.M, el usuario puede navegar entre diferentes modos de juego, reto
 Pantalla de bienvenida de la app.
 
 **Funcionamiento:**  
-Muestra el título del juego, animaciones atractivas y un botón para continuar al menú principal. Es la primera pantalla que ve el usuario.
+Pantalla de bienvenida, la cual simula una jarra de cerveza con el nombre de la app 'LA PREVIA'
 
 ---
 
@@ -66,39 +64,10 @@ Muestra el título del juego, animaciones atractivas y un botón para continuar 
 Menú principal de la aplicación.
 
 **Funcionamiento:**  
-Permite navegar a los distintos modos de juego, minijuegos y opciones. Suele tener animaciones, botones grandes y accesibles para cada modo de juego.
+Permite navegar a los distintos modos de juego y minijuegos. En ella podrás añadir también los borrachos que jugaran.
 
 ---
 
-## PruebaHomeScreen
-
-**Propósito:**  
-Versión de pruebas del menú principal.
-
-**Funcionamiento:**  
-Permite testear nuevas funciones o elementos del HomeScreen sin afectar la versión principal. Puede mostrar nuevos diseños o funciones en desarrollo.
-
----
-
-## GamesScreen
-
-**Propósito:**  
-Menú para acceder a los juegos principales.
-
-**Funcionamiento:**  
-Lista y organiza los diferentes juegos disponibles. Permite al usuario seleccionar a cuál jugar, mostrando a veces opciones o configuraciones adicionales.
-
----
-
-## GamerScreen
-
-**Propósito:**  
-Gestión y visualización de jugadores.
-
-**Funcionamiento:**  
-Permite agregar, editar y mostrar los nombres o avatares de los jugadores que participan en los juegos. Almacena esta información localmente y la muestra en los juegos.
-
----
 
 ## MiniGamesScreen
 
@@ -106,11 +75,11 @@ Permite agregar, editar y mostrar los nombres o avatares de los jugadores que pa
 Selector de minijuegos adicionales.
 
 **Funcionamiento:**  
-Permite explorar y acceder a diferentes minijuegos cortos. Muestra una lista visual con imágenes, títulos y botones para empezar cada uno.
+Permite explorar y acceder a diferentes minijuegos cortos. Muestra una lista visual para empezar cada uno.
 
 ---
 
-## GameOneScreen / PruebaGameOneScreen
+## GameOneScreen
 
 **Propósito:**  
 Juego principal tipo cartas.
@@ -179,6 +148,32 @@ Colección de minijuegos cortos.
 Cada mini-juego tiene una dinámica única, independiente de los juegos principales. Ejemplos comunes: preguntas rápidas, retos exprés, memoria, reacción, etc.
 
 ---
+
+
+## Diagrama de Navegación (Mermaid UML)
+
+Puedes visualizar la navegación entre pantallas de la app con el siguiente diagrama:
+
+```mermaid
+flowchart TD
+    TittleScreen["Pantalla de titulo"] --> Home["Home"]
+
+    Home --> Juego4["BebeCartas"]
+    Home --> Juego1["La Cadena Del Crupier"]
+    Home --> Juego2["El Saca Cartas"]
+    Home --> MiniJuegos["Minigamessss"]
+
+    MiniJuegos --> Minijuego1["Ranking Salvaje"]
+    MiniJuegos --> Minijuego2["Hot Takes"]
+    MiniJuegos --> Minijuego3["TOP 1"]
+    MiniJuegos --> Juego3["La Ruleta Del Shot"]
+
+    Juego4 --> CreaTuFrase["CreaTuFrase"]
+    CreaTuFrase --> TodasLasFrases["TodasLasFrases"]
+
+    Minijuego3 --> ModoLocal["Modo Local"]
+    Minijuego3 --> ModoOnline["Modo Online"]
+```
 
 # Créditos
 
