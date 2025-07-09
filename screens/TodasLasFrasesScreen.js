@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, TouchableOpacity, FlatList, ActivityIndicator, TextInput, Modal, Alert } from 'react-native';
+// Si no tienes instalado @react-native-picker/picker, instálalo con: npm install @react-native-picker/picker
+import { Picker } from '@react-native-picker/picker';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
@@ -311,19 +313,33 @@ export default function TodasLasFrasesScreen() {
                       placeholder="Frase"
                     />
                     <Text style={{ fontWeight: 'bold', marginTop: 12 }}>Tipo</Text>
-                    <TextInput
+                    <View
                       style={{
                         borderWidth: 1,
                         borderColor: '#E2D6FF',
                         borderRadius: 8,
-                        padding: 8,
                         marginBottom: 10,
-                        fontSize: 16,
+                        overflow: 'hidden',
                       }}
-                      value={editTipo}
-                      onChangeText={setEditTipo}
-                      placeholder="Tipo"
-                    />
+                    >
+                      <Picker
+                        selectedValue={editTipo}
+                        onValueChange={setEditTipo}
+                        style={{
+                          fontSize: 16,
+                          height: 44,
+                        }}
+                        itemStyle={{ fontSize: 16 }}
+                      >
+                        <Picker.Item label="N/A" value="N/A" />
+                        <Picker.Item label="Castigos" value="Castigos" />
+                        <Picker.Item label="Vota a..." value="Vota a..." />
+                        <Picker.Item label="Reglas locas" value="Reglas locas" />
+                        <Picker.Item label="Cartas del amor/odio" value="Cartas del amor/odio" />
+                        <Picker.Item label="Congelados" value="Congelados" />
+                        <Picker.Item label="Virus con reto" value="Virus con reto" />
+                      </Picker>
+                    </View>
                     <Text style={{ fontWeight: 'bold', marginTop: 12 }}>Castigo</Text>
                     <TextInput
                       style={{
@@ -337,6 +353,7 @@ export default function TodasLasFrasesScreen() {
                       value={editCastigo}
                       onChangeText={setEditCastigo}
                       placeholder="Castigo"
+                      keyboardType="numeric"
                     />
                     <Text style={{ fontWeight: 'bold', marginTop: 12 }}>Visible</Text>
                     <TouchableOpacity
