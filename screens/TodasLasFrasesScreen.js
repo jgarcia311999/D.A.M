@@ -4,7 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
-import { collection, getDocs, doc, deleteDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../utils/firebaseConfig';
 
 export default function TodasLasFrasesScreen() {
@@ -15,10 +15,17 @@ export default function TodasLasFrasesScreen() {
   const [loading, setLoading] = useState(true);
   const [showSearch, setShowSearch] = useState(false);
   const [searchText, setSearchText] = useState('');
+  // orderType puede ser: 'nuevas', 'antiguas', 'az', 'za', 'mostradas', 'no_mostradas'
   const [orderType, setOrderType] = useState('nuevas');
   const [showFilterMenu, setShowFilterMenu] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedFrase, setSelectedFrase] = useState(null);
+  const [editMode, setEditMode] = useState(false);
+  // Estados para edición
+  const [editFrase, setEditFrase] = useState('');
+  const [editTipo, setEditTipo] = useState('');
+  const [editCastigo, setEditCastigo] = useState('');
+  const [editVisible, setEditVisible] = useState(true);
 
   // Fetch frases from Firestore
   const fetchFrases = useCallback(async () => {
@@ -118,7 +125,11 @@ export default function TodasLasFrasesScreen() {
   const filteredFrases = searchText.trim() === '' ? frases : frases.filter(f => f.frase.toLowerCase().includes(searchText.toLowerCase()));
 
   let orderedFrases = [...filteredFrases];
-  if (orderType === 'nuevas') {
+  if (orderType === 'mostradas') {
+    orderedFrases = orderedFrases.filter(f => f.visible === true);
+  } else if (orderType === 'no_mostradas') {
+    orderedFrases = orderedFrases.filter(f => f.visible !== true);
+  } else if (orderType === 'nuevas') {
     // Assuming id is string, try to sort by timestamp if available, else by id descending
     orderedFrases.sort((a, b) => {
       if (a.timestamp && b.timestamp) {
@@ -148,7 +159,6 @@ export default function TodasLasFrasesScreen() {
     <>
       <View style={{ position: 'absolute', top: insets.top + 10, left: 16, right: 16, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
         <TouchableOpacity
-          style={styles.tuFraseBtn}
           onPress={() => {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
             navigation.goBack();
@@ -209,6 +219,12 @@ export default function TodasLasFrasesScreen() {
           <TouchableOpacity style={styles.filterOption} onPress={() => { setOrderType('za'); setShowFilterMenu(false); }}>
             <Text style={styles.filterOptionText}>Z-A</Text>
           </TouchableOpacity>
+          <TouchableOpacity style={styles.filterOption} onPress={() => { setOrderType('mostradas'); setShowFilterMenu(false); }}>
+            <Text style={styles.filterOptionText}>Solo mostradas</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.filterOption} onPress={() => { setOrderType('no_mostradas'); setShowFilterMenu(false); }}>
+            <Text style={styles.filterOptionText}>Solo no mostradas</Text>
+          </TouchableOpacity>
         </View>
       )}
       <View style={{ flex: 1, padding: 24, paddingTop: insets.top + 60 }}>
@@ -224,9 +240,13 @@ export default function TodasLasFrasesScreen() {
                 onPress={() => {
                   setSelectedFrase(item);
                   setModalVisible(true);
+                  setEditMode(false);
                 }}
               >
-                <View style={styles.fraseContainer}>
+                <View style={[
+                  styles.fraseContainer,
+                  { backgroundColor: item.visible === false ? '#ffeaea' : '#fff' }
+                ]}>
                   <Text style={styles.fraseText}>{item.frase}</Text>
                 </View>
               </TouchableOpacity>
@@ -259,64 +279,214 @@ export default function TodasLasFrasesScreen() {
           }}>
             {selectedFrase && (
               <>
-                <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 12, color: '#5E1DE6' }}>Frase</Text>
-                <Text style={{ fontSize: 18, marginBottom: 8 }}>{selectedFrase.frase}</Text>
-                <Text style={{ fontWeight: 'bold', marginTop: 12 }}>Tipo</Text>
-                <Text style={{ marginBottom: 8 }}>{selectedFrase.tipo || 'Sin tipo'}</Text>
-                <Text style={{ fontWeight: 'bold', marginTop: 12 }}>Castigo</Text>
-                <Text style={{ marginBottom: 8 }}>{selectedFrase.castigo || 'Sin castigo'}</Text>
-                <Text style={{ fontWeight: 'bold', marginTop: 12 }}>Visible</Text>
-                <Text style={{ marginBottom: 16 }}>
-                  Visible: {selectedFrase.visible === true ? 'Sí' : 'No'}
-                </Text>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 12, color: '#5E1DE6' }}>Frase</Text>
+                  {!editMode && (
+                    <TouchableOpacity
+                      onPress={() => {
+                        setEditFrase(selectedFrase.frase);
+                        setEditTipo(selectedFrase.tipo || '');
+                        setEditCastigo(selectedFrase.castigo || '');
+                        setEditVisible(selectedFrase.visible === true);
+                        setEditMode(true);
+                      }}
+                    >
+                      <Ionicons name="pencil" size={24} color="#5E1DE6" />
+                    </TouchableOpacity>
+                  )}
+                </View>
+                {editMode ? (
+                  <>
+                    <TextInput
+                      style={{
+                        borderWidth: 1,
+                        borderColor: '#E2D6FF',
+                        borderRadius: 8,
+                        padding: 8,
+                        marginBottom: 10,
+                        fontSize: 18,
+                      }}
+                      value={editFrase}
+                      onChangeText={setEditFrase}
+                      placeholder="Frase"
+                    />
+                    <Text style={{ fontWeight: 'bold', marginTop: 12 }}>Tipo</Text>
+                    <TextInput
+                      style={{
+                        borderWidth: 1,
+                        borderColor: '#E2D6FF',
+                        borderRadius: 8,
+                        padding: 8,
+                        marginBottom: 10,
+                        fontSize: 16,
+                      }}
+                      value={editTipo}
+                      onChangeText={setEditTipo}
+                      placeholder="Tipo"
+                    />
+                    <Text style={{ fontWeight: 'bold', marginTop: 12 }}>Castigo</Text>
+                    <TextInput
+                      style={{
+                        borderWidth: 1,
+                        borderColor: '#E2D6FF',
+                        borderRadius: 8,
+                        padding: 8,
+                        marginBottom: 10,
+                        fontSize: 16,
+                      }}
+                      value={editCastigo}
+                      onChangeText={setEditCastigo}
+                      placeholder="Castigo"
+                    />
+                    <Text style={{ fontWeight: 'bold', marginTop: 12 }}>Visible</Text>
+                    <TouchableOpacity
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        marginBottom: 16,
+                        marginTop: 4,
+                      }}
+                      onPress={() => setEditVisible(!editVisible)}
+                    >
+                      <View
+                        style={{
+                          width: 36,
+                          height: 22,
+                          borderRadius: 12,
+                          backgroundColor: editVisible ? '#5E1DE6' : '#ccc',
+                          justifyContent: 'center',
+                          marginRight: 10,
+                          padding: 2,
+                        }}
+                      >
+                        <View
+                          style={{
+                            width: 18,
+                            height: 18,
+                            borderRadius: 9,
+                            backgroundColor: '#fff',
+                            marginLeft: editVisible ? 14 : 2,
+                          }}
+                        />
+                      </View>
+                      <Text style={{ fontSize: 16 }}>{editVisible ? 'Sí' : 'No'}</Text>
+                    </TouchableOpacity>
+                  </>
+                ) : (
+                  <>
+                    <Text style={{ fontSize: 18, marginBottom: 8 }}>{selectedFrase.frase}</Text>
+                    <Text style={{ fontWeight: 'bold', marginTop: 12 }}>Tipo</Text>
+                    <Text style={{ marginBottom: 8 }}>{selectedFrase.tipo || 'Sin tipo'}</Text>
+                    <Text style={{ fontWeight: 'bold', marginTop: 12 }}>Castigo</Text>
+                    <Text style={{ marginBottom: 8 }}>{selectedFrase.castigo || 'Sin castigo'}</Text>
+                    <Text style={{ fontWeight: 'bold', marginTop: 12 }}>Visible</Text>
+                    <Text style={{ marginBottom: 16 }}>
+                      Visible: {selectedFrase.visible === true ? 'Sí' : 'No'}
+                    </Text>
+                  </>
+                )}
               </>
             )}
-            <TouchableOpacity
-              style={{
-                backgroundColor: '#5E1DE6',
-                borderRadius: 8,
-                paddingVertical: 10,
-                alignItems: 'center',
-                marginTop: 8,
-              }}
-              onPress={() => setModalVisible(false)}
-            >
-              <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>Cerrar</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                backgroundColor: '#ff3b30',
-                borderRadius: 8,
-                paddingVertical: 10,
-                alignItems: 'center',
-                marginTop: 12,
-              }}
-              onPress={async () => {
-                Alert.alert(
-                  'Confirmar borrado',
-                  '¿Seguro que quieres borrar esta frase? No se podrá recuperar después',
-                  [
-                    { text: 'Cancelar', style: 'cancel' },
-                    {
-                      text: 'Borrar',
-                      style: 'destructive',
-                      onPress: async () => {
-                        try {
-                          await deleteDoc(doc(db, 'frases', selectedFrase.id));
-                          setModalVisible(false);
-                          setSelectedFrase(null);
-                          refrescarFrases();
-                        } catch (err) {
-                          Alert.alert('Error', 'No se pudo borrar la frase.');
-                        }
-                      }
+            {editMode ? (
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 8 }}>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: '#5E1DE6',
+                    borderRadius: 8,
+                    paddingVertical: 10,
+                    paddingHorizontal: 18,
+                    alignItems: 'center',
+                    marginRight: 8,
+                    flex: 1,
+                  }}
+                  onPress={async () => {
+                    // Guardar cambios
+                    try {
+                      await updateDoc(doc(db, 'frases', selectedFrase.id), {
+                        frase: editFrase,
+                        tipo: editTipo,
+                        castigo: editCastigo,
+                        visible: editVisible,
+                      });
+                      // Refrescar lista, cerrar modal y salir de edición
+                      await refrescarFrases();
+                      setModalVisible(false);
+                      setEditMode(false);
+                      setSelectedFrase(null);
+                    } catch (err) {
+                      Alert.alert('Error', 'No se pudo guardar la frase.');
                     }
-                  ]
-                );
-              }}
-            >
-              <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>Borrar</Text>
-            </TouchableOpacity>
+                  }}
+                >
+                  <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>Guardar</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: '#ccc',
+                    borderRadius: 8,
+                    paddingVertical: 10,
+                    paddingHorizontal: 18,
+                    alignItems: 'center',
+                    marginLeft: 8,
+                    flex: 1,
+                  }}
+                  onPress={() => {
+                    setEditMode(false);
+                  }}
+                >
+                  <Text style={{ color: '#333', fontWeight: 'bold', fontSize: 16 }}>Cancelar</Text>
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: '#5E1DE6',
+                    borderRadius: 8,
+                    paddingVertical: 10,
+                    alignItems: 'center',
+                    marginTop: 8,
+                  }}
+                  onPress={() => setModalVisible(false)}
+                >
+                  <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>Cerrar</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: '#ff3b30',
+                    borderRadius: 8,
+                    paddingVertical: 10,
+                    alignItems: 'center',
+                    marginTop: 12,
+                  }}
+                  onPress={async () => {
+                    Alert.alert(
+                      'Confirmar borrado',
+                      '¿Seguro que quieres borrar esta frase? No se podrá recuperar después',
+                      [
+                        { text: 'Cancelar', style: 'cancel' },
+                        {
+                          text: 'Borrar',
+                          style: 'destructive',
+                          onPress: async () => {
+                            try {
+                              await deleteDoc(doc(db, 'frases', selectedFrase.id));
+                              setModalVisible(false);
+                              setSelectedFrase(null);
+                              refrescarFrases();
+                            } catch (err) {
+                              Alert.alert('Error', 'No se pudo borrar la frase.');
+                            }
+                          }
+                        }
+                      ]
+                    );
+                  }}
+                >
+                  <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>Borrar</Text>
+                </TouchableOpacity>
+              </>
+            )}
           </View>
         </View>
       </Modal>
