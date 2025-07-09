@@ -85,17 +85,17 @@ Permite explorar y acceder a diferentes minijuegos cortos. Muestra una lista vis
 Juego principal tipo cartas.
 
 **Funcionamiento:**  
-Muestra una baraja de cartas y asigna retos aleatorios según la carta que se saque. Incluye lógica para mostrar imágenes de cartas, reglas asociadas, y pasar turno entre jugadores. La versión “Prueba” es para testeo de nuevas reglas o diseños.
+El usuario tiene que conseguir acertar 4 cartas seguidas, segun el color, mas alta o mas baja, dentro o fuera y palo.
 
 ---
 
-## GameTwoScreen / PruebaGameTwoScreen
+## GameTwoScreen 
 
 **Propósito:**  
-Segundo juego de cartas o dinámicas.
+Juego principal tipo cartas.
 
 **Funcionamiento:**  
-Mecánica similar al anterior pero con otras reglas, barajas o retos. Incluye lógica de barajado, interacción visual, y turnos. La versión “Prueba” sirve para testear cambios o nuevos retos.
+Según el numero de la carta hara una acción u otra. Según el palo, beberá más o menos.
 
 ---
 
@@ -105,17 +105,17 @@ Mecánica similar al anterior pero con otras reglas, barajas o retos. Incluye l�
 Juego de retos aleatorios tipo ruleta.
 
 **Funcionamiento:**  
-Muestra una ruleta animada que, al girar, selecciona un reto o castigo aleatorio para el jugador. Usa animaciones, vibraciones y efectos visuales.
+Muestra una ruleta animada que, al girar, selecciona un reto o castigo aleatorio para el jugador. 
 
 ---
 
-## GameFourScreen / PruebaGameFourScreen
+## GameFourScreen 
 
 **Propósito:**  
-Juego de retos usando “Swiper” de cartas o frases.
+Juego de retos usando “Swiper” de cartas.
 
 **Funcionamiento:**  
-Permite al usuario deslizar tarjetas con retos o frases (tipo Tinder). Cada swipe ejecuta un reto o acción. La versión “Prueba” es para validar nuevos retos o cambios en la dinámica.
+Permite al usuario deslizar tarjetas con retos o frases. Cada swipe ejecuta un reto o acción.
 
 ---
 
@@ -177,8 +177,8 @@ flowchart TD
 
 # Créditos
 
-- Autor: [Tu Nombre o Equipo]
-- Contacto: [Tu Email o enlace de redes]
+- Autor: Jesús García Alemany
+- Contacto: jgarciaa3199@gmail.com
 
 # Licencia
 
