@@ -145,6 +145,10 @@ export default function GameOneScreen({ route, navigation }) {
 
   const cerrarModal = () => {
     setModalVisible(false);
+    if (resultado === 'perdiste') {
+      reiniciar();
+      return;
+    }
     if (resultado) return;
     if (fase < 4) setFase(fase + 1);
   };
@@ -164,6 +168,7 @@ export default function GameOneScreen({ route, navigation }) {
       setModalVisible(true);
       setMensaje(`😵 Fallaste. Tienes que beber ${fase} trago${fase > 1 ? 's' : ''}.`);
       setResultado('perdiste');
+      reiniciar();
     }
   };
 
@@ -186,6 +191,7 @@ export default function GameOneScreen({ route, navigation }) {
       setModalVisible(true);
       setMensaje(`😵 Fallaste. Tienes que beber ${fase} trago${fase > 1 ? 's' : ''}.`);
       setResultado('perdiste');
+      reiniciar();
     }
   };
 
@@ -210,6 +216,7 @@ export default function GameOneScreen({ route, navigation }) {
       setModalVisible(true);
       setMensaje(`😵 Fallaste. Tienes que beber ${fase} trago${fase > 1 ? 's' : ''}.`);
       setResultado('perdiste');
+      reiniciar();
     }
   };
 
@@ -229,6 +236,7 @@ export default function GameOneScreen({ route, navigation }) {
       setModalVisible(true);
       setMensaje(`😵 Fallaste. Tienes que beber ${fase} trago${fase > 1 ? 's' : ''}.`);
       setResultado('perdiste');
+      reiniciar();
     }
   };
 
@@ -442,12 +450,12 @@ export default function GameOneScreen({ route, navigation }) {
     },
     modalOverlay: {
       flex: 1,
-      backgroundColor: 'rgba(200, 0, 0, 0.8)',
+      backgroundColor: 'rgba(0,0,0,0.5)',
       justifyContent: 'center',
       alignItems: 'center',
     },
     modalContent: {
-      backgroundColor: '#400000',
+      backgroundColor: '#D89568',
       padding: 20,
       borderRadius: 12,
       alignItems: 'center',
