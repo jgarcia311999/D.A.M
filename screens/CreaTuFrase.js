@@ -3,8 +3,10 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../utils/firebaseConfig';
+// Si usas haptics:
+import * as Haptics from 'expo-haptics';
 
 const tiposMinijuego = [
   "N/A",
@@ -40,12 +42,13 @@ export default function CreaTuFrase({ navigation }) {
       frase,
       castigo,
       visible: false,
+      timestamp: serverTimestamp(),
     };
     try {
       const docRef = await addDoc(collection(db, 'frases'), payload);
       await guardarFraseLocal({
         ...payload,
-        timestamp: Date.now(),
+        timestamp: Date.now(), // Para local, mantener Date.now()
         ok: '0',
       });
       alert('¡Frase enviada!\nAparecerá en tu partida aunque esté pendiente de revisión.');
@@ -58,59 +61,74 @@ export default function CreaTuFrase({ navigation }) {
 
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
+      
       <View style={{
+        position: 'absolute',
+        top: insets.top + 10,
+        left: 0,
+        right: 0,
         flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'center',
-        paddingHorizontal: 16,
-        height: 48,
-        backgroundColor: '#fff',
-        borderBottomWidth: 1,
-        borderBottomColor: '#ececec'
+        paddingHorizontal: 20,
+        zIndex: 10
       }}>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={{padding: 4, paddingRight: 16}}>
+        <TouchableOpacity onPress={() => {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+          navigation.goBack();
+        }}>
           <Ionicons name="arrow-back" size={28} color="#5E1DE6" />
         </TouchableOpacity>
-        <View style={{flex: 1}} />
+        <TouchableOpacity
+          style={styles.tuFraseBtn}
+          onPress={() => navigation.navigate('TodasFrases')}
+        >
+          <Text style={styles.tuFraseBtnText}>Todas las frases</Text>
+        </TouchableOpacity>
       </View>
-      <Text style={styles.titulo}>Crea tu frase</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Escribe tu frase..."
-        placeholderTextColor="#888"
-        value={frase}
-        onChangeText={setFrase}
-        multiline
-      />
-      <Text style={styles.label}>Tipo de minijuego:</Text>
-      <View style={styles.tiposContainer}>
-        {tiposMinijuego.map((t) => (
-          <TouchableOpacity
-            key={t}
-            style={[styles.tipoBtn, tipo === t && styles.tipoBtnSel]}
-            onPress={() => setTipo(t)}
-          >
-            <Text style={styles.tipoTxt}>{t}</Text>
-          </TouchableOpacity>
-        ))}
+
+      <View style={{ flex: 1, justifyContent: 'flex-start', paddingTop: 80 }}>
+        <Text style={styles.titulo}>Crea tu frase</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Escribe tu frase..."
+          placeholderTextColor="#888"
+          value={frase}
+          onChangeText={setFrase}
+          multiline
+        />
+        <Text style={styles.label}>Tipo de minijuego:</Text>
+        <View style={styles.tiposContainer}>
+          {tiposMinijuego.map((t) => (
+            <TouchableOpacity
+              key={t}
+              style={[styles.tipoBtn, tipo === t && styles.tipoBtnSel]}
+              onPress={() => setTipo(t)}
+            >
+              <Text style={styles.tipoTxt}>{t}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+        <TextInput
+          style={styles.input}
+          placeholder="Castigo (opcional)"
+          placeholderTextColor="#888"
+          value={castigo}
+          onChangeText={setCastigo}
+        />
+        <TouchableOpacity
+          style={styles.enviarBtn}
+          onPress={enviarFrase}
+          disabled={!frase.trim() || enviando}
+        >
+          <Text style={styles.enviarBtnTxt}>{enviando ? 'Enviando...' : 'Añadir frase'}</Text>
+        </TouchableOpacity>
       </View>
-      <TextInput
-        style={styles.input}
-        placeholder="Castigo (opcional)"
-        placeholderTextColor="#888"
-        value={castigo}
-        onChangeText={setCastigo}
-      />
-      <TouchableOpacity
-        style={styles.enviarBtn}
-        onPress={enviarFrase}
-        disabled={!frase.trim() || enviando}
-      >
-        <Text style={styles.enviarBtnTxt}>{enviando ? 'Enviando...' : 'Añadir frase'}</Text>
-      </TouchableOpacity>
     </View>
   );
 }
 
+// Puedes añadir estos estilos para el botón derecho:
 const styles = StyleSheet.create({
   container: { flex:1, backgroundColor:'#fff', padding:24, paddingTop:40 },
   titulo: {
@@ -159,5 +177,17 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontFamily: 'Panchang-Bold',
     fontSize: 18
+  },
+  tuFraseBtn: {
+    backgroundColor: '#E2D6FF',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 8,
+    marginLeft: 8
+  },
+  tuFraseBtnText: {
+    color: '#fff',
+    fontFamily: 'Panchang-Bold',
+    fontSize: 16
   }
 });

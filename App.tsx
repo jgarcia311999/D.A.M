@@ -19,6 +19,7 @@ import MiniGame1 from './screens/miniGames/MiniGame1';
 import MiniGame2 from './screens/miniGames/MiniGame2';
 import MiniGame4 from './screens/miniGames/MiniGame4';
 import CreaTuFrase from './screens/CreaTuFrase';
+import TodasLasFrasesScreen from './screens/TodasLasFrasesScreen';
 
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
@@ -56,6 +57,7 @@ export default function App() {
           <Stack.Screen name="Juego 4" component={GameFourScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Prueba 4" component={PruebaGameFourScreen} options={{ headerShown: false }} />
           <Stack.Screen name="CreaFrase" component={CreaTuFrase} options={{ headerShown: false }} />
+          <Stack.Screen name="TodasFrases" component={TodasLasFrasesScreen} options={{ headerShown: false }} />
           <Stack.Screen name="MiniGames" component={MiniGamesScreen} options={{ headerShown: false }} />
           <Stack.Screen name="MiniGame1" component={MiniGame1} options={{ headerShown: false }} />
           <Stack.Screen name="MiniGame2" component={MiniGame2} />
