@@ -30,4 +30,16 @@ jobs:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
       - name: Confirmación visual
-        run: echo "✅ EAS Update ejecutado correctamente con el mensaje del commit"
+        run: echo "✅"
+
+      - name: Notificar por issue
+        run: |
+          curl -X POST \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/${{ github.repository }}/issues \
+            -d '{
+              "title": "🚀 EAS Update ejecutado",
+              "body": "Hola @jgarcia311999, la acción de EAS Update se ejecutó correctamente en `${{ github.ref }}` con el mensaje de commit:\n\n```\n${{ github.event.head_commit.message }}\n```",
+              "labels": ["notificación"]
+            }'
