@@ -1,5 +1,4 @@
-
-const cartasImagenes = {
+/* const cartasImagenes = {
   'oro_1': require('../assets/cartas/GameOneCards/oro/1.png'),
   'oro_2': require('../assets/cartas/GameOneCards/oro/2.png'),
   'oro_3': require('../assets/cartas/GameOneCards/oro/3.png'),
@@ -51,6 +50,70 @@ const cartasImagenes = {
   'cigarro_j': require('../assets/cartas/GameOneCards/cigarro/j.png'),
   'cigarro_q': require('../assets/cartas/GameOneCards/cigarro/q.png'),
   'cigarro_k': require('../assets/cartas/GameOneCards/cigarro/k.png'),
+}; */
+
+const cartasImagenes = {
+
+  // CLUBS
+  'clubs_1': require('../assets/cards-png/Clubs/Clubs_card_01.png'),
+  'clubs_2': require('../assets/cards-png/Clubs/Clubs_card_02.png'),
+  'clubs_3': require('../assets/cards-png/Clubs/Clubs_card_03.png'),
+  'clubs_4': require('../assets/cards-png/Clubs/Clubs_card_04.png'),
+  'clubs_5': require('../assets/cards-png/Clubs/Clubs_card_05.png'),
+  'clubs_6': require('../assets/cards-png/Clubs/Clubs_card_06.png'),
+  'clubs_7': require('../assets/cards-png/Clubs/Clubs_card_07.png'),
+  'clubs_8': require('../assets/cards-png/Clubs/Clubs_card_08.png'),
+  'clubs_9': require('../assets/cards-png/Clubs/Clubs_card_09.png'),
+  'clubs_10': require('../assets/cards-png/Clubs/Clubs_card_10.png'),
+  'clubs_j': require('../assets/cards-png/Clubs/Clubs_card_11.png'),
+  'clubs_q': require('../assets/cards-png/Clubs/Clubs_card_12.png'),
+  'clubs_k': require('../assets/cards-png/Clubs/Clubs_card_13.png'),
+
+  // DIAMONDS
+  'diamonds_1': require('../assets/cards-png/Diamonds/Diamonds_card_01.png'),
+  'diamonds_2': require('../assets/cards-png/Diamonds/Diamonds_card_02.png'),
+  'diamonds_3': require('../assets/cards-png/Diamonds/Diamonds_card_03.png'),
+  'diamonds_4': require('../assets/cards-png/Diamonds/Diamonds_card_04.png'),
+  'diamonds_5': require('../assets/cards-png/Diamonds/Diamonds_card_05.png'),
+  'diamonds_6': require('../assets/cards-png/Diamonds/Diamonds_card_06.png'),
+  'diamonds_7': require('../assets/cards-png/Diamonds/Diamonds_card_07.png'),
+  'diamonds_8': require('../assets/cards-png/Diamonds/Diamonds_card_08.png'),
+  'diamonds_9': require('../assets/cards-png/Diamonds/Diamonds_card_09.png'),
+  'diamonds_10': require('../assets/cards-png/Diamonds/Diamonds_card_10.png'),
+  'diamonds_j': require('../assets/cards-png/Diamonds/Diamonds_card_11.png'),
+  'diamonds_q': require('../assets/cards-png/Diamonds/Diamonds_card_12.png'),
+  'diamonds_k': require('../assets/cards-png/Diamonds/Diamonds_card_13.png'),
+
+  // HEARTS
+  'hearts_1': require('../assets/cards-png/Hearts/Hearts_card_01.png'),
+  'hearts_2': require('../assets/cards-png/Hearts/Hearts_card_02.png'),
+  'hearts_3': require('../assets/cards-png/Hearts/Hearts_card_03.png'),
+  'hearts_4': require('../assets/cards-png/Hearts/Hearts_card_04.png'),
+  'hearts_5': require('../assets/cards-png/Hearts/Hearts_card_05.png'),
+  'hearts_6': require('../assets/cards-png/Hearts/Hearts_card_06.png'),
+  'hearts_7': require('../assets/cards-png/Hearts/Hearts_card_07.png'),
+  'hearts_8': require('../assets/cards-png/Hearts/Hearts_card_08.png'),
+  'hearts_9': require('../assets/cards-png/Hearts/Hearts_card_09.png'),
+  'hearts_10': require('../assets/cards-png/Hearts/Hearts_card_10.png'),
+  'hearts_j': require('../assets/cards-png/Hearts/Hearts_card_11.png'),
+  'hearts_q': require('../assets/cards-png/Hearts/Hearts_card_12.png'),
+  'hearts_k': require('../assets/cards-png/Hearts/Hearts_card_13.png'),
+
+  // SPADES
+  'spades_1': require('../assets/cards-png/Spades/Spades_card_01.png'),
+  'spades_2': require('../assets/cards-png/Spades/Spades_card_02.png'),
+  'spades_3': require('../assets/cards-png/Spades/Spades_card_03.png'),
+  'spades_4': require('../assets/cards-png/Spades/Spades_card_04.png'),
+  'spades_5': require('../assets/cards-png/Spades/Spades_card_05.png'),
+  'spades_6': require('../assets/cards-png/Spades/Spades_card_06.png'),
+  'spades_7': require('../assets/cards-png/Spades/Spades_card_07.png'),
+  'spades_8': require('../assets/cards-png/Spades/Spades_card_08.png'),
+  'spades_9': require('../assets/cards-png/Spades/Spades_card_09.png'),
+  'spades_10': require('../assets/cards-png/Spades/Spades_card_10.png'),
+  'spades_j': require('../assets/cards-png/Spades/Spades_card_11.png'),
+  'spades_q': require('../assets/cards-png/Spades/Spades_card_12.png'),
+  'spades_k': require('../assets/cards-png/Spades/Spades_card_13.png'),
+
 };
 
 import React, { useState, useEffect, useCallback } from 'react';
@@ -63,20 +126,20 @@ export default function GameOneScreen({ route, navigation }) {
   const { height } = Dimensions.get('window');
   const insets = useSafeAreaInsets();
 
-  const palos = ['oro', 'cubata', 'pollo', 'cigarro'];
+  const palos = ['clubs', 'diamonds', 'hearts', 'spades'];
   const colores = {
-    oro: 'rojo',
-    cubata: 'rojo',
-    pollo: 'negro',
-    cigarro: 'negro',
+    clubs: 'negro',
+    spades: 'negro',
+    diamonds: 'rojo',
+    hearts: 'rojo',
   };
 
   const obtenerImagenCarta = (carta) => {
     if (!carta) return require('../assets/cartas/carta-user-oro-br.png');
     let valor = carta.numero;
-    if (valor === 10) valor = 'j';
-    else if (valor === 11) valor = 'q';
-    else if (valor === 12) valor = 'k';
+    if (valor === 11) valor = 'j';
+    else if (valor === 12) valor = 'q';
+    else if (valor === 13) valor = 'k';
 
     const clave = `${carta.palo}_${valor}`;
     return cartasImagenes[clave] || require('../assets/cartas/carta-trasera.png');
@@ -86,7 +149,7 @@ export default function GameOneScreen({ route, navigation }) {
     const palo = palos[Math.floor(Math.random() * palos.length)];
     let numero;
     do {
-      numero = Math.floor(Math.random() * 12) + 1;
+      numero = Math.floor(Math.random() * 13) + 1;
     } while (prohibidos.includes(numero));
     return { palo, numero, color: colores[palo] };
   };
@@ -378,10 +441,11 @@ export default function GameOneScreen({ route, navigation }) {
     },
     cardImage: {
       width: '20%',
-      aspectRatio: 0.625,
-      marginHorizontal: 5,
+      height: 140,
+      aspectRatio: 0.8,
+      marginHorizontal: 6,
       borderRadius: 12,
-      borderWidth: 1.5,
+      borderWidth: 2,
       borderColor: 'black',
       backgroundColor: '#D89568',
     },
