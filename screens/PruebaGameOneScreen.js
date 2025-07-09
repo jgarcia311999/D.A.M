@@ -218,7 +218,7 @@ export default function GameOneScreen({ route, navigation }) {
     } else {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       setModalCarta({ carta, acierto: false });
-      setMensaje(`😵 Fallaste. Tienes que beber ${fase} trago${fase > 1 ? 's' : ''}.`);
+      setMensaje(`Fallaste. Tienes que beber ${fase} trago${fase > 1 ? 's' : ''}.`);
       setResultado('perdiste');
       parpadearRojoCarta(fase - 1);
       // reiniciar(); // Eliminado: ya no se reinicia automáticamente al perder
@@ -243,7 +243,7 @@ export default function GameOneScreen({ route, navigation }) {
     } else {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       setModalCarta({ carta: nuevaCarta, acierto: false });
-      setMensaje(`😵 Fallaste. Tienes que beber ${fase} trago${fase > 1 ? 's' : ''}.`);
+      setMensaje(`Fallaste. Tienes que beber ${fase} trago${fase > 1 ? 's' : ''}.`);
       setResultado('perdiste');
       parpadearRojoCarta(fase - 1);
       // reiniciar(); // Eliminado: ya no se reinicia automáticamente al perder
@@ -270,7 +270,7 @@ export default function GameOneScreen({ route, navigation }) {
     } else {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       setModalCarta({ carta: nuevaCarta, acierto: false });
-      setMensaje(`😵 Fallaste. Tienes que beber ${fase} trago${fase > 1 ? 's' : ''}.`);
+      setMensaje(`Fallaste. Tienes que beber ${fase} trago${fase > 1 ? 's' : ''}.`);
       setResultado('perdiste');
       parpadearRojoCarta(fase - 1);
       // reiniciar(); // Eliminado: ya no se reinicia automáticamente al perder
@@ -292,7 +292,7 @@ export default function GameOneScreen({ route, navigation }) {
     } else {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       setModalCarta({ carta: nuevaCarta, acierto: false });
-      setMensaje(`😵 Fallaste. Tienes que beber ${fase} trago${fase > 1 ? 's' : ''}.`);
+      setMensaje(`Fallaste. Tienes que beber ${fase} trago${fase > 1 ? 's' : ''}.`);
       setResultado('perdiste');
       parpadearRojoCarta(fase - 1);
       // reiniciar(); // Eliminado: ya no se reinicia automáticamente al perder
@@ -491,7 +491,7 @@ export default function GameOneScreen({ route, navigation }) {
       backgroundColor: '#D89568',
     },
     message: {
-      fontSize: 16,
+      fontSize: 26,
       marginTop: 20,
       marginBottom: 10,
       textAlign: 'center',
