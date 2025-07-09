@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+permissions:
+  issues: write
+
 jobs:
   eas-update:
     runs-on: ubuntu-latest
@@ -34,7 +37,10 @@ jobs:
 
       - name: Notificar por issue
         run: |
-          curl -X POST \
+          set -e
+          echo "Creando issue de notificación..."
+          response=$(curl -f -s -w "%{http_code}" -o response.json \
+            -X POST \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Accept: application/vnd.github+json" \
             https://api.github.com/repos/${{ github.repository }}/issues \
@@ -42,4 +48,8 @@ jobs:
               "title": "🚀 EAS Update ejecutado",
               "body": "Hola @jgarcia311999, la acción de EAS Update se ejecutó correctamente en `${{ github.ref }}` con el mensaje de commit:\n\n```\n${{ github.event.head_commit.message }}\n```",
               "labels": ["notificación"]
-            }'
+            }')
+
+          echo "Código HTTP de respuesta: $response"
+          echo "Contenido de la respuesta:"
+          cat response.json
