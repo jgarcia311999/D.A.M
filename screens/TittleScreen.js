@@ -48,7 +48,7 @@ export default function TittleScreen({ navigation }) {
   }, []);
 
   const handleScrollDown = () => {
-    navigation.navigate('Inicio');
+    navigation.navigate('Inicio'); 
   };
 
   return (
