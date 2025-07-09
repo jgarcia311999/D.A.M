@@ -36,7 +36,22 @@ export default function TodasLasFrasesScreen() {
     setLoading(true);
     try {
       const querySnapshot = await getDocs(collection(db, 'frases'));
-      const frasesList = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const frasesList = querySnapshot.docs.map(doc => {
+        const data = doc.data();
+        let ts = 0;
+        if (data.timestamp) {
+          if (typeof data.timestamp === 'object') {
+            if (typeof data.timestamp.toMillis === 'function') {
+              ts = data.timestamp.toMillis();
+            } else if ('seconds' in data.timestamp) {
+              ts = data.timestamp.seconds * 1000;
+            }
+          } else if (typeof data.timestamp === 'number') {
+            ts = data.timestamp;
+          }
+        }
+        return { id: doc.id, ...data, timestamp: ts };
+      });
       setFrases(frasesList);
     } catch (error) {
       console.error('Error fetching frases:', error);

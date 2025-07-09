@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -20,7 +20,19 @@ export default function CreaTuFrase({ navigation }) {
   const [tipo, setTipo] = useState('N/A');
   const [castigo, setCastigo] = useState('');
   const [enviando, setEnviando] = useState(false);
+  const [bannerVisible, setBannerVisible] = useState(false);
+  const [bannerText, setBannerText] = useState('');
   const insets = useSafeAreaInsets();
+
+  useEffect(() => {
+    let timer;
+    if (bannerVisible) {
+      timer = setTimeout(() => {
+        setBannerVisible(false);
+      }, 2000);
+    }
+    return () => clearTimeout(timer);
+  }, [bannerVisible]);
 
   const guardarFraseLocal = async (nuevaFrase) => {
     try {
@@ -57,7 +69,8 @@ export default function CreaTuFrase({ navigation }) {
         timestamp: Date.now(),
         ok: '0',
       });
-      alert('¡Frase creada!.');
+      setBannerText('¡Frase creada!');
+      setBannerVisible(true);
       setFrase(''); // Limpiar input de frase tras enviar
     } catch (err) {
       alert('Error de conexión: ' + err.message);
@@ -67,7 +80,16 @@ export default function CreaTuFrase({ navigation }) {
 
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
-      
+      {bannerVisible && (
+        <TouchableOpacity 
+          style={[styles.banner, {top: insets.top}]} 
+          onPress={() => setBannerVisible(false)}
+          activeOpacity={0.8}
+        >
+          <Ionicons name="checkmark-circle-outline" size={24} color="#fff" style={{marginRight: 8}} />
+          <Text style={styles.bannerText}>{bannerText}</Text>
+        </TouchableOpacity>
+      )}
       <View style={{
         position: 'absolute',
         top: insets.top + 10,
@@ -195,5 +217,21 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontFamily: 'Panchang-Bold',
     fontSize: 16
-  }
+  },
+  banner: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'green',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    zIndex: 20,
+  },
+  bannerText: {
+    color: 'white',
+    fontSize: 16,
+    fontFamily: 'Panchang-Bold',
+  },
 });
