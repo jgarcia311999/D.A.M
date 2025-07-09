@@ -54,11 +54,10 @@ export default function CreaTuFrase({ navigation }) {
       const docRef = await addDoc(collection(db, 'frases'), payload);
       await guardarFraseLocal({
         ...payload,
-        timestamp: Date.now(), // Para local, mantener Date.now()
+        timestamp: Date.now(),
         ok: '0',
       });
-      alert('¡Frase enviada!\nAparecerá en tu partida aunque esté pendiente de revisión.');
-      // navigation.goBack(); // No navegar atrás tras crear la frase
+      alert('¡Frase creada!.');
       setFrase(''); // Limpiar input de frase tras enviar
     } catch (err) {
       alert('Error de conexión: ' + err.message);
