@@ -250,16 +250,20 @@ const styles = StyleSheet.create({
     zIndex: 0,
   },
   tuFraseBtn: {
-    backgroundColor: '#E2D6FF',
-    borderRadius: 14,
-    paddingHorizontal: 18,
+    position: 'absolute',
+    right: 20,
+    backgroundColor: 'transparent',
+    paddingHorizontal: 16,
     paddingVertical: 8,
-    marginLeft: 10,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#fff',
+    zIndex: 10,
   },
   tuFraseBtnText: {
-    fontFamily: 'Panchang-Bold',
     color: '#fff',
-    fontSize: 16,
+    fontWeight: 'bold',
+    fontFamily: 'Panchang-Bold',
   },
 });
 
