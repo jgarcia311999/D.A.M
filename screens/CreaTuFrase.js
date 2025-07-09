@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
     right: 0,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'green',
+    backgroundColor: '#4CD964',
     paddingVertical: 10,
     paddingHorizontal: 20,
     zIndex: 20,
