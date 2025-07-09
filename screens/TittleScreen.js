@@ -9,31 +9,38 @@ export default function TittleScreen({ navigation }) {
 
   React.useEffect(() => {
     const interval = setInterval(() => {
-      const translateY = new Animated.Value(0);
-      const opacity = new Animated.Value(0);
+      requestAnimationFrame(() => {
+        const translateY = new Animated.Value(0);
+        const opacity = new Animated.Value(0);
 
-      const id = Date.now();
-      const left = Math.random() * width;
-      const size = 10 + Math.random() * 20;
-      const duration = 4000 + Math.random() * 2000;
+        const id = Date.now();
+        const left = Math.random() * width;
+        const size = 10 + Math.random() * 20;
+        const duration = 4000 + Math.random() * 2000;
 
-      const burbuja = { id, left, size, duration, translateY, opacity };
+        const burbuja = { id, left, size, duration, translateY, opacity };
 
-      setBurbujas(prev => [...prev, burbuja]);
+        setBurbujas(prev => {
+          if (prev.length >= 20) {
+            return prev.slice(1).concat(burbuja);
+          }
+          return [...prev, burbuja];
+        });
 
-      Animated.parallel([
-        Animated.timing(translateY, {
-          toValue: -height * 1,
-          duration,
-          useNativeDriver: true,
-        }),
-        Animated.timing(opacity, {
-          toValue: 1,
-          duration: duration / 4,
-          useNativeDriver: true,
-        }),
-      ]).start(() => {
-        setBurbujas(prev => prev.filter(b => b.id !== id));
+        Animated.parallel([
+          Animated.timing(translateY, {
+            toValue: -height * 1,
+            duration,
+            useNativeDriver: true,
+          }),
+          Animated.timing(opacity, {
+            toValue: 1,
+            duration: duration / 4,
+            useNativeDriver: true,
+          }),
+        ]).start(() => {
+          setBurbujas(prev => prev.filter(b => b.id !== id));
+        });
       });
     }, 500);
 
