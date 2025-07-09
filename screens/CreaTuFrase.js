@@ -145,7 +145,7 @@ export default function CreaTuFrase({ navigation }) {
           onChangeText={setCastigo}
         />
         <TouchableOpacity
-          style={styles.enviarBtn}
+          style={[styles.enviarBtn, { backgroundColor: frase.trim() ? '#5E1DE6' : '#E2D6FF' }]}
           onPress={enviarFrase}
           disabled={!frase.trim() || enviando}
         >
@@ -195,7 +195,6 @@ const styles = StyleSheet.create({
   },
   tipoTxt: { color:'#5E1DE6', fontFamily: 'Panchang-Bold' },
   enviarBtn: {
-    backgroundColor: '#E2D6FF',
     borderRadius: 14,
     paddingVertical: 14,
     marginTop: 14,
@@ -207,7 +206,7 @@ const styles = StyleSheet.create({
     fontSize: 18
   },
   tuFraseBtn: {
-    backgroundColor: '#E2D6FF',
+    backgroundColor: '#5E1DE6',
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 8,
