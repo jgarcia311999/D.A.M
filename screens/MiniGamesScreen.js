@@ -124,16 +124,6 @@ export default function HomeScreen({ navigation, route }) {
         screen: 'MiniGame1',
       },
       {
-        nombre: 'Hot Take',
-        descripcion: 'Comparte opiniones polémicas y defiéndelas con argumentos.',
-        screen: 'MiniGame2',
-      },
-      {
-        nombre: 'La ruleta del shot',
-        descripcion: 'Gira y bebe, facil y sencillo.',
-        screen: 'Juego 3',
-      },
-      {
         nombre: 'Asociación rápida',
         descripcion: 'Relaciona palabras lo más rápido posible en rondas cronometradas.',
         screen: 'MiniGame4',

@@ -7,6 +7,7 @@ import PjCartas from '../assets/nuevos_personajes/cartas_pj.png';
 import PjPollo from '../assets/nuevos_personajes/pollo_pj.png';
 import PjsBotellines from '../assets/nuevos_personajes/botellines_pj.png';
 import PjTabaco from '../assets/nuevos_personajes/tabaco_pj.png';
+import PjDados from '../assets/nuevos_personajes/dados_pj.png';
 
 const { width, height } = Dimensions.get('window');
 const scaleFont = (size) => (width / 375) * size;
@@ -41,6 +42,24 @@ const juegos = [
   },
   {
     id: 4,
+    nombre: 'La ruleta del shot',
+    descripcion: 'Gira y bebe, facil y sencillo.',
+    screen: 'Juego 3',
+    imagen: PjDados,
+    imagenEstilo: { width: '80%', height: height * 0.35, resizeMode: 'contain' },
+    color: '#70B77E',
+  },
+  {
+    id: 5,
+    nombre: 'TOP 3',
+    descripcion: 'Ordenaos según vuestro criterio de m***da.',
+    screen: 'MiniGame1',
+    imagen: PjsBotellines,
+    imagenEstilo: { width: '80%', height: height * 0.35, resizeMode: 'contain' },
+    color: '#70B77E',
+  },
+  {
+    id: 6,
     nombre: 'MiniGamesss',
     descripcion: 'Una variedad de minijuegos.',
     screen: 'MiniGames',
