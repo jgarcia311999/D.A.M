@@ -37,7 +37,7 @@ const juegos = [
     screen: 'Juego 2',
     imagen: PjPollo,
     imagenEstilo: { width: '80%', height: height * 0.35, resizeMode: 'contain' },
-    color: '#d5c385',
+    color: '#F490CC',
   },
   {
     id: 4,
