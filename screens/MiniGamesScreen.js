@@ -83,7 +83,7 @@ export default function HomeScreen({ navigation, route }) {
                     navigation.goBack();
                   }}
                 >
-                  <Ionicons name="arrow-back" size={28} color="#fff" />
+                  <Ionicons name="arrow-back" size={28} color="#000" />
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -98,7 +98,7 @@ export default function HomeScreen({ navigation, route }) {
                       paddingVertical: 8,
                       borderRadius: 8,
                       borderWidth: 1,
-                      borderColor: '#fff',
+                      borderColor: '#000',
                     },
                   ]}
                   onPress={() => {
@@ -106,7 +106,7 @@ export default function HomeScreen({ navigation, route }) {
                     navigation.navigate('Jugadores');
                   }}
                 >
-                  <Text style={{ color: '#fff', fontWeight: 'bold', fontFamily: 'Panchang-Bold' }}>Borrachos</Text>
+                  <Text style={{ color: '#000', fontWeight: 'bold', fontFamily: 'Panchang-Bold' }}>Borrachos</Text>
                 </TouchableOpacity>
 
                 <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
@@ -115,13 +115,7 @@ export default function HomeScreen({ navigation, route }) {
                             {juegos.map((juego, index) => (
                                 <TouchableOpacity
                                     key={index}
-                                    style={[styles.gameCard, {
-                                      backgroundColor:
-                                        index === 0 ? '#bfa3ff' :
-                                        index === 1 ? '#ffc8a3' :
-                                        index === 2 ? '#d5c385' :
-                                        '#a3ffd9'
-                                    }]}
+                                    style={styles.gameCard}
                                     onPress={() =>
                                       juego.minijuego
                                         ? handleMinijuegoPress(juego.minijuego)
@@ -145,7 +139,7 @@ export default function HomeScreen({ navigation, route }) {
 const styles = StyleSheet.create({
     gridBackground: {
         flex: 1,
-        backgroundColor: '#191716',
+        backgroundColor: '#70B77E',
     },
     imageBackground: {
         position: 'absolute',
@@ -174,6 +168,9 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 4,
         elevation: 2,
+        backgroundColor: '#459853',
+        borderWidth: 2,
+        borderColor: '#0A5617',
     },
     cardImage: {
         width: '100%',

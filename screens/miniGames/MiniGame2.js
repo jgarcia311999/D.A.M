@@ -1,6 +1,8 @@
 import React from 'react';
 import * as Haptics from 'expo-haptics';
 import { View, Text, StyleSheet, TouchableWithoutFeedback, SafeAreaView, TouchableOpacity } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const frases = [
   'No estaria con una gorda',
@@ -33,6 +35,7 @@ const frases = [
 ];
 
 export default function MiniGame2({ navigation }) {
+  const insets = useSafeAreaInsets();
   const [fraseActual, setFraseActual] = React.useState(() => {
     return frases[Math.floor(Math.random() * frases.length)];
   });
@@ -46,16 +49,27 @@ export default function MiniGame2({ navigation }) {
   };
 
   return (
-    <SafeAreaView style={[styles.container, { paddingTop: 50 }]}>
-      <TouchableOpacity onPress={() => {
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-        navigation.goBack();
-      }} style={styles.backButton}>
-        <Text style={styles.backButtonText}>Volver</Text>
-      </TouchableOpacity>
+    <SafeAreaView style={styles.container}>
+      <View style={[styles.header, { paddingTop: insets.top + 10 }]}>
+        <TouchableOpacity onPress={() => {
+          Haptics.selectionAsync();
+          navigation.goBack();
+        }}>
+          <Ionicons name="arrow-back" size={28} color="#fff" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => { /* vacío de momento */ }}>
+          <Ionicons name="ellipsis-vertical" size={28} color="#fff" />
+        </TouchableOpacity>
+      </View>
       <TouchableWithoutFeedback onPress={cambiarFrase}>
         <View style={styles.content}>
-          <Text style={styles.text}>{fraseActual}</Text>
+          <View style={styles.card}>
+            <Text style={styles.text}>{fraseActual}</Text>
+          </View>
+          <View style={{ marginTop: 32, alignItems: 'center' }}>
+            <Ionicons name="hand-left-outline" size={32} color="#d5c385" />
+            <Text style={{ color: '#d5c385', marginTop: 4, fontSize: 16 }}>Toca para cambiar</Text>
+          </View>
         </View>
       </TouchableWithoutFeedback>
     </SafeAreaView>
@@ -80,9 +94,33 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  card: {
+    backgroundColor: '#a3c8ff',
+    borderRadius: 18,
+    padding: 28,
+    marginHorizontal: 24,
+    shadowColor: '#000',
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    elevation: 3,
+    alignItems: 'center',
+  },
   text: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#fff'
+    color: '#191716',
+    textAlign: 'center',
+    fontFamily: 'Panchang-Regular',
+    paddingHorizontal: 28,
+  },
+  header: {
+    width: '100%',
+    paddingHorizontal: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    position: 'absolute',
+    top: 0,
+    zIndex: 2,
   },
 });

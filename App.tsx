@@ -54,14 +54,14 @@ export default function App() {
           <Stack.Screen name="Prueba 1" component={PruebaGameOneScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Juego 2" component={GameTwoScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Prueba 2" component={PruebaGameTwoScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="Juego 3" component={GameThreeScreen} />
+          <Stack.Screen name="Juego 3" component={GameThreeScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Juego 4" component={GameFourScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Prueba 4" component={PruebaGameFourScreen} options={{ headerShown: false }} />
           <Stack.Screen name="CreaFrase" component={CreaTuFrase} options={{ headerShown: false }} />
           <Stack.Screen name="TodasFrases" component={TodasLasFrasesScreen} options={{ headerShown: false }} />
           <Stack.Screen name="MiniGames" component={MiniGamesScreen} options={{ headerShown: false }} />
           <Stack.Screen name="MiniGame1" component={MiniGame1} options={{ headerShown: false }} />
-          <Stack.Screen name="MiniGame2" component={MiniGame2} />
+          <Stack.Screen name="MiniGame2" component={MiniGame2} options={{ headerShown: false }} />
           <Stack.Screen name="MiniGame4" component={MiniGame4} />
           <Stack.Screen name="VariosMinigames" component={VariosMinigames} options={{ headerShown: false }} />
         </Stack.Navigator>

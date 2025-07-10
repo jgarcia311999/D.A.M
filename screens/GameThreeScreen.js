@@ -2,11 +2,51 @@ import * as Haptics from 'expo-haptics';
 import React, { useRef, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Animated, Easing, Dimensions, TouchableWithoutFeedback, PanResponder, SafeAreaView } from 'react-native';
 import Svg, { G, Path } from 'react-native-svg';
+import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { width } = Dimensions.get('window');
 const radius = width * 0.35;
-const options = ['1 trago', '2 tragos', '3 tragos', 'Todos beben', 'Regla', 'Elige quien bebe'];
-const colors = ['#f39c12', '#d35400', '#8e44ad', '#27ae60', '#2980b9', '#c0392b'];
+
+const baseOptions = [
+  '1 trago',
+  '2 tragos',
+  '3 tragos',
+  'Todos beben',
+  'Crea una regla',
+  'Elige quien bebe',
+  'Beso o verdad',
+  'Reta a alguien a piedra, papel, tijeras, el que pierda bebe',
+  'Elige quien tenga una bebida diferente a la tuya, y cambiarosla',
+  'Reto rápido',
+  'Cambio de sitio, muevete tres sillas a tu izquierda',
+  'Besito al de la derecha',
+];
+
+const baseColors = [
+  '#f39c12', 
+  '#d35400', 
+  '#8e44ad', 
+  '#27ae60', 
+  '#2980b9', 
+  '#c0392b', 
+  '#e67e22', 
+  '#9b59b6', 
+  '#16a085', 
+  '#fdcb6e', 
+  '#00b894', 
+  '#e17055', 
+];
+
+const options = [];
+const colors = [];
+for (let i = 0; i < baseOptions.length; i++) {
+  options[i] = baseOptions[i];
+  options[i + baseOptions.length] = baseOptions[i];
+  colors[i] = baseColors[i];
+  colors[i + baseColors.length] = baseColors[i];
+}
 
 function createWheelPaths() {
   const angle = (2 * Math.PI) / options.length;
@@ -35,6 +75,9 @@ function createWheelPaths() {
 }
 
 export default function GameThreeScreen() {
+  const navigation = useNavigation();
+  const insets = useSafeAreaInsets();
+
   const spinAnim = useRef(new Animated.Value(0)).current;
   const [selected, setSelected] = useState(null);
   const [isSpinning, setIsSpinning] = useState(false);
@@ -96,7 +139,18 @@ export default function GameThreeScreen() {
   return (
     <TouchableWithoutFeedback disabled={!isSpinning}>
       <SafeAreaView style={[styles.container, { paddingTop: 50 }]}>
-        <Text style={styles.title}>Ruleta de los Traguitos</Text>
+        <View style={[styles.header, { paddingTop: insets.top + 10 }]}>
+          <TouchableOpacity onPress={() => {
+            Haptics.selectionAsync();
+            navigation.goBack();
+          }}>
+            <Ionicons name="arrow-back" size={28} color="#fff" />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => { /* vacío de momento */ }}>
+            <Ionicons name="ellipsis-vertical" size={28} color="#fff" />
+          </TouchableOpacity>
+        </View>
+        <Text style={styles.title}>Ruleta del shot</Text>
         <View style={styles.pointer} />
         <Animated.View style={{ transform: [{ rotate: spin }] }} {...panResponder.panHandlers}>
           <Svg width={radius * 2} height={radius * 2}>
@@ -114,7 +168,7 @@ export default function GameThreeScreen() {
         >
           <Text style={styles.buttonText}>🎯 GIRAR</Text>
         </TouchableOpacity>
-        {selected && <Text style={styles.result}>Resultado: {selected}</Text>}
+        {selected && <Text style={styles.result}>{selected}</Text>}
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );
@@ -123,7 +177,7 @@ export default function GameThreeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#191716',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -131,6 +185,9 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+    color: '#fff',
+    fontFamily: 'Panchang-Bold',
+    textAlign: 'center',
   },
   button: {
     marginTop: 40,
@@ -143,11 +200,16 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
+    fontFamily: 'Panchang-Bold',
+    textAlign: 'center',
   },
   result: {
     marginTop: 30,
     fontSize: 20,
     fontWeight: '600',
+    color: '#fff',
+    fontFamily: 'Panchang-Bold',
+    textAlign: 'center',
   },
   pointer: {
     position: 'absolute',
@@ -165,5 +227,16 @@ const styles = StyleSheet.create({
     borderTopColor: '#000',
     borderBottomColor: 'transparent',
     zIndex: 1,
+  },
+  header: {
+    width: '100%',
+    paddingHorizontal: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    position: 'absolute',
+    top: 0,
+    zIndex: 2,
+    
   },
 });
