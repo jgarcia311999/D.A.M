@@ -99,7 +99,7 @@ export default function GameOneScreen({ route, navigation }) {
   const [colorTextoJugador, setColorTextoJugador] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalCarta, setModalCarta] = useState(null);
-  const [modalInfoVisible, setModalInfoVisible] = useState(false);
+  const [modalInfoVisible, setModalInfoVisible] = useState(true);
   const [infoPage, setInfoPage] = useState(0);
   // --- Parpadeo de carta en fallo ---
   const [cartaFallidaIndex, setCartaFallidaIndex] = useState(null);
@@ -580,6 +580,7 @@ export default function GameOneScreen({ route, navigation }) {
   });
 
   return (
+    <>
     <ScrollView contentContainerStyle={styles.scrollContainer} style={styles.scrollView}>
       {/* Header absolute */}
       <View style={{
@@ -735,6 +736,7 @@ export default function GameOneScreen({ route, navigation }) {
         </View>
       </Modal>
     </ScrollView>
-  );
+    </>
+);
 }
 
