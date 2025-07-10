@@ -26,7 +26,6 @@ export default function MiniGame1({ route, navigation }) {
     'Pulsa sobre el nombre del jugador y luego en el top que quieras ponerlo.',
   ];
 
-  // Enable LayoutAnimation on Android
   if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
     UIManager.setLayoutAnimationEnabledExperimental(true);
   }
@@ -180,7 +179,7 @@ export default function MiniGame1({ route, navigation }) {
                   disabled={asignado}
                   style={[
                     styles.jugador,
-                    jugadorSeleccionado === nombre && { backgroundColor: '#d8c7fa' },
+                    jugadorSeleccionado === nombre && { backgroundColor: '#6C8FB4' },
                     asignado && { opacity: 0.4 }
                   ]}>
                   <Text style={styles.jugadorTexto}>{nombre}</Text>
@@ -279,15 +278,15 @@ export default function MiniGame1({ route, navigation }) {
 }
 
 const styles = StyleSheet.create({
-  // Cambios para sincronizar diseño visual con pantalla de juego de cartas
+  
   scrollView: {
     flex: 1,
-    backgroundColor: '#9BB7D4', // cambiado de '#191716'
+    backgroundColor: '#9BB7D4', 
   },
   innerContainer: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#9BB7D4', // cambiado de '#191716'
+    backgroundColor: '#9BB7D4', 
     paddingBottom: 100,
   },
   scrollContainer: {
@@ -296,8 +295,8 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#000', // cambiado de '#fff'
-    fontFamily: 'Panchang-Bold', // añadido para texto principal
+    color: '#000', 
+    fontFamily: 'Panchang-Bold', 
   },
   jugadoresWrapper: {
     flexDirection: 'row',
@@ -309,28 +308,28 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   jugador: {
-    backgroundColor: '#E2D6FF', // cambiado de 'rgba(0, 100, 0, 0.5)'
-    borderColor: '#9BB7D4', // cambiado de 'green'
-    borderWidth: 2, // asegurando que es 2
+    backgroundColor: '#C9DAEC', 
+    borderColor: '#9BB7D4', 
+    borderWidth: 2, 
     borderRadius: 20,
     paddingVertical: 10,
     paddingHorizontal: 16,
     margin: 6,
     minWidth: 80,
     alignItems: 'center',
-    shadowColor: '#000', // añadido sombra suave
+    shadowColor: '#000', 
     shadowOpacity: 0.08,
     shadowRadius: 6,
     elevation: 3,
   },
   jugadorTexto: {
-    color: '#000', // cambiado de '#fff'
+    color: '#000', 
     fontSize: 16,
     fontWeight: 'bold',
-    fontFamily: 'Panchang-Bold', // añadido
+    fontFamily: 'Panchang-Bold', 
   },
   topItem: {
-    color: '#000', // cambiado de '#fff'
+    color: '#000', 
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 8,
@@ -338,8 +337,8 @@ const styles = StyleSheet.create({
   },
   header: {
     width: '100%',
-    // paddings eliminados para fondo transparente
-    backgroundColor: 'transparent', // cambiado de fondo oscuro
+    
+    backgroundColor: 'transparent', 
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -347,27 +346,27 @@ const styles = StyleSheet.create({
   tema: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: '#000', // cambiado de '#fff'
+    color: '#000', 
     marginBottom: 10,
     textAlign: 'center',
     fontFamily: 'Panchang-Bold',
   },
   botonContinuar: {
-    backgroundColor: '#6C8FB4', // cambiado de '#6a0dad'
+    backgroundColor: '#6C8FB4', 
     paddingVertical: 12,
     paddingHorizontal: 24,
-    borderRadius: 16, // cambiado de 10
+    borderRadius: 16,
     marginTop: 0,
-    shadowColor: '#000', // añadido sombra suave
+    shadowColor: '#000', 
     shadowOpacity: 0.15,
     shadowRadius: 8,
     elevation: 5,
   },
   botonTexto: {
-    color: '#000', // cambiado de '#fff'
+    color: '#000', 
     fontWeight: 'bold',
     fontSize: 16,
-    fontFamily: 'Panchang-Bold', // añadido
+    fontFamily: 'Panchang-Bold', 
   },
   modalOverlay: {
     flex: 1,
@@ -376,7 +375,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalContent: {
-    backgroundColor: '#E2D6FF', // cambiado de '#333'
+    backgroundColor: '#C9DAEC', 
     padding: 24,
     borderRadius: 20,
     alignItems: 'center',
@@ -384,19 +383,19 @@ const styles = StyleSheet.create({
     maxWidth: 480,
     justifyContent: 'center',
     minHeight: 350,
-    borderWidth: 2, // añadido
-    borderColor: '#ffffff44', // añadido
-    shadowColor: '#000', // añadido sombra suave
+    borderWidth: 2, 
+    borderColor: '#ffffff44', 
+    shadowColor: '#000', 
     shadowOpacity: 0.10,
     shadowRadius: 8,
     elevation: 6,
   },
   botonCerrar: {
     marginTop: 20,
-    backgroundColor: '#ff9e9e', // cambiado de '#cc0000'
+    backgroundColor: '#ff9e9e', 
     paddingVertical: 10,
     paddingHorizontal: 20,
-    borderRadius: 14, // cambiado de 10
+    borderRadius: 14, 
   },
   podiumContainer: {
     flexDirection: 'row',
@@ -411,7 +410,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   topLabel: {
-    color: '#000', // cambiado de '#fff'
+    color: '#000', 
     fontSize: 16,
     marginBottom: 8,
     textAlign: 'center',
@@ -424,34 +423,34 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 10,
     width: '100%',
-    backgroundColor: '#E2D6FF', // cambiado de '#333'
-    shadowColor: '#000', // añadido sombra suave
+    backgroundColor: '#C9DAEC', 
+    shadowColor: '#000', 
     shadowOpacity: 0.08,
     shadowRadius: 6,
     elevation: 3,
   },
   podiumFirst: {
     height: 120,
-    borderColor: '#ffd700', // oro, cambiado de '#FFD700' para consistencia
-    backgroundColor: '#E2D6FF', // asegurar mismo fondo
+    borderColor: '#ffd700', 
+    backgroundColor: '#C9DAEC', 
   },
   podiumSecond: {
     height: 90,
-    borderColor: '#c0c0c0', // plata, cambiado de '#C0C0C0'
-    backgroundColor: '#E2D6FF',
+    borderColor: '#c0c0c0', 
+    backgroundColor: '#C9DAEC',
   },
   podiumThird: {
     height: 90,
-    borderColor: '#cd7f32', // bronce, cambiado de '#CD7F32'
-    backgroundColor: '#E2D6FF',
+    borderColor: '#cd7f32', 
+    backgroundColor: '#C9DAEC',
   },
   modalMessage: {
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#000', // cambiado de '#fff'
+    color: '#000', 
     fontFamily: 'Panchang-Bold',
-    // fontFamily: 'Panchang-Regular',
+    
   },
   modalFooter: {
     width: '100%',
