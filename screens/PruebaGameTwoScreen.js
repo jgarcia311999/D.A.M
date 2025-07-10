@@ -335,9 +335,10 @@ export default function GameTwoScreen({ route, navigation }) {
         )}
       </Animated.View>
       <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 10 }}>
-        {ultimasCartas
-          .filter(c => !(c.numero === carta?.numero && c.palo === carta?.palo))
-          .map((c, index) => {
+        {[...Array(4)].map((_, index) => {
+          const c = ultimasCartas
+            .filter(c => !(c.numero === carta?.numero && c.palo === carta?.palo))[index];
+          if (c) {
             let valor = c.numero;
             if (valor === 'j') valor = '11';
             else if (valor === 'q') valor = '12';
@@ -351,7 +352,21 @@ export default function GameTwoScreen({ route, navigation }) {
                 style={{ width: 50, height: 75, marginHorizontal: 4, resizeMode: 'contain' }}
               />
             );
-          })}
+          } else {
+            // Renderiza un placeholder invisible, pero con el mismo tamaño
+            return (
+              <View
+                key={'placeholder-' + index}
+                style={{
+                  width: 50,
+                  height: 75,
+                  marginHorizontal: 4,
+                  opacity: 0,
+                }}
+              />
+            );
+          }
+        })}
       </View>
 
       <Modal
