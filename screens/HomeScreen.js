@@ -34,7 +34,7 @@ const juegos = [
     id: 3,
     nombre: 'El Saca Cartas',
     descripcion: 'Desliza y revela desafíos divertidos carta por carta.',
-    screen: 'Juego 2',
+    screen: 'Prueba 2',
     imagen: PjPollo,
     imagenEstilo: { width: '80%', height: height * 0.35, resizeMode: 'contain' },
     color: '#F490CC',

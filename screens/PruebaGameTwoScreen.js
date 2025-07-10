@@ -309,7 +309,7 @@ export default function GameTwoScreen({ route, navigation }) {
               style={styles.cartaImagenMarco}
             />
             <LinearGradient
-              colors={['rgba(213,195,133,0)', '#d5c385']}
+              colors={['rgba(255,255,255,0)', '#fff']}
               style={styles.cartaFade}
               pointerEvents="none"
             />
@@ -425,7 +425,7 @@ export default function GameTwoScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#d5c385',
+    backgroundColor: '#F490CC',
     alignItems: 'center',
     padding: 20,
     paddingTop: 50,
@@ -529,7 +529,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Panchang-Regular',
   },
   primaryButton: {
-    backgroundColor: '#B29D55',
+    backgroundColor: '#E968B6',
     paddingVertical: 12,
     paddingHorizontal: 30,
     borderRadius: 10,
@@ -594,7 +594,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    height: 100,
+    height: 150,
     width: '100%',
     borderBottomLeftRadius: 12,
     borderBottomRightRadius: 12,
