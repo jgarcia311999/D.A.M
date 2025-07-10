@@ -224,17 +224,31 @@ export default function GameTwoScreen({ route, navigation }) {
           </>
         )}
       </Animated.View>
-      <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 10 }}>
-        {[...Array(4)].map((_, index) => {
-          const cartasSinActual = ultimasCartas.filter(c => !(c.numero === carta?.numero && c.palo === carta?.palo));
-          const c = cartasSinActual[index];
-          if (c) {
+      <View style={{ 
+        flexDirection: 'row', 
+        justifyContent: 'center', 
+        alignSelf: 'center', 
+        width: 4 * 50 + 3 * 8, // 4 cartas de 50 y 3 márgenes de 8px
+        marginTop: 10 
+      }}>
+        {ultimasCartas.length === 0 ? (
+          // Placeholder invisible para la primera ronda
+          <View
+            style={{
+              width: 50,
+              height: 75,
+              marginHorizontal: 4,
+              opacity: 0,
+            }}
+          />
+        ) : (
+          ultimasCartas.slice(-4).map((c, index) => {
             let valor = c.numero;
             if (valor === 'j') valor = '11';
             else if (valor === 'q') valor = '12';
             else if (valor === 'k') valor = '13';
-            const key = `${c.palo}_${valor}`;
-            const source = imagenesCartas[key];
+            const key = `${c.palo}_${valor}_${index}`;
+            const source = imagenesCartas[`${c.palo}_${valor}`];
             return (
               <Image
                 key={key}
@@ -242,20 +256,8 @@ export default function GameTwoScreen({ route, navigation }) {
                 style={{ width: 50, height: 75, marginHorizontal: 4, resizeMode: 'contain' }}
               />
             );
-          } else {
-            return (
-              <View
-                key={'placeholder-' + index}
-                style={{
-                  width: 50,
-                  height: 75,
-                  marginHorizontal: 4,
-                  opacity: 0,
-                }}
-              />
-            );
-          }
-        })}
+          })
+        )}
       </View>
 
       <Modal
@@ -307,11 +309,6 @@ export default function GameTwoScreen({ route, navigation }) {
             <Image
               source={source}
               style={styles.cartaImagenMarco}
-            />
-            <LinearGradient
-              colors={['rgba(255,255,255,0)', '#fff']}
-              style={styles.cartaFade}
-              pointerEvents="none"
             />
             <View style={styles.textoEnCarta}>
               <Text style={styles.carta}>{displayValor} de {carta.palo}</Text>
@@ -593,7 +590,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     right: 0,
-    bottom: 0,
+    bottom: 50,
     height: 150,
     width: '100%',
     borderBottomLeftRadius: 12,
