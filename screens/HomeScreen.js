@@ -48,15 +48,6 @@ const juegos = [
     imagenEstilo: { width: '80%', height: height * 0.35, resizeMode: 'contain' },
     color: '#70B77E',
   },
-  /* {
-    id: 5,
-    nombre: 'Home de prueba',
-    descripcion: 'en fase de desarrollo.',
-    screen: 'Inicio2',
-    imagen: ImgDJ,
-    imagenEstilo: { width: '80%', height: height * 0.35, resizeMode: 'contain' },
-    color: '#ffa3d1',
-  }, */
 ];
 
 export default function HomeScreen({ navigation, route }) {
