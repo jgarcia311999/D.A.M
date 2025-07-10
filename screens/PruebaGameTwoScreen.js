@@ -422,7 +422,7 @@ export default function GameTwoScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F490CC',
+    backgroundColor: '#F4B7D1',
     alignItems: 'center',
     padding: 20,
     paddingTop: 50,
