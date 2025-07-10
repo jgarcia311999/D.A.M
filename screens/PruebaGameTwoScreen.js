@@ -526,7 +526,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Panchang-Regular',
   },
   primaryButton: {
-    backgroundColor: '#E968B6',
+    backgroundColor: '#E98FB5',
     paddingVertical: 12,
     paddingHorizontal: 30,
     borderRadius: 10,
