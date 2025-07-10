@@ -8,6 +8,7 @@ import PjPollo from '../assets/nuevos_personajes/pollo_pj.png';
 import PjsBotellines from '../assets/nuevos_personajes/botellines_pj.png';
 import PjTabaco from '../assets/nuevos_personajes/tabaco_pj.png';
 import PjDados from '../assets/nuevos_personajes/dados_pj.png';
+import PjRuleta from '../assets/nuevos_personajes/ruleta_pj.png';
 
 const { width, height } = Dimensions.get('window');
 const scaleFont = (size) => (width / 375) * size;
@@ -36,27 +37,27 @@ const juegos = [
     nombre: 'El Saca Cartas',
     descripcion: 'Desliza y revela desafíos divertidos carta por carta.',
     screen: 'Prueba 2',
-    imagen: PjPollo,
+    imagen: PjDados,
     imagenEstilo: { width: '80%', height: height * 0.35, resizeMode: 'contain' },
-    color: '#F490CC',
+    color: '#F4B7D1',
   },
   {
     id: 4,
     nombre: 'La ruleta del shot',
     descripcion: 'Gira y bebe, facil y sencillo.',
     screen: 'Juego 3',
-    imagen: PjDados,
+    imagen: PjRuleta,
     imagenEstilo: { width: '80%', height: height * 0.35, resizeMode: 'contain' },
-    color: '#70B77E',
+    color: '#FFF3B0',
   },
   {
     id: 5,
     nombre: 'TOP 3',
     descripcion: 'Ordenaos según vuestro criterio de m***da.',
     screen: 'MiniGame1',
-    imagen: PjsBotellines,
+    imagen: PjPollo,
     imagenEstilo: { width: '80%', height: height * 0.35, resizeMode: 'contain' },
-    color: '#70B77E',
+    color: '#9BB7D4',
   },
   {
     id: 6,
