@@ -18,6 +18,7 @@ import MiniGamesScreen from './screens/MiniGamesScreen';
 import MiniGame1 from './screens/miniGames/MiniGame1';
 import MiniGame2 from './screens/miniGames/MiniGame2';
 import MiniGame4 from './screens/miniGames/MiniGame4';
+import VariosMinigames from './screens/miniGames/VariosMinigames';
 import CreaTuFrase from './screens/CreaTuFrase';
 import TodasLasFrasesScreen from './screens/TodasLasFrasesScreen';
 
@@ -62,6 +63,7 @@ export default function App() {
           <Stack.Screen name="MiniGame1" component={MiniGame1} options={{ headerShown: false }} />
           <Stack.Screen name="MiniGame2" component={MiniGame2} />
           <Stack.Screen name="MiniGame4" component={MiniGame4} />
+          <Stack.Screen name="VariosMinigames" component={VariosMinigames} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>

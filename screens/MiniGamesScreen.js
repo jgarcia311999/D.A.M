@@ -5,6 +5,34 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as Haptics from 'expo-haptics';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+const minijuegos = [
+  {
+    id: 'mini1',
+    titulo: 'MiniMiniJuego 1',
+    descripcion: 'Explicación para el minijuego número 1.',
+  },
+  {
+    id: 'mini2',
+    titulo: 'MiniMiniJuego 2',
+    descripcion: 'Instrucciones para el minijuego número 2.',
+  },
+  {
+    id: 'mini3',
+    titulo: 'MiniMiniJuego 3',
+    descripcion: 'Así se juega el minijuego 3: todos hacen X.',
+  },
+  {
+    id: 'mini4',
+    titulo: 'MiniMiniJuego 4',
+    descripcion: 'Normas especiales del minijuego cuatro.',
+  },
+  {
+    id: 'mini5',
+    titulo: 'MiniMiniJuego 5',
+    descripcion: 'Qué tienes que hacer en el MiniMiniJuego 5.',
+  },
+];
+
 const { width, height } = Dimensions.get('window');
 
 export default function HomeScreen({ navigation, route }) {
@@ -33,7 +61,17 @@ export default function HomeScreen({ navigation, route }) {
         descripcion: 'Relaciona palabras lo más rápido posible en rondas cronometradas.',
         screen: 'MiniGame4',
       },
+      ...minijuegos.map(j => ({
+        nombre: j.titulo,
+        descripcion: j.descripcion,
+        screen: null,
+        minijuego: j
+      })),
     ];
+
+    const handleMinijuegoPress = (minijuego) => {
+      navigation.navigate('VariosMinigames', { minijuego });
+    };
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
@@ -84,7 +122,11 @@ export default function HomeScreen({ navigation, route }) {
                                         index === 2 ? '#d5c385' :
                                         '#a3ffd9'
                                     }]}
-                                    onPress={() => navigation.navigate(juego.screen, { jugadores })}
+                                    onPress={() =>
+                                      juego.minijuego
+                                        ? handleMinijuegoPress(juego.minijuego)
+                                        : navigation.navigate(juego.screen, { jugadores })
+                                    }
                                 >
                                     <View style={styles.cardTextContainer}>
                                         <Text style={styles.gameText}>{juego.nombre}</Text>

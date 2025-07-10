@@ -46,7 +46,7 @@ const juegos = [
     screen: 'MiniGames',
     imagen: PjsBotellines,
     imagenEstilo: { width: '80%', height: height * 0.35, resizeMode: 'contain' },
-    color: '#a3ffd9',
+    color: '#70B77E',
   },
   /* {
     id: 5,
@@ -364,7 +364,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   jugadoresButtonText: {
-    color: '#fff',
+    color: '#000',
     fontWeight: 'bold',
     fontFamily: 'Panchang-Bold',
   },
@@ -376,7 +376,8 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#fff',
+    borderColor: '#000',
+    color: '#000',
     zIndex: 10,
   },
   input: {
