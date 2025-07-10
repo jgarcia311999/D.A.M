@@ -140,7 +140,7 @@ export default function MiniGame1({ route, navigation }) {
   );
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#bfa3ff', paddingTop: 50 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#9BB7D4', paddingTop: 50 }}>
       <View style={styles.scrollView}>
         <View style={styles.innerContainer}>
           <View style={[
@@ -158,13 +158,13 @@ export default function MiniGame1({ route, navigation }) {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
               navigation.goBack();
             }}>
-              <Ionicons name="arrow-back" size={28} color="#7c58c5" />
+              <Ionicons name="arrow-back" size={28} color="#000" />
             </TouchableOpacity>
             <TouchableOpacity onPress={() => {
               setInfoPage(0);
               setModalInfoVisible(true);
             }}>
-              <Ionicons name="help-circle-outline" size={28} color="#7c58c5" />
+              <Ionicons name="help-circle-outline" size={28} color="#000" />
             </TouchableOpacity>
           </View>
           <View style={{ height: insets.top + 58 }} />
@@ -282,12 +282,12 @@ const styles = StyleSheet.create({
   // Cambios para sincronizar diseño visual con pantalla de juego de cartas
   scrollView: {
     flex: 1,
-    backgroundColor: '#bfa3ff', // cambiado de '#191716'
+    backgroundColor: '#9BB7D4', // cambiado de '#191716'
   },
   innerContainer: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#bfa3ff', // cambiado de '#191716'
+    backgroundColor: '#9BB7D4', // cambiado de '#191716'
     paddingBottom: 100,
   },
   scrollContainer: {
@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
   },
   jugador: {
     backgroundColor: '#E2D6FF', // cambiado de 'rgba(0, 100, 0, 0.5)'
-    borderColor: '#bfa3ff', // cambiado de 'green'
+    borderColor: '#9BB7D4', // cambiado de 'green'
     borderWidth: 2, // asegurando que es 2
     borderRadius: 20,
     paddingVertical: 10,
@@ -353,7 +353,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Panchang-Bold',
   },
   botonContinuar: {
-    backgroundColor: '#7c58c5', // cambiado de '#6a0dad'
+    backgroundColor: '#6C8FB4', // cambiado de '#6a0dad'
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 16, // cambiado de 10
