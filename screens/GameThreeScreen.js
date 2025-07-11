@@ -69,7 +69,7 @@ const baseOptions = [
 
 
 function createWheelPaths() {
-  const angle = (2 * Math.PI) / options.length;
+  const angle = (2 * Math.PI) / options.length * 1.2;
   const paths = [];
 
   for (let i = 0; i < options.length; i++) {
@@ -89,7 +89,7 @@ function createWheelPaths() {
     ].join(' ');
 
     const labelAngle = startAngle + angle / 2;
-    const labelRadius = radius * 0.92;
+    const labelRadius = radius * 0.88;
     const labelX = radius + labelRadius * Math.cos(labelAngle);
     const labelY = radius + labelRadius * Math.sin(labelAngle);
     // Rotate label so it appears upright and readable from outside the circle, add 90 degrees to align tangentially
@@ -281,7 +281,7 @@ export default function GameThreeScreen({ route }) {
                       x={segment.labelX}
                       y={segment.labelY}
                       fill="#fff"
-                      fontSize="12"
+                      fontSize="16"
                       fontWeight="bold"
                       textAnchor="middle"
                       alignmentBaseline="middle"
