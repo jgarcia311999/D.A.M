@@ -16,7 +16,7 @@ const baseOptions = [
   'Todos beben',
   'Crea una regla',
   'Elige quien bebe',
-  'Beso o verdad',
+  'Besito al de la izquierda',
   'Reta a alguien a piedra, papel, tijeras, el que pierda bebe',
   'Elige quien tenga una bebida diferente a la tuya, y cambiarosla',
   'Reto rápido',
@@ -25,19 +25,20 @@ const baseOptions = [
 ];
 
 const baseColors = [
-  '#f39c12', 
-  '#d35400', 
-  '#8e44ad', 
-  '#27ae60', 
-  '#2980b9', 
-  '#c0392b', 
-  '#e67e22', 
-  '#9b59b6', 
-  '#16a085', 
-  '#fdcb6e', 
-  '#00b894', 
-  '#e17055', 
+  '#bfa3ff', // lila suave
+  '#a3c8ff', // celeste claro
+  '#9BB7D4', // azul clarito
+  '#F4B7D1', // rosa pastel suave
+  '#FFC8A3', // durazno claro
+  '#FDD9B0', // melocotón pastel
+  '#70B77E', // verde suave
+  '#8FCC9F', // verde menta claro
+  '#FFB6B9', // rosa melocotón claro
+  '#6A5ACD', // azul índigo
+  '#FF9F80', // naranja pastel
+  '#D6A0F6', // lavanda suave
 ];
+
 
 const options = [];
 const colors = [];
@@ -156,7 +157,7 @@ export default function GameThreeScreen() {
           <Svg width={radius * 2} height={radius * 2}>
             <G>
               {wheelPaths.map((segment, index) => (
-                <Path key={index} d={segment.path} fill={segment.color} />
+                <Path key={index} d={segment.path} fill={segment.color} stroke="#000" strokeWidth={1} />
               ))}
             </G>
           </Svg>
@@ -166,7 +167,7 @@ export default function GameThreeScreen() {
           onPress={spinWheel}
           disabled={isSpinning}
         >
-          <Text style={styles.buttonText}>🎯 GIRAR</Text>
+          <Text style={styles.buttonText}>Dale vueltas</Text>
         </TouchableOpacity>
         {selected && <Text style={styles.result}>{selected}</Text>}
       </SafeAreaView>
@@ -177,7 +178,7 @@ export default function GameThreeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#191716',
+    backgroundColor: '#FFF3B0',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -185,7 +186,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
-    color: '#fff',
+    color: '#000',
     fontFamily: 'Panchang-Bold',
     textAlign: 'center',
   },
