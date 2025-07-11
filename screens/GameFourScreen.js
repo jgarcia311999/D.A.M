@@ -36,23 +36,39 @@ const PruebaGameFourScreen = ({ route, navigation }) => {
     return shuffled;
   };
 
-  useEffect(() => {
-    const cargar = async () => {
-      try {
-        const todas = await getTodasLasFrases();
-        if (!Array.isArray(todas)) {
-          console.error("getTodasLasFrases no devolvió un array:", todas);
-          return;
-        }
-        const mezcladas = shuffleArray(todas);
-        setFrasesCombinadas(todas);
-        setFrasesToUse(mezcladas);
-      } catch (error) {
-        console.error("Error al cargar frases dinámicas:", error);
+useEffect(() => {
+  let timeoutId;
+
+  const cargar = async () => {
+    try {
+      timeoutId = setTimeout(() => {
+        alert('No tienes conexion a internet');
+        navigation.goBack();
+      }, 30000);
+
+      const todas = await getTodasLasFrases();
+      clearTimeout(timeoutId);
+
+      if (!Array.isArray(todas)) {
+        console.error("getTodasLasFrases no devolvió un array:", todas);
+        return;
       }
-    };
-    cargar();
-  }, []);
+
+      const mezcladas = shuffleArray(todas);
+      setFrasesCombinadas(todas);
+      setFrasesToUse(mezcladas);
+    } catch (error) {
+      clearTimeout(timeoutId);
+      console.error("Error al cargar frases dinámicas:", error);
+    }
+  };
+
+  cargar();
+
+  return () => {
+    clearTimeout(timeoutId);
+  };
+}, []);
 
   const procesarFrase = (frase) => {
     if (!jugadores.length) return frase;
