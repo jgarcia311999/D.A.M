@@ -114,6 +114,7 @@ export default function GameThreeScreen({ route }) {
   const insets = useSafeAreaInsets();
 
   const spinAnim = useRef(new Animated.Value(0)).current;
+  const spinAnimationRef = useRef(null);
   const [selected, setSelected] = useState(null);
   const [isSpinning, setIsSpinning] = useState(false);
   const angle = useRef(0);
@@ -122,6 +123,8 @@ export default function GameThreeScreen({ route }) {
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
+    let isMounted = true;
+
     if (selected) {
       scaleAnim.setValue(1);
       Animated.sequence([
@@ -137,6 +140,13 @@ export default function GameThreeScreen({ route }) {
         })
       ]).start();
     }
+
+    return () => {
+      isMounted = false;
+      if (spinAnimationRef.current) {
+        spinAnimationRef.current.stop();
+      }
+    };
   }, [selected]);
 
   const panResponder = useRef(
@@ -165,7 +175,9 @@ export default function GameThreeScreen({ route }) {
             const selectedIndex = Math.floor((relativeAngle + segmentAngle / 2) % 360 / segmentAngle);
             const index = parseInt(options[selectedIndex], 10);
             const jugador = jugadores.length ? jugadores[Math.floor(Math.random() * jugadores.length)] : 'Jugador';
-            setSelected(`${jugador}: ${baseOptions[selectedIndex]}`);
+            if (isMounted) {
+              setSelected(`${jugador}: ${baseOptions[selectedIndex]}`);
+            }
             console.log(`Número de la ruleta: ${index}. Frase: ${baseOptions[selectedIndex]}`);
           });
         }
@@ -178,6 +190,7 @@ export default function GameThreeScreen({ route }) {
     setIsSpinning(true);
 
     let vibrationActive = true;
+    let isMounted = true;
 
     const triggerHaptics = () => {
       let duration = 30; // initial fast vibration
@@ -198,12 +211,14 @@ export default function GameThreeScreen({ route }) {
     const randomIndex = Math.floor(Math.random() * options.length);
     const targetAngle = 360 * 5 + Math.random() * 360;
 
-    Animated.timing(spinAnim, {
+    spinAnimationRef.current = Animated.timing(spinAnim, {
       toValue: targetAngle,
       duration: 3000,
       easing: Easing.out(Easing.ease),
       useNativeDriver: true,
-    }).start(() => {
+    });
+
+    spinAnimationRef.current.start(() => {
       angle.current = targetAngle % 360;
       spinAnim.setValue(angle.current);
       const normalizedAngle = (angle.current % 360 + 360) % 360;
@@ -212,7 +227,9 @@ export default function GameThreeScreen({ route }) {
       const selectedIndex = Math.floor((relativeAngle + segmentAngle / 2) % 360 / segmentAngle);
       const index = parseInt(options[selectedIndex], 10);
       const jugador = jugadores.length ? jugadores[Math.floor(Math.random() * jugadores.length)] : 'Jugador';
-      setSelected(`${jugador}: ${baseOptions[selectedIndex]}`);
+      if (isMounted) {
+        setSelected(`${jugador}: ${baseOptions[selectedIndex]}`);
+      }
       console.log(`Número de la ruleta: ${index}. Frase: ${baseOptions[selectedIndex]}`);
       setIsSpinning(false);
       vibrationActive = false;
