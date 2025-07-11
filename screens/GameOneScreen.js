@@ -99,7 +99,7 @@ export default function GameOneScreen({ route, navigation }) {
   const [colorTextoJugador, setColorTextoJugador] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalCarta, setModalCarta] = useState(null);
-  const [modalInfoVisible, setModalInfoVisible] = useState(false);
+  const [modalInfoVisible, setModalInfoVisible] = useState(true);
   const [infoPage, setInfoPage] = useState(0);
   // --- Parpadeo de carta en fallo ---
   const [cartaFallidaIndex, setCartaFallidaIndex] = useState(null);
@@ -141,9 +141,9 @@ export default function GameOneScreen({ route, navigation }) {
   const infoPages = [
     `Un juego de cartas para beber... sí, otro más. Pero este por lo menos te obliga a usar una neurona o dos.`,
     `Son cuatro fases. Aciertas, avanzas. La cagas, bebes.\n¿Demasiado para ti? Siempre puedes rendirte y fingir que repartes los tragos por estrategia.`,
-    `Fase 1 - Color: ¿Roja o negra? Una decisión tan difícil como elegir entre tinto o cerveza.\n\nFase 2 - Mayor o menor: Compara cartas. Decide si sube o baja. Vamos, no es física cuántica.`,
+    `Fase 1 - Color: ¿Roja o negra? Una decisión tan difícil como elegir entre vino o cerveza.\n\nFase 2 - Mayor o menor: Compara cartas. Decide si sube o baja. Vamos, no es física cuántica.`,
     `Fase 3 - ¿Entre o fuera?: ¿La carta cae entre las otras dos? Pues di "sí" o "no", a ver si te crees Nostradamus.\n\nFase 4 - Palo: Elige: cigarro, cubata, gallina u oro.`,
-    `¿Te rajas? Genial. Reparte tragos como si fueras el rey de la fiesta… aunque todos sepan que te has cagado.`,
+    `¿Te cagas? Genial. Reparte tragos como si fueras el rey de la fiesta… aunque todos sepan que te has cagado.`,
   ];
   const jugadores = route?.params?.jugadores || [];
 
@@ -580,6 +580,7 @@ export default function GameOneScreen({ route, navigation }) {
   });
 
   return (
+    <>
     <ScrollView contentContainerStyle={styles.scrollContainer} style={styles.scrollView}>
       {/* Header absolute */}
       <View style={{
@@ -735,6 +736,7 @@ export default function GameOneScreen({ route, navigation }) {
         </View>
       </Modal>
     </ScrollView>
-  );
+    </>
+);
 }
 

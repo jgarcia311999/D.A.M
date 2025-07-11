@@ -1,4 +1,4 @@
-const palos = ['copas', 'cigarros', 'oros', 'pollos'];
+const palos = ['oro', 'cubata', 'pollo', 'cigarro'];
 
 const generarBarajaCompleta = () => {
   const baraja = [];
@@ -13,59 +13,73 @@ const generarBarajaCompleta = () => {
 
 import React, { useState, useRef, useEffect } from 'react';
 import { Animated } from 'react-native';
+import { Dimensions } from 'react-native';
+const { width, height } = Dimensions.get('window');
 import * as Haptics from 'expo-haptics';
 import { View, Text, Button, StyleSheet, Modal, TouchableOpacity, ScrollView, Image, SafeAreaView, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 const imagenesCartas = {
-  'cigarros_1': require('../assets/cartas/cigarros/sf/cig-1.png'),
-  'cigarros_2': require('../assets/cartas/cigarros/sf/cig-2.png'),
-  'cigarros_3': require('../assets/cartas/cigarros/sf/cig-3.png'),
-  'cigarros_4': require('../assets/cartas/cigarros/sf/cig-4.png'),
-  'cigarros_5': require('../assets/cartas/cigarros/sf/cig-5.png'),
-  'cigarros_6': require('../assets/cartas/cigarros/sf/cig-6.png'),
-  'cigarros_7': require('../assets/cartas/cigarros/sf/cig-7.png'),
-  'cigarros_8': require('../assets/cartas/cigarros/sf/cig-8.png'),
-  'cigarros_9': require('../assets/cartas/cigarros/sf/cig-9.png'),
-  'cigarros_j': require('../assets/cartas/cigarros/sf/cig-j.png'),
-  'cigarros_q': require('../assets/cartas/cigarros/sf/cig-q.png'),
-  'cigarros_k': require('../assets/cartas/cigarros/sf/cig-k.png'),
-  'copas_1': require('../assets/cartas/copas/sf/cub-1.png'),
-  'copas_2': require('../assets/cartas/copas/sf/cub-2.png'),
-  'copas_3': require('../assets/cartas/copas/sf/cub-3.png'),
-  'copas_4': require('../assets/cartas/copas/sf/cub-4.png'),
-  'copas_5': require('../assets/cartas/copas/sf/cub-5.png'),
-  'copas_6': require('../assets/cartas/copas/sf/cub-6.png'),
-  'copas_7': require('../assets/cartas/copas/sf/cub-7.png'),
-  'copas_8': require('../assets/cartas/copas/sf/cub-8.png'),
-  'copas_9': require('../assets/cartas/copas/sf/cub-9.png'),
-  'copas_j': require('../assets/cartas/copas/sf/cub-j.png'),
-  'copas_q': require('../assets/cartas/copas/sf/cub-q.png'),
-  'copas_k': require('../assets/cartas/copas/sf/cub-k.png'),
-  'oros_1': require('../assets/cartas/oros/sf/oro-1.png'),
-  'oros_2': require('../assets/cartas/oros/sf/oro-2.png'),
-  'oros_3': require('../assets/cartas/oros/sf/oro-3.png'),
-  'oros_4': require('../assets/cartas/oros/sf/oro-4.png'),
-  'oros_5': require('../assets/cartas/oros/sf/oro-5.png'),
-  'oros_6': require('../assets/cartas/oros/sf/oro-6.png'),
-  'oros_7': require('../assets/cartas/oros/sf/oro-7.png'),
-  'oros_8': require('../assets/cartas/oros/sf/oro-8.png'),
-  'oros_9': require('../assets/cartas/oros/sf/oro-9.png'),
-  'oros_j': require('../assets/cartas/oros/sf/oro-j.png'),
-  'oros_q': require('../assets/cartas/oros/sf/oro-q.png'),
-  'oros_k': require('../assets/cartas/oros/sf/oro-k.png'),
-  'pollos_1': require('../assets/cartas/pollos/sf/poll-1.png'),
-  'pollos_2': require('../assets/cartas/pollos/sf/poll-2.png'),
-  'pollos_3': require('../assets/cartas/pollos/sf/poll-3.png'),
-  'pollos_4': require('../assets/cartas/pollos/sf/poll-4.png'),
-  'pollos_5': require('../assets/cartas/pollos/sf/poll-5.png'),
-  'pollos_6': require('../assets/cartas/pollos/sf/poll-6.png'),
-  'pollos_7': require('../assets/cartas/pollos/sf/poll-7.png'),
-  'pollos_8': require('../assets/cartas/pollos/sf/poll-8.png'),
-  'pollos_9': require('../assets/cartas/pollos/sf/poll-9.png'),
-  'pollos_j': require('../assets/cartas/pollos/sf/poll-j.png'),
-  'pollos_q': require('../assets/cartas/pollos/sf/poll-q.png'),
-  'pollos_k': require('../assets/cartas/pollos/sf/poll-k.png'),
+  // ORO
+  'oro_1': require('../assets/cartas_cortadas/oro_cartas/1.png'),
+  'oro_2': require('../assets/cartas_cortadas/oro_cartas/2.png'),
+  'oro_3': require('../assets/cartas_cortadas/oro_cartas/3.png'),
+  'oro_4': require('../assets/cartas_cortadas/oro_cartas/4.png'),
+  'oro_5': require('../assets/cartas_cortadas/oro_cartas/5.png'),
+  'oro_6': require('../assets/cartas_cortadas/oro_cartas/6.png'),
+  'oro_7': require('../assets/cartas_cortadas/oro_cartas/7.png'),
+  'oro_8': require('../assets/cartas_cortadas/oro_cartas/8.png'),
+  'oro_9': require('../assets/cartas_cortadas/oro_cartas/9.png'),
+  'oro_10': require('../assets/cartas_cortadas/oro_cartas/10.png'),
+  'oro_11': require('../assets/cartas_cortadas/oro_cartas/11.png'),
+  'oro_12': require('../assets/cartas_cortadas/oro_cartas/12.png'),
+  'oro_13': require('../assets/cartas_cortadas/oro_cartas/13.png'),
+
+  // CUBATA
+  'cubata_1': require('../assets/cartas_cortadas/cubata_carta/1.png'),
+  'cubata_2': require('../assets/cartas_cortadas/cubata_carta/2.png'),
+  'cubata_3': require('../assets/cartas_cortadas/cubata_carta/3.png'),
+  'cubata_4': require('../assets/cartas_cortadas/cubata_carta/4.png'),
+  'cubata_5': require('../assets/cartas_cortadas/cubata_carta/5.png'),
+  'cubata_6': require('../assets/cartas_cortadas/cubata_carta/6.png'),
+  'cubata_7': require('../assets/cartas_cortadas/cubata_carta/7.png'),
+  'cubata_8': require('../assets/cartas_cortadas/cubata_carta/8.png'),
+  'cubata_9': require('../assets/cartas_cortadas/cubata_carta/9.png'),
+  'cubata_10': require('../assets/cartas_cortadas/cubata_carta/10.png'),
+  'cubata_11': require('../assets/cartas_cortadas/cubata_carta/11.png'),
+  'cubata_12': require('../assets/cartas_cortadas/cubata_carta/12.png'),
+  'cubata_13': require('../assets/cartas_cortadas/cubata_carta/13.png'),
+
+  // POLLO
+  'pollo_1': require('../assets/cartas_cortadas/pollo_cartas/1.png'),
+  'pollo_2': require('../assets/cartas_cortadas/pollo_cartas/2.png'),
+  'pollo_3': require('../assets/cartas_cortadas/pollo_cartas/3.png'),
+  'pollo_4': require('../assets/cartas_cortadas/pollo_cartas/4.png'),
+  'pollo_5': require('../assets/cartas_cortadas/pollo_cartas/5.png'),
+  'pollo_6': require('../assets/cartas_cortadas/pollo_cartas/6.png'),
+  'pollo_7': require('../assets/cartas_cortadas/pollo_cartas/7.png'),
+  'pollo_8': require('../assets/cartas_cortadas/pollo_cartas/8.png'),
+  'pollo_9': require('../assets/cartas_cortadas/pollo_cartas/9.png'),
+  'pollo_10': require('../assets/cartas_cortadas/pollo_cartas/10.png'),
+  'pollo_11': require('../assets/cartas_cortadas/pollo_cartas/11.png'),
+  'pollo_12': require('../assets/cartas_cortadas/pollo_cartas/12.png'),
+  'pollo_13': require('../assets/cartas_cortadas/pollo_cartas/13.png'),
+
+  // CIGARRO
+  'cigarro_1': require('../assets/cartas_cortadas/cigarro_cartas/1.png'),
+  'cigarro_2': require('../assets/cartas_cortadas/cigarro_cartas/2.png'),
+  'cigarro_3': require('../assets/cartas_cortadas/cigarro_cartas/3.png'),
+  'cigarro_4': require('../assets/cartas_cortadas/cigarro_cartas/4.png'),
+  'cigarro_5': require('../assets/cartas_cortadas/cigarro_cartas/5.png'),
+  'cigarro_6': require('../assets/cartas_cortadas/cigarro_cartas/6.png'),
+  'cigarro_7': require('../assets/cartas_cortadas/cigarro_cartas/7.png'),
+  'cigarro_8': require('../assets/cartas_cortadas/cigarro_cartas/8.png'),
+  'cigarro_9': require('../assets/cartas_cortadas/cigarro_cartas/9.png'),
+  'cigarro_10': require('../assets/cartas_cortadas/cigarro_cartas/10.png'),
+  'cigarro_11': require('../assets/cartas_cortadas/cigarro_cartas/11.png'),
+  'cigarro_12': require('../assets/cartas_cortadas/cigarro_cartas/12.png'),
+  'cigarro_13': require('../assets/cartas_cortadas/cigarro_cartas/13.png'),
+
 };
 
 const valores = {
@@ -84,10 +98,10 @@ const valores = {
 };
 
 const tragosPorPalo = {
-  copas: 1,
-  cigarros: 2,
-  oros: 3,
-  pollos: 4,
+  oro: 1,
+  cubata: 2,
+  pollo: 3,
+  cigarro: 4,
 };
 
 const generarCarta = () => {
@@ -178,12 +192,6 @@ export default function GameTwoScreen({ route, navigation }) {
           <>
             <TouchableOpacity style={styles.primaryButton} onPress={() => {
               setMostrarOpciones(false);
-              navigation.navigate('Prueba 2');
-            }}>
-              <Text style={styles.primaryButtonText}>Ir a Prueba 2</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.primaryButton} onPress={() => {
-              setMostrarOpciones(false);
               setModalVisible(true);
             }}>
               <Text style={styles.primaryButtonText}>Registro</Text>
@@ -211,29 +219,40 @@ export default function GameTwoScreen({ route, navigation }) {
           </>
         )}
       </Animated.View>
-      <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 10 }}>
-        {ultimasCartas
-          .filter(c => !(c.numero === carta?.numero && c.palo === carta?.palo))
-          .map((c, index) => {
+      <View style={{ 
+        flexDirection: 'row', 
+        justifyContent: 'center', 
+        alignSelf: 'center', 
+        width: 4 * 50 + 3 * 8, // 4 cartas de 50 y 3 márgenes de 8px
+        marginTop: 10 
+      }}>
+        {ultimasCartas.length === 0 ? (
+          // Placeholder invisible para la primera ronda
+          <View
+            style={{
+              width: 50,
+              height: 75,
+              marginHorizontal: 4,
+              opacity: 0,
+            }}
+          />
+        ) : (
+          ultimasCartas.slice(-4).map((c, index) => {
             let valor = c.numero;
-            let displayValor = valor;
-            if (valor === 'j') {
-              displayValor = 'J';
-            } else if (valor === 'q') {
-              displayValor = 'Q';
-            } else if (valor === 'k') {
-              displayValor = 'K';
-            }
-            const key = `${c.palo}_${valor}`;
-            const source = imagenesCartas[key];
+            if (valor === 'j') valor = '11';
+            else if (valor === 'q') valor = '12';
+            else if (valor === 'k') valor = '13';
+            const key = `${c.palo}_${valor}_${index}`;
+            const source = imagenesCartas[`${c.palo}_${valor}`];
             return (
               <Image
-                key={index}
+                key={key}
                 source={source}
                 style={{ width: 50, height: 75, marginHorizontal: 4, resizeMode: 'contain' }}
               />
             );
-          })}
+          })
+        )}
       </View>
 
       <Modal
@@ -265,56 +284,36 @@ export default function GameTwoScreen({ route, navigation }) {
         </View>
       </Modal>
 
-      {carta && (
-        <>
-          {(() => {
-            let valor = carta.numero;
-            if (valor === 'j' || valor === 'q' || valor === 'k') {
-              valor = valor;
-            }
-            const key = `${carta.palo}_${valor}`;
-            const source = imagenesCartas[key];
-            if (source) {
-              return (
-                <Image
-                  source={source}
-                  style={{
-                    width: 150,
-                    height: 225,
-                    marginVertical: 10,
-                    resizeMode: 'contain',
-                    backgroundColor: 'transparent',
-                    borderRadius: 12,
-                  }}
-                />
-              );
-            }
-            return null;
-          })()}
-          {(() => {
-            let valor = carta.numero;
-            let displayValor = valor;
-            if (valor === 'j') {
-              displayValor = 'J';
-            } else if (valor === 'q') {
-              displayValor = 'Q';
-            } else if (valor === 'k') {
-              displayValor = 'K';
-            }
-            return (
-              <Text style={styles.carta}>
-                {displayValor} de {carta.palo}
+      {carta && (() => {
+        let valor = carta.numero;
+        let displayValor = valor;
+        if (valor === 'j') {
+          valor = '11';
+          displayValor = 'J';
+        } else if (valor === 'q') {
+          valor = '12';
+          displayValor = 'Q';
+        } else if (valor === 'k') {
+          valor = '13';
+          displayValor = 'K';
+        }
+        const key = `${carta.palo}_${valor}`;
+        const source = imagenesCartas[key];
+        return (
+          <View style={styles.cartaMarco}>
+            <Image
+              source={source}
+              style={styles.cartaImagenMarco}
+            />
+            <View style={styles.textoEnCarta}>
+              <Text style={styles.carta}>{displayValor} de {carta.palo}</Text>
+              <Text style={styles.accion}>
+                {jugadorActual ? `${jugadorActual}, ${valores[carta.numero]}` : valores[carta.numero]}
               </Text>
-            );
-          })()}
-          <Text style={styles.accion}>
-            {jugadorActual ? `${jugadorActual}, ${valores[carta.numero]}` : valores[carta.numero]}
-          </Text>
-          <Text style={styles.tragos}>
-            {tragosPorPalo[carta.palo]} {carta.palo === 'copas' ? 'trago' : 'tragos'} por ser {carta.palo}
-          </Text>
-        </>
-      )}
+            </View>
+          </View>
+        );
+      })()}
 
       <Modal
         animationType="slide"
@@ -328,14 +327,13 @@ export default function GameTwoScreen({ route, navigation }) {
             <ScrollView style={{ maxHeight: 300 }}>
               {registro.map((item, index) => {
                 let valor = item.carta.numero;
-                let displayValor = valor;
-                if (valor === 'j') {
-                  displayValor = 'J';
-                } else if (valor === 'q') {
-                  displayValor = 'Q';
-                } else if (valor === 'k') {
-                  displayValor = 'K';
-                }
+                if (valor === 'j') valor = '11';
+                else if (valor === 'q') valor = '12';
+                else if (valor === 'k') valor = '13';
+                let displayValor = item.carta.numero;
+                if (item.carta.numero === 'j') displayValor = 'J';
+                else if (item.carta.numero === 'q') displayValor = 'Q';
+                else if (item.carta.numero === 'k') displayValor = 'K';
                 return (
                   <Text key={index} style={styles.modalItem}>
                     {item.jugador}: {displayValor} de {item.carta.palo}
@@ -419,7 +417,7 @@ export default function GameTwoScreen({ route, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#d5c385',
+    backgroundColor: '#F4B7D1',
     alignItems: 'center',
     padding: 20,
     paddingTop: 50,
@@ -447,6 +445,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
     color: '#000',
     fontFamily: 'Panchang-Regular',
+    textAlign: 'center',
+    paddingHorizontal: 0,
   },
   accion: {
     fontSize: 18,
@@ -454,6 +454,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#000',
     fontFamily: 'Panchang-Regular',
+    paddingHorizontal: 0,
   },
   tragos: {
     fontSize: 16,
@@ -519,7 +520,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Panchang-Regular',
   },
   primaryButton: {
-    backgroundColor: '#B29D55',
+    backgroundColor: '#E98FB5',
     paddingVertical: 12,
     paddingHorizontal: 30,
     borderRadius: 10,
@@ -553,5 +554,39 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  cartaMarco: {
+    alignSelf: 'center',
+    width: width * 0.98,        
+    height: height * 0.8,       
+    marginVertical: 10,
+    position: 'relative',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  cartaImagenMarco: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain',
+    position: 'absolute',
+    borderRadius: 12,
+  },
+  textoEnCarta: {
+    position: 'absolute',
+    top: height * 0.2,
+    paddingHorizontal: 32,
+    alignItems: 'center',
+    alignSelf: 'center',
+    width: width * 0.85,
+  },
+  cartaFade: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 50,
+    height: 150,
+    width: '100%',
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
   },
 });

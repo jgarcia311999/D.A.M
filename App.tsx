@@ -5,14 +5,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import TittleScreen from './screens/TittleScreen';
 import HomeScreen from './screens/HomeScreen';
-import PruebaHomeScreen from './screens/PruebaHomeScreen';
 import GameOneScreen from './screens/GameOneScreen';
-import PruebaGameOneScreen from './screens/PruebaGameOneScreen';
 import GameTwoScreen from './screens/GameTwoScreen';
-import PruebaGameTwoScreen from './screens/PruebaGameTwoScreen';
 import GameThreeScreen from './screens/GameThreeScreen';
 import GameFourScreen from './screens/GameFourScreen';
-import PruebaGameFourScreen from './screens/PruebaGameFourScreen';
 import GamerScreen from './screens/GamerScreen';
 import MiniGamesScreen from './screens/MiniGamesScreen';
 import MiniGame1 from './screens/miniGames/MiniGame1';
@@ -49,14 +45,10 @@ export default function App() {
           <Stack.Screen name="TittleScreen" component={TittleScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Inicio" component={HomeScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Gamer" component={GamerScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="Inicio2" component={PruebaHomeScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Juego 1" component={GameOneScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="Prueba 1" component={PruebaGameOneScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Juego 2" component={GameTwoScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="Prueba 2" component={PruebaGameTwoScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Juego 3" component={GameThreeScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Juego 4" component={GameFourScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="Prueba 4" component={PruebaGameFourScreen} options={{ headerShown: false }} />
           <Stack.Screen name="CreaFrase" component={CreaTuFrase} options={{ headerShown: false }} />
           <Stack.Screen name="TodasFrases" component={TodasLasFrasesScreen} options={{ headerShown: false }} />
           <Stack.Screen name="MiniGames" component={MiniGamesScreen} options={{ headerShown: false }} />
