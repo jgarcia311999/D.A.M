@@ -18,11 +18,11 @@ export default function VariosMinigames({ route }) {
           navigation.goBack();
         }}
       >
-        <Ionicons name="arrow-back" size={28} color="#fff" />
+        <Ionicons name="arrow-back" size={28} color="#000" />
       </TouchableOpacity>
       <View style={{ flex: 1, backgroundColor: '#70B77C' }}>
         <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'flex-start', alignItems: 'center', paddingHorizontal: 24, paddingTop: insets.top + 64 }}>
-          <Text style={{ fontSize: 28, fontWeight: 'bold', marginBottom: 18, color: '#fff' }}>
+          <Text style={{ fontSize: 28, fontWeight: 'bold', marginBottom: 18, color: '#000' }}>
             {minijuego.titulo}
           </Text>
           <View style={styles.card}>
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
     fontFamily: 'Panchang-Regular',
-    color: '#fff',
+    color: '#000',
     textAlign: 'center',
     lineHeight: 28,
   },
