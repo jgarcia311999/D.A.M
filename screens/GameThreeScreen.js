@@ -175,6 +175,24 @@ export default function GameThreeScreen({ route }) {
   const spinWheel = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy); // vibración al girar
     setIsSpinning(true);
+
+    let vibrationActive = true;
+
+    const triggerHaptics = () => {
+      let duration = 30; // initial fast vibration
+
+      const loop = () => {
+        if (!vibrationActive) return;
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        duration = Math.min(duration * 1.1, 300); // increase interval
+        setTimeout(loop, duration);
+      };
+
+      loop();
+    };
+
+    triggerHaptics();
+
     const segmentAngle = 360 / options.length;
     const randomIndex = Math.floor(Math.random() * options.length);
     const targetAngle = 360 * 5 + Math.random() * 360;
@@ -196,6 +214,7 @@ export default function GameThreeScreen({ route }) {
       setSelected(`${jugador}: ${baseOptions[selectedIndex]}`);
       console.log(`Número de la ruleta: ${index}. Frase: ${baseOptions[selectedIndex]}`);
       setIsSpinning(false);
+      vibrationActive = false;
     });
   };
 
