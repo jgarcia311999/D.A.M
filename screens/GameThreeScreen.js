@@ -49,7 +49,7 @@ const baseOptions = [
   'Haz un “body shot” imaginario en el aire y bebe CAMBIAR',
   'Obliga a alguien a intercambiar ropa con otro y que beba',
   'Cambia una prenda con alguien mientras bebes',
-  'Manda a alguien a beber desde el vaso del que más le atraiga',
+  'Manda a alguien a beber desde el vaso de la persona que mas le guste',
   'Bebe desde el vaso de la persona que más te atrae',
   'Manda a alguien a beber del vaso del de su izquierda',
   'Bebe del vaso del de tu izquierda',
