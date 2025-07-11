@@ -7,12 +7,6 @@ import { getTodasLasFrases } from '../data/getFrases';
 import { useEffect } from 'react';
 import * as Haptics from 'expo-haptics';
 
-const userIcons = [
-  require('../assets/cartas/pollo-user.png'),
-  require('../assets/cartas/oro-user.png'),
-  require('../assets/cartas/cubata-user.png'),
-  require('../assets/cartas/cigarro-user.png'),
-];
 
 const { width } = Dimensions.get('window');
 
@@ -35,16 +29,28 @@ const PruebaGameFourScreen = ({ route, navigation }) => {
   };
 
   useEffect(() => {
+    let timeoutId;
+
     const cargar = async () => {
       try {
+        timeoutId = setTimeout(() => {
+          alert('No tienes conexión a internet');
+          navigation.goBack();
+        }, 30000);
+
         const todas = await getTodasLasFrases();
+        clearTimeout(timeoutId);
         const mezcladas = shuffleArray(todas);
         setFrasesCombinadas(todas);
         setFrasesToUse(mezcladas);
       } catch (error) {
+        clearTimeout(timeoutId);
         console.error("Error al cargar frases dinámicas:", error);
+        alert('No tienes conexión a internet');
+        navigation.goBack();
       }
     };
+
     cargar();
   }, []);
 
@@ -68,9 +74,6 @@ const PruebaGameFourScreen = ({ route, navigation }) => {
     return resultado;
   };
 
-  const getRandomUserIcon = () => {
-    return userIcons[Math.floor(Math.random() * userIcons.length)];
-  };
 
   const toggleMenu = () => { };
 
@@ -110,10 +113,6 @@ const PruebaGameFourScreen = ({ route, navigation }) => {
                   <Text style={styles.placeholder}>
                     {card?.castigo ? `Bebe ${card.castigo} ${card.castigo === '1' ? 'chupito' : 'chupitos'}` : ''}
                   </Text>
-                  <Image
-                    source={getRandomUserIcon()}
-                    style={styles.footerImage}
-                  />
                 </View>
               </View>
             )}
@@ -209,11 +208,6 @@ const styles = StyleSheet.create({
   placeholder: {
     fontSize: 12,
     color: '#fff',
-  },
-  footerImage: {
-    width: 80,
-    height: 80,
-    resizeMode: 'contain',
   },
   header: {
     position: 'absolute',
