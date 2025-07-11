@@ -7,46 +7,59 @@ import { useNavigation } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { width } = Dimensions.get('window');
-const radius = width * 0.7;
+const radius = width * 0.99;
 
 const baseOptions = [
-  '1 trago',
-  '2 tragos',
-  '3 tragos',
-  'Todos beben',
-  'Crea una regla',
-  'Elige quien bebe',
-  'Besito al de la izquierda',
-  'Reta a alguien a piedra, papel, tijeras, el que pierda bebe',
-  'Elige quien tenga una bebida diferente a la tuya, y cambiarosla',
-  'Reto rápido',
-  'Cambio de sitio, muevete tres sillas a tu izquierda',
-  'Besito al de la derecha',
+  'Elige a alguien para que beba 2 tragos',
+  'BEBEN TODOS',
+  'Reta a alguien: el que pierda bebe',
+  'BEBEN TODOS',
+  'Haz que alguien cante un trozo de canción',
+  'BEBEN TODOS',
+  'Elige a alguien que cuente un secreto',
+  'BEBEN TODOS',
+  'Cambia de sitio con quien elijas',
+  'BEBEN TODOS',
+  'Haz que alguien te mire fijamente 10 segundos',
+  'BEBEN TODOS',
+  'Intercambia una prenda con alguien',
+  'BEBEN TODOS',
+  'Obliga a alguien a beber sin manos',
+  'BEBEN TODOS',
+  'Manda a alguien a imitar un animal',
+  'BEBEN TODOS',
+  'Obliga a alguien a hablar con acento raro',
+  'BEBEN TODOS',
+  'Haz que dos personas se reten a piedra, papel o tijera',
+  'BEBEN TODOS',
+  'Elige a alguien que hable sin usar vocales hasta su turno',
+  'BEBEN TODOS',
+  'Haz que alguien baile durante 10 segundos',
+  'BEBEN TODOS',
+  'Elige a dos personas para cambiar sus bebidas',
+  'BEBEN TODOS',
+  'Haz que alguien diga su apodo más raro',
+  'BEBEN TODOS',
+  'Haz que alguien improvise un rap',
+  'BEBEN TODOS',
+  'Elige a alguien para que haga una mini actuación',
+  'BEBEN TODOS',
+  'Manda a alguien a contar su crush de la mesa',
+  'BEBEN TODOS',
+  'Haz que alguien beba mientras cuenta hasta 10',
+  'BEBEN TODOS',
+  'Haz que alguien invente una nueva regla del juego'
 ];
 
-const baseColors = [
-  '#bfa3ff', // lila suave
-  '#a3c8ff', // celeste claro
-  '#9BB7D4', // azul clarito
-  '#F4B7D1', // rosa pastel suave
-  '#FFC8A3', // durazno claro
-  '#FDD9B0', // melocotón pastel
-  '#70B77E', // verde suave
-  '#8FCC9F', // verde menta claro
-  '#FFB6B9', // rosa melocotón claro
-  '#6A5ACD', // azul índigo
-  '#FF9F80', // naranja pastel
-  '#D6A0F6', // lavanda suave
-];
-
+const numericLabels = Array.from({ length: baseOptions.length }, (_, i) => i.toString());
 
 const options = [];
 const colors = [];
-for (let i = 0; i < baseOptions.length; i++) {
-  options[i] = baseOptions[i];
-  options[i + baseOptions.length] = baseOptions[i];
-  colors[i] = baseColors[i];
-  colors[i + baseColors.length] = baseColors[i];
+for (let i = 0; i < numericLabels.length; i++) {
+  options[i] = numericLabels[i];
+  options[i + numericLabels.length] = numericLabels[i];
+  colors[i] = i % 2 === 0 ? '#000000' : '#FF0000';
+  colors[i + numericLabels.length] = colors[i];
 }
 
 function createWheelPaths() {
@@ -105,7 +118,8 @@ export default function GameThreeScreen() {
             angle.current = angle.current % 360;
             spinAnim.setValue(angle.current);
             const randomIndex = Math.floor(Math.random() * options.length);
-            setSelected(options[randomIndex]);
+            const index = parseInt(options[randomIndex % baseOptions.length], 10);
+            setSelected(baseOptions[index]);
           });
         }
       },
@@ -125,7 +139,8 @@ export default function GameThreeScreen() {
       easing: Easing.out(Easing.ease),
       useNativeDriver: true,
     }).start(() => {
-      setSelected(options[randomIndex]);
+      const index = parseInt(options[randomIndex % baseOptions.length], 10);
+      setSelected(baseOptions[index]);
       angle.current = targetAngle % 360;
       spinAnim.setValue(angle.current);
       setIsSpinning(false);
@@ -236,7 +251,7 @@ const styles = StyleSheet.create({
   },
   wheelWrapper: {
     position: 'absolute',
-    bottom: 0,
+    bottom: -100,
     height: radius,
     width: radius * 2,
     overflow: 'hidden',
