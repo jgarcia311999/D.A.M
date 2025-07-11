@@ -119,7 +119,7 @@ export default function HomeScreen({ navigation, route }) {
 
     const juegos = [
       {
-        nombre: 'Asociación rápida',
+        nombre: 'The best',
         descripcion: 'Relaciona palabras lo más rápido posible en rondas cronometradas.',
         screen: 'MiniGame4',
       },
