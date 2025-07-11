@@ -254,6 +254,8 @@ export default function TodasLasFrasesScreen() {
             data={orderedFrases}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => {
+              // 1. At the top of renderItem, add:
+              let swipeableRow = null;
               // Render right actions for swipe (delete)
               const renderRightActions = () => (
                 <View style={{
@@ -275,13 +277,19 @@ export default function TodasLasFrasesScreen() {
                   </View>
                 </View>
               );
-              // On swipe open, show alert for delete confirmation
-              const handleSwipeOpen = () => {
+              // 3. Modify handleSwipeOpen to accept item and swipeable, and close on cancel
+              const handleSwipeOpen = (item, swipeable) => {
                 Alert.alert(
                   'Confirmar borrado',
                   '¿Seguro que quieres borrar esta frase? No se podrá recuperar después',
                   [
-                    { text: 'Cancelar', style: 'cancel' },
+                    {
+                      text: 'Cancelar',
+                      style: 'cancel',
+                      onPress: () => {
+                        swipeable?.close();
+                      }
+                    },
                     {
                       text: 'Borrar',
                       style: 'destructive',
@@ -299,8 +307,9 @@ export default function TodasLasFrasesScreen() {
               };
               return (
                 <Swipeable
+                  ref={(ref) => (swipeableRow = ref)}
                   renderRightActions={renderRightActions}
-                  onSwipeableOpen={handleSwipeOpen}
+                  onSwipeableOpen={() => handleSwipeOpen(item, swipeableRow)}
                   overshootRight={false}
                 >
                   <TouchableOpacity
