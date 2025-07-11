@@ -119,11 +119,6 @@ export default function HomeScreen({ navigation, route }) {
 
     const juegos = [
       {
-        nombre: 'Ranking Salvaje',
-        descripcion: 'Ordena elementos inusuales según tu criterio personal.',
-        screen: 'MiniGame1',
-      },
-      {
         nombre: 'Asociación rápida',
         descripcion: 'Relaciona palabras lo más rápido posible en rondas cronometradas.',
         screen: 'MiniGame4',

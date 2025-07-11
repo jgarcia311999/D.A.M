@@ -29,42 +29,42 @@ const options = [...numericLabels];
 const colors = [...rouletteColors];
 const baseOptions = [
   'BEBEN TODOS',
-  'Manda a alguien a beber 1 trago',
-  'Te toca beber 1 trago',
-  'Manda a alguien a beber 2 tragos seguidos',
-  'Te tocan 2 tragos, sin pausas',
-  'Manda a alguien a beber 3 tragos sin respirar entre ellos',
-  'Trágate 3 tragos como si fuera agua',
-  'Manda a alguien que se cambie de sitio por el de enfrente mientras los dos beben',
-  'Cambiate por el de enfrente mientras los dos bebeis',
-  'Obliga a alguien a leer su último mensaje con un ex y que beba',
-  'Lée el último mensaje de tu ex en voz alta y bebe',
-  'Haz que dos personas se miren muy cerca mientras beben',
-  'Bebe tu y el de tu izquierda, mientras os mirais muy de cerca',
-  'Manda a alguien a gemir como si fuera real y después que beba',
-  'Imita un gemido y luego bebe como si nada hubiera pasado',
-  'Haz que alguien diga como le ha ido el mes, sexualmente hablando, y que beba',
-  'Cuenta que tal te ha ido el mes, sexualmente hablando, y bebe',
-  'Manda a alguien a dar 3 vueltas sobre si mismo, y que beba',
-  'Da 3 vueltas sobre ti mismo y bebe',
-  'Obliga a alguien a intercambiar ropa con otro y que beba',
-  'Cambia una prenda con alguien mientras bebes',
-  'Manda a alguien a beber desde el vaso de la persona que mas le guste',
-  'Bebe desde el vaso de la persona que más te atrae',
-  'Manda a alguien a beber del vaso del de su izquierda',
-  'Bebe del vaso del de tu izquierda',
-  'Haz que alguien beba sin manos',
-  'Bebe sin usar las manos',
-  'Manda a alguien a que se cambie de sitio por la 3ª persona a su izquierda',
-  'Cambiate por la 3ª persona de tu izquierda ',
-  'Elige a alguien y haz que confiese con quién se liaría de la mesa',
-  'Bebe y luego declara con quién te liarías esta noche',
-  'Manda a alguien que haga una selfi con todo el mundo',
-  'Haz un selfi con todo el mundo',
-  'Manda a alguien a soltar una frase de ligue y luego beber',
-  'Suelta tu mejor frase de ligue, y bebe',
-  'Manda a alguien a morder la oreja de otro mientras bebe',
-  'Dale un mordisquito en la oreja al de tu derecha y luego bebe'
+  'manda a alguien a beber 1 trago',
+  'te toca beber 1 trago',
+  'manda a alguien a beber 2 tragos seguidos',
+  'te tocan 2 tragos, sin pausas',
+  'manda a alguien a beber 3 tragos sin respirar entre ellos',
+  'bebe 3 tragos como si fuera agua',
+  'manda a alguien que se cambie de sitio por el de enfrente mientras los dos beben',
+  'cambiate por el de enfrente mientras los dos bebeis',
+  'obliga a alguien a leer su último mensaje con un ex y que beba',
+  'lée el último mensaje de tu ex en voz alta y bebe',
+  'haz que dos personas se miren muy cerca mientras beben',
+  'bebe tu y el de tu izquierda, mientras os mirais muy de cerca',
+  'manda a alguien a gemir como si fuera real y después que beba',
+  'imita un gemido y luego bebe como si nada hubiera pasado',
+  'haz que alguien diga como le ha ido el mes, sexualmente hablando, y que beba',
+  'cuenta que tal te ha ido el mes, sexualmente hablando, y bebe',
+  'manda a alguien a dar 3 vueltas sobre si mismo, y que beba',
+  'da 3 vueltas sobre ti mismo y bebe',
+  'obliga a alguien a intercambiar ropa con otro y que beba',
+  'cambia una prenda con alguien mientras bebes',
+  'manda a alguien a beber desde el vaso de la persona que mas le guste',
+  'bebe desde el vaso de la persona que más te atrae',
+  'manda a alguien a beber del vaso del de su izquierda',
+  'bebe del vaso del de tu izquierda',
+  'haz que alguien beba sin manos',
+  'bebe sin usar las manos',
+  'manda a alguien a que se cambie de sitio por la 3ª persona a su izquierda',
+  'cambiate por la 3ª persona de tu izquierda ',
+  'elige a alguien y haz que confiese con quién se liaría de la mesa',
+  'bebe y luego declara con quién te liarías esta noche',
+  'manda a alguien que haga una selfi con todo el mundo',
+  'haz un selfi con todo el mundo',
+  'manda a alguien a soltar una frase de ligue y luego beber',
+  'suelta tu mejor frase de ligue, y bebe',
+  'manda a alguien a morder la oreja de otro mientras bebe',
+  'dale un mordisquito en la oreja al de tu derecha y luego bebe'
 ];
 
 
@@ -176,7 +176,9 @@ export default function GameThreeScreen({ route }) {
             const index = parseInt(options[selectedIndex], 10);
             const jugador = jugadores.length ? jugadores[Math.floor(Math.random() * jugadores.length)] : 'Jugador';
             if (isMounted) {
-              setSelected(`${jugador}: ${baseOptions[selectedIndex]}`);
+              const showJugador = options[selectedIndex] !== '0';
+              const displayText = showJugador ? `${jugador}, ${baseOptions[selectedIndex]}` : baseOptions[selectedIndex];
+              setSelected(displayText);
             }
             console.log(`Número de la ruleta: ${index}. Frase: ${baseOptions[selectedIndex]}`);
           });
@@ -228,7 +230,9 @@ export default function GameThreeScreen({ route }) {
       const index = parseInt(options[selectedIndex], 10);
       const jugador = jugadores.length ? jugadores[Math.floor(Math.random() * jugadores.length)] : 'Jugador';
       if (isMounted) {
-        setSelected(`${jugador}: ${baseOptions[selectedIndex]}`);
+        const showJugador = options[selectedIndex] !== '0';
+        const displayText = showJugador ? `${jugador}, ${baseOptions[selectedIndex]}` : baseOptions[selectedIndex];
+        setSelected(displayText);
       }
       console.log(`Número de la ruleta: ${index}. Frase: ${baseOptions[selectedIndex]}`);
       setIsSpinning(false);

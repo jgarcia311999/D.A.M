@@ -142,28 +142,12 @@ export default function MiniGame1({ route, navigation }) {
     <SafeAreaView style={{ flex: 1, backgroundColor: '#9BB7D4', paddingTop: 50 }}>
       <View style={styles.scrollView}>
         <View style={styles.innerContainer}>
-          <View style={[
-            styles.header,
-            {
-              position: 'absolute',
-              top: insets.top + 10,
-              left: 0,
-              right: 0,
-              paddingHorizontal: 20,
-              zIndex: 10,
-            }
-          ]}>
+          <View style={[styles.header, { paddingTop: insets.top + 10 }]}>
             <TouchableOpacity onPress={() => {
-              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+              Haptics.selectionAsync();
               navigation.goBack();
             }}>
               <Ionicons name="arrow-back" size={28} color="#000" />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => {
-              setInfoPage(0);
-              setModalInfoVisible(true);
-            }}>
-              <Ionicons name="help-circle-outline" size={28} color="#000" />
             </TouchableOpacity>
           </View>
           <View style={{ height: insets.top + 58 }} />
@@ -337,11 +321,13 @@ const styles = StyleSheet.create({
   },
   header: {
     width: '100%',
-    
-    backgroundColor: 'transparent', 
+    paddingHorizontal: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    position: 'absolute',
+    top: 0,
+    zIndex: 2,
   },
   tema: {
     fontSize: 22,

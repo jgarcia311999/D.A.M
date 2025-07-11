@@ -1,6 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, Modal, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 
+import { useNavigation } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import * as Haptics from 'expo-haptics';
+import { Ionicons } from '@expo/vector-icons';
+
 import { db } from '../../utils/firebaseConfig';
 import { doc, setDoc, updateDoc, increment, onSnapshot, getDoc } from 'firebase/firestore';
 
@@ -9,6 +14,8 @@ const generateRoomCode = () => {
 };
 
 const MiniGame4 = ({ route }) => {
+  const navigation = useNavigation();
+  const insets = useSafeAreaInsets();
   const [modalVisible, setModalVisible] = useState(true);
   const roomCodeRef = useRef(generateRoomCode());
   const [roomCode, setRoomCode] = useState(roomCodeRef.current);
@@ -101,6 +108,14 @@ const phrases = [
 
   return (
     <View style={styles.container}>
+      <View style={[styles.header, { paddingTop: insets.top + 10 }]}>
+        <TouchableOpacity onPress={() => {
+          Haptics.selectionAsync();
+          navigation.goBack();
+        }}>
+          <Ionicons name="arrow-back" size={28} color="#fff" />
+        </TouchableOpacity>
+      </View>
       {!modalVisible && (
         <>
           <Text style={styles.roomCodeDisplay}>Código de Sala: {roomCode}</Text>
@@ -266,6 +281,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#121212',
     padding: 20,
     paddingTop: 60,
+  },
+  header: {
+    width: '100%',
+    paddingHorizontal: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    position: 'absolute',
+    top: 0,
+    zIndex: 2,
   },
   roomCodeDisplay: {
     fontSize: 18,

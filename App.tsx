@@ -62,7 +62,7 @@ export default function App() {
           <Stack.Screen name="MiniGames" component={MiniGamesScreen} options={{ headerShown: false }} />
           <Stack.Screen name="MiniGame1" component={MiniGame1} options={{ headerShown: false }} />
           <Stack.Screen name="MiniGame2" component={MiniGame2} options={{ headerShown: false }} />
-          <Stack.Screen name="MiniGame4" component={MiniGame4} />
+          <Stack.Screen name="MiniGame4" component={MiniGame4} options={{ headerShown: false }} />
           <Stack.Screen name="VariosMinigames" component={VariosMinigames} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
