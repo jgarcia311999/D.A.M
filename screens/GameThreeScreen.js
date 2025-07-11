@@ -69,7 +69,7 @@ const baseOptions = [
 
 
 function createWheelPaths() {
-  const angle = (2 * Math.PI) / options.length * 1.2;
+  const angle = (2 * Math.PI) / options.length;
   const paths = [];
 
   for (let i = 0; i < options.length; i++) {
@@ -89,7 +89,7 @@ function createWheelPaths() {
     ].join(' ');
 
     const labelAngle = startAngle + angle / 2;
-    const labelRadius = radius * 0.88;
+    const labelRadius = radius * 0.92;
     const labelX = radius + labelRadius * Math.cos(labelAngle);
     const labelY = radius + labelRadius * Math.sin(labelAngle);
     // Rotate label so it appears upright and readable from outside the circle, add 90 degrees to align tangentially
