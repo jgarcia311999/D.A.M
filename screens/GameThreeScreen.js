@@ -9,57 +9,62 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 const { width } = Dimensions.get('window');
 const radius = width * 0.99;
 
-const numericLabels = Array.from({ length: 37 }, (_, i) => i.toString());
+const rouletteNumbers = [0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27,
+                         13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33,
+                         1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12,
+                         35, 3, 26];
 
-const options = [];
-const colors = [];
-for (let i = 0; i < numericLabels.length; i++) {
-  options[i] = numericLabels[i];
-  if (i === 0) {
-    colors[i] = '#008000'; // green for segment 0
-  } else {
-    colors[i] = i % 2 === 0 ? '#000000' : '#FF0000';
-  }
-}
+const rouletteColors = [
+  '#008000', // 0 - Green
+  '#000000', '#FF0000', '#000000', '#FF0000', '#000000', '#FF0000', '#000000',
+  '#FF0000', '#000000', '#FF0000', '#000000', '#FF0000', '#000000', '#FF0000',
+  '#000000', '#FF0000', '#000000', '#FF0000', '#000000', '#FF0000', '#000000',
+  '#FF0000', '#000000', '#FF0000', '#000000', '#FF0000', '#000000', '#FF0000',
+  '#000000', '#FF0000', '#000000', '#FF0000', '#000000', '#FF0000', '#000000',
+  '#FF0000'
+];
 
+const numericLabels = rouletteNumbers.map(n => n.toString());
+const options = [...numericLabels];
+const colors = [...rouletteColors];
 const baseOptions = [
   '0 - VERDE',
-  '1 - ROJO',
-  '2 - NEGRO',
-  '3 - ROJO',
-  '4 - NEGRO',
-  '5 - ROJO',
-  '6 - NEGRO',
-  '7 - ROJO',
-  '8 - NEGRO',
-  '9 - ROJO',
-  '10 - NEGRO',
-  '11 - ROJO',
-  '12 - NEGRO',
-  '13 - ROJO',
-  '14 - NEGRO',
-  '15 - ROJO',
-  '16 - NEGRO',
-  '17 - ROJO',
-  '18 - NEGRO',
-  '19 - ROJO',
-  '20 - NEGRO',
-  '21 - ROJO',
-  '22 - NEGRO',
-  '23 - ROJO',
-  '24 - NEGRO',
-  '25 - ROJO',
-  '26 - NEGRO',
-  '27 - ROJO',
-  '28 - NEGRO',
-  '29 - ROJO',
-  '30 - NEGRO',
-  '31 - ROJO',
   '32 - NEGRO',
-  '33 - ROJO',
+  '15 - ROJO',
+  '19 - NEGRO',
+  '4 - ROJO',
+  '21 - NEGRO',
+  '2 - ROJO',
+  '25 - NEGRO',
+  '17 - ROJO',
   '34 - NEGRO',
+  '6 - ROJO',
+  '27 - NEGRO',
+  '13 - ROJO',
+  '36 - NEGRO',
+  '11 - ROJO',
+  '30 - NEGRO',
+  '8 - ROJO',
+  '23 - NEGRO',
+  '10 - ROJO',
+  '5 - NEGRO',
+  '24 - ROJO',
+  '16 - NEGRO',
+  '33 - ROJO',
+  '1 - NEGRO',
+  '20 - ROJO',
+  '14 - NEGRO',
+  '31 - ROJO',
+  '9 - NEGRO',
+  '22 - ROJO',
+  '18 - NEGRO',
+  '29 - ROJO',
+  '7 - NEGRO',
+  '28 - ROJO',
+  '12 - NEGRO',
   '35 - ROJO',
-  '36 - NEGRO'
+  '3 - NEGRO',
+  '26 - ROJO'
 ];
 
 function createWheelPaths() {
@@ -152,10 +157,15 @@ export default function GameThreeScreen({ route }) {
           }).start(() => {
             angle.current = angle.current % 360;
             spinAnim.setValue(angle.current);
-            const randomIndex = Math.floor(Math.random() * options.length);
-            const index = parseInt(options[randomIndex % baseOptions.length], 10);
+            const segmentAngle = 360 / options.length;
+            const normalizedAngle = (angle.current % 360 + 360) % 360;
+            const pointerAngle = 270; // vertical center at top
+            const relativeAngle = (pointerAngle - normalizedAngle + 360) % 360;
+            const selectedIndex = Math.floor((relativeAngle + segmentAngle / 2) % 360 / segmentAngle);
+            const index = parseInt(options[selectedIndex], 10);
             const jugador = jugadores.length ? jugadores[Math.floor(Math.random() * jugadores.length)] : 'Jugador';
-            setSelected(`${jugador}: ${baseOptions[index]}`);
+            setSelected(`${jugador}: ${baseOptions[selectedIndex]}`);
+            console.log(`Número de la ruleta: ${index}. Frase: ${baseOptions[selectedIndex]}`);
           });
         }
       },
@@ -175,11 +185,16 @@ export default function GameThreeScreen({ route }) {
       easing: Easing.out(Easing.ease),
       useNativeDriver: true,
     }).start(() => {
-      const index = parseInt(options[randomIndex % baseOptions.length], 10);
-      const jugador = jugadores.length ? jugadores[Math.floor(Math.random() * jugadores.length)] : 'Jugador';
-      setSelected(`${jugador}: ${baseOptions[index]}`);
       angle.current = targetAngle % 360;
       spinAnim.setValue(angle.current);
+      const normalizedAngle = (angle.current % 360 + 360) % 360;
+      const pointerAngle = 270; // vertical center at top
+      const relativeAngle = (pointerAngle - normalizedAngle + 360) % 360;
+      const selectedIndex = Math.floor((relativeAngle + segmentAngle / 2) % 360 / segmentAngle);
+      const index = parseInt(options[selectedIndex], 10);
+      const jugador = jugadores.length ? jugadores[Math.floor(Math.random() * jugadores.length)] : 'Jugador';
+      setSelected(`${jugador}: ${baseOptions[selectedIndex]}`);
+      console.log(`Número de la ruleta: ${index}. Frase: ${baseOptions[selectedIndex]}`);
       setIsSpinning(false);
     });
   };
@@ -228,7 +243,7 @@ export default function GameThreeScreen({ route }) {
             </View>
           );
         })()}
-        {/* <View style={styles.pointer} /> */}
+        <View style={styles.pointer} />
         <View style={styles.wheelWrapper}>
           <Animated.View
             style={[
@@ -303,7 +318,7 @@ const styles = StyleSheet.create({
   },
   pointer: {
     position: 'absolute',
-    bottom: radius + 10,
+    bottom: radius - 1,
     left: '50%',
     marginLeft: -10,
     width: 0,
