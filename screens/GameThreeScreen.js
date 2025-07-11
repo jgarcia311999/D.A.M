@@ -234,13 +234,8 @@ export default function GameThreeScreen({ route }) {
           }}>
             <Ionicons name="arrow-back" size={28} color="#000" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => { /* vacío de momento */ }}>
-            <Ionicons name="ellipsis-vertical" size={28} color="#000" />
-          </TouchableOpacity>
         </View>
-        {/*
-          Dynamically position the textWrapper below the header using insets.top + 60
-        */}
+        
         {(() => {
           const dynamicTextWrapper = {
             position: 'absolute',
@@ -329,9 +324,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   resultContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: '#FFF8D1',
     paddingHorizontal: 16,
-    paddingVertical: 10,
+    paddingVertical: 16,
     marginTop: 16,
     marginHorizontal: 32,
     borderRadius: 8,
