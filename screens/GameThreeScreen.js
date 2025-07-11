@@ -1,7 +1,7 @@
 import * as Haptics from 'expo-haptics';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Animated, Easing, Dimensions, TouchableWithoutFeedback, PanResponder, SafeAreaView } from 'react-native';
-import Svg, { G, Path } from 'react-native-svg';
+import Svg, { G, Path, Text as SvgText } from 'react-native-svg';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -9,58 +9,58 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 const { width } = Dimensions.get('window');
 const radius = width * 0.99;
 
-const baseOptions = [
-  'Elige a alguien para que beba 2 tragos',
-  'BEBEN TODOS',
-  'Reta a alguien: el que pierda bebe',
-  'BEBEN TODOS',
-  'Haz que alguien cante un trozo de canción',
-  'BEBEN TODOS',
-  'Elige a alguien que cuente un secreto',
-  'BEBEN TODOS',
-  'Cambia de sitio con quien elijas',
-  'BEBEN TODOS',
-  'Haz que alguien te mire fijamente 10 segundos',
-  'BEBEN TODOS',
-  'Intercambia una prenda con alguien',
-  'BEBEN TODOS',
-  'Obliga a alguien a beber sin manos',
-  'BEBEN TODOS',
-  'Manda a alguien a imitar un animal',
-  'BEBEN TODOS',
-  'Obliga a alguien a hablar con acento raro',
-  'BEBEN TODOS',
-  'Haz que dos personas se reten a piedra, papel o tijera',
-  'BEBEN TODOS',
-  'Elige a alguien que hable sin usar vocales hasta su turno',
-  'BEBEN TODOS',
-  'Haz que alguien baile durante 10 segundos',
-  'BEBEN TODOS',
-  'Elige a dos personas para cambiar sus bebidas',
-  'BEBEN TODOS',
-  'Haz que alguien diga su apodo más raro',
-  'BEBEN TODOS',
-  'Haz que alguien improvise un rap',
-  'BEBEN TODOS',
-  'Elige a alguien para que haga una mini actuación',
-  'BEBEN TODOS',
-  'Manda a alguien a contar su crush de la mesa',
-  'BEBEN TODOS',
-  'Haz que alguien beba mientras cuenta hasta 10',
-  'BEBEN TODOS',
-  'Haz que alguien invente una nueva regla del juego'
-];
-
-const numericLabels = Array.from({ length: baseOptions.length }, (_, i) => i.toString());
+const numericLabels = Array.from({ length: 37 }, (_, i) => i.toString());
 
 const options = [];
 const colors = [];
 for (let i = 0; i < numericLabels.length; i++) {
   options[i] = numericLabels[i];
-  options[i + numericLabels.length] = numericLabels[i];
-  colors[i] = i % 2 === 0 ? '#000000' : '#FF0000';
-  colors[i + numericLabels.length] = colors[i];
+  if (i === 0) {
+    colors[i] = '#008000'; // green for segment 0
+  } else {
+    colors[i] = i % 2 === 0 ? '#000000' : '#FF0000';
+  }
 }
+
+const baseOptions = [
+  '0 - VERDE',
+  '1 - ROJO',
+  '2 - NEGRO',
+  '3 - ROJO',
+  '4 - NEGRO',
+  '5 - ROJO',
+  '6 - NEGRO',
+  '7 - ROJO',
+  '8 - NEGRO',
+  '9 - ROJO',
+  '10 - NEGRO',
+  '11 - ROJO',
+  '12 - NEGRO',
+  '13 - ROJO',
+  '14 - NEGRO',
+  '15 - ROJO',
+  '16 - NEGRO',
+  '17 - ROJO',
+  '18 - NEGRO',
+  '19 - ROJO',
+  '20 - NEGRO',
+  '21 - ROJO',
+  '22 - NEGRO',
+  '23 - ROJO',
+  '24 - NEGRO',
+  '25 - ROJO',
+  '26 - NEGRO',
+  '27 - ROJO',
+  '28 - NEGRO',
+  '29 - ROJO',
+  '30 - NEGRO',
+  '31 - ROJO',
+  '32 - NEGRO',
+  '33 - ROJO',
+  '34 - NEGRO',
+  '35 - ROJO',
+  '36 - NEGRO'
+];
 
 function createWheelPaths() {
   const angle = (2 * Math.PI) / options.length;
@@ -82,13 +82,28 @@ function createWheelPaths() {
       'Z'
     ].join(' ');
 
-    paths.push({ path: pathData, color: colors[i], label: options[i] });
+    const labelAngle = startAngle + angle / 2;
+    const labelRadius = radius * 0.92;
+    const labelX = radius + labelRadius * Math.cos(labelAngle);
+    const labelY = radius + labelRadius * Math.sin(labelAngle);
+    // Rotate label so it appears upright and readable from outside the circle, add 90 degrees to align tangentially
+    const labelRotation = (labelAngle * 180) / Math.PI + 90;
+
+    paths.push({
+      path: pathData,
+      color: colors[i],
+      label: options[i],
+      labelX,
+      labelY,
+      labelRotation,
+    });
   }
 
   return paths;
 }
 
-export default function GameThreeScreen() {
+export default function GameThreeScreen({ route }) {
+  const { jugadores = [] } = route.params || {};
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
 
@@ -97,6 +112,26 @@ export default function GameThreeScreen() {
   const [isSpinning, setIsSpinning] = useState(false);
   const angle = useRef(0);
   const wheelPaths = createWheelPaths();
+
+  const scaleAnim = useRef(new Animated.Value(1)).current;
+
+  useEffect(() => {
+    if (selected) {
+      scaleAnim.setValue(1);
+      Animated.sequence([
+        Animated.timing(scaleAnim, {
+          toValue: 1.2,
+          duration: 150,
+          useNativeDriver: true,
+        }),
+        Animated.timing(scaleAnim, {
+          toValue: 1,
+          duration: 150,
+          useNativeDriver: true,
+        })
+      ]).start();
+    }
+  }, [selected]);
 
   const panResponder = useRef(
     PanResponder.create({
@@ -119,7 +154,8 @@ export default function GameThreeScreen() {
             spinAnim.setValue(angle.current);
             const randomIndex = Math.floor(Math.random() * options.length);
             const index = parseInt(options[randomIndex % baseOptions.length], 10);
-            setSelected(baseOptions[index]);
+            const jugador = jugadores.length ? jugadores[Math.floor(Math.random() * jugadores.length)] : 'Jugador';
+            setSelected(`${jugador}: ${baseOptions[index]}`);
           });
         }
       },
@@ -140,7 +176,8 @@ export default function GameThreeScreen() {
       useNativeDriver: true,
     }).start(() => {
       const index = parseInt(options[randomIndex % baseOptions.length], 10);
-      setSelected(baseOptions[index]);
+      const jugador = jugadores.length ? jugadores[Math.floor(Math.random() * jugadores.length)] : 'Jugador';
+      setSelected(`${jugador}: ${baseOptions[index]}`);
       angle.current = targetAngle % 360;
       spinAnim.setValue(angle.current);
       setIsSpinning(false);
@@ -166,11 +203,32 @@ export default function GameThreeScreen() {
             <Ionicons name="ellipsis-vertical" size={28} color="#000" />
           </TouchableOpacity>
         </View>
-        <View style={styles.textWrapper}>
-          <Text style={styles.title}>Ruleta del shot</Text>
-          {selected && <Text style={styles.result}>{selected}</Text>}
-        </View>
-        <View style={styles.pointer} />
+        {/*
+          Dynamically position the textWrapper below the header using insets.top + 60
+        */}
+        {(() => {
+          const dynamicTextWrapper = {
+            position: 'absolute',
+            top: insets.top + 60,
+            left: 0,
+            right: 0,
+            alignItems: 'center',
+            zIndex: 2,
+          };
+          return (
+            <View style={dynamicTextWrapper}>
+              <Text style={styles.title}>Ruleta del shot</Text>
+              {selected && (
+                <View style={styles.resultContainer}>
+                  <Animated.Text style={[styles.result, { transform: [{ scale: scaleAnim }] }]}>
+                    {selected}
+                  </Animated.Text>
+                </View>
+              )}
+            </View>
+          );
+        })()}
+        {/* <View style={styles.pointer} /> */}
         <View style={styles.wheelWrapper}>
           <Animated.View
             style={[
@@ -182,7 +240,21 @@ export default function GameThreeScreen() {
             <Svg width={radius * 2} height={radius * 2}>
               <G>
                 {wheelPaths.map((segment, index) => (
-                  <Path key={index} d={segment.path} fill={segment.color} stroke="#000" strokeWidth={1} />
+                  <React.Fragment key={index}>
+                    <Path d={segment.path} fill={segment.color} stroke="#000" strokeWidth={1} />
+                    <SvgText
+                      x={segment.labelX}
+                      y={segment.labelY}
+                      fill="#fff"
+                      fontSize="12"
+                      fontWeight="bold"
+                      textAnchor="middle"
+                      alignmentBaseline="middle"
+                      transform={`rotate(${segment.labelRotation} ${segment.labelX} ${segment.labelY})`}
+                    >
+                      {segment.label}
+                    </SvgText>
+                  </React.Fragment>
                 ))}
               </G>
             </Svg>
@@ -220,6 +292,14 @@ const styles = StyleSheet.create({
     color: '#000',
     fontFamily: 'Panchang-Bold',
     textAlign: 'center',
+  },
+  resultContainer: {
+    backgroundColor: '#fff',
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    marginTop: 16,
+    marginHorizontal: 32,
+    borderRadius: 8,
   },
   pointer: {
     position: 'absolute',
@@ -265,13 +345,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  textWrapper: {
-    position: 'absolute',
-    top: 70,
-    left: 0,
-    right: 0,
-    alignItems: 'center',
-    zIndex: 2,
-  },
 
   });
