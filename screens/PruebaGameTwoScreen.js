@@ -13,6 +13,8 @@ const generarBarajaCompleta = () => {
 
 import React, { useState, useRef, useEffect } from 'react';
 import { Animated } from 'react-native';
+import { Dimensions } from 'react-native';
+const { width, height } = Dimensions.get('window');
 import * as Haptics from 'expo-haptics';
 import { View, Text, Button, StyleSheet, Modal, TouchableOpacity, ScrollView, Image, SafeAreaView, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -450,8 +452,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
     color: '#000',
     fontFamily: 'Panchang-Regular',
-    paddingHorizontal: 50,
     textAlign: 'center',
+    paddingHorizontal: 0,
   },
   accion: {
     fontSize: 18,
@@ -459,8 +461,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#000',
     fontFamily: 'Panchang-Regular',
-    paddingHorizontal: 50,
-    textAlign: 'center',
+    paddingHorizontal: 0,
   },
   tragos: {
     fontSize: 16,
@@ -563,8 +564,8 @@ const styles = StyleSheet.create({
   },
   cartaMarco: {
     alignSelf: 'center',
-    width: '100%',
-    height: 530,
+    width: width * 0.98,        
+    height: height * 0.8,       
     marginVertical: 10,
     position: 'relative',
     justifyContent: 'center',
@@ -578,13 +579,12 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   textoEnCarta: {
-    width: '100%',
     position: 'absolute',
-    top: 120,
-    left: 0,
-    right: 0,
+    top: height * 0.2,
+    paddingHorizontal: 32,
     alignItems: 'center',
     alignSelf: 'center',
+    width: width * 0.85,
   },
   cartaFade: {
     position: 'absolute',
