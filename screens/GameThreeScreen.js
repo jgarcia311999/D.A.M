@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { width } = Dimensions.get('window');
-const radius = width * 0.35;
+const radius = width * 0.45;
 
 const baseOptions = [
   '1 trago',
@@ -138,17 +138,17 @@ export default function GameThreeScreen() {
   });
 
   return (
-    <TouchableWithoutFeedback disabled={!isSpinning}>
+    <TouchableWithoutFeedback disabled={isSpinning} onPress={spinWheel}>
       <SafeAreaView style={[styles.container, { paddingTop: 50 }]}>
         <View style={[styles.header, { paddingTop: insets.top + 10 }]}>
           <TouchableOpacity onPress={() => {
             Haptics.selectionAsync();
             navigation.goBack();
           }}>
-            <Ionicons name="arrow-back" size={28} color="#fff" />
+            <Ionicons name="arrow-back" size={28} color="#000" />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => { /* vacío de momento */ }}>
-            <Ionicons name="ellipsis-vertical" size={28} color="#fff" />
+            <Ionicons name="ellipsis-vertical" size={28} color="#000" />
           </TouchableOpacity>
         </View>
         <Text style={styles.title}>Ruleta del shot</Text>
@@ -162,13 +162,6 @@ export default function GameThreeScreen() {
             </G>
           </Svg>
         </Animated.View>
-        <TouchableOpacity
-          style={[styles.button, isSpinning && { opacity: 0.5 }]}
-          onPress={spinWheel}
-          disabled={isSpinning}
-        >
-          <Text style={styles.buttonText}>Dale vueltas</Text>
-        </TouchableOpacity>
         {selected && <Text style={styles.result}>{selected}</Text>}
       </SafeAreaView>
     </TouchableWithoutFeedback>
@@ -197,18 +190,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     borderRadius: 10,
   },
-  buttonText: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: 'bold',
-    fontFamily: 'Panchang-Bold',
-    textAlign: 'center',
-  },
   result: {
     marginTop: 30,
     fontSize: 20,
     fontWeight: '600',
-    color: '#fff',
+    color: '#000',
     fontFamily: 'Panchang-Bold',
     textAlign: 'center',
   },
