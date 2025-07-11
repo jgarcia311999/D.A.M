@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { width } = Dimensions.get('window');
-const radius = width * 0.45;
+const radius = width * 0.7;
 
 const baseOptions = [
   '1 trago',
@@ -151,18 +151,28 @@ export default function GameThreeScreen() {
             <Ionicons name="ellipsis-vertical" size={28} color="#000" />
           </TouchableOpacity>
         </View>
-        <Text style={styles.title}>Ruleta del shot</Text>
+        <View style={styles.textWrapper}>
+          <Text style={styles.title}>Ruleta del shot</Text>
+          {selected && <Text style={styles.result}>{selected}</Text>}
+        </View>
         <View style={styles.pointer} />
-        <Animated.View style={{ transform: [{ rotate: spin }] }} {...panResponder.panHandlers}>
-          <Svg width={radius * 2} height={radius * 2}>
-            <G>
-              {wheelPaths.map((segment, index) => (
-                <Path key={index} d={segment.path} fill={segment.color} stroke="#000" strokeWidth={1} />
-              ))}
-            </G>
-          </Svg>
-        </Animated.View>
-        {selected && <Text style={styles.result}>{selected}</Text>}
+        <View style={styles.wheelWrapper}>
+          <Animated.View
+            style={[
+              styles.wheelContainer,
+              { transform: [{ rotate: spin }] }
+            ]}
+            {...panResponder.panHandlers}
+          >
+            <Svg width={radius * 2} height={radius * 2}>
+              <G>
+                {wheelPaths.map((segment, index) => (
+                  <Path key={index} d={segment.path} fill={segment.color} stroke="#000" strokeWidth={1} />
+                ))}
+              </G>
+            </Svg>
+          </Animated.View>
+        </View>
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );
@@ -178,7 +188,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
     color: '#000',
     fontFamily: 'Panchang-Bold',
     textAlign: 'center',
@@ -191,7 +200,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   result: {
-    marginTop: 30,
     fontSize: 20,
     fontWeight: '600',
     color: '#000',
@@ -200,15 +208,15 @@ const styles = StyleSheet.create({
   },
   pointer: {
     position: 'absolute',
-    top: (Dimensions.get('window').height / 2 - radius - 10),
+    bottom: radius + 10,
     left: '50%',
     marginLeft: -10,
     width: 0,
     height: 0,
     borderLeftWidth: 10,
     borderRightWidth: 10,
-    borderBottomWidth: 0,
     borderTopWidth: 20,
+    borderBottomWidth: 0,
     borderLeftColor: 'transparent',
     borderRightColor: 'transparent',
     borderTopColor: '#000',
@@ -226,4 +234,29 @@ const styles = StyleSheet.create({
     zIndex: 2,
     
   },
-});
+  wheelWrapper: {
+    position: 'absolute',
+    bottom: 0,
+    height: radius,
+    width: radius * 2,
+    overflow: 'hidden',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  wheelContainer: {
+    width: radius * 2,
+    height: radius * 2,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  textWrapper: {
+    position: 'absolute',
+    top: 70,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    zIndex: 2,
+  },
+
+  });
