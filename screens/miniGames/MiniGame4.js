@@ -177,8 +177,19 @@ const phrases = [
         animationType="slide"
         transparent={true}
         visible={modalVisible}
+        onRequestClose={() => {
+          Haptics.selectionAsync();
+          navigation.goBack();
+        }}
       >
-        <View style={styles.modalBackground}>
+        <TouchableOpacity
+          style={styles.modalBackground}
+          activeOpacity={1}
+          onPressOut={() => {
+            Haptics.selectionAsync();
+            navigation.goBack();
+          }}
+        >
           <View style={styles.modalContainer}>
             <Text style={styles.roomCode}>{roomCode}</Text>
             <QRCode value={`https://dam-multiplayer.vercel.app/?room=${roomCode}`} size={150} />
@@ -197,7 +208,7 @@ const phrases = [
               <Text style={styles.buttonText}>Comenzar</Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </TouchableOpacity>
       </Modal>
 
       <Modal
