@@ -3,7 +3,7 @@ name: EAS Update on Push to Main
 on:
   push:
     branches:
-      - main
+      - uat
 
 permissions:
   issues: write
