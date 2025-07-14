@@ -569,7 +569,6 @@ const styles = StyleSheet.create({
     height: '100%',
     resizeMode: 'contain',
     position: 'absolute',
-    borderRadius: 12,
   },
   textoEnCarta: {
     position: 'absolute',

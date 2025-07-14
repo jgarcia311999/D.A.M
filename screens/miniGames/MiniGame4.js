@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
+import QRCode from 'react-native-qrcode-svg';
 import { View, Text, Modal, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
+import { useFonts } from 'expo-font';
 
 import { useNavigation } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -14,6 +16,20 @@ const generateRoomCode = () => {
 };
 
 const MiniGame4 = ({ route }) => {
+  const [fontsLoaded] = useFonts({
+    'Panchang-Bold': require('../../assets/fonts/Panchang-Bold.otf'),
+    'Panchang-Extrabold': require('../../assets/fonts/Panchang-Extrabold.otf'),
+    'Panchang-Extralight': require('../../assets/fonts/Panchang-Extralight.otf'),
+    'Panchang-Light': require('../../assets/fonts/Panchang-Light.otf'),
+    'Panchang-Medium': require('../../assets/fonts/Panchang-Medium.otf'),
+    'Panchang-Regular': require('../../assets/fonts/Panchang-Regular.otf'),
+    'Panchang-Semibold': require('../../assets/fonts/Panchang-Semibold.otf'),
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
   const [modalVisible, setModalVisible] = useState(true);
@@ -52,8 +68,6 @@ const phrases = [
   "¿Quién sería el más probable en tener una noche con su ex?",
   "¿Quién ha tenido sexo en un lugar público sin que lo pillaran?"
 ];
-
-  // Removed crearSalaUnica and its call from here.
 
   useEffect(() => {
     if (!roomCode) return;
@@ -113,50 +127,50 @@ const phrases = [
           Haptics.selectionAsync();
           navigation.goBack();
         }}>
-          <Ionicons name="arrow-back" size={28} color="#fff" />
+          <Ionicons name="arrow-back" size={28} color="#000" />
         </TouchableOpacity>
       </View>
       {!modalVisible && (
-        <>
-          <Text style={styles.roomCodeDisplay}>Código de Sala: {roomCode}</Text>
-          <Text style={styles.phrase}>{selectedPhrase}</Text>
+        <View style={{ flex: 1, justifyContent: 'space-between' }}>
+          <View>
+            <Text style={styles.roomCodeDisplay}>{roomCode}</Text>
+            <Text style={styles.phrase}>{selectedPhrase}</Text>
 
-          <Text style={styles.dropdownLabel}>Selecciona un jugador:</Text>
-          <View style={styles.jugadoresWrapper}>
-            {jugadores.map((nombre) => (
-              <TouchableOpacity
-                key={nombre}
-                onPress={async () => {
-                  setJugadorSeleccionado(nombre);
-                  try {
-                    const salaRef = doc(db, 'salas', roomCode);
-                    const nuevaVotacion = {};
-
-                    jugadores.forEach(j => {
-                      nuevaVotacion[`votos.${j}`] = j === nombre ? 1 : 0;
-                    });
-
-                    await updateDoc(salaRef, nuevaVotacion);
-                    console.log(`Voto actualizado: ${nombre}`);
-                  } catch (error) {
-                    console.error('Error al registrar voto:', error);
-                  }
-                }}
-                style={[
-                  styles.jugador,
-                  jugadorSeleccionado === nombre && { backgroundColor: '#2ecc71' }
-                ]}>
-                <Text style={styles.jugadorTexto}>{nombre}</Text>
-              </TouchableOpacity>
-            ))}
+            <View style={styles.jugadoresWrapper}>
+              {jugadores.map((nombre) => (
+                <TouchableOpacity
+                  key={nombre}
+                  onPress={async () => {
+                    setJugadorSeleccionado(nombre);
+                    try {
+                      const salaRef = doc(db, 'salas', roomCode);
+                      const nuevaVotacion = {};
+                      jugadores.forEach(j => {
+                        nuevaVotacion[`votos.${j}`] = j === nombre ? 1 : 0;
+                      });
+                      await updateDoc(salaRef, nuevaVotacion);
+                      console.log(`Voto actualizado: ${nombre}`);
+                    } catch (error) {
+                      console.error('Error al registrar voto:', error);
+                    }
+                  }}
+                  style={[
+                    styles.jugador,
+                    jugadorSeleccionado === nombre && { backgroundColor: '#2ecc71' }
+                  ]}>
+                  <Text style={styles.jugadorTexto}>{nombre}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
           </View>
+
           <TouchableOpacity
             style={styles.roundButton}
             onPress={() => setVotosModalVisible(true)}
           >
             <Text style={styles.buttonText}>Pasar de ronda</Text>
           </TouchableOpacity>
-        </>
+        </View>
       )}  
 
       <Modal
@@ -166,8 +180,8 @@ const phrases = [
       >
         <View style={styles.modalBackground}>
           <View style={styles.modalContainer}>
-            <Text style={styles.modalTitle}>Código de Sala</Text>
             <Text style={styles.roomCode}>{roomCode}</Text>
+            <QRCode value={`https://dam-multiplayer.vercel.app/?room=${roomCode}`} size={150} />
             <TextInput
               placeholder="Introduce tu nombre"
               placeholderTextColor="#888"
@@ -278,7 +292,7 @@ const phrases = [
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#121212',
+    backgroundColor: '#70B77C',
     padding: 20,
     paddingTop: 60,
   },
@@ -294,22 +308,25 @@ const styles = StyleSheet.create({
   },
   roomCodeDisplay: {
     fontSize: 18,
-    color: '#fff',
+    color: '#000',
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
+    fontFamily: 'Panchang-Regular',
   },
   phrase: {
     fontSize: 20,
-    color: '#fff',
+    color: '#000',
     textAlign: 'center',
     marginBottom: 30,
+    fontFamily: 'Panchang-Bold',
   },
   dropdownLabel: {
     fontSize: 16,
-    color: '#fff',
+    color: '#000',
     marginBottom: 10,
     textAlign: 'center',
+    fontFamily: 'Panchang-Regular',
   },
   picker: {
     height: 50,
@@ -334,12 +351,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 10,
     fontWeight: '600',
+    fontFamily: 'Panchang-Regular',
   },
   roomCode: {
     fontSize: 36,
     fontWeight: 'bold',
     marginVertical: 20,
     letterSpacing: 2,
+    fontFamily: 'Panchang-Regular',
   },
   button: {
     marginTop: 15,
@@ -349,9 +368,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   buttonText: {
-    color: '#fff',
+    color: '#000',
     fontSize: 16,
     fontWeight: '600',
+    fontFamily: 'Panchang-Regular',
   },
   jugadoresWrapper: {
     flexDirection: 'row',
@@ -370,8 +390,9 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   jugadorTexto: {
-    color: '#fff',
+    color: '#000',
     fontWeight: 'bold',
+    fontFamily: 'Panchang-Regular',
   },
   roundButton: {
     marginTop: 25,
@@ -391,6 +412,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     backgroundColor: '#f9f9f9',
     color: '#000',
+    fontFamily: 'Panchang-Regular',
   },
 });
 
