@@ -1,10 +1,12 @@
+
+
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions, TouchableWithoutFeedback, Animated } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 
 const { height, width } = Dimensions.get('window');
 
-export default function TittleScreen({ navigation }) {
+export default function TittleMobile({ navigation }) {
   const [burbujas, setBurbujas] = React.useState([]);
 
   React.useEffect(() => {
@@ -97,7 +99,6 @@ export default function TittleScreen({ navigation }) {
             <Text style={styles.damLineTop}>la</Text>
             <Text style={styles.damLineBottom}>prv.</Text>
           </View>
-          {/* <Text style={styles.slogan}>calienta Motores</Text> */}
         </TouchableOpacity>
       </View>
     </TouchableWithoutFeedback>
