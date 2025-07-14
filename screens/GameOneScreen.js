@@ -377,13 +377,14 @@ export default function GameOneScreen({ route, navigation }) {
       marginTop: 10, // para que no tape el header
     },
     cardImage: {
-      width: '20%',
-      aspectRatio: 0.625,
+      width: 70,
+      height: 112, // Mantiene una proporción realista de carta (0.625)
       marginHorizontal: 5,
       borderRadius: 12,
       borderWidth: 1.5,
       borderColor: 'black',
       backgroundColor: '#D89568',
+      resizeMode: 'contain',
     },
     turno: {
       fontSize: 22,

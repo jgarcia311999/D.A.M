@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { View, Image, FlatList, ScrollView, Dimensions, StyleSheet, SafeAreaView, TouchableOpacity, Animated, Text, TextInput } from 'react-native';
+import { View, Image, FlatList, ScrollView, Dimensions, StyleSheet, SafeAreaView, TouchableOpacity, Animated, Text, TextInput, Platform, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import PjCartas from '../assets/nuevos_personajes/cartas_pj.png';
@@ -116,32 +116,65 @@ export default function HomeScreen({ navigation, route }) {
     setCurrentIndex(index);
   };
 
-  const renderItem = ({ item, index }) => (
-    <TouchableOpacity
-      style={[styles.slide, { backgroundColor: item.color, paddingTop: topPadding }]}
-      onPress={() => navigation.navigate(item.screen, { jugadores })}
-      activeOpacity={0.9}
-    >
-      <View style={styles.slideTop}>
-        <Text
-          style={styles.slideTitle}
-          numberOfLines={2}
-          adjustsFontSizeToFit
-          minimumFontScale={0.8}
-        >
-          {item.nombre}
-        </Text>
-      </View>
+  const handleRight = () => {
+    const nextIndex = Math.min(currentIndex + 1, juegos.length - 1);
+    const scrollToX = nextIndex * width;
 
-      <View style={styles.slideMiddle}>
-        <Image source={item.imagen} style={styles.slideImage} resizeMode="contain" />
-      </View>
+    if (Platform.OS === 'web') {
+      const scrollEl = document.getElementById('carruselScroll');
+      if (scrollEl) {
+        scrollEl.scrollLeft = scrollToX;
+      }
+    } else {
+      flatListRef.current?.scrollTo({ x: scrollToX, animated: true });
+    }
 
-      <View style={styles.slideBottom}>
-        <Text style={styles.slideDescription}>{item.descripcion}</Text>
-      </View>
-    </TouchableOpacity>
-  );
+    setCurrentIndex(nextIndex);
+  };
+
+  const handleLeft = () => {
+    const prevIndex = Math.max(currentIndex - 1, 0);
+    const scrollToX = prevIndex * width;
+
+    if (Platform.OS === 'web') {
+      const scrollEl = document.getElementById('carruselScroll');
+      if (scrollEl) {
+        scrollEl.scrollLeft = scrollToX;
+      }
+    } else {
+      flatListRef.current?.scrollTo({ x: scrollToX, animated: true });
+    }
+
+    setCurrentIndex(prevIndex);
+  };
+
+  const renderItem = ({ item, index }) => {
+    const Wrapper = Platform.OS === 'web' ? View : TouchableOpacity;
+
+    return (
+      <Wrapper
+        style={[styles.slide, { backgroundColor: item.color, paddingTop: topPadding }]}
+        {...(Platform.OS === 'web'
+          ? {
+              onClick: () => navigation.navigate(item.screen, { jugadores }),
+            }
+          : {
+              onPress: () => navigation.navigate(item.screen, { jugadores }),
+              activeOpacity: 0.9,
+            })}
+      >
+        <View style={styles.slideTop}>
+          <Text style={styles.slideTitle}>{item.nombre}</Text>
+        </View>
+        <View style={styles.slideMiddle}>
+          <Image source={item.imagen} style={styles.slideImage} resizeMode="contain" />
+        </View>
+        <View style={styles.slideBottom}>
+          <Text style={styles.slideDescription}>{item.descripcion}</Text>
+        </View>
+      </Wrapper>
+    );
+  };
 
   return (
     <View style={[styles.container, {
@@ -187,34 +220,74 @@ export default function HomeScreen({ navigation, route }) {
         >
           {!modoLista && (
             <View style={styles.bottomControls}>
-              <View style={styles.dotsInline}>
-                {juegos.map((_, i) => (
-                  <View
-                    key={i}
-                    style={[
-                      styles.dot,
-                      currentIndex === i && styles.dotActive,
-                    ]}
-                  />
-                ))}
+              <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+                {Platform.OS !== 'web' && (
+                  <View style={[styles.dotsInline, { marginBottom: 24 }]}>
+                    {juegos.map((_, i) => (
+                      <View
+                        key={i}
+                        style={[
+                          styles.dot,
+                          currentIndex === i && styles.dotActive,
+                        ]}
+                      />
+                    ))}
+                  </View>
+                )}
+                {Platform.OS === 'web' && (
+                  <TouchableOpacity
+                    style={styles.botonCarruselWeb}
+                    onPress={() => {
+                      const juego = juegos[currentIndex];
+                      if (juego) navigation.navigate(juego.screen, { jugadores });
+                    }}
+                  >
+                    <Text style={styles.jugadoresButtonText}>
+                      Emborracharse
+                    </Text>
+                  </TouchableOpacity>
+                )}
               </View>
             </View>
           )}
         </View>
         <Animated.View style={{ flex: 1, opacity: fadeCarrusel, position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
-          <FlatList
-            data={juegos}
-            ref={flatListRef}
-            renderItem={renderItem}
-            horizontal
-            pagingEnabled
-            showsHorizontalScrollIndicator={false}
-            onScroll={handleScroll}
-            scrollEventThrottle={16}
-            keyExtractor={(item) => item.id.toString()}
-          />
+          {Platform.OS === 'web' ? (
+            <ScrollView
+              nativeID="carruselScroll"
+              horizontal
+              pagingEnabled
+              showsHorizontalScrollIndicator={false}
+              onScroll={handleScroll}
+              scrollEventThrottle={16}
+              contentContainerStyle={{ flexGrow: 1 }}
+            >
+              {juegos.map((item, index) => renderItem({ item, index }))}
+            </ScrollView>
+          ) : (
+            <FlatList
+              data={juegos}
+              ref={flatListRef}
+              renderItem={renderItem}
+              horizontal
+              pagingEnabled
+              showsHorizontalScrollIndicator={false}
+              onScroll={handleScroll}
+              scrollEventThrottle={16}
+              keyExtractor={(item) => item.id.toString()}
+            />
+          )}
         </Animated.View>
-
+        {Platform.OS === 'web' && !modoLista && (
+          <View style={{ position: 'absolute', top: '50%', left: 10, right: 10, flexDirection: 'row', justifyContent: 'space-between', zIndex: 10 }}>
+            <TouchableOpacity onPress={handleLeft}>
+              <Ionicons name="chevron-back" size={40} color="#000" />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleRight}>
+              <Ionicons name="chevron-forward" size={40} color="#000" />
+            </TouchableOpacity>
+          </View>
+        )}
         <Animated.View style={{ flex: 1, opacity: fadeLista }}>
           <ScrollView
             style={{ flex: 1 }}
@@ -258,10 +331,14 @@ const styles = StyleSheet.create({
   },
   slide: {
     width: width,
+    minWidth: width,
     height: '100%',
     paddingHorizontal: 20,
-    // paddingTop: 80,
     paddingBottom: 80,
+    ...(Platform.OS === 'web' && {
+      pointerEvents: 'auto',
+      cursor: 'pointer',
+    }),
   },
   slideTop: {
     alignItems: 'center',
@@ -366,7 +443,7 @@ const styles = StyleSheet.create({
     bottom: 40,
     left: 20,
     right: 20,
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 10,
@@ -432,4 +509,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 10,
   },
-});
+
+
+  botonCarruselWeb: {
+    borderWidth: 2,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 8,
+    borderColor: '#000',
+    backgroundColor: 'transparent',
+    alignSelf: 'center',
+  },
+
+  });
