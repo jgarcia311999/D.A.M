@@ -43,6 +43,7 @@ const MiniGame4 = ({ route }) => {
   const [nombreJugador, setNombreJugador] = useState('');
   const [votos, setVotos] = useState({});
   const [votosModalVisible, setVotosModalVisible] = useState(false);
+  const [botonHabilitado, setBotonHabilitado] = useState(false);
 
   const [jugadores, setJugadores] = useState([]);
   console.log('Jugadores recibidos:', jugadores);
@@ -142,6 +143,7 @@ const phrases = [
                   key={nombre}
                   onPress={async () => {
                     setJugadorSeleccionado(nombre);
+                    setBotonHabilitado(true);
                     try {
                       const salaRef = doc(db, 'salas', roomCode);
                       const nuevaVotacion = {};
@@ -165,8 +167,12 @@ const phrases = [
           </View>
 
           <TouchableOpacity
-            style={styles.roundButton}
+            style={[
+              styles.roundButton,
+              !botonHabilitado && { backgroundColor: 'gray' }
+            ]}
             onPress={() => setVotosModalVisible(true)}
+            disabled={!botonHabilitado}
           >
             <Text style={styles.buttonText}>Pasar de ronda</Text>
           </TouchableOpacity>
@@ -258,8 +264,10 @@ const phrases = [
             <Text style={styles.modalTitle}>El más votado es:</Text>
             <Text style={styles.roomCode}>{jugadorSeleccionado || 'Ninguno'}</Text>
             <TouchableOpacity
-              style={styles.button}
+              style={[styles.button, !jugadorSeleccionado && { backgroundColor: 'gray' }]}
               onPress={async () => {
+                if (!jugadorSeleccionado) return;
+
                 const remaining = phrases.filter(p => !usedPhrases.includes(p));
                 let newPhrase = "Fin de frases";
 
@@ -290,6 +298,7 @@ const phrases = [
                 setJugadorSeleccionado('');
                 setResultadoVisible(false);
               }}
+              disabled={!jugadorSeleccionado}
             >
               <Text style={styles.buttonText}>Siguiente ronda</Text>
             </TouchableOpacity>
