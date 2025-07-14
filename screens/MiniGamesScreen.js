@@ -11,12 +11,14 @@ const minijuegos = [
   titulo: 'Mímica',
   descripcion: 'Actúa películas sin hablar, ¡adivina rápido!',
   descripcionDetallada: 'Un juego universal y sencillo de actuar y adivinar. Se forman dos equipos; un miembro de un equipo recibe en secreto el título de una película (o canción, libro, personaje famoso, etc.) y debe representarla con mímica sin hablar, para que su propio equipo la adivine en un tiempo limitado (30 segundos o 1 minuto). Si aciertan antes de que se acabe el tiempo, ganan un punto; luego le toca al otro equipo. Las risas están aseguradas con las interpretaciones exageradas. (Sin alcohol; ideal en equipos con al menos 4 personas en total, aunque se disfruta con grupos grandes.)',
+  tieneLogica: true
 },
 {
   id: 'telefono',
   titulo: 'Teléfono escacharrado',
   descripcion: 'Pasa un mensaje susurrando, ¡y ríete del resultado!',
   descripcionDetallada: 'Un juego clásico para reírse de cómo un mensaje se distorsiona. Todos se sientan en círculo. Una persona piensa una frase corta y se la susurra al oído al jugador de su derecha. Este, a su vez, la susurra al siguiente, y así sucesivamente. Al llegar al último jugador, este dice en voz alta lo que entendió. Por lo general, el mensaje acaba siendo muy diferente y disparatado comparado con la frase original, lo que provoca carcajadas. (Sin alcohol; ideal 5-10 personas o más.)',
+  tieneLogica: true
 },
 {
   id: 'sillas',
@@ -59,6 +61,7 @@ const minijuegos = [
   titulo: 'Palabras encadenadas',
   descripcion: 'Di palabras siguiendo la última sílaba.',
   descripcionDetallada: 'Juego sencillo para poner a prueba vocabulario y agilidad mental. El primer jugador dice una palabra cualquiera. El siguiente debe decir otra que comience con la última sílaba o letra de la palabra anterior. Por ejemplo, si el primero dice “fiesta”, el siguiente podría decir “tarta” (“ta” continúa “fies-ta”). Se continúa encadenando palabras así sucesivamente. No se pueden repetir palabras ya dichas; quien se quede bloqueado, diga una palabra inválida o tarde más de 5 segundos, pierde la ronda. Es ideal para jugar en cualquier lugar sin necesidad de objetos. (Sin alcohol; número de jugadores indefinido, mínimo 2, mejor en grupo.)',
+  tieneLogica: true
 },
 {
   id: 'no_te_rias',
@@ -71,6 +74,7 @@ const minijuegos = [
   titulo: 'Canta la palabra',
   descripcion: 'Canta una canción que contenga la palabra.',
   descripcionDetallada: 'Ideal para amantes de la música. Un jugador actúa como presentador y dice una palabra al azar (por ejemplo, “corazón”). El resto, ya sea individualmente o por equipos, debe pensar rápidamente y cantar una canción que incluya esa palabra en la letra. El primero que consiga recordar y cantar un fragmento válido gana la ronda para su equipo o para sí mismo. Luego se elige otra palabra y se repite. Este juego pone a prueba la memoria musical y suele acabar en mini karaoke improvisado. (Sin alcohol; ideal 3 o más personas.)',
+  tieneLogica: true
 },
 {
   id: 'beer_pong',
@@ -107,6 +111,7 @@ const minijuegos = [
   titulo: 'Tabú',
   descripcion: 'Da pistas sin decir palabras prohibidas.',
   descripcionDetallada: 'Un divertido juego de palabras que puedes preparar en el momento sin comprar nada. Se juega por equipos. El objetivo es que tu equipo adivine una palabra secreta que tú debes describirles sin mencionar la palabra en sí ni ciertos términos “tabú” relacionados. Por ejemplo, si la palabra prohibida es “hospital”, no podrías usar palabras evidentes como “médico” o “enfermo” al dar pistas. Puedes usar un generador de palabras aleatorias o pensar las palabras clave previamente y escribirlas en papel. Se turnan los equipos: mientras un miembro de un equipo da las pistas, el otro equipo vigila que no use ninguna palabra prohibida. Se puede usar un reloj para limitar el tiempo de cada turno y aumentar la emoción. Gana el equipo que adivine más palabras. (Sin alcohol; ideal jugar en equipos de 2-5 personas cada uno.)',
+  tieneLogica: true
 },
 ];
 
