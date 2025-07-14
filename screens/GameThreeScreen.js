@@ -322,6 +322,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF3B0',
     alignItems: 'center',
     justifyContent: 'center',
+    overflowX: 'hidden',
   },
   title: {
     fontSize: 24,
