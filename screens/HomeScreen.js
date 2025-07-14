@@ -221,37 +221,25 @@ export default function HomeScreen({ navigation, route }) {
           {!modoLista && (
             <View style={styles.bottomControls}>
               <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                {Platform.OS !== 'web' && (
-                  <View style={[styles.dotsInline, { marginBottom: 24 }]}>
-                    {juegos.map((_, i) => (
-                      <View
-                        key={i}
-                        style={[
-                          styles.dot,
-                          currentIndex === i && styles.dotActive,
-                        ]}
-                      />
-                    ))}
-                  </View>
-                )}
-                {Platform.OS === 'web' && (
-                  <TouchableOpacity
-                    style={styles.botonCarruselWeb}
-                    onPress={() => {
-                      const juego = juegos[currentIndex];
-                      if (juego) navigation.navigate(juego.screen, { jugadores });
-                    }}
-                  >
-                    <Text style={styles.jugadoresButtonText}>
-                      Emborracharse
-                    </Text>
-                  </TouchableOpacity>
-                )}
+                <View style={[styles.dotsInline, { marginBottom: 24 }]}>
+                  {juegos.map((_, i) => (
+                    <View
+                      key={i}
+                      style={[
+                        styles.dot,
+                        currentIndex === i && styles.dotActive,
+                      ]}
+                    />
+                  ))}
+                </View>
               </View>
             </View>
           )}
         </View>
-        <Animated.View style={{ flex: 1, opacity: fadeCarrusel, position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
+        <Animated.View
+          style={{ flex: 1, opacity: fadeCarrusel, position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
+          pointerEvents={Platform.OS === 'web' ? (modoLista ? 'none' : 'auto') : undefined}
+        >
           {Platform.OS === 'web' ? (
             <ScrollView
               nativeID="carruselScroll"
@@ -288,7 +276,10 @@ export default function HomeScreen({ navigation, route }) {
             </TouchableOpacity>
           </View>
         )}
-        <Animated.View style={{ flex: 1, opacity: fadeLista }}>
+        <Animated.View
+          style={{ flex: 1, opacity: fadeLista }}
+          pointerEvents={Platform.OS === 'web' ? (modoLista ? 'auto' : 'none') : undefined}
+        >
           <ScrollView
             style={{ flex: 1 }}
             contentContainerStyle={{ ...styles.scrollList, paddingTop: 0, marginTop: 0 }}
