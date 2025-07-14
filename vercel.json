@@ -1,12 +1,7 @@
-
-
 {
   "build": {
     "env": {},
-    "commands": {
-      "install": "npm install --legacy-peer-deps",
-      "build": "npm run build:web"
-    },
+    "command": "npm run build:web",
     "outputDirectory": "web-build"
   }
 }
