@@ -1,7 +1,5 @@
 {
-  "build": {
-    "env": {},
-    "command": "npm run build:web",
-    "outputDirectory": "web-build"
-  }
+  "buildCommand": "npm run build:web",
+  "outputDirectory": "web-build",
+  "env": {}
 }
