@@ -27,7 +27,8 @@
       "edgeToEdgeEnabled": true
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/chapas/chapa_flor.png",
+      "bundler": "webpack"
     },
     "extra": {
       "eas": {
