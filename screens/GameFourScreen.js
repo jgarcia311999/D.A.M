@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image, SafeAreaView, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image, SafeAreaView, ImageBackground, Platform } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Swiper from 'react-native-deck-swiper';
 // import { frases as frasesEstáticas } from '../data/frases';
@@ -173,12 +173,35 @@ useEffect(() => {
             stackScale={20}
             showSecondCard={true}
             animateCardOpacity
-            disableTopSwipe
-            disableBottomSwipe
+            disableLeftSwipe={Platform.OS === 'web'} disableRightSwipe={Platform.OS === 'web'} disableTopSwipe={Platform.OS === 'web'} disableBottomSwipe={Platform.OS === 'web'}
             infinite={false}
           />
         )}
       </View>
+      {Platform.OS === 'web' && (
+        <View style={styles.webNavButtons}>
+          <TouchableOpacity
+            style={styles.navButton}
+            onPress={() => {
+              if (cardIndex > 0) {
+                setCardIndex(cardIndex - 1);
+              }
+            }}
+          >
+            <Text style={styles.navButtonText}>Anterior</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.navButton}
+            onPress={() => {
+              if (cardIndex < frasesToUse.length - 1) {
+                setCardIndex(cardIndex + 1);
+              }
+            }}
+          >
+            <Text style={styles.navButtonText}>Siguiente</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </SafeAreaView>
   );
 };
@@ -280,6 +303,25 @@ const styles = StyleSheet.create({
     color: '#000',
     fontWeight: 'bold',
     fontFamily: 'Panchang-Bold',
+  },
+  webNavButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 20,
+    width: '100%',
+  },
+  navButton: {
+    backgroundColor: '#E2D6FF',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#000',
+  },
+  navButtonText: {
+    fontSize: 16,
+    fontFamily: 'Panchang-Bold',
+    color: '#000',
   },
 });
 
