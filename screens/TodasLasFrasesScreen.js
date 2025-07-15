@@ -8,7 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
-import { collection, getDocs, doc, deleteDoc, updateDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, deleteDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../utils/firebaseConfig';
 
 export default function TodasLasFrasesScreen() {
@@ -429,6 +429,7 @@ export default function TodasLasFrasesScreen() {
                         tipo: editTipo,
                         castigo: editCastigo,
                         visible: editVisible,
+                        timestamp: serverTimestamp(),
                       });
                       // Refrescar lista, cerrar modal y salir de edición
                       await refrescarFrases();
