@@ -333,6 +333,12 @@ export default function TodasLasFrasesScreen() {
           <View style={{ position: 'relative' }}>
             <TouchableOpacity
               onPress={() => {
+                const contraseña = window.prompt('Introduce la contraseña para acceder a funciones de Excel');
+                if (contraseña !== 'Contraseña') {
+                  alert('Contraseña incorrecta');
+                  return;
+                }
+
                 const opcion = window.prompt('¿Qué quieres hacer? Escribe "descargar" o "subir"');
                 if (!opcion) return;
                 if (opcion.toLowerCase() === 'descargar') {
