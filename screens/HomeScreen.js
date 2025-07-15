@@ -99,6 +99,21 @@ export default function HomeScreen({ navigation, route }) {
     AsyncStorage.setItem('jugadores', JSON.stringify(jugadores));
   }, [jugadores]);
 
+  useEffect(() => {
+    if (Platform.OS === 'web') {
+      const meta = document.querySelector('meta[name="theme-color"]');
+      const colorActual = juegos[currentIndex]?.color || '#000000';
+      if (meta) {
+        meta.setAttribute('content', colorActual);
+      } else {
+        const newMeta = document.createElement('meta');
+        newMeta.name = 'theme-color';
+        newMeta.content = colorActual;
+        document.head.appendChild(newMeta);
+      }
+    }
+  }, [currentIndex]);
+
   const agregarJugador = () => {
     if (newJugador.trim() !== '') {
       setJugadores([...jugadores, newJugador.trim()]);
