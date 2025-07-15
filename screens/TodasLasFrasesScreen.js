@@ -334,7 +334,7 @@ export default function TodasLasFrasesScreen() {
             <TouchableOpacity
               onPress={() => {
                 const contraseña = window.prompt('Introduce la contraseña para acceder a funciones de Excel');
-                if (contraseña !== 'Contraseña') {
+                if (contraseña !== 'tuborrachapass') {
                   alert('Contraseña incorrecta');
                   return;
                 }
