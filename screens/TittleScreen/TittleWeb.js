@@ -89,6 +89,19 @@ export default function TittleWeb({ navigation }) {
         backgroundColor: '#EFD74A',
         overflow: 'hidden',
       }}>
+        <Text style={{
+          position: 'absolute',
+          top: 20,
+          width: '100%',
+          textAlign: 'center',
+          fontSize: 14,
+          color: '#AC950F',
+          fontFamily: 'Panchang-Bold',
+          zIndex: 5,
+          paddingHorizontal: 20,
+        }}>
+          Solo para adultos (18+){'\n'}Juega con moderación.
+        </Text>
         <Svg
           width={width}
           height={height * 0.8}
