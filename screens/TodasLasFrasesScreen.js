@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, TouchableOpacity, FlatList, ActivityIndicator, TextInput, Modal, Alert, Platform } from 'react-native';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 // Si no tienes instalado react-native-gesture-handler, instálalo con: npm install react-native-gesture-handler
 // import { Swipeable } from 'react-native-gesture-handler';
 // Si no tienes instalado @react-native-picker/picker, instálalo con: npm install @react-native-picker/picker
@@ -8,7 +10,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
-import { collection, getDocs, doc, deleteDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, getDocs, doc, deleteDoc, updateDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../utils/firebaseConfig';
 
 export default function TodasLasFrasesScreen() {
@@ -30,6 +32,104 @@ export default function TodasLasFrasesScreen() {
   const [editTipo, setEditTipo] = useState('');
   const [editCastigo, setEditCastigo] = useState('');
   const [editVisible, setEditVisible] = useState(true);
+
+  // Función para exportar a Excel
+  const exportarExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(frases.map(f => ({
+      id: f.id,
+      frase: f.frase,
+      tipo: f.tipo || '',
+      castigo: f.castigo || '',
+      visible: f.visible === undefined ? true : f.visible,
+      eliminar: ''
+    })));
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Frases');
+    const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const data = new Blob([excelBuffer], { type: 'application/octet-stream' });
+    saveAs(data, 'frases.xlsx');
+  };
+
+  // Función para sincronizar frases importadas con Firestore según id
+  const reemplazarTodasLasFrases = async (frasesImportadas) => {
+    const snapshot = await getDocs(collection(db, 'frases'));
+    const firestoreFrases = {};
+    snapshot.docs.forEach(docSnap => {
+      firestoreFrases[docSnap.id] = docSnap.data();
+    });
+
+    let insertadas = 0;
+    let actualizadas = 0;
+    let eliminadas = 0;
+
+    const updateOrInsertPromises = frasesImportadas
+      .filter(item => item.id && item.frase && item.frase.trim() !== '')
+      .map(async (item) => {
+        const existing = firestoreFrases[item.id];
+        // Bloque para eliminar frases si corresponde
+        if (
+          existing &&
+          typeof item.eliminar === 'string' &&
+          ['true', 'sí', 'si'].includes(item.eliminar.trim().toLowerCase())
+        ) {
+          await deleteDoc(doc(db, 'frases', item.id));
+          eliminadas++;
+          return;
+        }
+        const cleanItem = {
+          frase: item.frase.trim(),
+          tipo: item.tipo || '',
+          castigo: item.castigo || '',
+          visible: item.visible === undefined ? false : item.visible === 'false' ? false : Boolean(item.visible),
+        };
+
+        if (existing) {
+          const isDifferent =
+            existing.frase !== cleanItem.frase ||
+            (existing.tipo || '') !== cleanItem.tipo ||
+            (existing.castigo || '') !== cleanItem.castigo ||
+            existing.visible !== cleanItem.visible;
+
+          if (isDifferent) {
+            await updateDoc(doc(db, 'frases', item.id), {
+              ...cleanItem,
+              timestamp: serverTimestamp(),
+            });
+            actualizadas++;
+          }
+        } else {
+          await setDoc(doc(db, 'frases', item.id), {
+            ...cleanItem,
+            timestamp: serverTimestamp(),
+          });
+          insertadas++;
+        }
+      });
+
+    await Promise.all(updateOrInsertPromises);
+    alert(`Frases sincronizadas:\nNuevas: ${insertadas}\nActualizadas: ${actualizadas}\nEliminadas: ${eliminadas}`);
+    await fetchFrases();
+  };
+
+  // Manejar subida de Excel
+  const handleExcelUpload = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, { type: 'array' });
+      const sheetName = workbook.SheetNames[0];
+      const sheet = workbook.Sheets[sheetName];
+      const frasesImportadas = XLSX.utils.sheet_to_json(sheet);
+
+      if (window.confirm('¿Estás seguro de que quieres reemplazar TODAS las frases?')) {
+        await reemplazarTodasLasFrases(frasesImportadas);
+      }
+    };
+    reader.readAsArrayBuffer(file);
+  };
 
   // Fetch frases from Firestore
   const fetchFrases = useCallback(async () => {
@@ -222,6 +322,32 @@ export default function TodasLasFrasesScreen() {
               <Ionicons name="refresh" size={28} color="#5E1DE6" />
             )}
           </TouchableOpacity>
+          {/* Excel Import/Export */}
+          <View style={{ position: 'relative' }}>
+            <TouchableOpacity
+              onPress={() => {
+                const opcion = window.prompt('¿Qué quieres hacer? Escribe "descargar" o "subir"');
+                if (!opcion) return;
+                if (opcion.toLowerCase() === 'descargar') {
+                  exportarExcel();
+                } else if (opcion.toLowerCase() === 'subir') {
+                  document.getElementById('excelInput').click();
+                } else {
+                  alert('Opción no válida');
+                }
+              }}
+              style={styles.tuFraseBtn}
+            >
+              <Text style={styles.tuFraseBtnText}>Excel</Text>
+            </TouchableOpacity>
+            <input
+              id="excelInput"
+              type="file"
+              accept=".xlsx"
+              onChange={handleExcelUpload}
+              style={{ display: 'none' }}
+            />
+          </View>
         </View>
       </View>
       {showFilterMenu && (
@@ -429,7 +555,6 @@ export default function TodasLasFrasesScreen() {
                         tipo: editTipo,
                         castigo: editCastigo,
                         visible: editVisible,
-                        timestamp: serverTimestamp(),
                       });
                       // Refrescar lista, cerrar modal y salir de edición
                       await refrescarFrases();
