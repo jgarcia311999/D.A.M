@@ -122,6 +122,11 @@ export default function GameThreeScreen({ route }) {
 
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
+  const [showHint, setShowHint] = useState(false);
+  const hintScaleAnim = useRef(new Animated.Value(1)).current;
+
+  const lastInteractionRef = useRef(Date.now());
+
   useEffect(() => {
     let isMounted = true;
 
@@ -149,10 +154,40 @@ export default function GameThreeScreen({ route }) {
     };
   }, [selected]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (Date.now() - lastInteractionRef.current >= 10000) {
+        setShowHint(true);
+        Animated.loop(
+          Animated.sequence([
+            Animated.timing(hintScaleAnim, {
+              toValue: 1.1,
+              duration: 600,
+              useNativeDriver: true,
+            }),
+            Animated.timing(hintScaleAnim, {
+              toValue: 1,
+              duration: 600,
+              useNativeDriver: true,
+            }),
+          ])
+        ).start();
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const registerInteraction = () => {
+    lastInteractionRef.current = Date.now();
+    if (showHint) setShowHint(false);
+  };
+
   const panResponder = useRef(
     PanResponder.create({
       onMoveShouldSetPanResponder: () => !isSpinning,
       onPanResponderMove: (_, gestureState) => {
+        registerInteraction();
         const delta = gestureState.dx;
         spinAnim.setValue(angle.current + delta);
       },
@@ -246,7 +281,10 @@ export default function GameThreeScreen({ route }) {
   });
 
   return (
-    <TouchableWithoutFeedback disabled={isSpinning} onPress={spinWheel}>
+    <TouchableWithoutFeedback disabled={isSpinning} onPress={() => {
+      registerInteraction();
+      spinWheel();
+    }}>
       <SafeAreaView style={[styles.container, { paddingTop: 50 }]}>
         <View style={[styles.header, { paddingTop: insets.top + 10 }]}>
           <TouchableOpacity onPress={() => {
@@ -311,6 +349,21 @@ export default function GameThreeScreen({ route }) {
             </Svg>
           </Animated.View>
         </View>
+        {showHint && (
+          <Animated.View style={{
+            position: 'absolute',
+            bottom: 40,
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            paddingHorizontal: 20,
+            paddingVertical: 10,
+            borderRadius: 10,
+            transform: [{ scale: hintScaleAnim }]
+          }}>
+            <Text style={{ color: '#fff', fontSize: 16, fontFamily: 'Panchang-Bold' }}>
+              Pulsa sobre la ruleta
+            </Text>
+          </Animated.View>
+        )}
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );

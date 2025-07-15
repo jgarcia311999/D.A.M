@@ -55,7 +55,12 @@ export default function TittleWeb({ navigation }) {
 
   return (
     <TouchableWithoutFeedback onPress={() => navigation.navigate('Inicio')}>
-      <View style={{ height, width, backgroundColor: '#EFD74A' }}>
+      <View style={{
+        height,
+        width,
+        backgroundColor: '#EFD74A',
+        overflow: 'hidden',
+      }}>
         <Svg
           width={width}
           height={height * 0.8}
@@ -100,6 +105,18 @@ export default function TittleWeb({ navigation }) {
             <Text style={styles.damLineBottom}>prv.</Text>
           </View>
         </TouchableOpacity>
+        <Text style={{
+          position: 'absolute',
+          bottom: 20,
+          width: '100%',
+          textAlign: 'center',
+          fontSize: 14,
+          color: '#AC950F',
+          fontFamily: 'Panchang-Bold',
+          zIndex: 5,
+        }}>
+          Pulsa para continuar
+        </Text>
       </View>
     </TouchableWithoutFeedback>
   );

@@ -1,4 +1,5 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Animated } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { View, Text, StyleSheet, TouchableOpacity, Modal, Pressable, LayoutAnimation, Platform, UIManager, SafeAreaView, TouchableWithoutFeedback, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -16,6 +17,29 @@ export default function MiniGame1({ route, navigation }) {
 
   const [modalInfoVisible, setModalInfoVisible] = useState(false);
   const [infoPage, setInfoPage] = useState(0);
+
+  // Estado y animación para la instrucción
+  const [showInstruction, setShowInstruction] = useState(true);
+  const instructionScale = useRef(new Animated.Value(1)).current;
+
+  useEffect(() => {
+    if (showInstruction) {
+      Animated.loop(
+        Animated.sequence([
+          Animated.timing(instructionScale, {
+            toValue: 1.05,
+            duration: 800,
+            useNativeDriver: true,
+          }),
+          Animated.timing(instructionScale, {
+            toValue: 1,
+            duration: 800,
+            useNativeDriver: true,
+          }),
+        ])
+      ).start();
+    }
+  }, [showInstruction]);
 
   const infoPages = [
     'Un juego de cartas para beber... sí, otro más. Pero este por lo menos te obliga a usar una neurona o dos.',
@@ -257,6 +281,39 @@ export default function MiniGame1({ route, navigation }) {
           </TouchableOpacity>
         </View>
       </View>
+      {showInstruction && (
+        <Animated.View style={{
+          position: 'absolute',
+          bottom: 30,
+          alignSelf: 'center',
+          backgroundColor: 'rgba(0,0,0,0.6)',
+          paddingVertical: 10,
+          paddingHorizontal: 24,
+          borderRadius: 20,
+          marginHorizontal: 20,
+          transform: [{ scale: instructionScale }],
+          maxWidth: '90%',
+        }}>
+          <TouchableWithoutFeedback onPress={() => setShowInstruction(false)}>
+            <View>
+              <TouchableOpacity
+                onPress={() => setShowInstruction(false)}
+                style={{ position: 'absolute', top: -16, right: -25, zIndex: 2, backgroundColor: '#fff', borderRadius: 12, padding: 2 }}
+              >
+                <Text style={{ fontSize: 12, fontWeight: 'bold', color: '#000' }}>✕</Text>
+              </TouchableOpacity>
+              <Text style={{
+                color: '#fff',
+                fontSize: 14,
+                textAlign: 'center',
+                fontFamily: 'Panchang-Bold',
+              }}>
+                Pulsa sobre un nombre y luego en la posición del TOP que quieras ponerlo
+              </Text>
+            </View>
+          </TouchableWithoutFeedback>
+        </Animated.View>
+      )}
     </SafeAreaView>
   );
 }

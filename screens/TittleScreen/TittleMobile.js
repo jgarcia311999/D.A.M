@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions, TouchableWithoutFeedback, Animated } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
@@ -100,6 +98,18 @@ export default function TittleMobile({ navigation }) {
             <Text style={styles.damLineBottom}>prv.</Text>
           </View>
         </TouchableOpacity>
+        <Text style={{
+          position: 'absolute',
+          bottom: 20,
+          width: '100%',
+          textAlign: 'center',
+          fontSize: 14,
+          color: '#AC950F',
+          fontFamily: 'Panchang-Bold',
+          zIndex: 5,
+        }}>
+          Pulsa para continuar
+        </Text>
       </View>
     </TouchableWithoutFeedback>
   );

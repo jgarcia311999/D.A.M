@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { View, Text, TouchableOpacity, FlatList, ActivityIndicator, TextInput, Modal, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, FlatList, ActivityIndicator, TextInput, Modal, Alert, Platform } from 'react-native';
 // Si no tienes instalado react-native-gesture-handler, instálalo con: npm install react-native-gesture-handler
-import { Swipeable } from 'react-native-gesture-handler';
+// import { Swipeable } from 'react-native-gesture-handler';
 // Si no tienes instalado @react-native-picker/picker, instálalo con: npm install @react-native-picker/picker
 import { Picker } from '@react-native-picker/picker';
 import { Ionicons } from '@expo/vector-icons';
@@ -176,7 +176,7 @@ export default function TodasLasFrasesScreen() {
 
   return (
     <>
-      <View style={{ position: 'absolute', top: insets.top + 10, left: 16, right: 16, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+      <View style={{ position: 'absolute', top: insets.top + 10, left: 16, right: 16, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', zIndex: 10, pointerEvents: 'auto' }}>
         <TouchableOpacity
           onPress={() => {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -246,7 +246,7 @@ export default function TodasLasFrasesScreen() {
           </TouchableOpacity>
         </View>
       )}
-      <View style={{ flex: 1, padding: 24, paddingTop: insets.top + 60 }}>
+      <View style={{ flex: 1, padding: 24, paddingTop: insets.top + 60, zIndex: 0 }}>
         {loading ? (
           <ActivityIndicator size="large" color="#5E1DE6" />
         ) : (
@@ -254,80 +254,22 @@ export default function TodasLasFrasesScreen() {
             data={orderedFrases}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => {
-              // 1. At the top of renderItem, add:
-              let swipeableRow = null;
-              // Render right actions for swipe (delete)
-              const renderRightActions = () => (
-                <View style={{
-                  justifyContent: 'center',
-                  alignItems: 'flex-end',
-                  flex: 1,
-                  backgroundColor: '#ff3b30',
-                  borderRadius: 10,
-                  marginBottom: 12,
-                  marginTop: 0,
-                }}>
-                  <View style={{
-                    width: 70,
-                    height: '100%',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                    <Ionicons name="trash" size={28} color="#fff" />
-                  </View>
-                </View>
-              );
-              // 3. Modify handleSwipeOpen to accept item and swipeable, and close on cancel
-              const handleSwipeOpen = (item, swipeable) => {
-                Alert.alert(
-                  'Confirmar borrado',
-                  '¿Seguro que quieres borrar esta frase? No se podrá recuperar después',
-                  [
-                    {
-                      text: 'Cancelar',
-                      style: 'cancel',
-                      onPress: () => {
-                        swipeable?.close();
-                      }
-                    },
-                    {
-                      text: 'Borrar',
-                      style: 'destructive',
-                      onPress: async () => {
-                        try {
-                          await deleteDoc(doc(db, 'frases', item.id));
-                          refrescarFrases();
-                        } catch (err) {
-                          Alert.alert('Error', 'No se pudo borrar la frase.');
-                        }
-                      }
-                    }
-                  ]
-                );
-              };
               return (
-                <Swipeable
-                  ref={(ref) => (swipeableRow = ref)}
-                  renderRightActions={renderRightActions}
-                  onSwipeableOpen={() => handleSwipeOpen(item, swipeableRow)}
-                  overshootRight={false}
+                <TouchableOpacity
+                  activeOpacity={0.7}
+                  onPress={() => {
+                    setSelectedFrase(item);
+                    setModalVisible(true);
+                    setEditMode(false);
+                  }}
                 >
-                  <TouchableOpacity
-                    activeOpacity={0.7}
-                    onPress={() => {
-                      setSelectedFrase(item);
-                      setModalVisible(true);
-                      setEditMode(false);
-                    }}
-                  >
-                    <View style={[
-                      styles.fraseContainer,
-                      { backgroundColor: item.visible === false ? '#ffeaea' : '#fff' }
-                    ]}>
-                      <Text style={styles.fraseText}>{item.frase}</Text>
-                    </View>
-                  </TouchableOpacity>
-                </Swipeable>
+                  <View style={[
+                    styles.fraseContainer,
+                    { backgroundColor: item.visible === false ? '#ffeaea' : '#fff' }
+                  ]}>
+                    <Text style={styles.fraseText}>{item.frase}</Text>
+                  </View>
+                </TouchableOpacity>
               );
             }}
           />
@@ -540,27 +482,41 @@ export default function TodasLasFrasesScreen() {
                     marginTop: 12,
                   }}
                   onPress={async () => {
-                    Alert.alert(
-                      'Confirmar borrado',
-                      '¿Seguro que quieres borrar esta frase? No se podrá recuperar después',
-                      [
-                        { text: 'Cancelar', style: 'cancel' },
-                        {
-                          text: 'Borrar',
-                          style: 'destructive',
-                          onPress: async () => {
-                            try {
-                              await deleteDoc(doc(db, 'frases', selectedFrase.id));
-                              setModalVisible(false);
-                              setSelectedFrase(null);
-                              refrescarFrases();
-                            } catch (err) {
-                              Alert.alert('Error', 'No se pudo borrar la frase.');
+                    if (Platform.OS === 'web') {
+                      const confirmDelete = window.confirm('¿Seguro que quieres borrar esta frase? No se podrá recuperar después');
+                      if (confirmDelete) {
+                        try {
+                          await deleteDoc(doc(db, 'frases', selectedFrase.id));
+                          setModalVisible(false);
+                          setSelectedFrase(null);
+                          refrescarFrases();
+                        } catch (err) {
+                          alert('Error: No se pudo borrar la frase.');
+                        }
+                      }
+                    } else {
+                      Alert.alert(
+                        'Confirmar borrado',
+                        '¿Seguro que quieres borrar esta frase? No se podrá recuperar después',
+                        [
+                          { text: 'Cancelar', style: 'cancel' },
+                          {
+                            text: 'Borrar',
+                            style: 'destructive',
+                            onPress: async () => {
+                              try {
+                                await deleteDoc(doc(db, 'frases', selectedFrase.id));
+                                setModalVisible(false);
+                                setSelectedFrase(null);
+                                refrescarFrases();
+                              } catch (err) {
+                                Alert.alert('Error', 'No se pudo borrar la frase.');
+                              }
                             }
                           }
-                        }
-                      ]
-                    );
+                        ]
+                      );
+                    }
                   }}
                 >
                   <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>Borrar</Text>

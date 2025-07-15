@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
@@ -23,6 +23,7 @@ export default function CreaTuFrase({ navigation }) {
   const [bannerVisible, setBannerVisible] = useState(false);
   const [bannerText, setBannerText] = useState('');
   const insets = useSafeAreaInsets();
+  const [mostrarBoton, setMostrarBoton] = useState(false);
 
   useEffect(() => {
     let timer;
@@ -33,6 +34,15 @@ export default function CreaTuFrase({ navigation }) {
     }
     return () => clearTimeout(timer);
   }, [bannerVisible]);
+
+  useEffect(() => {
+    if (Platform.OS === 'web') {
+      const searchParams = new URLSearchParams(window.location.search);
+      if (searchParams.toString().includes('230566')) {
+        setMostrarBoton(true);
+      }
+    }
+  }, []);
 
   const guardarFraseLocal = async (nuevaFrase) => {
     try {
@@ -107,12 +117,14 @@ export default function CreaTuFrase({ navigation }) {
         }}>
           <Ionicons name="arrow-back" size={28} color="#5E1DE6" />
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.tuFraseBtn}
-          onPress={() => navigation.navigate('TodasFrases')}
-        >
-          <Text style={styles.tuFraseBtnText}>Todas las frases</Text>
-        </TouchableOpacity>
+        {(Platform.OS !== 'web' || mostrarBoton) && (
+          <TouchableOpacity
+            style={styles.tuFraseBtn}
+            onPress={() => navigation.navigate('TodasFrases')}
+          >
+            <Text style={styles.tuFraseBtnText}>Todas las frases</Text>
+          </TouchableOpacity>
+        )}
       </View>
 
       <View style={{ flex: 1, justifyContent: 'flex-start', paddingTop: 80 }}>

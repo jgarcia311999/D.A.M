@@ -120,7 +120,7 @@ useEffect(() => {
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
           navigation.goBack();
         }}>
-          <Ionicons name="arrow-back" size={28} color="#fff" />
+          <Ionicons name="arrow-back" size={28} color="#000" />
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.tuFraseBtn}
@@ -273,11 +273,11 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#fff',
+    borderColor: '#000',
     zIndex: 10,
   },
   tuFraseBtnText: {
-    color: '#fff',
+    color: '#000',
     fontWeight: 'bold',
     fontFamily: 'Panchang-Bold',
   },
