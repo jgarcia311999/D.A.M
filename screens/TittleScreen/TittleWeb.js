@@ -78,7 +78,11 @@ export default function TittleWeb({ navigation }) {
   }
 
   return (
-    <TouchableWithoutFeedback onPress={() => navigation.navigate('Inicio')}>
+    <TouchableWithoutFeedback onPress={() => {
+      if (!modalVisible) {
+        navigation.navigate('Inicio');
+      }
+    }}>
       <View style={{
         height,
         width,
@@ -148,81 +152,83 @@ export default function TittleWeb({ navigation }) {
             transparent={true}
             visible={modalVisible}
           >
-            <View style={{
-              flex: 1,
-              backgroundColor: 'rgba(0,0,0,0.6)',
-              justifyContent: 'center',
-              alignItems: 'center',
-              padding: 20,
-            }}>
+            <TouchableWithoutFeedback onPress={() => {}}>
               <View style={{
-                backgroundColor: '#fff',
-                borderRadius: 12,
-                padding: 24,
-                width: '100%',
-                maxWidth: 400,
-                alignItems: 'flex-start',
+                flex: 1,
+                backgroundColor: 'rgba(0,0,0,0.6)',
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: 20,
               }}>
-                <Text style={{
-                  fontFamily: 'Panchang-Bold',
-                  fontSize: 18,
-                  marginBottom: 12,
-                  color: '#000',
-                  textAlign: 'center',
-                  alignSelf: 'center',
+                <View style={{
+                  backgroundColor: '#fff',
+                  borderRadius: 12,
+                  padding: 24,
+                  width: '100%',
+                  maxWidth: 400,
+                  alignItems: 'flex-start',
                 }}>
-                  Advertencia de contenido +18
-                </Text>
-                <Text style={{
-                  fontFamily: 'Panchang-Regular',
-                  fontSize: 14,
-                  marginBottom: 16,
-                  color: '#000',
-                }}>
-                  Esta aplicación está dirigida exclusivamente a personas mayores de 18 años. No promovemos el consumo excesivo de alcohol. Juega con responsabilidad y conforme a la normativa vigente en tu país.
-                </Text>
-
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
-                  <CheckBox
-                    value={isAdult}
-                    onValueChange={(value) => {
-                      setIsAdult(value);
-                      AsyncStorage.setItem('isAdult', value.toString());
-                    }}
-                  />
-                  <Text style={{ fontFamily: 'Panchang-Regular', marginLeft: 8 }}>Confirmo que tengo más de 18 años.</Text>
-                </View>
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
-                  <CheckBox
-                    value={isResponsible}
-                    onValueChange={(value) => {
-                      setIsResponsible(value);
-                      AsyncStorage.setItem('isResponsible', value.toString());
-                    }}
-                  />
-                  <Text style={{ fontFamily: 'Panchang-Regular', marginLeft: 8 }}>Me comprometo a jugar con responsabilidad.</Text>
-                </View>
-
-                <Pressable
-                  onPress={() => {
-                    if (isAdult && isResponsible) {
-                      setModalVisible(false);
-                    }
-                  }}
-                  style={{
-                    backgroundColor: '#AC950F',
-                    paddingVertical: 12,
-                    paddingHorizontal: 20,
-                    borderRadius: 8,
-                    alignSelf: 'stretch',
-                  }}
-                >
-                  <Text style={{ textAlign: 'center', color: '#fff', fontFamily: 'Panchang-Bold', fontSize: 16 }}>
-                    Aceptar
+                  <Text style={{
+                    fontFamily: 'Panchang-Bold',
+                    fontSize: 18,
+                    marginBottom: 12,
+                    color: '#000',
+                    textAlign: 'center',
+                    alignSelf: 'center',
+                  }}>
+                    Advertencia de contenido +18
                   </Text>
-                </Pressable>
+                  <Text style={{
+                    fontFamily: 'Panchang-Regular',
+                    fontSize: 14,
+                    marginBottom: 16,
+                    color: '#000',
+                  }}>
+                    Esta aplicación está dirigida exclusivamente a personas mayores de 18 años. No promovemos el consumo excesivo de alcohol. Juega con responsabilidad y conforme a la normativa vigente en tu país.
+                  </Text>
+
+                  <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
+                    <CheckBox
+                      value={isAdult}
+                      onValueChange={(value) => {
+                        setIsAdult(value);
+                        AsyncStorage.setItem('isAdult', value.toString());
+                      }}
+                    />
+                    <Text style={{ fontFamily: 'Panchang-Regular', marginLeft: 8 }}>Confirmo que tengo más de 18 años.</Text>
+                  </View>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
+                    <CheckBox
+                      value={isResponsible}
+                      onValueChange={(value) => {
+                        setIsResponsible(value);
+                        AsyncStorage.setItem('isResponsible', value.toString());
+                      }}
+                    />
+                    <Text style={{ fontFamily: 'Panchang-Regular', marginLeft: 8 }}>Me comprometo a jugar con responsabilidad.</Text>
+                  </View>
+
+                  <Pressable
+                    onPress={() => {
+                      if (isAdult && isResponsible) {
+                        setModalVisible(false);
+                      }
+                    }}
+                    style={{
+                      backgroundColor: '#AC950F',
+                      paddingVertical: 12,
+                      paddingHorizontal: 20,
+                      borderRadius: 8,
+                      alignSelf: 'stretch',
+                    }}
+                  >
+                    <Text style={{ textAlign: 'center', color: '#fff', fontFamily: 'Panchang-Bold', fontSize: 16 }}>
+                      Aceptar
+                    </Text>
+                  </Pressable>
+                </View>
               </View>
-            </View>
+            </TouchableWithoutFeedback>
           </Modal>
         )}
       </View>
