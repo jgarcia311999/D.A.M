@@ -282,40 +282,45 @@ export default function HomeScreen({ navigation, route }) {
           : juegos[currentIndex]?.color || '#191716'
       }]}>
         <SafeAreaView style={{ flex: 1 }}>
-        <TouchableOpacity
-          style={[styles.jugadoresButtonTopRight, { top: insets.top + 10 }]}
-          onPress={() => {
-            setModoPendiente(!modoLista);
-            if (modoLista) {
-              Animated.parallel([
-                Animated.timing(fadeCarrusel, { toValue: 1, duration: 200, useNativeDriver: true }),
-                Animated.timing(fadeLista, { toValue: 0, duration: 200, useNativeDriver: true }),
-              ]).start(() => {
-                setModoLista(false);
-              });
-            } else {
-              Animated.parallel([
-                Animated.timing(fadeCarrusel, { toValue: 0, duration: 200, useNativeDriver: true }),
-                Animated.timing(fadeLista, { toValue: 1, duration: 200, useNativeDriver: true }),
-              ]).start(() => {
-                setModoLista(true);
-              });
-            }
-          }}
-        >
-          <Text style={styles.jugadoresButtonText}>
-            {modoPendiente ? 'Juegos' : 'Borrachos'}
-          </Text>
-        </TouchableOpacity>
-        {/* Botón de icono de perfil en la parte superior izquierda */}
-        <TouchableOpacity
-          style={[styles.topRightButton, { top: insets.top + 10, left: 20, right: undefined }]}
-          onPress={() => {
-            navigation.navigate('Perfil');
-          }}
-        >
-          <Ionicons name="person-circle-outline" size={36} color="#000" />
-        </TouchableOpacity>
+        {/* Botones superiores agrupados */}
+        <View style={{
+          position: 'absolute',
+          top: insets.top + 10,
+          left: 0,
+          right: 0,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          paddingHorizontal: 20,
+          zIndex: 10
+        }}>
+          {/* Botón de perfil a la izquierda */}
+          <TouchableOpacity onPress={() => navigation.navigate('Perfil')}>
+            <Ionicons name="person-circle-outline" size={36} color="#000" />
+          </TouchableOpacity>
+
+          {/* Botón de modo a la derecha */}
+          <TouchableOpacity
+            style={styles.jugadoresButtonTopRight}
+            onPress={() => {
+              setModoPendiente(!modoLista);
+              if (modoLista) {
+                Animated.parallel([
+                  Animated.timing(fadeCarrusel, { toValue: 1, duration: 200, useNativeDriver: true }),
+                  Animated.timing(fadeLista, { toValue: 0, duration: 200, useNativeDriver: true }),
+                ]).start(() => setModoLista(false));
+              } else {
+                Animated.parallel([
+                  Animated.timing(fadeCarrusel, { toValue: 0, duration: 200, useNativeDriver: true }),
+                  Animated.timing(fadeLista, { toValue: 1, duration: 200, useNativeDriver: true }),
+                ]).start(() => setModoLista(true));
+              }
+            }}
+          >
+            <Text style={styles.jugadoresButtonText}>
+              {modoPendiente ? 'Juegos' : 'Borrachos'}
+            </Text>
+          </TouchableOpacity>
+        </View>
         {/* Only show dots in carousel mode */}
         <View
           pointerEvents="box-none"

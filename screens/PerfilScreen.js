@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Linking } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Linking, Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
@@ -41,7 +41,7 @@ export default function PerfilScreen() {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={{ width: '100%', alignItems: 'center', marginBottom: 20 }}>
+      <View style={styles.footerContainer}>
         <Text style={styles.footerText}>Contenido +18</Text>
       </View>
     </View>
@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
   damTextWrapper: {
     paddingTop: 20,
     alignSelf: 'flex-start',
+    marginBottom: 60,
   },
   damLineTop: {
     fontSize: 70,
@@ -83,12 +84,10 @@ const styles = StyleSheet.create({
     paddingLeft: 12,
   },
   list: {
-    flex: 1,
-    justifyContent: 'flex-start',
+    marginTop: Platform.OS === 'web' ? '50vh' : 20,
     gap: 20,
     width: '100%',
     alignItems: 'flex-start',
-    marginTop: 60,
   },
   linkContainer: {
     backgroundColor: '#79AFFF',
@@ -116,5 +115,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     zIndex: 2,
+  },
+  footerContainer: {
+    position: 'absolute',
+    bottom: 20,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
   },
 });
