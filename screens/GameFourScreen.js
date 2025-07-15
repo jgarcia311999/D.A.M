@@ -144,7 +144,7 @@ useEffect(() => {
                   </View>
                   <View style={styles.cardFooter}>
                     <Text style={styles.placeholder}>
-                      {card?.castigo ? `Bebe ${card.castigo} ${card.castigo === '1' ? 'chupito' : 'chupitos'}` : ''}
+                      {card?.castigo ? `${'🥃 '.repeat(Number(card.castigo)).trim()}` : ''}
                     </Text>
                   </View>
                 </View>

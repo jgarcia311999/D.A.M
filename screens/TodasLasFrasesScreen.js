@@ -1,9 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, TouchableOpacity, FlatList, ActivityIndicator, TextInput, Modal, Alert, Platform } from 'react-native';
 import * as XLSX from 'xlsx';
-// Si no tienes instalado react-native-gesture-handler, instálalo con: npm install react-native-gesture-handler
-// import { Swipeable } from 'react-native-gesture-handler';
-// Si no tienes instalado @react-native-picker/picker, instálalo con: npm install @react-native-picker/picker
 import { Picker } from '@react-native-picker/picker';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -20,7 +17,6 @@ export default function TodasLasFrasesScreen() {
   const [loading, setLoading] = useState(true);
   const [showSearch, setShowSearch] = useState(false);
   const [searchText, setSearchText] = useState('');
-  // orderType puede ser: 'nuevas', 'antiguas', 'az', 'za', 'mostradas', 'no_mostradas'
   const [orderType, setOrderType] = useState('nuevas');
   const [showFilterMenu, setShowFilterMenu] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
@@ -47,6 +43,7 @@ export default function TodasLasFrasesScreen() {
       tipo: f.tipo || '',
       castigo: f.castigo || '',
       visible: f.visible === undefined ? true : f.visible,
+      timestamp: f.timestamp || '',
       eliminar: ''
     })));
     const workbook = XLSX.utils.book_new();
@@ -335,42 +332,6 @@ export default function TodasLasFrasesScreen() {
               <Ionicons name="refresh" size={28} color="#5E1DE6" />
             )}
           </TouchableOpacity>
-          {/* Excel Import/Export */}
-          {Platform.OS === 'web' && (
-            <View style={{ position: 'relative' }}>
-              <TouchableOpacity
-                onPress={() => {
-                  if (Platform.OS !== 'web') return;
-
-                  const contraseña = window.prompt('Introduce la contraseña para acceder a funciones de Excel');
-                  if (contraseña !== 'tuborrachapass') {
-                    alert('Contraseña incorrecta');
-                    return;
-                  }
-
-                  const opcion = window.prompt('¿Qué quieres hacer? Escribe "descargar" o "subir"');
-                  if (!opcion) return;
-                  if (opcion.toLowerCase() === 'descargar') {
-                    exportarExcel();
-                  } else if (opcion.toLowerCase() === 'subir') {
-                    document.getElementById('excelInput')?.click();
-                  } else {
-                    alert('Opción no válida');
-                  }
-                }}
-                style={styles.tuFraseBtn}
-              >
-                <Text style={styles.tuFraseBtnText}>Excel</Text>
-              </TouchableOpacity>
-              <input
-                id="excelInput"
-                type="file"
-                accept=".xlsx"
-                onChange={handleExcelUpload}
-                style={{ display: 'none' }}
-              />
-            </View>
-          )}
         </View>
       </View>
       {showFilterMenu && (
@@ -393,6 +354,23 @@ export default function TodasLasFrasesScreen() {
           <TouchableOpacity style={styles.filterOption} onPress={() => { setOrderType('no_mostradas'); setShowFilterMenu(false); }}>
             <Text style={styles.filterOptionText}>Solo no mostradas</Text>
           </TouchableOpacity>
+          {Platform.OS === 'web' && (
+            <>
+              <TouchableOpacity style={styles.filterOption} onPress={exportarExcel}>
+                <Text style={styles.filterOptionText}>Descargar Excel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.filterOption} onPress={() => document.getElementById('excelInput')?.click()}>
+                <Text style={styles.filterOptionText}>Subir Excel</Text>
+              </TouchableOpacity>
+              <input
+                id="excelInput"
+                type="file"
+                accept=".xlsx"
+                onChange={handleExcelUpload}
+                style={{ display: 'none' }}
+              />
+            </>
+          )}
         </View>
       )}
       <View style={{ flex: 1, padding: 24, paddingTop: insets.top + 60, zIndex: 0 }}>
