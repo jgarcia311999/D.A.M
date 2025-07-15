@@ -307,11 +307,15 @@ export default function HomeScreen({ navigation, route }) {
             {modoPendiente ? 'Juegos' : 'Borrachos'}
           </Text>
         </TouchableOpacity>
-        {/* Espacio reservado para el botón de menú hamburguesa */}
+        {/* Botón de icono de perfil en la parte superior izquierda */}
         <TouchableOpacity
-          style={[styles.topRightButton, { top: insets.top + 10 }]}
-          // Sin onPress ni contenido para reservar espacio
-        />
+          style={[styles.topRightButton, { top: insets.top + 10, left: 20, right: undefined }]}
+          onPress={() => {
+            navigation.navigate('Perfil');
+          }}
+        >
+          <Ionicons name="person-circle-outline" size={36} color="#000" />
+        </TouchableOpacity>
         {/* Only show dots in carousel mode */}
         <View
           pointerEvents="box-none"

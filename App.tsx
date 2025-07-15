@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import TittleScreen from './screens/TittleScreen';
 import HomeScreen from './screens/HomeScreen';
+import PerfilScreen from './screens/PerfilScreen';
 import GameOneScreen from './screens/GameOneScreen';
 import GameTwoScreen from './screens/GameTwoScreen';
 import GameThreeScreen from './screens/GameThreeScreen';
@@ -17,6 +18,7 @@ import MiniGame4 from './screens/miniGames/MiniGame4';
 import VariosMinigames from './screens/miniGames/VariosMinigames';
 import CreaTuFrase from './screens/CreaTuFrase';
 import TodasLasFrasesScreen from './screens/TodasLasFrasesScreen';
+import PoliticaPrivacidadScreen from './screens/PoliticaPrivacidadScreen';
 
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
@@ -44,6 +46,7 @@ export default function App() {
         <Stack.Navigator initialRouteName="TittleScreen">
           <Stack.Screen name="TittleScreen" component={TittleScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Inicio" component={HomeScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Perfil" component={PerfilScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Gamer" component={GamerScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Juego 1" component={GameOneScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Juego 2" component={GameTwoScreen} options={{ headerShown: false }} />
@@ -56,6 +59,7 @@ export default function App() {
           <Stack.Screen name="MiniGame2" component={MiniGame2} options={{ headerShown: false }} />
           <Stack.Screen name="MiniGame4" component={MiniGame4} options={{ headerShown: false }} />
           <Stack.Screen name="VariosMinigames" component={VariosMinigames} options={{ headerShown: false }} />
+          <Stack.Screen name="Privacidad" component={PoliticaPrivacidadScreen} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>
