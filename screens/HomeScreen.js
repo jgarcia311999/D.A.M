@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { View, Image, FlatList, ScrollView, Dimensions, StyleSheet, SafeAreaView, TouchableOpacity, Animated, Text, TextInput, Platform, Pressable } from 'react-native';
+import { View, Image, FlatList, ScrollView, Dimensions, StyleSheet, SafeAreaView, TouchableOpacity, Animated, Text, TextInput, Platform, Pressable, Modal, TouchableWithoutFeedback } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import PjCartas from '../assets/nuevos_personajes/cartas_pj.png';
@@ -76,6 +76,7 @@ export default function HomeScreen({ navigation, route }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [modoLista, setModoLista] = useState(false);
   const [modoPendiente, setModoPendiente] = useState(false);
+  const [showJugadoresModal, setShowJugadoresModal] = useState(false);
   const flatListRef = useRef(null);
   const fadeCarrusel = useRef(new Animated.Value(1)).current;
   const fadeLista = useRef(new Animated.Value(0)).current;
@@ -156,10 +157,22 @@ export default function HomeScreen({ navigation, route }) {
         style={[styles.slide, { backgroundColor: item.color, paddingTop: topPadding }]}
         {...(Platform.OS === 'web'
           ? {
-              onClick: () => navigation.navigate(item.screen, { jugadores }),
+              onClick: () => {
+                if (jugadores.length >= 2) {
+                  navigation.navigate(item.screen, { jugadores });
+                } else {
+                  setShowJugadoresModal(true);
+                }
+              },
             }
           : {
-              onPress: () => navigation.navigate(item.screen, { jugadores }),
+              onPress: () => {
+                if (jugadores.length >= 2) {
+                  navigation.navigate(item.screen, { jugadores });
+                } else {
+                  setShowJugadoresModal(true);
+                }
+              },
               activeOpacity: 0.9,
             })}
       >
@@ -176,13 +189,84 @@ export default function HomeScreen({ navigation, route }) {
     );
   };
 
+  // Modal para jugadores insuficientes
+  // Debe ir justo antes del return principal
   return (
-    <View style={[styles.container, {
-      backgroundColor: modoPendiente
-        ? '#a3c8ff'
-        : juegos[currentIndex]?.color || '#191716'
-    }]}>
-      <SafeAreaView style={{ flex: 1 }}>
+    <>
+      <Modal
+        transparent
+        visible={showJugadoresModal}
+        animationType="fade"
+        onRequestClose={() => setShowJugadoresModal(false)}
+      >
+        <TouchableWithoutFeedback onPress={() => setShowJugadoresModal(false)}>
+          <View style={{
+            flex: 1,
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+            <TouchableWithoutFeedback>
+              <View style={{
+                backgroundColor: '#a3c8ff',
+                borderColor: '#79AFFF',
+                borderWidth: 2,
+                borderRadius: 16,
+                padding: 28,
+                maxWidth: '85%',
+                minWidth: 260,
+                // Modal visual enhancements for clarity
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.2,
+                shadowRadius: 8,
+                elevation: 8,
+              }}>
+                <Text style={{
+                  color: '#000',
+                  fontFamily: 'Panchang-Bold',
+                  fontSize: 20,
+                  textAlign: 'center',
+                  lineHeight: 30,
+                  paddingHorizontal: 12,
+                  paddingVertical: 8,
+                }}>
+                  ¡Para empezar a jugar añade por lo menos 2 jugadores desde el botón borrachos!
+                </Text>
+                {Platform.OS === 'web' && (
+                  <TouchableOpacity
+                    onPress={() => setShowJugadoresModal(false)}
+                    style={{
+                      marginTop: 16,
+                      backgroundColor: '#79AFFF',
+                      borderColor: '#000',
+                      borderWidth: 2,
+                      borderRadius: 8,
+                      paddingVertical: 8,
+                      paddingHorizontal: 16,
+                      alignSelf: 'center',
+                    }}
+                  >
+                    <Text style={{
+                      color: '#000',
+                      fontSize: 16,
+                      fontFamily: 'Panchang-Bold',
+                    }}>
+                      Cerrar
+                    </Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
+      <View style={[styles.container, {
+        backgroundColor: modoPendiente
+          ? '#a3c8ff'
+          : juegos[currentIndex]?.color || '#191716'
+      }]}>
+        <SafeAreaView style={{ flex: 1 }}>
         <TouchableOpacity
           style={[styles.jugadoresButtonTopRight, { top: insets.top + 10 }]}
           onPress={() => {
@@ -310,8 +394,9 @@ export default function HomeScreen({ navigation, route }) {
             <Text style={styles.footerText}>Agrega jugadores para comenzar a jugar</Text>
           </ScrollView>
         </Animated.View>
-      </SafeAreaView>
-    </View>
+        </SafeAreaView>
+      </View>
+    </>
   );
 }
 
