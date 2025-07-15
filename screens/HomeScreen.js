@@ -406,7 +406,9 @@ export default function HomeScreen({ navigation, route }) {
                 ))
               )}
             </View>
-            <Text style={styles.footerText}>Agrega jugadores para comenzar a jugar</Text>
+            {jugadores.length < 2 && (
+              <Text style={styles.footerText}>Agrega mínimo 2 borrachos</Text>
+            )}
           </ScrollView>
         </Animated.View>
         </SafeAreaView>
@@ -594,11 +596,12 @@ const styles = StyleSheet.create({
     fontFamily: 'Panchang-Regular',
   },
   footerText: {
-    color: '#aaa',
+    color: '#fff',
     fontSize: 14,
     fontFamily: 'Panchang-Regular',
     textAlign: 'center',
     marginTop: 10,
+    paddingHorizontal: 20,
   },
 
 

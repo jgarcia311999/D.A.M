@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions, TouchableWithoutFeedback, Animated } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
@@ -46,7 +44,14 @@ export default function TittleWeb({ navigation }) {
       });
     }, 500);
 
-    return () => clearInterval(interval);
+    const timeout = setTimeout(() => {
+      clearInterval(interval);
+    }, 20000); // 20 segundos
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+    };
   }, []);
 
   const handleScrollDown = () => {
