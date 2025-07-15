@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, TouchableOpacity, FlatList, ActivityIndicator, TextInput, Modal, Alert, Platform } from 'react-native';
 import * as XLSX from 'xlsx';
-import { saveAs } from 'file-saver';
 // Si no tienes instalado react-native-gesture-handler, instálalo con: npm install react-native-gesture-handler
 // import { Swipeable } from 'react-native-gesture-handler';
 // Si no tienes instalado @react-native-picker/picker, instálalo con: npm install @react-native-picker/picker
@@ -33,8 +32,15 @@ export default function TodasLasFrasesScreen() {
   const [editCastigo, setEditCastigo] = useState('');
   const [editVisible, setEditVisible] = useState(true);
 
-  // Función para exportar a Excel
-  const exportarExcel = () => {
+  // Función para exportar a Excel (importación dinámica de file-saver solo en web)
+  const exportarExcel = async () => {
+    if (Platform.OS !== 'web') {
+      alert('Exportar a Excel solo está disponible en la versión web.');
+      return;
+    }
+
+    const { saveAs } = await import('file-saver');
+
     const worksheet = XLSX.utils.json_to_sheet(frases.map(f => ({
       id: f.id,
       frase: f.frase,
@@ -330,37 +336,41 @@ export default function TodasLasFrasesScreen() {
             )}
           </TouchableOpacity>
           {/* Excel Import/Export */}
-          <View style={{ position: 'relative' }}>
-            <TouchableOpacity
-              onPress={() => {
-                const contraseña = window.prompt('Introduce la contraseña para acceder a funciones de Excel');
-                if (contraseña !== 'tuborrachapass') {
-                  alert('Contraseña incorrecta');
-                  return;
-                }
+          {Platform.OS === 'web' && (
+            <View style={{ position: 'relative' }}>
+              <TouchableOpacity
+                onPress={() => {
+                  if (Platform.OS !== 'web') return;
 
-                const opcion = window.prompt('¿Qué quieres hacer? Escribe "descargar" o "subir"');
-                if (!opcion) return;
-                if (opcion.toLowerCase() === 'descargar') {
-                  exportarExcel();
-                } else if (opcion.toLowerCase() === 'subir') {
-                  document.getElementById('excelInput').click();
-                } else {
-                  alert('Opción no válida');
-                }
-              }}
-              style={styles.tuFraseBtn}
-            >
-              <Text style={styles.tuFraseBtnText}>Excel</Text>
-            </TouchableOpacity>
-            <input
-              id="excelInput"
-              type="file"
-              accept=".xlsx"
-              onChange={handleExcelUpload}
-              style={{ display: 'none' }}
-            />
-          </View>
+                  const contraseña = window.prompt('Introduce la contraseña para acceder a funciones de Excel');
+                  if (contraseña !== 'tuborrachapass') {
+                    alert('Contraseña incorrecta');
+                    return;
+                  }
+
+                  const opcion = window.prompt('¿Qué quieres hacer? Escribe "descargar" o "subir"');
+                  if (!opcion) return;
+                  if (opcion.toLowerCase() === 'descargar') {
+                    exportarExcel();
+                  } else if (opcion.toLowerCase() === 'subir') {
+                    document.getElementById('excelInput')?.click();
+                  } else {
+                    alert('Opción no válida');
+                  }
+                }}
+                style={styles.tuFraseBtn}
+              >
+                <Text style={styles.tuFraseBtnText}>Excel</Text>
+              </TouchableOpacity>
+              <input
+                id="excelInput"
+                type="file"
+                accept=".xlsx"
+                onChange={handleExcelUpload}
+                style={{ display: 'none' }}
+              />
+            </View>
+          )}
         </View>
       </View>
       {showFilterMenu && (
