@@ -78,29 +78,6 @@ export default function VariosMinigames({ route }) {
       <View style={{ flex: 1, backgroundColor: '#70B77C' }}>
         <ScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'flex-start', alignItems: 'center', paddingHorizontal: 24, paddingTop: insets.top + 64, paddingBottom: 40 }}>
 
-          {minijuego.tieneLogica && (
-            <TouchableOpacity
-              onPress={generarFrase}
-              style={{
-                backgroundColor: '#9ED2A7',
-                paddingVertical: 14,
-                paddingHorizontal: 28,
-                borderRadius: 12,
-                marginTop: 12,
-                marginBottom: 16,
-                borderWidth: 2,
-                borderColor: '#ffffff22',
-                shadowColor: '#fff',
-                shadowOpacity: 0.15,
-                shadowOffset: { width: 0, height: 4 },
-                shadowRadius: 6,
-                elevation: 4,
-              }}
-            >
-              <Text style={{ color: '#000', fontSize: 18, fontWeight: 'bold' }}>Generar frase</Text>
-            </TouchableOpacity>
-          )}
-
           {mostrarFrase && (
             <View style={styles.card}>
               <Text style={styles.text}>{fraseActual}</Text>
@@ -123,6 +100,16 @@ export default function VariosMinigames({ route }) {
           </TouchableOpacity>
 
         </ScrollView>
+        {minijuego.tieneLogica && (
+          <View style={styles.botonFijo}>
+            <TouchableOpacity
+              onPress={generarFrase}
+              style={styles.botonGenerar}
+            >
+              <Text style={styles.botonGenerarTexto}>Generar frase</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </View>
     </>
   );
@@ -155,5 +142,31 @@ const styles = StyleSheet.create({
     color: '#000',
     textAlign: 'center',
     lineHeight: 28,
+  },
+  botonFijo: {
+    position: 'absolute',
+    bottom: 20,
+    left: 0,
+    right: 0,
+    alignItems: 'center',
+    zIndex: 20,
+  },
+  botonGenerar: {
+    backgroundColor: '#9ED2A7',
+    paddingVertical: 14,
+    paddingHorizontal: 28,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: '#000',
+    shadowColor: '#fff',
+    shadowOpacity: 0.15,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 6,
+    elevation: 4,
+  },
+  botonGenerarTexto: {
+    color: '#000',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
 });
