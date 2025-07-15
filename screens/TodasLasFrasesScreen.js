@@ -63,7 +63,7 @@ export default function TodasLasFrasesScreen() {
     let eliminadas = 0;
 
     const updateOrInsertPromises = frasesImportadas
-      .filter(item => item.id && item.frase && item.frase.trim() !== '')
+      .filter(item => item.frase && item.frase.trim() !== '')
       .map(async (item) => {
         const existing = firestoreFrases[item.id];
         // Bloque para eliminar frases si corresponde
@@ -98,10 +98,17 @@ export default function TodasLasFrasesScreen() {
             actualizadas++;
           }
         } else {
-          await setDoc(doc(db, 'frases', item.id), {
-            ...cleanItem,
-            timestamp: serverTimestamp(),
-          });
+          if (item.id && item.id.trim() !== '') {
+            await setDoc(doc(db, 'frases', item.id), {
+              ...cleanItem,
+              timestamp: serverTimestamp(),
+            });
+          } else {
+            await setDoc(doc(collection(db, 'frases')), {
+              ...cleanItem,
+              timestamp: serverTimestamp(),
+            });
+          }
           insertadas++;
         }
       });
