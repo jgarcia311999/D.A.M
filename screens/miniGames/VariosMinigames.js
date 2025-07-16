@@ -440,11 +440,32 @@ export default function VariosMinigames({ route }) {
             onPress={() => setInstruccionesExpandido(prev => !prev)}
           >
             <>
-              <Text style={[styles.text, { textDecorationLine: 'underline', fontWeight: 'bold' }]}>Instrucciones</Text>
+              <Text style={[styles.text, { textDecorationLine: 'underline', fontFamily: 'Panchang-Bold' }]}>Instrucciones</Text>
               {instruccionesExpandido && (
-                <Text style={[styles.text, { marginTop: 12, fontSize: 14, textAlign: 'left', lineHeight: 20 }]}>
-                  {minijuego.descripcionDetallada}
-                </Text>
+                typeof minijuego.descripcionDetallada === 'object' ? (
+                  <View style={{ marginTop: 12, width: '100%' }}>
+                    <Text style={[styles.text, { textAlign: 'left', fontSize: 16, marginBottom: 30, marginTop: 15 }]}>
+                      <Text style={{ fontFamily: 'Panchang-Semibold' }}>Número de jugadores:{'\n'}</Text>
+                      {minijuego.descripcionDetallada.jugadores}
+                    </Text>
+                    <Text style={[styles.text, { textAlign: 'left', fontSize: 16, marginBottom: 30 }]}>
+                      <Text style={{ fontFamily: 'Panchang-Semibold' }}>Objetivo del juego:{'\n'}</Text>
+                      {minijuego.descripcionDetallada.objetivo}
+                    </Text>
+                    <Text style={[styles.text, { textAlign: 'left', fontSize: 16, marginBottom: 30 }]}>
+                      <Text style={{ fontFamily: 'Panchang-Semibold' }}>Cómo se juega:{'\n'}</Text>
+                      {minijuego.descripcionDetallada.comoSeJuega}
+                    </Text>
+                    <Text style={[styles.text, { textAlign: 'left', fontSize: 16 }]}>
+                      <Text style={{ fontFamily: 'Panchang-Semibold' }}>Consejos:{'\n'}</Text>
+                      {minijuego.descripcionDetallada.consejos}
+                    </Text>
+                  </View>
+                ) : (
+                  <Text style={[styles.text, { marginTop: 12, fontSize: 14, textAlign: 'left', lineHeight: 20 }]}>
+                    {minijuego.descripcionDetallada}
+                  </Text>
+                )
               )}
             </>
           </TouchableOpacity>

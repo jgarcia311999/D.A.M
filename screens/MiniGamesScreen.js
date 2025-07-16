@@ -7,297 +7,452 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const minijuegos = [
   {
-  id: 'mimica',
-  titulo: 'Mímica',
-  descripcion: 'Actúa películas sin hablar, ¡adivina rápido!',
-  descripcionDetallada: 'Un juego universal y sencillo de actuar y adivinar. Se forman dos equipos; un miembro de un equipo recibe en secreto el título de una película (o canción, libro, personaje famoso, etc.) y debe representarla con mímica sin hablar, para que su propio equipo la adivine en un tiempo limitado (30 segundos o 1 minuto). Si aciertan antes de que se acabe el tiempo, ganan un punto; luego le toca al otro equipo. Las risas están aseguradas con las interpretaciones exageradas. (Sin alcohol; ideal en equipos con al menos 4 personas en total, aunque se disfruta con grupos grandes.)',
-  tieneLogica: true
-},
-{
-  id: 'telefono',
-  titulo: 'Teléfono escacharrado',
-  descripcion: 'Pasa un mensaje susurrando, ¡y ríete del resultado!',
-  descripcionDetallada: 'Un juego clásico para reírse de cómo un mensaje se distorsiona. Todos se sientan en círculo. Una persona piensa una frase corta y se la susurra al oído al jugador de su derecha. Este, a su vez, la susurra al siguiente, y así sucesivamente. Al llegar al último jugador, este dice en voz alta lo que entendió. Por lo general, el mensaje acaba siendo muy diferente y disparatado comparado con la frase original, lo que provoca carcajadas. (Sin alcohol; ideal 5-10 personas o más.)',
-  tieneLogica: true
-},
-{
-  id: 'sillas',
-  titulo: 'Sillas musicales',
-  descripcion: 'Corre y siéntate cuando pare la música.',
-  descripcionDetallada: 'Un juego físico y divertido que todos conocen desde niños, ¡pero sigue funcionando con adultos! Se colocan sillas en círculo (siempre una silla menos que el número de jugadores, por ejemplo 9 sillas para 10 personas). Con la música sonando, todos bailan o caminan alrededor; cuando la música se detiene de repente, cada quien intenta sentarse rápidamente. Quien se quede sin silla queda eliminado y se retira una silla antes de la siguiente ronda. Gana el último que consiga asiento. (Sin alcohol; ideal a partir de ~5 personas hasta grupos grandes, dependiendo del espacio.)',
-},
-{
-  id: 'limbo',
-  titulo: 'Limbo',
-  descripcion: 'Pasa bajo la barra sin caer ni tocar.',
-  descripcionDetallada: 'Perfecto para animar la fiesta con música y movimiento. Dos voluntarios sostienen una escoba, cuerda o barra a cierta altura, y los participantes deben pasar por debajo al ritmo de la música inclinándose hacia atrás sin tocarla. Tras cada ronda se baja más la barra, haciendo el paso más difícil. Quien la toque o se caiga queda eliminado, y así hasta que solo uno logre pasar a la altura más baja sin caer – ¡ese será el ganador o ganadora del limbo! (Sin alcohol; apto para cualquier número de personas, turnándose, ideal en fiestas con música.)',
-},
-{
-  id: 'quien_soy',
-  titulo: '¿Quién soy?',
-  descripcion: 'Adivina el personaje peguntando sí o no.',
-  descripcionDetallada: 'Un juego de adivinanzas de identidad que siempre triunfa. Se reparten lápiz y papel para escribir nombres de personajes conocidos (celebridades, personajes históricos, dibujos animados, etc.). Cada jugador recibe un papel con un nombre pegado en la frente o espalda, sin verlo él mismo. Por turnos, cada quien hace preguntas de sí o no a los demás para intentar descubrir quién es (“¿Soy un hombre?”, “¿Soy cantante?”…). Si la respuesta es sí, puede preguntar de nuevo; si es no, pasa el turno. El primero en adivinar correctamente su personaje gana (se puede seguir jugando para que todos lo descubran). (Sin alcohol; ideal ~4-10 personas.)',
-},
-{
-  id: 'asesino',
-  titulo: 'Pueblo duerme',
-  descripcion: 'Descubre quién es el asesino guiñando ojos.',
-  descripcionDetallada: 'Juego de misterio e intriga donde uno del grupo es el “asesino” secreto. Todos se sientan en círculo y cierran los ojos excepto el asesino (asignado al azar al repartir cartas o papelitos, o elegido por el moderador). En silencio, el asesino “mata” a sus víctimas guiñando un ojo furtivamente. Cada vez que alguien recibe el guiño, debe anunciar dramatúrgicamente “he muerto” y sale del juego. Los demás deben estar atentos para pillar quién está guiñando. En algunas versiones hay un policía que intenta descubrir al culpable. Si el grupo identifica al asesino, ganan; si el asesino elimina a casi todos sin ser descubierto, gana él. (Sin alcohol; ideal grupos más grandes, 6-15 personas.)',
-},
-{
-  id: 'verdades_mentira',
-  titulo: 'Dos verdades y una mentira',
-  descripcion: 'Adivina la mentira entre tres historias.',
-  descripcionDetallada: 'Un excelente rompehielos para cualquier reunión. Cada jugador, por turno, dice tres afirmaciones sobre sí mismo: dos cosas verdaderas y una mentira (en orden aleatorio). El resto del grupo debe discutir y adivinar cuál de las tres es la mentira. Cuando todos hayan dado su opinión, se revela la respuesta. Es sorprendente lo que puedes aprender de tus amigos con este juego lleno de anécdotas personales. (Sin alcohol; ideal 3-8 personas.)',
-},
-{
-  id: '20_preguntas',
-  titulo: '20 Preguntas',
-  descripcion: 'Adivina cualquier cosa en veinte preguntas.',
-  descripcionDetallada: 'Un clásico juego de adivinar cualquier cosa imaginada. Un jugador piensa en un objeto, personaje, lugar o concepto (sin decirlo). Los demás, en total, pueden hacer hasta 20 preguntas de sí o no para intentar averiguar de qué se trata. Las preguntas deben ser generales al inicio (por ejemplo: “¿Es un animal?”, “¿Es algo que se puede comprar?”). Si logran adivinar antes de la vigésima pregunta, ganan; si no, se revela la respuesta. Se puede jugar en equipo o todos contra el que piensa la palabra. (Sin alcohol; ideal 2-8 participantes.)',
-},
-{
-  id: 'palabras_encadenadas',
-  titulo: 'Palabras encadenadas',
-  descripcion: 'Di palabras siguiendo la última sílaba.',
-  descripcionDetallada: 'Juego sencillo para poner a prueba vocabulario y agilidad mental. El primer jugador dice una palabra cualquiera. El siguiente debe decir otra que comience con la última sílaba o letra de la palabra anterior. Por ejemplo, si el primero dice “fiesta”, el siguiente podría decir “tarta” (“ta” continúa “fies-ta”). Se continúa encadenando palabras así sucesivamente. No se pueden repetir palabras ya dichas; quien se quede bloqueado, diga una palabra inválida o tarde más de 5 segundos, pierde la ronda. Es ideal para jugar en cualquier lugar sin necesidad de objetos. (Sin alcohol; número de jugadores indefinido, mínimo 2, mejor en grupo.)',
-  tieneLogica: true
-},
-{
-  id: 'no_te_rias',
-  titulo: 'No te rías (guerra de caras serias)',
-  descripcion: 'Mantén la cara seria y haz reír a otros.',
-  descripcionDetallada: 'Un desafío divertidísimo para ver quién tiene más autocontrol. Todos los participantes se miran unos a otros con la expresión más seria posible. Pueden contarse chistes malos, hacer muecas o decir tonterías para intentar que los demás se rían – pero ¡no puedes reírte tú! El primero que se ría o no pueda aguantar la cara seria pierde. Se puede jugar por rondas cortas y el que aguante sin reír hasta el final es el ganador. (Sin alcohol, aunque se puede establecer que quien se ríe beba como penitencia; sin límite de personas.)',
-},
-{
-  id: 'canta_palabra',
-  titulo: 'Canta la palabra',
-  descripcion: 'Canta una canción que contenga la palabra.',
-  descripcionDetallada: 'Ideal para amantes de la música. Un jugador actúa como presentador y dice una palabra al azar (por ejemplo, “corazón”). El resto, ya sea individualmente o por equipos, debe pensar rápidamente y cantar una canción que incluya esa palabra en la letra. El primero que consiga recordar y cantar un fragmento válido gana la ronda para su equipo o para sí mismo. Luego se elige otra palabra y se repite. Este juego pone a prueba la memoria musical y suele acabar en mini karaoke improvisado. (Sin alcohol; ideal 3 o más personas.)',
-  tieneLogica: true
-},
-{
-  id: 'beer_pong',
-  titulo: 'Beer Pong',
-  descripcion: 'Encesta la pelota y haz beber al rival.',
-  descripcionDetallada: 'Un popular juego de fiesta con competición y bebida. Se necesitan unos vasos de plástico (tradicionalmente 10 por equipo, formando un triángulo) colocados en extremos opuestos de una mesa, llenos con un poco de cerveza o bebida. Los equipos (normalmente de 1 o 2 jugadores por lado) se turnan para lanzar una pelota de ping-pong intentando que caiga dentro de un vaso del equipo contrario. Si encesta, el oponente debe beberse el contenido de ese vaso y retirarlo. Gana el equipo que logra eliminar todos los vasos del rival. (Con alcohol típicamente; 2 a 4 jugadores, aunque el resto puede animar y turnarse en próximos partidos.)',
-},
-{
-  id: 'juego_rey',
-  titulo: 'El juego del rey',
-  descripcion: 'Cumple las órdenes del rey o bebe.',
-  descripcionDetallada: 'Versión fiestera de “Simon dice” con castigos para adultos. En cada ronda alguien se proclama Rey/Reina y da órdenes al grupo que deben cumplirse al momento. Pueden ser órdenes graciosas o atrevidas pero viables en el lugar de la fiesta (ej.: “¡Todos bajo la mesa!” o “Baila con la persona a tu derecha”). Quien se niegue o tarde demasiado en cumplir la orden, bebe como castigo. Después de unas cuantas órdenes, se pasa la corona a otro para que todos tengan turno de mandar. (Con alcohol, aunque se puede jugar sin beber usando retos; ideal 4-8 personas.)',
-},
-{
-  id: 'bufalo',
-  titulo: '¡Búfalo!',
-  descripcion: 'Bebe si usas la mano incorrecta.',
-  descripcionDetallada: 'Juego de bebida simple y global, perfecto para reuniones relajadas. Regla básica: todos los jugadores deben sostener su bebida siempre con la mano izquierda (o la derecha, si alguno es zurdo se invierten los roles). En cualquier momento, si ves a alguien bebiendo o sujetando el vaso con la mano equivocada, grita “¡Búfalo!”. Quien haya cometido el despiste debe beberse su trago de un solo golpe como penalización. A partir de entonces el juego continúa. Es una regla que puede durar toda la fiesta y provocar muchos descuidos divertidos. (Con alcohol principalmente; número de jugadores ilimitado.)',
-},
-{
-  id: 'como_es_el_tuyo',
-  titulo: '¿Cómo es el tuyo?',
-  descripcion: 'Adivina el objeto común con pistas.',
-  descripcionDetallada: 'Un juego ingenioso para grupos observadores. Un jugador sale de la habitación o tapa sus oídos. El resto del grupo se pone de acuerdo en un objeto o característica que todos tengan en común (por ejemplo, todos llevan calcetines, todos tienen carnet de conducir, o algo más específico como “todos tienen Facebook”). Cuando el jugador vuelve, debe preguntar a cualquiera: “¿Cómo es el tuyo?” refiriéndose a ese algo. Cada persona, sin revelar directamente lo que es, responde con una pista sincera pero no obvia (ej.: si el objeto secreto es “cepillo de dientes”, podría decir “el mío es azul” sin decir que es un cepillo). El interrogador puede seguir preguntando a diferentes personas hasta intentar adivinar de qué se trata aquello que todos tienen. Si acierta, gana; si no, paga una prenda o se la juega otra ronda. (Sin alcohol; ideal 4-8 personas.)',
-},
-{
-  id: 'infiltrado',
-  titulo: 'El infiltrado',
-  descripcion: 'Descubre quién finge conocer la temática.',
-  descripcionDetallada: 'Juego de deducción y engaño que pondrá a prueba la creatividad del grupo. Antes de empezar, una persona es elegida secretamente como “el infiltrado” y no recibirá la información que los demás sí tienen. El resto de jugadores acuerda una temática común (por ejemplo, “cosas de la playa”) y cada uno, por turnos, dice una palabra relacionada con ese tema. El infiltrado, que desconoce la temática real, debe improvisar una palabra que crea que encaja con las demás para no levantar sospechas. Al finalizar la ronda, todos votan quién sospechan que era el infiltrado. Si aciertan, se elimina a esa persona; si no, continúa el juego con otra ronda de palabras. El juego termina cuando se descubre al infiltrado (ganan los demás) o si el infiltrado logra pasar varias rondas sin ser identificado. (Sin alcohol; ideal grupos de 5-10 personas.)',
-},
-{
-  id: 'tabu',
-  titulo: 'Tabú',
-  descripcion: 'Da pistas sin decir palabras prohibidas.',
-  descripcionDetallada: `🎲 Tabú – Instrucciones
+    id: 'tabu',
+    titulo: 'Tabú',
+    descripcion: 'Da pistas sin decir palabras prohibidas.',
+    descripcionDetallada: {
+      jugadores: '4 o más (en equipos de 2–5 personas)',
+      objetivo: 'Hacer que tu equipo adivine una palabra secreta sin usar ciertas palabras prohibidas asociadas a ella.',
+      comoSeJuega: `1. Divide a los jugadores en dos equipos.
 
-👥 Número de jugadores:
+2. Pulsa el boton inferior y saldra:
+- Una palabra principal (la que deben adivinar).
+- Y 8 palabras “tabú” que no se pueden usar al dar pistas.
 
-4 o más (en equipos de 2–5 personas)
-
-🧠 Objetivo del juego:
-
-Hacer que tu equipo adivine una palabra secreta sin usar ciertas palabras prohibidas asociadas a ella.
-
-🔧 Cómo se juega:
-1. Divide a los jugadores en dos equipos.
-2. Prepara tarjetas o papelitos con:
--	Una palabra principal (la que deben adivinar).
--	Y 3 a 5 palabras “tabú” que no se pueden usar al dar pistas.
-Por ejemplo:
--	Palabra: Hospital
-Palabras tabú: médico, enfermera, paciente, enfermo, urgencias
 3. En cada ronda, un jugador del equipo es el describidor y tiene un tiempo limitado (por ejemplo, 1 minuto) para hacer que su equipo adivine tantas palabras como pueda.
+
 4. El describidor no puede decir:
 - La palabra en sí,
--	Las palabras tabú,
--	Ni usar mímica, sonidos ni partes de la palabra como pistas.
-5. Cada vez que el equipo adivina correctamente, gana 1 punto.
-6. Si el describidor dice una palabra prohibida, el turno se detiene o se pierde ese punto, según la regla acordada.
-7. Se turnan los equipos hasta que todos hayan participado. Gana el equipo con más puntos al final de las rondas.
+- Las palabras tabú,
+- Ni usar mímica, sonidos ni partes de la palabra como pistas.
 
-💡 Consejos:
--	Puedes jugar sin app: basta con preparar una lista de palabras con sus prohibidas.
--	Si no tienes palabras prohibidas preparadas, el otro equipo puede inventarlas al momento.
--	Para más dificultad, limita el tiempo a 30 segundos o añade un “penalizador” por errores.
--	Es excelente para estimular la creatividad, reírse y ver quién se pone nervioso más rápido.
-`,
-  tieneLogica: true
-},
+5. Cada vez que el equipo adivina correctamente, gana 1 punto.
+
+6. Si el describidor dice una palabra prohibida, el turno se detiene o se pierde ese punto, según la regla acordada.
+
+7. Se turnan los equipos hasta que todos hayan participado. Gana el equipo con más puntos al final de las rondas.`,
+      consejos: `- Puedes jugar sin app: basta con preparar una lista de palabras con sus prohibidas.
+- Si no tienes palabras prohibidas preparadas, el otro equipo puede inventarlas al momento.
+- Para más dificultad, limita el tiempo a 30 segundos o añade un “penalizador” por errores.
+- Es excelente para estimular la creatividad, reírse y ver quién se pone nervioso más rápido.`,
+    },
+    tieneLogica: true
+  },
+  {
+    id: 'mimica',
+    titulo: 'Mímica',
+    descripcion: 'Actúa películas sin hablar, ¡adivina rápido!',
+    descripcionDetallada: {
+      jugadores: 'De 4 personas en adelante, ideal en equipos. Cuantos más, mejor.',
+      objetivo: 'Que tu equipo adivine el concepto, película, persona o cosa que representas solo con gestos.',
+      comoSeJuega: `1. Divide a los participantes en dos equipos.
+2. Un miembro de un equipo recibe (en secreto) el nombre de una película, personaje, objeto, etc.
+3. Debe representarlo con gestos, sin hablar ni emitir sonidos, para que su equipo lo adivine en un tiempo límite (ej: 1 minuto).
+4. Si aciertan, ganan un punto y pasa el turno al otro equipo.
+5. Se repite cambiando el representante en cada ronda.
+6. Gana el equipo con más aciertos tras varias rondas.`,
+      consejos: `- Prohibido hablar, escribir o emitir sonidos.
+- Puedes usar una app, cartas o papelitos para elegir los conceptos.
+- Los temas pueden ser: películas, canciones, profesiones, acciones, etc.
+- ¡Las interpretaciones absurdas son lo mejor!`
+    },
+    tieneLogica: true
+  },
+  {
+    id: 'canta_palabra',
+    titulo: 'Canta la palabra',
+    descripcion: 'Canta una canción que contenga la palabra.',
+    descripcionDetallada: {
+      jugadores: 'De 3 en adelante, sin máximo.',
+      objetivo: 'Ser el primero en cantar una canción real que contenga la palabra dada.',
+      comoSeJuega: `1. Un jugador (o juez) dice una palabra al azar.
+2. El resto debe pensar y cantar lo más rápido posible una canción conocida que contenga esa palabra en la letra.
+3. El primero en cantar correctamente gana la ronda.
+4. Se repite con diferentes palabras y jugadores.`,
+      consejos: `- Puedes jugar por equipos o todos contra todos.
+- Si nadie canta en 10 segundos, la ronda queda desierta.
+- ¡Ideal para amantes de la música y para animar la fiesta!`
+    },
+    tieneLogica: true
+  },
+  {
+    id: 'telefono',
+    titulo: 'Teléfono escacharrado',
+    descripcion: 'Pasa un mensaje susurrando, ¡y ríete del resultado!',
+    descripcionDetallada: {
+      jugadores: 'Ideal de 5 a 12 personas o más.',
+      objetivo: 'Comprobar cuánto se distorsiona un mensaje al transmitirse de persona en persona.',
+      comoSeJuega: `1. Todos se sientan formando un círculo.
+2. Una persona inventa una frase corta y se la susurra al oído al jugador de su derecha.
+3. Ese jugador la transmite de la misma forma al siguiente, y así sucesivamente.
+4. El último jugador dice en voz alta lo que ha entendido.
+5. Se compara con la frase original y se repite con otra persona inventando la frase.`,
+      consejos: `- Las frases largas o con trabalenguas suelen acabar en resultados más divertidos.
+- No vale repetir la frase si no se ha entendido: ¡hay que decir lo que se ha escuchado!
+- Es ideal para romper el hielo y reírse mucho.`
+    },
+    tieneLogica: true
+  },
+  {
+    id: 'palabras_encadenadas',
+    titulo: 'Palabras encadenadas',
+    descripcion: 'Di palabras siguiendo la última sílaba.',
+    descripcionDetallada: {
+      jugadores: 'De 2 personas en adelante, sin límite superior.',
+      objetivo: 'Encadenar palabras usando la última sílaba o letra de la anterior, sin repetir.',
+      comoSeJuega: `1. El primer jugador dice una palabra cualquiera.
+2. El siguiente debe decir una palabra que empiece por la última sílaba o letra de la anterior.
+   Ejemplo: “fiesta” → “tarta” → “taza” → “zapato”…
+3. No se pueden repetir palabras ya usadas.
+4. Si alguien no responde en 5 segundos, repite palabra o falla, queda eliminado o pierde la ronda.
+5. Se puede jugar por rondas o hasta que quede un solo ganador.`,
+      consejos: `- Puedes complicarlo usando solo nombres de animales, ciudades, etc.
+- Ideal para mejorar vocabulario y agilidad mental.
+- Perfecto para viajes, esperas o cualquier reunión.`
+    },
+    tieneLogica: true
+  },
+  {
+    id: 'sillas',
+    titulo: 'Sillas musicales',
+    descripcion: 'Corre y siéntate cuando pare la música.',
+    descripcionDetallada: {
+      jugadores: 'Desde 5 personas hasta grupos grandes (según espacio y sillas disponibles).',
+      objetivo: 'Ser el último en conseguir sentarse cuando pare la música.',
+      comoSeJuega: `1. Coloca las sillas en círculo, siempre una menos que el número de jugadores.
+2. Pon música y todos deben caminar o bailar alrededor de las sillas.
+3. En cualquier momento, alguien para la música sin avisar.
+4. Todos deben sentarse rápidamente. Quien se quede sin silla queda eliminado.
+5. Se retira una silla y se repite hasta que quede un solo ganador.`,
+      consejos: `- Puedes variar la música para hacerlo más divertido.
+- Si no hay sillas, se pueden usar cojines, hojas de papel, etc.
+- ¡Cuidado con empujones!`
+    },
+  },
+  {
+    id: 'limbo',
+    titulo: 'Limbo',
+    descripcion: 'Pasa bajo la barra sin caer ni tocar.',
+    descripcionDetallada: {
+      jugadores: 'Para cualquier grupo, ideal de 5 en adelante.',
+      objetivo: 'Pasar por debajo de la barra sin tocarla ni caerse. Gana quien llegue más lejos.',
+      comoSeJuega: `1. Dos personas sujetan una barra, palo o cuerda a cierta altura.
+2. Los jugadores, uno a uno, deben pasar por debajo inclinándose hacia atrás, sin tocar la barra ni caerse.
+3. Tras cada ronda, se baja la barra un poco más.
+4. Quien toque la barra o caiga queda eliminado.
+5. Gana quien logre pasar cuando ya nadie más puede.`,
+      consejos: `- Pon música animada para motivar a los participantes.
+- Usa una escoba, cuerda o similar si no tienes barra.
+- ¡Cuidado con la espalda!`
+    },
+  },
+  {
+    id: 'quien_soy',
+    titulo: '¿Quién soy?',
+    descripcion: 'Adivina el personaje peguntando sí o no.',
+    descripcionDetallada: {
+      jugadores: 'De 4 a 10 personas o más.',
+      objetivo: 'Adivinar qué personaje o identidad tienes asignada, haciendo preguntas de sí/no.',
+      comoSeJuega: `1. Escribe nombres de personajes famosos, dibujos, objetos, etc., en papelitos.
+2. Cada jugador recibe uno pegado en la frente o espalda, sin verlo.
+3. Por turnos, cada persona hace preguntas de sí/no para descubrir quién es (“¿Soy real?”, “¿Soy un animal?”, etc.).
+4. Si la respuesta es sí, puede preguntar de nuevo; si es no, pasa el turno.
+5. Gana quien adivine su personaje primero (o se puede seguir hasta que todos lo logren).`,
+      consejos: `- Puedes usar apps para asignar personajes aleatorios.
+- Elige personajes conocidos por todos para que sea divertido.
+- Prohibido mirar reflejos o preguntar directamente el nombre.`
+    },
+  },
+  {
+    id: 'asesino',
+    titulo: 'Pueblo duerme',
+    descripcion: 'Descubre quién es el asesino guiñando ojos.',
+    descripcionDetallada: {
+      jugadores: 'De 6 a 15 personas, ideal para grupos grandes.',
+      objetivo: 'Descubrir quién es el asesino antes de que elimine a todos los demás.',
+      comoSeJuega: `1. Todos se sientan en círculo. Se elige (al azar) un asesino y, si se desea, un policía.
+2. El moderador pide a todos cerrar los ojos. Solo el asesino abre los ojos para identificarse.
+3. Todos abren los ojos y comienza el juego: el asesino elimina a otros guiñando un ojo sin que los demás lo noten.
+4. Si alguien recibe un guiño, espera unos segundos y dice “he muerto” de forma teatral, saliendo del juego.
+5. Los demás deben debatir y tratar de descubrir quién es el asesino.
+6. Si acusan correctamente, ganan los inocentes; si el asesino elimina a casi todos, gana él.`,
+      consejos: `- Puedes añadir un “policía” que tenga una oportunidad para adivinar quién es el asesino.
+- El asesino debe ser discreto y no levantar sospechas.
+- Cuantos más jugadores, más divertido y difícil.`
+    },
+  },
+  {
+    id: 'verdades_mentira',
+    titulo: 'Dos verdades y una mentira',
+    descripcion: 'Adivina la mentira entre tres historias.',
+    descripcionDetallada: {
+      jugadores: 'Ideal 3-8 personas.',
+      objetivo: 'Adivinar cuál de las tres afirmaciones de un jugador es la mentira.',
+      comoSeJuega: 'Cada jugador, por turno, dice tres afirmaciones sobre sí mismo: dos cosas verdaderas y una mentira (en orden aleatorio). El resto del grupo debe discutir y adivinar cuál de las tres es la mentira. Cuando todos hayan dado su opinión, se revela la respuesta.',
+      consejos: 'Un excelente rompehielos para cualquier reunión. Es sorprendente lo que puedes aprender de tus amigos con este juego lleno de anécdotas personales. Sin alcohol.',
+    },
+  },
+  {
+    id: '20_preguntas',
+    titulo: '20 Preguntas',
+    descripcion: 'Adivina cualquier cosa en veinte preguntas.',
+    descripcionDetallada: {
+      jugadores: 'De 2 a 8 personas, aunque puede jugarse en grupos grandes.',
+      objetivo: 'Adivinar lo que una persona está pensando haciendo hasta 20 preguntas de sí/no.',
+      comoSeJuega: `1. Una persona piensa en un objeto, personaje, lugar, etc., sin decirlo.
+2. El resto, por turnos, hace preguntas que solo se puedan responder con sí o no.
+3. El objetivo es adivinar lo que pensó antes de llegar a 20 preguntas.
+4. Si se adivina antes de la pregunta 20, ganan los que preguntan; si no, gana quien pensó la palabra.
+5. Se puede jugar individualmente o por equipos.`,
+      consejos: `- Empieza preguntando cosas generales (“¿Es un ser vivo?”, “¿Es algo que se puede tocar?”).
+- Ideal para viajes, sobremesas o esperar en grupo.
+- Puedes variar el número de preguntas según la dificultad.`
+    },
+  },
+  {
+    id: 'no_te_rias',
+    titulo: 'No te rías (guerra de caras serias)',
+    descripcion: 'Mantén la cara seria y haz reír a otros.',
+    descripcionDetallada: {
+      jugadores: 'Sin límite de personas.',
+      objetivo: 'Mantener la cara seria mientras intentas que los demás se rían.',
+      comoSeJuega: 'Todos los participantes se miran unos a otros con la expresión más seria posible. Pueden contarse chistes malos, hacer muecas o decir tonterías para intentar que los demás se rían – pero ¡no puedes reírte tú! El primero que se ría o no pueda aguantar la cara seria pierde. Se puede jugar por rondas cortas y el que aguante sin reír hasta el final es el ganador.',
+      consejos: 'Un desafío divertidísimo para ver quién tiene más autocontrol. Sin alcohol, aunque se puede establecer que quien se ríe beba como penitencia.',
+    },
+  },
+  {
+    id: 'beer_pong',
+    titulo: 'Beer Pong',
+    descripcion: 'Encesta la pelota y haz beber al rival.',
+    descripcionDetallada: {
+      jugadores: '2 a 4 jugadores (1 o 2 por equipo), aunque pueden rotar y animar los demás.',
+      objetivo: 'Encestar la pelota en los vasos del rival y lograr que beban todos sus vasos.',
+      comoSeJuega: `1. Coloca 10 vasos (por equipo) en forma de triángulo en cada extremo de una mesa, con bebida dentro.
+2. Los equipos se turnan para lanzar una pelota de ping-pong intentando encestar en los vasos del rival.
+3. Si encestan, el rival debe beber el vaso y retirarlo de la mesa.
+4. Gana el equipo que elimina primero todos los vasos del contrario.
+5. Se pueden establecer reglas extra, como rebotes, “reagrupaciones”, etc.`,
+      consejos: `- Usa agua si no quieres consumir alcohol.
+- Puedes variar el número de vasos o la bebida.
+- No hace falta mesa oficial: cualquier superficie sirve.`
+    },
+  },
+  {
+    id: 'juego_rey',
+    titulo: 'El juego del rey',
+    descripcion: 'Cumple las órdenes del rey o bebe.',
+    descripcionDetallada: {
+      jugadores: 'De 4 a 8 personas, aunque sirve para grupos más grandes.',
+      objetivo: 'Cumplir las órdenes del rey o recibir un castigo (generalmente beber).',
+      comoSeJuega: `1. En cada ronda se sortea quién será el Rey/Reina.
+2. El Rey da una orden al grupo (“Todos de pie”, “Haz una imitación”, etc.).
+3. Quien no cumpla la orden o tarde demasiado, recibe un castigo (normalmente beber, pero puede ser otra prenda).
+4. Después de varias órdenes, se elige un nuevo Rey y se repite.
+5. El juego continúa mientras haya ganas de seguir.`,
+      consejos: `- Las órdenes deben ser posibles y seguras en el contexto de la fiesta.
+- Si no se quiere beber, se pueden poner penitencias divertidas.
+- Ideal para romper el hielo y perder la vergüenza.`
+    },
+  },
+  {
+    id: 'bufalo',
+    titulo: '¡Búfalo!',
+    descripcion: 'Bebe si usas la mano incorrecta.',
+    descripcionDetallada: {
+      jugadores: 'Número de jugadores ilimitado.',
+      objetivo: 'Evitar beber con la mano equivocada y pillar a los demás haciéndolo.',
+      comoSeJuega: 'Todos los jugadores deben sostener su bebida siempre con la mano izquierda (o la derecha, si alguno es zurdo se invierten los roles). En cualquier momento, si ves a alguien bebiendo o sujetando el vaso con la mano equivocada, grita “¡Búfalo!”. Quien haya cometido el despiste debe beberse su trago de un solo golpe como penalización. A partir de entonces el juego continúa.',
+      consejos: 'Juego de bebida simple y global, perfecto para reuniones relajadas. Es una regla que puede durar toda la fiesta y provocar muchos descuidos divertidos. Con alcohol principalmente.',
+    },
+  },
+  {
+    id: 'como_es_el_tuyo',
+    titulo: '¿Cómo es el tuyo?',
+    descripcion: 'Adivina el objeto común con pistas.',
+    descripcionDetallada: {
+      jugadores: 'De 4 a 8 personas, aunque sirve para más.',
+      objetivo: 'Adivinar el objeto, prenda o característica común del grupo a base de pistas.',
+      comoSeJuega: `1. Elige a un jugador para que salga de la sala o se tape los oídos.
+2. El resto acuerda en secreto un objeto o característica que todos tengan (ej: “todos tenemos calcetines”).
+3. El jugador vuelve y pregunta a quien quiera: “¿Cómo es el tuyo?”.
+4. Cada persona responde con una pista sincera pero no obvia (“el mío es blanco”, “lo uso cada día”…).
+5. El interrogador puede preguntar varias veces hasta intentar adivinar.
+6. Si acierta, gana; si no, paga una prenda o se repite con otro objeto.`,
+      consejos: `- Las pistas deben ser verdaderas pero no demasiado evidentes.
+- Puedes complicarlo usando características menos visibles.
+- Ideal para grupos observadores y creativos.`
+    },
+  },
+  {
+    id: 'infiltrado',
+    titulo: 'El infiltrado',
+    descripcion: 'Descubre quién finge conocer la temática.',
+    descripcionDetallada: {
+      jugadores: 'De 5 a 10 personas es lo ideal.',
+      objetivo: 'Descubrir quién es el infiltrado (el único que no conoce la temática secreta).',
+      comoSeJuega: `1. Se elige en secreto a un jugador como infiltrado. El resto acuerda una temática (ej: “cosas de la playa”).
+2. Por turnos, cada jugador dice en voz alta una palabra relacionada con la temática (el infiltrado improvisa para no ser descubierto).
+3. Tras una ronda, todos discuten y votan quién creen que es el infiltrado.
+4. Si aciertan, el infiltrado pierde; si fallan, sigue otra ronda con nueva temática o se repite.
+5. El infiltrado gana si logra pasar desapercibido varias rondas.`,
+      consejos: `- El infiltrado debe ser convincente y creativo.
+- Elige temáticas ni muy fáciles ni muy difíciles.
+- Puedes dar un punto al infiltrado si no lo descubren.`
+    },
+  },
 ];
 
 const { width, height } = Dimensions.get('window');
 
 export default function HomeScreen({ navigation, route }) {
-    const { jugadores } = route.params || {};
-    const [mostrarOpciones, setMostrarOpciones] = React.useState(false);
-    const insets = useSafeAreaInsets();
+  const { jugadores } = route.params || {};
+  const [mostrarOpciones, setMostrarOpciones] = React.useState(false);
+  const insets = useSafeAreaInsets();
 
-    const juegos = [
-      {
-        nombre: 'The best',
-        descripcion: 'Relaciona palabras lo más rápido posible en rondas cronometradas.',
-        screen: 'MiniGame4',
-      },
-      ...minijuegos.map(j => ({
-        nombre: j.titulo,
-        descripcion: j.descripcion,
-        screen: null,
-        minijuego: j
-      })),
-    ];
+  const juegos = [
+    {
+      nombre: 'The best',
+      descripcion: 'Relaciona palabras lo más rápido posible en rondas cronometradas.',
+      screen: 'MiniGame4',
+    },
+    ...minijuegos.map(j => ({
+      nombre: j.titulo,
+      descripcion: j.descripcion,
+      screen: null,
+      minijuego: j
+    })),
+  ];
 
-    const handleMinijuegoPress = (minijuego) => {
-      // Pasa todo el objeto minijuego, incluyendo descripcionDetallada
-      navigation.navigate('VariosMinigames', { minijuego });
-    };
+  const handleMinijuegoPress = (minijuego) => {
+    // Pasa todo el objeto minijuego, incluyendo descripcionDetallada
+    navigation.navigate('VariosMinigames', { minijuego });
+  };
 
-    return (
-        <GestureHandlerRootView style={{ flex: 1 }}>
-            <SafeAreaView style={styles.gridBackground}>
+  return (
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaView style={styles.gridBackground}>
+        <TouchableOpacity
+          style={[{ position: 'absolute', top: insets.top + 10, left: 20, zIndex: 10 }]}
+          onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            navigation.goBack();
+          }}
+        >
+          <Ionicons name="arrow-back" size={28} color="#000" />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[
+            {
+              position: 'absolute',
+              top: insets.top + 10,
+              right: 20,
+              zIndex: 10,
+              backgroundColor: 'transparent',
+              paddingHorizontal: 16,
+              paddingVertical: 8,
+              borderRadius: 8,
+              borderWidth: 1,
+              borderColor: '#000',
+            },
+          ]}
+          onPress={() => {
+            Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            navigation.navigate('Jugadores');
+          }}
+        >
+          <Text style={{ color: '#000', fontWeight: 'bold', fontFamily: 'Panchang-Bold' }}>Borrachos</Text>
+        </TouchableOpacity>
+
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+          <View style={{ flex: 1 }}>
+            <View style={[styles.cardsContainer, { paddingTop: insets.top + 60 }]}>
+              {juegos.map((juego, index) => (
                 <TouchableOpacity
-                  style={[{ position: 'absolute', top: insets.top + 10, left: 20, zIndex: 10 }]}
-                  onPress={() => {
-                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                    navigation.goBack();
-                  }}
+                  key={index}
+                  style={styles.gameCard}
+                  onPress={() =>
+                    juego.minijuego
+                      ? handleMinijuegoPress(juego.minijuego)
+                      : navigation.navigate(juego.screen, { jugadores })
+                  }
                 >
-                  <Ionicons name="arrow-back" size={28} color="#000" />
+                  <View style={styles.cardTextContainer}>
+                    <Text style={styles.gameText}>{juego.nombre}</Text>
+                    <Text style={styles.gameDescription}>{juego.descripcion}</Text>
+                  </View>
                 </TouchableOpacity>
-
-                <TouchableOpacity
-                  style={[
-                    {
-                      position: 'absolute',
-                      top: insets.top + 10,
-                      right: 20,
-                      zIndex: 10,
-                      backgroundColor: 'transparent',
-                      paddingHorizontal: 16,
-                      paddingVertical: 8,
-                      borderRadius: 8,
-                      borderWidth: 1,
-                      borderColor: '#000',
-                    },
-                  ]}
-                  onPress={() => {
-                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                    navigation.navigate('Jugadores');
-                  }}
-                >
-                  <Text style={{ color: '#000', fontWeight: 'bold', fontFamily: 'Panchang-Bold' }}>Borrachos</Text>
-                </TouchableOpacity>
-
-                <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-                    <View style={{ flex: 1 }}>
-                        <View style={[styles.cardsContainer, { paddingTop: insets.top + 60 }]}>
-                            {juegos.map((juego, index) => (
-                                <TouchableOpacity
-                                    key={index}
-                                    style={styles.gameCard}
-                                    onPress={() =>
-                                      juego.minijuego
-                                        ? handleMinijuegoPress(juego.minijuego)
-                                        : navigation.navigate(juego.screen, { jugadores })
-                                    }
-                                >
-                                    <View style={styles.cardTextContainer}>
-                                        <Text style={styles.gameText}>{juego.nombre}</Text>
-                                        <Text style={styles.gameDescription}>{juego.descripcion}</Text>
-                                    </View>
-                                </TouchableOpacity>
-                            ))}
-                        </View>
-                    </View>
-                </ScrollView>
-            </SafeAreaView>
-        </GestureHandlerRootView>
-    );
+              ))}
+            </View>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </GestureHandlerRootView>
+  );
 }
 
 const styles = StyleSheet.create({
-    gridBackground: {
-        flex: 1,
-        backgroundColor: '#70B77E',
-    },
-    imageBackground: {
-        position: 'absolute',
-        top: -height * 0.06,
-        left: -width * 0.12,
-        width: width * 0.7,
-        height: undefined,
-        aspectRatio: 1,
-        resizeMode: 'contain',
-        zIndex: 2,
-    },
-    cardsContainer: {
-      paddingBottom: 20,
-      alignItems: 'center',
-    },
-    gameCard: {
-        width: '90%',
-        borderRadius: 12,
-        padding: 20,
-        marginBottom: 20,
-        alignItems: 'center',
-        justifyContent: 'center',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 2,
-        backgroundColor: '#459853',
-        borderWidth: 2,
-        borderColor: '#0A5617',
-    },
-    cardImage: {
-        width: '100%',
-        height: '70%',
-        borderTopLeftRadius: 12,
-        borderTopRightRadius: 12,
-        resizeMode: 'cover',
-    },
-    cardTextContainer: {
-        gap: 2,
-        alignItems: 'center',
-    },
-    gameText: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        fontFamily: 'Panchang-Bold',
-        color: '#000',
-        marginBottom: 10,
-        textTransform: 'uppercase',
-        paddingHorizontal: 20,
-        textAlign: 'center',
-    },
-    gameDescription: {
-        fontSize: 14,
-        fontFamily: 'Panchang-Regular',
-        color: '#000',
-        textAlign: 'center',
-        marginBottom: 10,
-        paddingHorizontal: 20,
-    },
+  gridBackground: {
+    flex: 1,
+    backgroundColor: '#70B77E',
+  },
+  imageBackground: {
+    position: 'absolute',
+    top: -height * 0.06,
+    left: -width * 0.12,
+    width: width * 0.7,
+    height: undefined,
+    aspectRatio: 1,
+    resizeMode: 'contain',
+    zIndex: 2,
+  },
+  cardsContainer: {
+    paddingBottom: 20,
+    alignItems: 'center',
+  },
+  gameCard: {
+    width: '90%',
+    borderRadius: 12,
+    padding: 20,
+    marginBottom: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+    backgroundColor: '#459853',
+    borderWidth: 2,
+    borderColor: '#0A5617',
+  },
+  cardImage: {
+    width: '100%',
+    height: '70%',
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+    resizeMode: 'cover',
+  },
+  cardTextContainer: {
+    gap: 2,
+    alignItems: 'center',
+  },
+  gameText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    fontFamily: 'Panchang-Bold',
+    color: '#000',
+    marginBottom: 10,
+    textTransform: 'uppercase',
+    paddingHorizontal: 20,
+    textAlign: 'center',
+  },
+  gameDescription: {
+    fontSize: 14,
+    fontFamily: 'Panchang-Regular',
+    color: '#000',
+    textAlign: 'center',
+    marginBottom: 10,
+    paddingHorizontal: 20,
+  },
 });
