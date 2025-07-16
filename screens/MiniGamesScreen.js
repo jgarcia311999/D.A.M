@@ -110,7 +110,39 @@ const minijuegos = [
   id: 'tabu',
   titulo: 'Tabú',
   descripcion: 'Da pistas sin decir palabras prohibidas.',
-  descripcionDetallada: 'Un divertido juego de palabras que puedes preparar en el momento sin comprar nada. Se juega por equipos. El objetivo es que tu equipo adivine una palabra secreta que tú debes describirles sin mencionar la palabra en sí ni ciertos términos “tabú” relacionados. Por ejemplo, si la palabra prohibida es “hospital”, no podrías usar palabras evidentes como “médico” o “enfermo” al dar pistas. Puedes usar un generador de palabras aleatorias o pensar las palabras clave previamente y escribirlas en papel. Se turnan los equipos: mientras un miembro de un equipo da las pistas, el otro equipo vigila que no use ninguna palabra prohibida. Se puede usar un reloj para limitar el tiempo de cada turno y aumentar la emoción. Gana el equipo que adivine más palabras. (Sin alcohol; ideal jugar en equipos de 2-5 personas cada uno.)',
+  descripcionDetallada: `🎲 Tabú – Instrucciones
+
+👥 Número de jugadores:
+
+4 o más (en equipos de 2–5 personas)
+
+🧠 Objetivo del juego:
+
+Hacer que tu equipo adivine una palabra secreta sin usar ciertas palabras prohibidas asociadas a ella.
+
+🔧 Cómo se juega:
+1. Divide a los jugadores en dos equipos.
+2. Prepara tarjetas o papelitos con:
+-	Una palabra principal (la que deben adivinar).
+-	Y 3 a 5 palabras “tabú” que no se pueden usar al dar pistas.
+Por ejemplo:
+-	Palabra: Hospital
+Palabras tabú: médico, enfermera, paciente, enfermo, urgencias
+3. En cada ronda, un jugador del equipo es el describidor y tiene un tiempo limitado (por ejemplo, 1 minuto) para hacer que su equipo adivine tantas palabras como pueda.
+4. El describidor no puede decir:
+- La palabra en sí,
+-	Las palabras tabú,
+-	Ni usar mímica, sonidos ni partes de la palabra como pistas.
+5. Cada vez que el equipo adivina correctamente, gana 1 punto.
+6. Si el describidor dice una palabra prohibida, el turno se detiene o se pierde ese punto, según la regla acordada.
+7. Se turnan los equipos hasta que todos hayan participado. Gana el equipo con más puntos al final de las rondas.
+
+💡 Consejos:
+-	Puedes jugar sin app: basta con preparar una lista de palabras con sus prohibidas.
+-	Si no tienes palabras prohibidas preparadas, el otro equipo puede inventarlas al momento.
+-	Para más dificultad, limita el tiempo a 30 segundos o añade un “penalizador” por errores.
+-	Es excelente para estimular la creatividad, reírse y ver quién se pone nervioso más rápido.
+`,
   tieneLogica: true
 },
 ];

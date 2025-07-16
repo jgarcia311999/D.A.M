@@ -442,7 +442,7 @@ export default function VariosMinigames({ route }) {
             <>
               <Text style={[styles.text, { textDecorationLine: 'underline', fontWeight: 'bold' }]}>Instrucciones</Text>
               {instruccionesExpandido && (
-                <Text style={[styles.text, { marginTop: 12, fontSize: 16 }]}>
+                <Text style={[styles.text, { marginTop: 12, fontSize: 14, textAlign: 'left', lineHeight: 20 }]}>
                   {minijuego.descripcionDetallada}
                 </Text>
               )}
