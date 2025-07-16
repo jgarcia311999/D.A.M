@@ -414,7 +414,10 @@ export default function TodasLasFrasesScreen() {
               <TouchableOpacity style={styles.filterOption} onPress={exportarJSON}>
                 <Text style={styles.filterOptionText}>Descargar JSON</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.filterOption} onPress={() => document.getElementById('jsonInput')?.click()}>
+              <TouchableOpacity style={styles.filterOption} onPress={() => {
+                const input = document.getElementById('jsonInput');
+                if (input) input.click();
+              }}>
                 <Text style={styles.filterOptionText}>Subir JSON</Text>
               </TouchableOpacity>
               <input
@@ -427,7 +430,7 @@ export default function TodasLasFrasesScreen() {
               <input
                 id="jsonInput"
                 type="file"
-                accept=".json"
+                accept=".json,application/json"
                 onChange={handleJSONUpload}
                 style={{ display: 'none' }}
               />
