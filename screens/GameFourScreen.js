@@ -43,7 +43,11 @@ useEffect(() => {
     try {
       timeoutId = setTimeout(() => {
         alert('No tienes conexion a internet');
-        navigation.goBack();
+        if (navigation.canGoBack()) {
+            navigation.goBack();
+          } else {
+            navigation.navigate('Inicio');
+          }
       }, 30000);
 
       const todas = await getTodasLasFrases();
@@ -118,7 +122,11 @@ useEffect(() => {
       }}>
         <TouchableOpacity onPress={() => {
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-          navigation.goBack();
+          if (navigation.canGoBack()) {
+            navigation.goBack();
+          } else {
+            navigation.navigate('Inicio');
+          }
         }}>
           <Ionicons name="arrow-back" size={28} color="#000" />
         </TouchableOpacity>

@@ -40,9 +40,33 @@ export default function App() {
     return <AppLoading />;
   }
 
+  const linking = {
+    prefixes: ['http://localhost:19006', 'https://tudominio.com'],
+    config: {
+      screens: {
+        TittleScreen: '',
+        Inicio: 'inicio',
+        Perfil: 'perfil',
+        Gamer: 'gamer',
+        'Juego 1': 'juego1',
+        'Juego 2': 'juego2',
+        'Juego 3': 'juego3',
+        'Juego 4': 'juego4',
+        CreaFrase: 'crea-frase',
+        TodasFrases: 'todas-frases',
+        MiniGames: 'mini-juegos',
+        MiniGame1: 'mini-juegos/1',
+        MiniGame2: 'mini-juegos/2',
+        MiniGame4: 'mini-juegos/4',
+        VariosMinigames: 'mini-juegos/varios',
+        Privacidad: 'privacidad',
+      },
+    },
+  };
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <NavigationContainer>
+      <NavigationContainer linking={linking}>
         <Stack.Navigator initialRouteName="TittleScreen">
           <Stack.Screen name="TittleScreen" component={TittleScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Inicio" component={HomeScreen} options={{ headerShown: false }} />

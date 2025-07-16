@@ -173,7 +173,15 @@ export default function GameTwoScreen({ route, navigation }) {
       <View style={styles.header}>
         <TouchableOpacity onPress={() => {
           Haptics.selectionAsync();
-          navigation.goBack();
+          if (navigation.canGoBack()) {
+            if (navigation.canGoBack()) {
+            navigation.goBack();
+          } else {
+            navigation.navigate('Inicio');
+          }
+          } else {
+            navigation.navigate('Inicio');
+          }
         }}>
           <Ionicons name="arrow-back" size={28} color="#fff" />
         </TouchableOpacity>

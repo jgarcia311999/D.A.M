@@ -96,7 +96,11 @@ export default function GamerScreen({ route }) {
             onPress={async () => {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
               await AsyncStorage.setItem('jugadores', JSON.stringify(jugadores));
-              navigation.goBack();
+              if (navigation.canGoBack()) {
+            navigation.goBack();
+          } else {
+            navigation.navigate('Inicio');
+          }
             }}
           >
             <Ionicons name="arrow-back" size={28} color="#fff" />

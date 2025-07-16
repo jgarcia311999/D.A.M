@@ -289,7 +289,11 @@ export default function GameThreeScreen({ route }) {
         <View style={[styles.header, { paddingTop: insets.top + 10 }]}>
           <TouchableOpacity onPress={() => {
             Haptics.selectionAsync();
+            if (navigation.canGoBack()) {
             navigation.goBack();
+          } else {
+            navigation.navigate('Inicio');
+          }
           }}>
             <Ionicons name="arrow-back" size={28} color="#000" />
           </TouchableOpacity>

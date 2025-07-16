@@ -41,7 +41,11 @@ export default function HomeScreen({ navigation, route }) {
           style={[{ position: 'absolute', top: insets.top + 10, left: 20, zIndex: 10 }]}
           onPress={() => {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            if (navigation.canGoBack()) {
             navigation.goBack();
+          } else {
+            navigation.navigate('Inicio');
+          }
           }}
         >
           <Ionicons name="arrow-back" size={28} color="#000" />

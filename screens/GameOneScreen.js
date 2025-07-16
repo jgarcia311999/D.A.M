@@ -598,7 +598,11 @@ export default function GameOneScreen({ route, navigation }) {
         {/* Botón Back */}
         <TouchableOpacity onPress={() => {
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-          navigation.goBack();
+          if (navigation.canGoBack()) {
+            navigation.goBack();
+          } else {
+            navigation.navigate('Inicio');
+          }
         }}>
           <Ionicons name="arrow-back" size={28} color="#000000" />
         </TouchableOpacity>

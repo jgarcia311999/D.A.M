@@ -336,7 +336,11 @@ export default function TodasLasFrasesScreen() {
         <TouchableOpacity
           onPress={() => {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            if (navigation.canGoBack()) {
             navigation.goBack();
+          } else {
+            navigation.navigate('CreaFrase');
+          }
           }}
         >
           <Ionicons name="arrow-back" size={28} color="#5E1DE6" />

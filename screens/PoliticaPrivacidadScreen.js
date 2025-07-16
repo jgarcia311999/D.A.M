@@ -14,7 +14,11 @@ export default function PoliticaPrivacidadScreen() {
       <View style={[styles.header, { paddingTop: insets.top + 10 }]}>
         <TouchableOpacity onPress={() => {
           Haptics.selectionAsync();
-          navigation.goBack();
+          if (navigation.canGoBack()) {
+            navigation.goBack();
+          } else {
+            navigation.navigate('Perfil');
+          }
         }}>
           <Ionicons name="arrow-back" size={28} color="#000" />
         </TouchableOpacity>

@@ -126,7 +126,11 @@ const phrases = [
       <View style={[styles.header, { paddingTop: insets.top + 10 }]}>
         <TouchableOpacity onPress={() => {
           Haptics.selectionAsync();
-          navigation.goBack();
+          if (navigation.canGoBack()) {
+            navigation.goBack();
+          } else {
+            navigation.navigate('MiniGames');
+          }
         }}>
           <Ionicons name="arrow-back" size={28} color="#000" />
         </TouchableOpacity>
@@ -185,7 +189,11 @@ const phrases = [
         visible={modalVisible}
         onRequestClose={() => {
           Haptics.selectionAsync();
-          navigation.goBack();
+          if (navigation.canGoBack()) {
+            navigation.goBack();
+          } else {
+            navigation.navigate('MiniGames');
+          }
         }}
       >
         <TouchableOpacity
@@ -193,7 +201,11 @@ const phrases = [
           activeOpacity={1}
           onPressOut={() => {
             Haptics.selectionAsync();
+            if (navigation.canGoBack()) {
             navigation.goBack();
+          } else {
+            navigation.navigate('MiniGames');
+          }
           }}
         >
           <View style={styles.modalContainer}>

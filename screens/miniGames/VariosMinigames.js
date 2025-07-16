@@ -67,7 +67,11 @@ export default function VariosMinigames({ route }) {
           style={{ position: 'absolute', left: 20 }}
           onPress={() => {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            if (navigation.canGoBack()) {
             navigation.goBack();
+          } else {
+            navigation.navigate('MiniGames');
+          }
           }}
         >
           <Ionicons name="arrow-back" size={28} color="#000" />

@@ -113,7 +113,11 @@ export default function CreaTuFrase({ navigation }) {
       }}>
         <TouchableOpacity onPress={() => {
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-          navigation.goBack();
+          if (navigation.canGoBack()) {
+            navigation.goBack();
+          } else {
+            navigation.navigate('Juego 4');
+          }
         }}>
           <Ionicons name="arrow-back" size={28} color="#5E1DE6" />
         </TouchableOpacity>
