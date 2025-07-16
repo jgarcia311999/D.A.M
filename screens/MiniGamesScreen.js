@@ -7,6 +7,28 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const minijuegos = [
   {
+    id: 'chapa',
+    titulo: 'La chapa',
+    descripcion: 'Prohibido decir si o no.',
+    descripcionDetallada: {
+      jugadores: '4 o más personas',
+      objetivo: 'No tener la chapa al final de la noche',
+      comoSeJuega: `1. Consigue una chapa de cerveza, un tapon o algo parecido, pequeño para poder guardartelo en el bolsillo
+
+2. El juego es facil, no puedes decir ni 'SI', ni 'NO'. Parece sencillo, pero te aseguro que se te olvidará.
+
+3. Juega durante toda la noche o hasta una hora especifica.
+
+4. Cuando sea la hora, el portador de la chapa, invitara a una ronda a todos los que hayan jugado.
+
+5. Repite el juego la siguiente noche, ¡ya verás como acabais todos enganchados!`,
+      consejos: `- Si tienes la chapa, que nadie lo sepa.
+- Aliate con alguien y engañar al grupo.
+- No hay amigos.
+- Juntaros al final de la partida, para que nadie pueda escapar`,
+    },
+  },
+  {
     id: 'tabu',
     titulo: 'Tabú',
     descripcion: 'Da pistas sin decir palabras prohibidas.',
