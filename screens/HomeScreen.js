@@ -173,7 +173,7 @@ export default function HomeScreen({ navigation, route }) {
         {...(Platform.OS === 'web'
           ? {
               onClick: () => {
-                if (jugadores.length >= 2) {
+                if (jugadores.length >= 2 || item.screen === 'MiniGames') {
                   navigation.navigate(item.screen, { jugadores });
                 } else {
                   setShowJugadoresModal(true);
@@ -182,7 +182,7 @@ export default function HomeScreen({ navigation, route }) {
             }
           : {
               onPress: () => {
-                if (jugadores.length >= 2) {
+                if (jugadores.length >= 2 || item.screen === 'MiniGames') {
                   navigation.navigate(item.screen, { jugadores });
                 } else {
                   setShowJugadoresModal(true);
