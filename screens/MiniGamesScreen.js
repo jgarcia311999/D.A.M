@@ -10,6 +10,7 @@ const minijuegos = [
     id: 'chapa',
     titulo: 'La chapa',
     descripcion: 'Prohibido decir si o no.',
+    recomendacion: true,
     descripcionDetallada: {
       jugadores: '4 o más personas',
       objetivo: 'No tener la chapa al final de la noche',
@@ -135,6 +136,39 @@ const minijuegos = [
     tieneLogica: true
   },
   {
+    id: 'caja',
+    titulo: '¿Qué hay en mi caja?',
+    recomendacion: true,
+    descripcion: 'Adivina la regla secreta que rige la caja.',
+    descripcionDetallada: {
+      jugadores: '3 o más (mejor con 4+)',
+      objetivo: 'Adivinar la regla secreta que determina qué cosas pueden o no entrar en la “caja” del jugador que lidera la ronda.',
+      comoSeJuega: `1. Un jugador empieza como el “Dueño de la caja”. Este jugador elige una regla secreta que define qué cosas pueden entrar en su caja.
+Ejemplos de reglas:
+- Solo pueden entrar cosas que empiecen con la letra “M”.
+- Solo pueden entrar cosas vivas.
+- Solo pueden entrar cosas que tengan cola.
+- Solo pueden entrar personas más altas que el jugador.
+- Solo pueden entrar cosas rojas.
+- Solo pueden entrar cosas que el jugador tenga en casa.
+
+2. Los demás jugadores, uno por uno, van diciendo frases del tipo:
+- “¿Puedo meter un elefante en tu caja?”
+- “¿Puedo meter a mi abuela en tu caja?”
+
+3. El dueño de la caja responde con un “Sí, puede entrar” o “No, no puede entrar”, según la regla secreta.
+
+4. Los jugadores deben intentar adivinar la regla a partir de las respuestas. Pueden hacerlo en voz alta, o esperar su turno para hacer una nueva sugerencia que les ayude a confirmar su teoría.
+
+5. Cuando alguien cree haber adivinado la regla, puede decir:
+- “¿Tu caja solo acepta cosas con pelo?”
+Si acierta, ¡gana esa ronda y se convierte en el nuevo dueño de la caja!`,
+      consejos: `- El juego es más divertido cuando la regla no es demasiado obvia, pero tampoco imposible.
+- Puedes aumentar la dificultad eligiendo reglas abstractas o basadas en cosas personales (como “solo cosas que me gustan”).
+- También se puede jugar en versión temática: animales, personas, cosas, acciones…`,
+    },
+  },
+  {
     id: 'sillas',
     titulo: 'Sillas musicales',
     descripcion: 'Corre y siéntate cuando pare la música.',
@@ -188,6 +222,7 @@ const minijuegos = [
   {
     id: 'asesino',
     titulo: 'Pueblo duerme',
+    recomendacion: true,
     descripcion: 'Descubre quién es el asesino guiñando ojos.',
     descripcionDetallada: {
       jugadores: 'De 6 a 15 personas, ideal para grupos grandes.',
@@ -201,17 +236,6 @@ const minijuegos = [
       consejos: `- Puedes añadir un “policía” que tenga una oportunidad para adivinar quién es el asesino.
 - El asesino debe ser discreto y no levantar sospechas.
 - Cuantos más jugadores, más divertido y difícil.`
-    },
-  },
-  {
-    id: 'verdades_mentira',
-    titulo: 'Dos verdades y una mentira',
-    descripcion: 'Adivina la mentira entre tres historias.',
-    descripcionDetallada: {
-      jugadores: 'Ideal 3-8 personas.',
-      objetivo: 'Adivinar cuál de las tres afirmaciones de un jugador es la mentira.',
-      comoSeJuega: 'Cada jugador, por turno, dice tres afirmaciones sobre sí mismo: dos cosas verdaderas y una mentira (en orden aleatorio). El resto del grupo debe discutir y adivinar cuál de las tres es la mentira. Cuando todos hayan dado su opinión, se revela la respuesta.',
-      consejos: 'Un excelente rompehielos para cualquier reunión. Es sorprendente lo que puedes aprender de tus amigos con este juego lleno de anécdotas personales. Sin alcohol.',
     },
   },
   {
@@ -229,17 +253,6 @@ const minijuegos = [
       consejos: `- Empieza preguntando cosas generales (“¿Es un ser vivo?”, “¿Es algo que se puede tocar?”).
 - Ideal para viajes, sobremesas o esperar en grupo.
 - Puedes variar el número de preguntas según la dificultad.`
-    },
-  },
-  {
-    id: 'no_te_rias',
-    titulo: 'No te rías (guerra de caras serias)',
-    descripcion: 'Mantén la cara seria y haz reír a otros.',
-    descripcionDetallada: {
-      jugadores: 'Sin límite de personas.',
-      objetivo: 'Mantener la cara seria mientras intentas que los demás se rían.',
-      comoSeJuega: 'Todos los participantes se miran unos a otros con la expresión más seria posible. Pueden contarse chistes malos, hacer muecas o decir tonterías para intentar que los demás se rían – pero ¡no puedes reírte tú! El primero que se ría o no pueda aguantar la cara seria pierde. Se puede jugar por rondas cortas y el que aguante sin reír hasta el final es el ganador.',
-      consejos: 'Un desafío divertidísimo para ver quién tiene más autocontrol. Sin alcohol, aunque se puede establecer que quien se ríe beba como penitencia.',
     },
   },
   {
@@ -277,17 +290,6 @@ const minijuegos = [
     },
   },
   {
-    id: 'bufalo',
-    titulo: '¡Búfalo!',
-    descripcion: 'Bebe si usas la mano incorrecta.',
-    descripcionDetallada: {
-      jugadores: 'Número de jugadores ilimitado.',
-      objetivo: 'Evitar beber con la mano equivocada y pillar a los demás haciéndolo.',
-      comoSeJuega: 'Todos los jugadores deben sostener su bebida siempre con la mano izquierda (o la derecha, si alguno es zurdo se invierten los roles). En cualquier momento, si ves a alguien bebiendo o sujetando el vaso con la mano equivocada, grita “¡Búfalo!”. Quien haya cometido el despiste debe beberse su trago de un solo golpe como penalización. A partir de entonces el juego continúa.',
-      consejos: 'Juego de bebida simple y global, perfecto para reuniones relajadas. Es una regla que puede durar toda la fiesta y provocar muchos descuidos divertidos. Con alcohol principalmente.',
-    },
-  },
-  {
     id: 'como_es_el_tuyo',
     titulo: '¿Cómo es el tuyo?',
     descripcion: 'Adivina el objeto común con pistas.',
@@ -308,6 +310,7 @@ const minijuegos = [
   {
     id: 'infiltrado',
     titulo: 'El infiltrado',
+    recomendacion: true,
     descripcion: 'Descubre quién finge conocer la temática.',
     descripcionDetallada: {
       jugadores: 'De 5 a 10 personas es lo ideal.',
@@ -341,7 +344,8 @@ export default function HomeScreen({ navigation, route }) {
       nombre: j.titulo,
       descripcion: j.descripcion,
       screen: null,
-      minijuego: j
+      minijuego: j,
+      recomendacion: j.recomendacion,
     })),
   ];
 
@@ -399,6 +403,12 @@ export default function HomeScreen({ navigation, route }) {
                       : navigation.navigate(juego.screen, { jugadores })
                   }
                 >
+                  {juego.recomendacion && (
+                    <Image
+                      source={require('../assets/chapas/chapa_ok.png')}
+                      style={styles.recomendacionBadge}
+                    />
+                  )}
                   <View style={styles.cardTextContainer}>
                     <Text style={styles.gameText}>{juego.nombre}</Text>
                     <Text style={styles.gameDescription}>{juego.descripcion}</Text>
@@ -476,5 +486,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 10,
     paddingHorizontal: 20,
+  },
+  recomendacionBadge: {
+    position: 'absolute',
+    top: -25,
+    right: -25,
+    width: 70,
+    height: 70,
+    resizeMode: 'contain',
+    zIndex: 20,
+    transform: [{ rotate: '45deg' }],
   },
 });
