@@ -53,6 +53,48 @@ export default function TodasLasFrasesScreen() {
     saveAs(data, 'frases.xlsx');
   };
 
+  // Función para exportar frases a JSON
+  const exportarJSON = () => {
+    if (Platform.OS !== 'web') {
+      alert('Exportar a JSON solo está disponible en la versión web.');
+      return;
+    }
+
+    const jsonData = JSON.stringify(frases, null, 2);
+    const blob = new Blob([jsonData], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'frases.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  // Función para manejar la subida de un archivo JSON
+  const handleJSONUpload = (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      try {
+        const frasesImportadas = JSON.parse(e.target.result);
+        if (!Array.isArray(frasesImportadas)) {
+          alert('El archivo no tiene el formato correcto.');
+          return;
+        }
+
+        if (window.confirm('¿Estás seguro de que quieres reemplazar TODAS las frases?')) {
+          await reemplazarTodasLasFrases(frasesImportadas);
+        }
+      } catch (error) {
+        alert('Error al leer el archivo JSON.');
+        console.error(error);
+      }
+    };
+    reader.readAsText(file);
+  };
+
   // Función para sincronizar frases importadas con Firestore según id
   const reemplazarTodasLasFrases = async (frasesImportadas) => {
     const snapshot = await getDocs(collection(db, 'frases'));
@@ -71,12 +113,16 @@ export default function TodasLasFrasesScreen() {
         const existing = firestoreFrases[item.id];
         // Bloque para eliminar frases si corresponde
         if (
-          existing &&
-          typeof item.eliminar === 'string' &&
-          ['true', 'sí', 'si'].includes(item.eliminar.trim().toLowerCase())
+          (
+            typeof item.eliminar === 'string' &&
+            ['true', 'sí', 'si'].includes(item.eliminar.trim().toLowerCase())
+          ) ||
+          item.eliminar === true
         ) {
-          await deleteDoc(doc(db, 'frases', item.id));
-          eliminadas++;
+          if (existing) {
+            await deleteDoc(doc(db, 'frases', item.id));
+            eliminadas++;
+          }
           return;
         }
         const cleanItem = {
