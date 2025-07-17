@@ -1,5 +1,6 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { injectAdSense } from './utils/loadAdsense';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -37,6 +38,14 @@ export default function App() {
   'Panchang-Regular': require('./assets/fonts/Panchang-Regular.otf'),
   'Panchang-Semibold': require('./assets/fonts/Panchang-Semibold.otf'),
 });
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const noAdds = searchParams.has('noadds');
+    if (!noAdds) {
+      injectAdSense();
+    }
+  }, []);
 
   if (!fontsLoaded) {
     return <AppLoading />;
