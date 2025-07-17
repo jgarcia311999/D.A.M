@@ -38,7 +38,8 @@ export default function CreaTuFrase({ navigation }) {
   useEffect(() => {
     if (Platform.OS === 'web') {
       const searchParams = new URLSearchParams(window.location.search);
-      if (searchParams.toString().includes('230566')) {
+      const user = searchParams.get('user');
+      if (user === '230566') {
         setMostrarBoton(true);
       }
     }
