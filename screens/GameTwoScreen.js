@@ -2,7 +2,7 @@ const palos = ['oro', 'cubata', 'pollo', 'cigarro'];
 
 const generarBarajaCompleta = () => {
   const baraja = [];
-  const valores = [1, 2, 3, 4, 5, 6, 7, 8, 9, 'j', 'q', 'k'];
+  const valores = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 'j', 'q', 'k'];
   for (let i of valores) {
     for (let palo of palos) {
       baraja.push({ numero: i, palo });
