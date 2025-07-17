@@ -105,6 +105,12 @@ const tragosPorPalo = {
   cigarro: 4,
 };
 
+const generarCarta = () => {
+  const valores = [1, 2, 3, 4, 5, 6, 7, 8, 9, 'j', 'q', 'k'];
+  const numero = valores[Math.floor(Math.random() * valores.length)];
+  const palo = palos[Math.floor(Math.random() * palos.length)];
+  return { numero, palo };
+};
 
 export default function GameTwoScreen({ route, navigation }) {
   const jugadores = route?.params?.jugadores || [];
