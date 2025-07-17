@@ -18,7 +18,7 @@ export default function PerfilScreen() {
       <View style={[styles.header, { paddingTop: insets.top + 10 }]}>
         <TouchableOpacity onPress={() => {
           Haptics.selectionAsync();
-          if (navigation.canGoBack()) {
+          if (navigation?.canGoBack?.()) {
             navigation.goBack();
           } else {
             navigation.navigate('Inicio');
@@ -40,6 +40,16 @@ export default function PerfilScreen() {
           </TouchableOpacity>
         </View>
         <View style={styles.linkContainer}>
+          <TouchableOpacity onPress={() => navigation.navigate('Cookies')}>
+            <Text style={styles.link}>Política de cookies</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.linkContainer}>
+          <TouchableOpacity onPress={() => navigation.navigate('AvisoLegal')}>
+            <Text style={styles.link}>Aviso legal</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.linkContainer}>
           <TouchableOpacity onPress={() => handleLinkPress('https://tusitio.com/sugerencias')}>
             <Text style={styles.link}>Sugerencias</Text>
           </TouchableOpacity>
@@ -57,7 +67,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 24,
     paddingTop: 60,
-    backgroundColor: '#a3c8ff',
+    backgroundColor: '#d3d3d3',
     alignItems: 'flex-start',
   },
   // header style removed as it's no longer used
@@ -69,7 +79,7 @@ const styles = StyleSheet.create({
   damLineTop: {
     fontSize: 70,
     fontWeight: 'bold',
-    color: '#000',
+    color: '#4f4f4f',
     fontFamily: 'Panchang-Bold',
     textAlign: 'left',
     marginLeft: 0,
@@ -78,7 +88,7 @@ const styles = StyleSheet.create({
   damLineBottom: {
     fontSize: 80,
     fontWeight: 'bold',
-    color: '#000',
+    color: '#4f4f4f',
     fontFamily: 'Panchang-Bold',
     textAlign: 'left',
     width: '100%',
@@ -94,7 +104,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   linkContainer: {
-    backgroundColor: '#79AFFF',
+    backgroundColor: '#e0e0e0',
     borderWidth: 2,
     borderColor: '#fff',
     padding: 12,

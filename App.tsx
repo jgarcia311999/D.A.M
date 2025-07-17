@@ -20,6 +20,8 @@ import VariosMinigames from './screens/miniGames/VariosMinigames';
 import CreaTuFrase from './screens/CreaTuFrase';
 import TodasLasFrasesScreen from './screens/TodasLasFrasesScreen';
 import PoliticaPrivacidadScreen from './screens/PoliticaPrivacidadScreen';
+import PoliticaCookiesScreen from './screens/PoliticaCookiesScreen';
+import AvisoLegalScreen from './screens/AvisoLegalScreen';
 
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
@@ -97,6 +99,8 @@ export default function App() {
           <Stack.Screen name="MiniGame4" component={MiniGame4} options={{ headerShown: false }} />
           <Stack.Screen name="VariosMinigames" component={VariosMinigames} options={{ headerShown: false }} />
           <Stack.Screen name="Privacidad" component={PoliticaPrivacidadScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Cookies" component={PoliticaCookiesScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="AvisoLegal" component={AvisoLegalScreen} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>

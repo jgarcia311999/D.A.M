@@ -76,7 +76,7 @@ export default function PoliticaPrivacidadScreen() {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    backgroundColor: '#a3c8ff',
+    backgroundColor: '#d3d3d3',
   },
   title: {
     fontSize: 28,
