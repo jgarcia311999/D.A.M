@@ -122,7 +122,9 @@ useEffect(() => {
       }}>
         <TouchableOpacity onPress={() => {
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-          if (navigation.canGoBack()) {
+          if (Platform.OS === 'web') {
+            navigation.navigate('Inicio');
+          } else if (navigation.canGoBack()) {
             navigation.goBack();
           } else {
             navigation.navigate('Inicio');

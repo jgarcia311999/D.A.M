@@ -23,6 +23,8 @@ import PoliticaPrivacidadScreen from './screens/PoliticaPrivacidadScreen';
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
 
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -39,6 +41,8 @@ export default function App() {
   if (!fontsLoaded) {
     return <AppLoading />;
   }
+
+  Ionicons.loadFont();
 
   const linking = {
     prefixes: ['http://localhost:19006', 'https://tudominio.com'],

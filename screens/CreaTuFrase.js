@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@expo/vector-icons';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../utils/firebaseConfig';
 // Si usas haptics:
@@ -114,7 +114,9 @@ export default function CreaTuFrase({ navigation }) {
       }}>
         <TouchableOpacity onPress={() => {
           Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-          if (navigation.canGoBack()) {
+          if (Platform.OS === 'web') {
+            navigation.navigate('Juego 4');
+          } else if (navigation.canGoBack()) {
             navigation.goBack();
           } else {
             navigation.navigate('Juego 4');
