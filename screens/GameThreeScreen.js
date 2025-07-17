@@ -29,11 +29,11 @@ const options = [...numericLabels];
 const colors = [...rouletteColors];
 const baseOptions = [
   'BEBEN TODOS',
-  'manda a alguien a beber 1 trago',
+  'elige alguien para que beba 1 trago',
   'te toca beber 1 trago',
-  'manda a alguien a beber 2 tragos seguidos',
+  'elige alguien para que beba 2 tragos seguidos',
   'te tocan 2 tragos, sin pausas',
-  'manda a alguien a beber 3 tragos sin respirar entre ellos',
+  'elige alguien para que beba 3 tragos sin respirar entre ellos',
   'bebe 3 tragos como si fuera agua',
   'manda a alguien que se cambie de sitio por el de enfrente mientras los dos beben',
   'cambiate por el de enfrente mientras los dos bebeis',
@@ -49,9 +49,9 @@ const baseOptions = [
   'da 3 vueltas sobre ti mismo y bebe',
   'obliga a alguien a intercambiar ropa con otro y que beba',
   'cambia una prenda con alguien mientras bebes',
-  'manda a alguien a beber desde el vaso de la persona que mas le guste',
+  'elige alguien para que beba desde el vaso de la persona que mas le guste',
   'bebe desde el vaso de la persona que más te atrae',
-  'manda a alguien a beber del vaso del de su izquierda',
+  'elige alguien para que beba del vaso del de su izquierda',
   'bebe del vaso del de tu izquierda',
   'haz que alguien beba sin manos',
   'bebe sin usar las manos',
@@ -63,8 +63,8 @@ const baseOptions = [
   'haz un selfi con todo el mundo',
   'manda a alguien a soltar una frase de ligue y luego beber',
   'suelta tu mejor frase de ligue, y bebe',
-  'manda a alguien a morder la oreja de otro mientras bebe',
-  'dale un mordisquito en la oreja al de tu derecha y luego bebe'
+  'manda a alguien a morder la oreja de otro',
+  'dale un mordisquito en la oreja al de tu derecha'
 ];
 
 
@@ -379,7 +379,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF3B0',
     alignItems: 'center',
     justifyContent: 'center',
-    overflowX: 'hidden',
+    overflow: 'hidden',
   },
   title: {
     fontSize: 24,
@@ -446,12 +446,14 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    clipPath: 'inset(0 0 0 0)',
   },
   wheelContainer: {
     width: radius * 2,
     height: radius * 2,
     alignItems: 'center',
     justifyContent: 'center',
+    overflow: 'hidden',
   },
 
 
