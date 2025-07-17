@@ -34,7 +34,7 @@ const juegos = [
   },
   {
     id: 3,
-    nombre: 'El Saca Cartas',
+    nombre: 'La Copa del Rey',
     descripcion: 'Desliza y revela desafíos divertidos carta por carta.',
     screen: 'Juego 2',
     imagen: PjDados,

@@ -83,18 +83,19 @@ const imagenesCartas = {
 };
 
 const valores = {
-  1: 'Elige quién bebe',
-  2: 'Tomas tú',
-  3: 'Reparte – Elige a 3 personas y reparte tragos',
-  4: 'Pregunta caliente – Haz una pregunta o bebe',
-  5: 'Rimas – Di una palabra, el que falle bebe',
-  6: 'Categoría – El que falle, bebe',
-  7: 'Todos beben',
-  8: 'Nueva regla – Aplica hasta el próximo 8',
-  9: 'Pulgar en la mesa – El último en copiar, bebe',
-  10: 'Cambio – De asiento o bebida',
-  11: 'Duelo – Piedra, papel o tijera',
-  12: 'Vaso del Rey 👑 – Agrega bebida al vaso central',
+  1: 'Ronda encadenada: no puedes dejar de beber hasta que lo haga quien empezó.',
+  2: 'Ordena a otro jugador que beba.',
+  3: 'Te toca beber, noble bebedor.',
+  4: '¡Al suelo! El último en agacharse bebe.',
+  5: '¡Manos al cielo! El último en alzarlas bebe.',
+  6: 'Brindan las mujeres.',
+  7: 'Brindan los hombres.',
+  8: 'Elige un compañero para brindar: si uno bebe, el otro también.',
+  9: 'Desafío de rimas: di una palabra y que siga el turno hasta que alguien falle.',
+  10: 'Prohibido decir "sí" o "no". Si lo haces, bebes.',
+  11: 'Crea una nueva norma que todos deberán respetar.',
+  12: 'Sólo puedes responder con preguntas, si no, bebes.',
+  13: 'Vierte un poco de tu bebida en la copa central.',
 };
 
 const tragosPorPalo = {
@@ -147,7 +148,34 @@ export default function GameTwoScreen({ route, navigation }) {
     const jugador = jugadores[Math.floor(Math.random() * jugadores.length)];
     setJugadorActual(jugador);
     setCarta(nueva);
-    setRegistro(prev => [...prev, { jugador: jugador, carta: { numero: nueva.numero, palo: nueva.palo } }]);
+
+    // Nueva lógica para detectar el cuarto rey
+    const nuevosRegistros = [...registro, { jugador: jugador, carta: { numero: nueva.numero, palo: nueva.palo } }];
+    // Para comparar correctamente, convertir 'k' a 13, etc.
+    const obtenerNumero = (num) => {
+      if (num === 'j') return 11;
+      if (num === 'q') return 12;
+      if (num === 'k') return 13;
+      return num;
+    };
+    const reyesSacados = nuevosRegistros.filter(item => obtenerNumero(item.carta.numero) === 13).length;
+
+    if (obtenerNumero(nueva.numero) === 13 && reyesSacados === 4) {
+      setRegistro(nuevosRegistros);
+      setMazo(nuevoMazo);
+      setUltimasCartas(prev => {
+        // Excluir la carta actual y mantener secuencia sin duplicados
+        const nuevaLista = [
+          ...prev.filter(c => !(c.numero === nueva.numero && c.palo === nueva.palo)),
+          { numero: nueva.numero, palo: nueva.palo }
+        ];
+        return nuevaLista.slice(-4);
+      });
+      alert('¡Cuarto rey! Te toca beber la copa central 🥴');
+      return;
+    }
+
+    setRegistro(nuevosRegistros);
     setMazo(nuevoMazo);
     setUltimasCartas(prev => {
       // Excluir la carta actual y mantener secuencia sin duplicados
