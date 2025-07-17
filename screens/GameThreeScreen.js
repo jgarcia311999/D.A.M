@@ -154,7 +154,8 @@ export default function GameThreeScreen({ route }) {
     };
   }, [selected]);
 
-  useEffect(() => {
+useEffect(() => {
+    setShowHint(true); // show hint immediately on mount
     const interval = setInterval(() => {
       if (Date.now() - lastInteractionRef.current >= 10000) {
         setShowHint(true);

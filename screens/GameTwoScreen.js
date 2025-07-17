@@ -431,7 +431,7 @@ export default function GameTwoScreen({ route, navigation }) {
       {!carta && (
         <View style={styles.introWrapper}>
           <Text style={styles.introText}>
-            Prepara chupitos para empezar 
+            Juego facil y simple. Pulsa el boton y saca cartas. Cada numero tiene una acción y cada palo una cantidad. Ahora, espero que no te toque el cuarto rey. 
           </Text>
         </View>
       )}
@@ -587,8 +587,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Panchang-Regular',
   },
   introWrapper: {
-    flex: 1,
-    justifyContent: 'center',
+    marginTop: height * 0.05,
     alignItems: 'center',
   },
   cartaMarco: {
