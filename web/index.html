@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>La PRV</title>
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6493534174293024"
+      crossorigin="anonymous"></script>
+    <script>
+      const searchParams = new URLSearchParams(window.location.search);
+      const noAdsParam = searchParams.has('noadds');
+      const isLocal = window.location.hostname === 'localhost';
+
+      if (noAdsParam) {
+        localStorage.setItem('ads_disabled', 'true');
+        window.location.href = window.location.origin + window.location.pathname; // limpiar parámetros
+      }
+
+      if (localStorage.getItem('ads_disabled') === 'true' || isLocal) {
+        window.__DISABLE_ADS__ = true;
+        console.log("🔕 Anuncios desactivados por configuración previa o entorno local");
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
