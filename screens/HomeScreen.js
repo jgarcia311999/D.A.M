@@ -16,8 +16,8 @@ const isSmallDevice = width < 360;
 const juegos = [
   {
     id: 1,
-    nombre: 'Bebecartas',
-    descripcion: 'Saca cartas al azar con retos únicos y bebe si no los cumples.',
+    nombre: 'The Remix',
+    descripcion: 'Un mix de preguntas, pruebas y diversion.',
     screen: 'Juego 4',
     imagen: PjTabaco,
     imagenEstilo: { width: '80%', height: height * 0.35, resizeMode: 'contain' },
@@ -26,7 +26,7 @@ const juegos = [
   {
     id: 2,
     nombre: 'La Cadena del Crupier',
-    descripcion: 'Reta a tus amigos con preguntas rápidas y pasa la cadena antes que el tiempo se agote.',
+    descripcion: 'Cuatro pruebas, dudo que puedas ganar.',
     screen: 'Juego 1',
     imagen: PjCartas,
     imagenEstilo: { width: '80%', height: height * 0.35, resizeMode: 'contain' },
@@ -35,7 +35,7 @@ const juegos = [
   {
     id: 3,
     nombre: 'La Copa del Rey',
-    descripcion: 'Desliza y revela desafíos divertidos carta por carta.',
+    descripcion: 'Cada carta con su acción, ahora, no saques el 4º rey...',
     screen: 'Juego 2',
     imagen: PjDados,
     imagenEstilo: { width: '80%', height: height * 0.35, resizeMode: 'contain' },
@@ -44,7 +44,7 @@ const juegos = [
   {
     id: 4,
     nombre: 'La ruleta del shot',
-    descripcion: 'Gira y bebe, facil y sencillo.',
+    descripcion: '¿Todo al rojo? ¿Todo al negro? Todo al shot',
     screen: 'Juego 3',
     imagen: PjRuleta,
     imagenEstilo: { width: '80%', height: height * 0.35, resizeMode: 'contain' },
