@@ -19,9 +19,9 @@ import MiniGame4 from './screens/miniGames/MiniGame4';
 import VariosMinigames from './screens/miniGames/VariosMinigames';
 import CreaTuFrase from './screens/CreaTuFrase';
 import TodasLasFrasesScreen from './screens/TodasLasFrasesScreen';
-import PoliticaPrivacidadScreen from './screens/PoliticaPrivacidadScreen';
-import PoliticaCookiesScreen from './screens/PoliticaCookiesScreen';
-import AvisoLegalScreen from './screens/AvisoLegalScreen';
+import PoliticaPrivacidadScreen from './screens/legal/PoliticaPrivacidadScreen';
+import PoliticaCookiesScreen from './screens/legal/PoliticaCookiesScreen';
+import AvisoLegalScreen from './screens/legal/AvisoLegalScreen';
 
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
