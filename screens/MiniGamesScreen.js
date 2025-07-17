@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
   recomendacionBadge: {
     position: 'absolute',
     top: -25,
-    right: -25,
+    right: -15,
     width: 70,
     height: 70,
     resizeMode: 'contain',
