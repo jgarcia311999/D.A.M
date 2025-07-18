@@ -75,7 +75,7 @@ const minijuegos = [
     tieneLogica: true
   },
   {
-    id: 'canta_palabra',
+    id: 'canta_palabras',
     titulo: 'Canta la palabra',
     descripcion: 'Canta una canción que contenga la palabra.',
     descripcionDetallada: {
