@@ -282,8 +282,6 @@ export default function GameOneScreen({ route, navigation }) {
     setCartas([...cartas, nuevaCarta]);
 
     if (nuevaCarta.palo === paloElegido) {
-      // setModalCarta({ carta: nuevaCarta, acierto: true });
-      // setModalVisible(true);
       parpadear('green');
       setModalCarta(null);
       setModalVisible(false);
@@ -295,7 +293,6 @@ export default function GameOneScreen({ route, navigation }) {
       setMensaje(`Fallaste. Tienes que beber ${fase} trago${fase > 1 ? 's' : ''}.`);
       setResultado('perdiste');
       parpadearRojoCarta(fase - 1);
-      // reiniciar(); // Eliminado: ya no se reinicia automáticamente al perder
     }
   };
 
@@ -350,11 +347,7 @@ export default function GameOneScreen({ route, navigation }) {
     </Modal>
   );
 
-  // Mover scrollContainer aquí para poder usar insets.top dinámicamente
   const styles = StyleSheet.create({
-    header: {
-      // eliminado, ya no se usa
-    },
     container: {
       flex: 1,
       paddingTop: 0,
@@ -374,11 +367,11 @@ export default function GameOneScreen({ route, navigation }) {
       alignItems: 'center',
       marginVertical: 10,
       paddingHorizontal: 10,
-      marginTop: 10, // para que no tape el header
+      marginTop: 10, 
     },
     cardImage: {
       width: 70,
-      height: 112, // Mantiene una proporción realista de carta (0.625)
+      height: 112, 
       marginHorizontal: 5,
       borderRadius: 12,
       borderWidth: 1.5,
