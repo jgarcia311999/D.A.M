@@ -78,6 +78,7 @@ export default function HomeScreen({ navigation, route }) {
   const [modoPendiente, setModoPendiente] = useState(false);
   const [showJugadoresModal, setShowJugadoresModal] = useState(false);
   const flatListRef = useRef(null);
+  const scrollRef = useRef(null); // Nuevo useRef para ScrollView web
   const fadeCarrusel = useRef(new Animated.Value(1)).current;
   const fadeLista = useRef(new Animated.Value(0)).current;
   const insets = useSafeAreaInsets();
@@ -137,10 +138,7 @@ export default function HomeScreen({ navigation, route }) {
     const scrollToX = nextIndex * width;
 
     if (Platform.OS === 'web') {
-      const scrollEl = document.getElementById('carruselScroll');
-      if (scrollEl) {
-        scrollEl.scrollLeft = scrollToX;
-      }
+      scrollRef.current?.scrollTo({ x: scrollToX, animated: true });
     } else {
       flatListRef.current?.scrollTo({ x: scrollToX, animated: true });
     }
@@ -153,10 +151,7 @@ export default function HomeScreen({ navigation, route }) {
     const scrollToX = prevIndex * width;
 
     if (Platform.OS === 'web') {
-      const scrollEl = document.getElementById('carruselScroll');
-      if (scrollEl) {
-        scrollEl.scrollLeft = scrollToX;
-      }
+      scrollRef.current?.scrollTo({ x: scrollToX, animated: true });
     } else {
       flatListRef.current?.scrollTo({ x: scrollToX, animated: true });
     }
@@ -351,6 +346,7 @@ export default function HomeScreen({ navigation, route }) {
           {Platform.OS === 'web' ? (
             <ScrollView
               nativeID="carruselScroll"
+              ref={scrollRef}
               horizontal
               pagingEnabled
               showsHorizontalScrollIndicator={false}
