@@ -375,36 +375,32 @@ export default function HomeScreen({ navigation, route }) {
           )}
         </Animated.View>
         {Platform.OS === 'web' && !modoLista && (
-          <View style={{
-            position: 'absolute',
-            top: '50%',
-            left: 10,
-            right: 10,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            zIndex: 10
-          }}>
-            <TouchableOpacity
-              onPress={handleLeft}
-              disabled={currentIndex === 0}
-              style={{
-                opacity: currentIndex === 0 ? 0 : 1,
-                pointerEvents: currentIndex === 0 ? 'none' : 'auto',
-              }}
-            >
-              <Ionicons name="chevron-back" size={40} color="#000" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={handleRight}
-              disabled={currentIndex === juegos.length - 1}
-              style={{
-                opacity: currentIndex === juegos.length - 1 ? 0 : 1,
-                pointerEvents: currentIndex === juegos.length - 1 ? 'none' : 'auto',
-              }}
-            >
-              <Ionicons name="chevron-forward" size={40} color="#000" />
-            </TouchableOpacity>
-          </View>
+          <>
+            <View style={{ position: 'absolute', top: '50%', left: 10, zIndex: 10 }}>
+              <TouchableOpacity
+                onPress={handleLeft}
+                disabled={currentIndex === 0}
+                style={{
+                  opacity: currentIndex === 0 ? 0 : 1,
+                  pointerEvents: currentIndex === 0 ? 'none' : 'auto',
+                }}
+              >
+                <Ionicons name="chevron-back" size={40} color="#000" />
+              </TouchableOpacity>
+            </View>
+            <View style={{ position: 'absolute', top: '50%', right: 10, zIndex: 10 }}>
+              <TouchableOpacity
+                onPress={handleRight}
+                disabled={currentIndex === juegos.length - 1}
+                style={{
+                  opacity: currentIndex === juegos.length - 1 ? 0 : 1,
+                  pointerEvents: currentIndex === juegos.length - 1 ? 'none' : 'auto',
+                }}
+              >
+                <Ionicons name="chevron-forward" size={40} color="#000" />
+              </TouchableOpacity>
+            </View>
+          </>
         )}
         <Animated.View
           style={{ flex: 1, opacity: fadeLista }}
