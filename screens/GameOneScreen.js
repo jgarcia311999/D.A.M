@@ -389,11 +389,11 @@ export default function GameOneScreen({ route, navigation }) {
       marginRight: 10,
     },
     question: {
-      fontSize: 22,
+      fontSize: 28,
       marginBottom: 20,
       textAlign: 'center',
       color: 'black',
-      fontFamily: 'Panchang-Regular',
+      fontFamily: 'Satoshi-Medium',
     },
     colorRow: {
       flexDirection: 'row',
@@ -540,11 +540,11 @@ export default function GameOneScreen({ route, navigation }) {
       borderColor: '#ff4d4d',
     },
     modalMessage: {
-      fontSize: 20,
+      fontSize: 28,
       fontWeight: 'bold',
       textAlign: 'center',
       color: 'black',
-      fontFamily: 'Panchang-Regular',
+      fontFamily: 'Satoshi-Medium',
     },
     fixedBackButton: {
       position: 'absolute',

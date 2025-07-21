@@ -193,7 +193,27 @@ export default function HomeScreen({ navigation, route }) {
           <Image source={item.imagen} style={styles.slideImage} resizeMode="contain" />
         </View>
         <View style={styles.slideBottom}>
-          <Text style={styles.slideDescription}>{item.descripcion}</Text>
+          <TouchableOpacity
+            style={{
+              backgroundColor: 'transparent',
+              paddingVertical: 10,
+              paddingHorizontal: 20,
+              borderRadius: 12,
+              borderWidth: 2,
+              borderColor: '#000',
+            }}
+            onPress={() => {
+              if (jugadores.length >= 2 || item.screen === 'MiniGames') {
+                navigation.navigate(item.screen, { jugadores });
+              } else {
+                setShowJugadoresModal(true);
+              }
+            }}
+          >
+            <Text style={{ color: '#000', fontFamily: 'Panchang-Bold', fontSize: 16 }}>
+              JUGAR
+            </Text>
+          </TouchableOpacity>
         </View>
       </Wrapper>
     );
@@ -537,14 +557,6 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     marginBottom: 0,
     marginTop: 0,
-  },
-  slideDescription: {
-    fontSize: 18,
-    fontFamily: 'Panchang-Regular',
-    color: '#000',
-    textAlign: 'center',
-    marginBottom: 10,
-    paddingHorizontal: 20,
   },
   cardDescription: {
     fontSize: scaleFont(14),

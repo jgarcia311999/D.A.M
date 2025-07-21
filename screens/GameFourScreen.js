@@ -246,8 +246,8 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   text: {
-    fontSize: 22,
-    fontFamily: 'Panchang-Regular',
+    fontSize: 26,
+    fontFamily: 'Satoshi-Medium',
     color: '#000',
     textAlign: 'center',
     paddingHorizontal: 20,
