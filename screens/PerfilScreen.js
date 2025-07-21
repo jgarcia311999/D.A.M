@@ -15,17 +15,29 @@ export default function PerfilScreen() {
 
   return (
     <View style={styles.container}>
-      <View style={[styles.header, { paddingTop: insets.top + 10 }]}>
-        <TouchableOpacity onPress={() => {
-          Haptics.selectionAsync();
-          if (navigation?.canGoBack?.()) {
-            navigation.goBack();
-          } else {
-            navigation.navigate('Inicio');
-          }
-        }}>
-          <Ionicons name="arrow-back" size={28} color="#000" />
-        </TouchableOpacity>
+      <View style={styles.header}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', width: '100%' }}>
+          <TouchableOpacity
+            onPress={() => {
+              Haptics.selectionAsync();
+              if (navigation.canGoBack()) {
+                if (navigation.canGoBack()) {
+                  navigation.goBack();
+                } else {
+                  navigation.navigate('Inicio');
+                }
+              } else {
+                navigation.navigate('Inicio');
+              }
+            }}
+            style={{ padding: 0, margin: 0 }}
+          >
+            <Ionicons name="arrow-back" size={28} color="#000" style={{ margin: 0 }} />
+          </TouchableOpacity>
+          <View style={{ flex: 1, alignItems: 'flex-end', paddingRight: 30 }}>
+            <Text style={styles.footerText}>Contenido +18</Text>
+          </View>
+        </View>
       </View>
       <TouchableOpacity style={{ flex: 0, justifyContent: 'flex-start', alignItems: 'flex-start' }}>
         <View style={styles.damTextWrapper}>
@@ -55,9 +67,6 @@ export default function PerfilScreen() {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={styles.footerContainer}>
-        <Text style={styles.footerText}>Contenido +18</Text>
-      </View>
     </View>
   );
 }
@@ -70,7 +79,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#d3d3d3',
     alignItems: 'flex-start',
   },
-  // header style removed as it's no longer used
   damTextWrapper: {
     paddingTop: 20,
     alignSelf: 'flex-start',
@@ -83,7 +91,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Panchang-Bold',
     textAlign: 'left',
     marginLeft: 0,
-    paddingLeft: 12,
+    paddingLeft: 0,
   },
   damLineBottom: {
     fontSize: 80,
@@ -95,7 +103,7 @@ const styles = StyleSheet.create({
     letterSpacing: -2,
     lineHeight: 70,
     marginLeft: 0,
-    paddingLeft: 12,
+    paddingLeft: 0,
   },
   list: {
     marginTop: Platform.OS === 'web' ? '50vh' : 20,
@@ -122,7 +130,8 @@ const styles = StyleSheet.create({
   },
   header: {
     width: '100%',
-    paddingHorizontal: 20,
+    paddingHorizontal: 0,
+    paddingTop: 50,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
