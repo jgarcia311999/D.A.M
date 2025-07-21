@@ -164,8 +164,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   gameDescription: {
-    fontSize: 14,
-    fontFamily: 'Panchang-Regular',
+    fontSize: 22,
+    fontFamily: 'Satoshi-Medium',
     color: '#000',
     textAlign: 'center',
     marginBottom: 10,

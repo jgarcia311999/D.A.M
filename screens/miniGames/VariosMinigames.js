@@ -104,24 +104,24 @@ export default function VariosMinigames({ route }) {
             onPress={() => setInstruccionesExpandido(prev => !prev)}
           >
             <>
-              <Text style={[styles.text, { textDecorationLine: 'underline', fontFamily: 'Panchang-Bold' }]}>Instrucciones</Text>
+              <Text style={[styles.text, { textDecorationLine: 'underline', fontFamily: 'Panchang-Bold', fontSize: 24 }]}>Instrucciones</Text>
               {instruccionesExpandido && (
                 typeof minijuego.descripcionDetallada === 'object' ? (
                   <View style={{ marginTop: 12, width: '100%' }}>
-                    <Text style={[styles.text, { textAlign: 'left', fontSize: 16, marginBottom: 30, marginTop: 15 }]}>
-                      <Text style={{ fontFamily: 'Panchang-Semibold' }}>Número de jugadores:{'\n'}</Text>
+                    <Text style={[styles.text, { textAlign: 'left', fontSize: 24, marginBottom: 30, marginTop: 15 }]}>
+                      <Text style={{ fontFamily: 'Satoshi-Bold' }}>Número de jugadores:{'\n'}</Text>
                       {minijuego.descripcionDetallada.jugadores}
                     </Text>
-                    <Text style={[styles.text, { textAlign: 'left', fontSize: 16, marginBottom: 30 }]}>
-                      <Text style={{ fontFamily: 'Panchang-Semibold' }}>Objetivo del juego:{'\n'}</Text>
+                    <Text style={[styles.text, { textAlign: 'left', fontSize: 24, marginBottom: 30 }]}>
+                      <Text style={{ fontFamily: 'Satoshi-Bold' }}>Objetivo del juego:{'\n'}</Text>
                       {minijuego.descripcionDetallada.objetivo}
                     </Text>
-                    <Text style={[styles.text, { textAlign: 'left', fontSize: 16, marginBottom: 30 }]}>
-                      <Text style={{ fontFamily: 'Panchang-Semibold' }}>Cómo se juega:{'\n'}</Text>
+                    <Text style={[styles.text, { textAlign: 'left', fontSize: 24, marginBottom: 30 }]}>
+                      <Text style={{ fontFamily: 'Satoshi-Bold' }}>Cómo se juega:{'\n'}</Text>
                       {minijuego.descripcionDetallada.comoSeJuega}
                     </Text>
-                    <Text style={[styles.text, { textAlign: 'left', fontSize: 16 }]}>
-                      <Text style={{ fontFamily: 'Panchang-Semibold' }}>Consejos:{'\n'}</Text>
+                    <Text style={[styles.text, { textAlign: 'left', fontSize: 24 }]}>
+                      <Text style={{ fontFamily: 'Satoshi-Bold' }}>Consejos:{'\n'}</Text>
                       {minijuego.descripcionDetallada.consejos}
                     </Text>
                   </View>
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
-    fontFamily: 'Panchang-Regular',
+    fontFamily: 'Satoshi-Medium',
     color: '#000',
     textAlign: 'center',
     lineHeight: 28,
