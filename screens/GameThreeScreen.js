@@ -37,18 +37,18 @@ const baseOptions = [
   'bebe 3 tragos como si fuera agua',
   'manda a alguien que se cambie de sitio por el de enfrente mientras los dos beben',
   'cambiate por el de enfrente mientras los dos bebeis',
-  'obliga a alguien a leer su último mensaje con un ex y que beba',
-  'lée el último mensaje de tu ex en voz alta y bebe',
+  'elige a alguien para que lea el ultimo mensaje de su ex',
+  'lée el último mensaje de tu ex en voz alta',
   'haz que dos personas se miren muy cerca mientras beben',
   'bebe tu y el de tu izquierda, mientras os mirais muy de cerca',
   'manda a alguien a gemir como si fuera real y después que beba',
   'imita un gemido y luego bebe como si nada hubiera pasado',
-  'haz que alguien diga como le ha ido el mes, sexualmente hablando, y que beba',
-  'cuenta que tal te ha ido el mes, sexualmente hablando, y bebe',
+  'elige a alguien y que nos cuente que tal le ha ido este mes sexualmente',
+  'cuenta que tal te ha ido el mes sexualmente',
   'manda a alguien a dar 3 vueltas sobre si mismo, y que beba',
   'da 3 vueltas sobre ti mismo y bebe',
-  'obliga a alguien a intercambiar ropa con otro y que beba',
-  'cambia una prenda con alguien mientras bebes',
+  'haz que alguien cambie una prenda con otra persona',
+  'cambia una prenda con alguien',
   'elige alguien para que beba desde el vaso de la persona que mas le guste',
   'bebe desde el vaso de la persona que más te atrae',
   'elige alguien para que beba del vaso del de su izquierda',
@@ -216,7 +216,6 @@ useEffect(() => {
               const displayText = showJugador ? `${jugador}, ${baseOptions[selectedIndex]}` : baseOptions[selectedIndex];
               setSelected(displayText);
             }
-            console.log(`Número de la ruleta: ${index}. Frase: ${baseOptions[selectedIndex]}`);
           });
         }
       },
@@ -343,6 +342,7 @@ useEffect(() => {
                       fontSize="16"
                       fontWeight="bold"
                       textAnchor="middle"
+                      fontFamily="Satoshi-bold"
                       alignmentBaseline="middle"
                       transform={`rotate(${segment.labelRotation} ${segment.labelX} ${segment.labelY})`}
                     >
@@ -364,7 +364,7 @@ useEffect(() => {
             borderRadius: 10,
             transform: [{ scale: hintScaleAnim }]
           }}>
-            <Text style={{ color: '#fff', fontSize: 16, fontFamily: 'Panchang-Bold' }}>
+            <Text style={{ color: '#fff', fontSize: 16, fontFamily: 'Satoshi-Regular' }}>
               Pulsa sobre la ruleta
             </Text>
           </Animated.View>
@@ -397,10 +397,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   result: {
-    fontSize: 20,
+    fontSize: 32,
     fontWeight: '600',
     color: '#000',
-    fontFamily: 'Panchang-Bold',
+    fontFamily: 'Satoshi-Medium',
     textAlign: 'center',
   },
   resultContainer: {
@@ -413,7 +413,7 @@ const styles = StyleSheet.create({
   },
   pointer: {
     position: 'absolute',
-    bottom: radius - 1,
+    bottom: radius - 90,
     left: '50%',
     marginLeft: -10,
     width: 0,

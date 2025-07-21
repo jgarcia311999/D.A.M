@@ -211,10 +211,10 @@ export default function GameTwoScreen({ route, navigation }) {
             navigation.navigate('Inicio');
           }
         }}>
-          <Ionicons name="arrow-back" size={28} color="#fff" />
+          <Ionicons name="arrow-back" size={28} color="#000" />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => setMostrarOpciones(!mostrarOpciones)}>
-          <Ionicons name="ellipsis-vertical" size={28} color="#fff" />
+          <Ionicons name="ellipsis-vertical" size={28} color="#000" />
         </TouchableOpacity>
       </View>
       <Animated.View style={[
@@ -477,19 +477,19 @@ const styles = StyleSheet.create({
     color: '#780000',
   },
   carta: {
-    fontSize: 32,
+    fontSize: 40,
     marginTop: 20,
     color: '#000',
-    fontFamily: 'Panchang-Regular',
+    fontFamily: 'Satoshi-Medium',
     textAlign: 'center',
     paddingHorizontal: 0,
   },
   accion: {
-    fontSize: 18,
+    fontSize: 28,
     marginVertical: 10,
     textAlign: 'center',
     color: '#000',
-    fontFamily: 'Panchang-Regular',
+    fontFamily: 'Satoshi-Medium',
     paddingHorizontal: 0,
   },
   tragos: {
@@ -579,12 +579,12 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   introText: {
-    fontSize: 22,
+    fontSize: 30,
     color: '#000',
     textAlign: 'center',
     marginBottom: 20,
     paddingHorizontal: 30,
-    fontFamily: 'Panchang-Regular',
+    fontFamily: 'Satoshi-Medium',
   },
   introWrapper: {
     marginTop: height * 0.05,
