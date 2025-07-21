@@ -285,6 +285,7 @@ export default function GameOneScreen({ route, navigation }) {
       parpadear('green');
       setModalCarta(null);
       setModalVisible(false);
+      setMensaje('Ojoo que ha ganado el campeon, ¡reparte 5 tragos a quien tu quieras!');
       parpadearVerdeCarta(fase - 1);
       setTimeout(() => setResultado('ganaste'), 200);
     } else {
