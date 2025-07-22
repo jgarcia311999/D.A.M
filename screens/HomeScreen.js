@@ -18,7 +18,8 @@ const juegos = [
     id: 1,
     nombre: 'Bebecartas',
     descripcion: 'Saca cartas al azar con retos únicos y bebe si no los cumples.',
-    screen: 'Juego 4',
+   /*  screen: 'Juego 4', */
+    screen: 'Juego 5',
     imagen: PjTabaco,
     imagenEstilo: { width: '80%', height: height * 0.35, resizeMode: 'contain' },
     color: '#bfa3ff',

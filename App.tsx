@@ -11,6 +11,7 @@ import GameOneScreen from './screens/GameOneScreen';
 import GameTwoScreen from './screens/GameTwoScreen';
 import GameThreeScreen from './screens/GameThreeScreen';
 import GameFourScreen from './screens/GameFourScreen';
+import GameFiveScreen from './screens/GameFiveScreen';
 import GamerScreen from './screens/GamerScreen';
 import MiniGamesScreen from './screens/MiniGamesScreen';
 import MiniGame1 from './screens/miniGames/MiniGame1';
@@ -78,6 +79,7 @@ export default function App() {
         'Juego 2': 'juego2',
         'Juego 3': 'juego3',
         'Juego 4': 'juego4',
+        'Juego 5': 'juego5',
         CreaFrase: 'crea-frase',
         TodasFrases: 'todas-frases',
         MiniGames: 'mini-juegos',
@@ -102,6 +104,7 @@ export default function App() {
           <Stack.Screen name="Juego 2" component={GameTwoScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Juego 3" component={GameThreeScreen} options={{ headerShown: false }} />
           <Stack.Screen name="Juego 4" component={GameFourScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="Juego 5" component={GameFiveScreen} options={{ headerShown: false }} />
           <Stack.Screen name="CreaFrase" component={CreaTuFrase} options={{ headerShown: false }} />
           <Stack.Screen name="TodasFrases" component={TodasLasFrasesScreen} options={{ headerShown: false }} />
           <Stack.Screen name="MiniGames" component={MiniGamesScreen} options={{ headerShown: false }} />

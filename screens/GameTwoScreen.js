@@ -18,6 +18,7 @@ const { width, height } = Dimensions.get('window');
 import * as Haptics from 'expo-haptics';
 import { View, Text, Button, StyleSheet, Modal, TouchableOpacity, ScrollView, Image, SafeAreaView, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import CustomHeader from './components/CustomHeader';
 
 const imagenesCartas = {
   // ORO
@@ -198,63 +199,13 @@ export default function GameTwoScreen({ route, navigation }) {
   return (
     <TouchableWithoutFeedback onPress={() => setMostrarOpciones(false)}>
       <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => {
-          Haptics.selectionAsync();
-          if (navigation.canGoBack()) {
-            if (navigation.canGoBack()) {
-            navigation.goBack();
-          } else {
-            navigation.navigate('Inicio');
-          }
-          } else {
-            navigation.navigate('Inicio');
-          }
-        }}>
-          <Ionicons name="arrow-back" size={28} color="#000" />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => setMostrarOpciones(!mostrarOpciones)}>
-          <Ionicons name="ellipsis-vertical" size={28} color="#000" />
-        </TouchableOpacity>
-      </View>
-      <Animated.View style={[
-        styles.headerOptions,
-        {
-          transform: [{ translateY: slideAnim }],
-          opacity: mostrarOpciones ? 1 : 0,
-        }
-      ]}>
-        {mostrarOpciones && (
-          <>
-            <TouchableOpacity style={styles.primaryButton} onPress={() => {
-              setMostrarOpciones(false);
-              setModalVisible(true);
-            }}>
-              <Text style={styles.primaryButtonText}>Registro</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.primaryButton} onPress={() => {
-              setMostrarOpciones(false);
-              setModalCartasVisible(true);
-            }}>
-              <Text style={styles.primaryButtonText}>Cartas</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.primaryButton} onPress={() => {
-              setMostrarOpciones(false);
-              setModalRankingVisible(true);
-            }}>
-              <Text style={styles.primaryButtonText}>Ranking</Text>
-            </TouchableOpacity>
-            {carta && (
-              <TouchableOpacity style={styles.primaryButton} onPress={() => {
-                setMostrarOpciones(false);
-                reiniciar();
-              }}>
-                <Text style={styles.primaryButtonText}>Reiniciar</Text>
-              </TouchableOpacity>
-            )}
-          </>
-        )}
-      </Animated.View>
+        <CustomHeader
+          navigation={navigation}
+          showBack={true}
+          backTo="Inicio"
+          showInfo={true}
+          onInfoPress={() => setMostrarOpciones(!mostrarOpciones)}
+        />
       <View style={{ 
         flexDirection: 'row', 
         justifyContent: 'center', 
@@ -458,17 +409,6 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingTop: 50,
   },
-  header: {
-    width: '100%',
-    paddingHorizontal: 20,
-    paddingTop: 50,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    position: 'absolute',
-    top: 0,
-    zIndex: 2,
-  },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
@@ -570,13 +510,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     fontFamily: 'Panchang-Regular',
-  },
-  headerOptions: {
-    position: 'absolute',
-    top: 90,
-    right: 20,
-    zIndex: 3,
-    alignItems: 'flex-end',
   },
   introText: {
     fontSize: 30,
