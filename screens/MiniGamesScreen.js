@@ -15,11 +15,11 @@ export default function HomeScreen({ navigation, route }) {
   const insets = useSafeAreaInsets();
 
   const juegos = [
-    {
+    /* {
       nombre: 'The best',
       descripcion: 'Relaciona palabras lo más rápido posible en rondas cronometradas.',
       screen: 'MiniGame4',
-    },
+    }, */
     ...minijuegos.map(j => ({
       nombre: j.titulo,
       descripcion: j.descripcion,
