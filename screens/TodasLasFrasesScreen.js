@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, TouchableOpacity, FlatList, ActivityIndicator, TextInput, Modal, Alert, Platform } from 'react-native';
 import * as XLSX from 'xlsx';
-import { Picker } from '@react-native-picker/picker';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import * as Haptics from 'expo-haptics';
-import { collection, getDocs, doc, deleteDoc, updateDoc, setDoc, serverTimestamp } from 'firebase/firestore';
-import { db } from '../utils/firebaseConfig';
+
+// ✅ NUEVO: leemos de tu JSON local
+import frasesLocal from '../data/frases.json'; // /data/frases.json relativo a /screens/
 
 export default function TodasLasFrasesScreen() {
   const navigation = useNavigation();
@@ -28,22 +28,21 @@ export default function TodasLasFrasesScreen() {
   const [editCastigo, setEditCastigo] = useState('');
   const [editVisible, setEditVisible] = useState(true);
 
-  // Función para exportar a Excel (importación dinámica de file-saver solo en web)
+  // ---------- Exportar a Excel (sólo web) ----------
   const exportarExcel = async () => {
     if (Platform.OS !== 'web') {
       alert('Exportar a Excel solo está disponible en la versión web.');
       return;
     }
-
     const { saveAs } = await import('file-saver');
 
     const worksheet = XLSX.utils.json_to_sheet(frases.map(f => ({
       id: f.id,
       frase: f.frase,
       tipo: f.tipo || '',
-      castigo: f.castigo || '',
+      castigo: f.castigo ?? '',
       visible: f.visible === undefined ? true : f.visible,
-      timestamp: f.timestamp || '',
+      timestamp: f.timestamp ?? '',
       eliminar: ''
     })));
     const workbook = XLSX.utils.book_new();
@@ -53,13 +52,12 @@ export default function TodasLasFrasesScreen() {
     saveAs(data, 'frases.xlsx');
   };
 
-  // Función para exportar frases a JSON
+  // ---------- Exportar a JSON (web) ----------
   const exportarJSON = () => {
     if (Platform.OS !== 'web') {
       alert('Exportar a JSON solo está disponible en la versión web.');
       return;
     }
-
     const jsonData = JSON.stringify(frases, null, 2);
     const blob = new Blob([jsonData], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -70,22 +68,21 @@ export default function TodasLasFrasesScreen() {
     URL.revokeObjectURL(url);
   };
 
-  // Función para manejar la subida de un archivo JSON
+  // ---------- Subir JSON (web) ----------
   const handleJSONUpload = (event) => {
     const file = event.target.files[0];
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = async (e) => {
+    reader.onload = (e) => {
       try {
         const frasesImportadas = JSON.parse(e.target.result);
         if (!Array.isArray(frasesImportadas)) {
-          alert('El archivo no tiene el formato correcto.');
+          alert('El archivo no tiene el formato correcto (se esperaba un array).');
           return;
         }
-
-        if (window.confirm('¿Estás seguro de que quieres reemplazar TODAS las frases?')) {
-          await reemplazarTodasLasFrases(frasesImportadas);
+        if (window.confirm('¿Reemplazar TODAS las frases por las del JSON?')) {
+          reemplazarTodasLasFrasesLocal(frasesImportadas);
         }
       } catch (error) {
         alert('Error al leer el archivo JSON.');
@@ -95,79 +92,7 @@ export default function TodasLasFrasesScreen() {
     reader.readAsText(file);
   };
 
-  // Función para sincronizar frases importadas con Firestore según id
-  const reemplazarTodasLasFrases = async (frasesImportadas) => {
-    const snapshot = await getDocs(collection(db, 'frases'));
-    const firestoreFrases = {};
-    snapshot.docs.forEach(docSnap => {
-      firestoreFrases[docSnap.id] = docSnap.data();
-    });
-
-    let insertadas = 0;
-    let actualizadas = 0;
-    let eliminadas = 0;
-
-    const updateOrInsertPromises = frasesImportadas
-      .filter(item => item.frase && item.frase.trim() !== '')
-      .map(async (item) => {
-        const existing = firestoreFrases[item.id];
-        // Bloque para eliminar frases si corresponde
-        if (
-          (
-            typeof item.eliminar === 'string' &&
-            ['true', 'sí', 'si'].includes(item.eliminar.trim().toLowerCase())
-          ) ||
-          item.eliminar === true
-        ) {
-          if (existing) {
-            await deleteDoc(doc(db, 'frases', item.id));
-            eliminadas++;
-          }
-          return;
-        }
-        const cleanItem = {
-          frase: item.frase.trim(),
-          tipo: item.tipo || '',
-          castigo: item.castigo || '',
-          visible: item.visible === undefined ? false : item.visible === 'false' ? false : Boolean(item.visible),
-        };
-
-        if (existing) {
-          const isDifferent =
-            existing.frase !== cleanItem.frase ||
-            (existing.tipo || '') !== cleanItem.tipo ||
-            (existing.castigo || '') !== cleanItem.castigo ||
-            existing.visible !== cleanItem.visible;
-
-          if (isDifferent) {
-            await updateDoc(doc(db, 'frases', item.id), {
-              ...cleanItem,
-              timestamp: serverTimestamp(),
-            });
-            actualizadas++;
-          }
-        } else {
-          if (item.id && item.id.trim() !== '') {
-            await setDoc(doc(db, 'frases', item.id), {
-              ...cleanItem,
-              timestamp: serverTimestamp(),
-            });
-          } else {
-            await setDoc(doc(collection(db, 'frases')), {
-              ...cleanItem,
-              timestamp: serverTimestamp(),
-            });
-          }
-          insertadas++;
-        }
-      });
-
-    await Promise.all(updateOrInsertPromises);
-    alert(`Frases sincronizadas:\nNuevas: ${insertadas}\nActualizadas: ${actualizadas}\nEliminadas: ${eliminadas}`);
-    await fetchFrases();
-  };
-
-  // Manejar subida de Excel
+  // ---------- Subir Excel (web) ----------
   const handleExcelUpload = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
@@ -180,43 +105,57 @@ export default function TodasLasFrasesScreen() {
       const sheet = workbook.Sheets[sheetName];
       const frasesImportadas = XLSX.utils.sheet_to_json(sheet);
 
-      if (window.confirm('¿Estás seguro de que quieres reemplazar TODAS las frases?')) {
-        await reemplazarTodasLasFrases(frasesImportadas);
+      if (window.confirm('¿Reemplazar TODAS las frases por las del Excel?')) {
+        reemplazarTodasLasFrasesLocal(frasesImportadas);
       }
     };
     reader.readAsArrayBuffer(file);
   };
 
-  // Fetch frases from Firestore
+  // ✅ Reemplazo local en memoria (sin Firestore)
+  const reemplazarTodasLasFrasesLocal = (frasesImportadas) => {
+    const limpias = frasesImportadas
+      .filter(item => item.frase && String(item.frase).trim() !== '')
+      .map(item => ({
+        id: item.id && String(item.id).trim() !== '' ? String(item.id) : cryptoRandomId(),
+        frase: String(item.frase).trim(),
+        tipo: item.tipo ? String(item.tipo) : '',
+        castigo: isFinite(item.castigo) ? Number(item.castigo) : (item.castigo ?? ''),
+        visible: item.visible === undefined ? true : (item.visible === 'false' ? false : Boolean(item.visible)),
+        timestamp: typeof item.timestamp === 'number' ? item.timestamp : Date.now()
+      }));
+    setFrases(limpias);
+  };
+
+  // Generador simple de ID si falta en importaciones
+  const cryptoRandomId = () =>
+    'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+      const r = (Math.random() * 16) | 0, v = c === 'x' ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
+
+  // ✅ Cargar desde JSON local (bundle)
   const fetchFrases = useCallback(async () => {
     setLoading(true);
     try {
-      const querySnapshot = await getDocs(collection(db, 'frases'));
-      const frasesList = querySnapshot.docs.map(doc => {
-        const data = doc.data();
-        let ts = 0;
-        if (data.timestamp) {
-          if (typeof data.timestamp === 'object') {
-            if (typeof data.timestamp.toMillis === 'function') {
-              ts = data.timestamp.toMillis();
-            } else if ('seconds' in data.timestamp) {
-              ts = data.timestamp.seconds * 1000;
-            }
-          } else if (typeof data.timestamp === 'number') {
-            ts = data.timestamp;
-          }
-        }
-        return { id: doc.id, ...data, timestamp: ts };
-      });
-      setFrases(frasesList);
+      // frasesLocal ya viene como array del JSON
+      const normalizadas = (frasesLocal || []).map(item => ({
+        id: item.id,
+        frase: item.frase,
+        tipo: item.tipo || '',
+        castigo: item.castigo ?? '',
+        visible: item.visible === undefined ? true : item.visible,
+        timestamp: typeof item.timestamp === 'number' ? item.timestamp : 0
+      }));
+      setFrases(normalizadas);
     } catch (error) {
-      console.error('Error fetching frases:', error);
+      console.error('Error leyendo frases.json:', error);
     } finally {
       setLoading(false);
     }
   }, []);
 
-  // Refrescar frases (igual que fetchFrases)
+  // “Refrescar” vuelve al contenido del JSON empaquetado
   const refrescarFrases = useCallback(async () => {
     await fetchFrases();
   }, [fetchFrases]);
@@ -305,21 +244,15 @@ export default function TodasLasFrasesScreen() {
   } else if (orderType === 'no_mostradas') {
     orderedFrases = orderedFrases.filter(f => f.visible !== true);
   } else if (orderType === 'nuevas') {
-    // Assuming id is string, try to sort by timestamp if available, else by id descending
     orderedFrases.sort((a, b) => {
-      if (a.timestamp && b.timestamp) {
-        return b.timestamp - a.timestamp;
-      }
-      // fallback to id descending (assuming id can be compared as string)
+      if (a.timestamp && b.timestamp) return b.timestamp - a.timestamp;
       if (a.id < b.id) return 1;
       if (a.id > b.id) return -1;
       return 0;
     });
   } else if (orderType === 'antiguas') {
     orderedFrases.sort((a, b) => {
-      if (a.timestamp && b.timestamp) {
-        return a.timestamp - b.timestamp;
-      }
+      if (a.timestamp && b.timestamp) return a.timestamp - b.timestamp;
       if (a.id < b.id) return -1;
       if (a.id > b.id) return 1;
       return 0;
@@ -336,16 +269,13 @@ export default function TodasLasFrasesScreen() {
         <TouchableOpacity
           onPress={() => {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-            if (navigation.canGoBack()) {
-            navigation.goBack();
-          } else {
-            navigation.navigate('CreaFrase');
-          }
+            if (navigation.canGoBack()) navigation.goBack();
+            else navigation.navigate('CreaFrase');
           }}
         >
           <Ionicons name="arrow-back" size={28} color="#5E1DE6" />
         </TouchableOpacity>
-        {/* Header center: search input si está abierto */}
+
         {showSearch ? (
           <View style={styles.searchContainer}>
             <TextInput
@@ -362,7 +292,7 @@ export default function TodasLasFrasesScreen() {
             </TouchableOpacity>
           </View>
         ) : <View style={{ flex: 1 }} />}
-        {/* Header right: SIEMPRE los botones de search, filter y refresh */}
+
         <View style={{ flexDirection: 'row', marginLeft: 8 }}>
           <TouchableOpacity style={{ paddingHorizontal: 8 }} onPress={() => setShowSearch(true)}>
             <Ionicons name="search" size={28} color="#5E1DE6" />
@@ -384,6 +314,7 @@ export default function TodasLasFrasesScreen() {
           </TouchableOpacity>
         </View>
       </View>
+
       {showFilterMenu && (
         <View style={styles.filterMenu}>
           <TouchableOpacity style={styles.filterOption} onPress={() => { setOrderType('nuevas'); setShowFilterMenu(false); }}>
@@ -404,25 +335,28 @@ export default function TodasLasFrasesScreen() {
           <TouchableOpacity style={styles.filterOption} onPress={() => { setOrderType('no_mostradas'); setShowFilterMenu(false); }}>
             <Text style={styles.filterOptionText}>Solo no mostradas</Text>
           </TouchableOpacity>
+
           {Platform.OS === 'web' && (
             <>
               <TouchableOpacity style={styles.filterOption} onPress={exportarExcel}>
                 <Text style={styles.filterOptionText}>Descargar Excel</Text>
               </TouchableOpacity>
+              <TouchableOpacity style={styles.filterOption} onPress={exportarJSON}>
+                <Text style={styles.filterOptionText}>Descargar JSON</Text>
+              </TouchableOpacity>
               <TouchableOpacity style={styles.filterOption} onPress={() => document.getElementById('excelInput')?.click()}>
                 <Text style={styles.filterOptionText}>Subir Excel</Text>
               </TouchableOpacity>
-              <input
-                id="excelInput"
-                type="file"
-                accept=".xlsx"
-                onChange={handleExcelUpload}
-                style={{ display: 'none' }}
-              />
+              <TouchableOpacity style={styles.filterOption} onPress={() => document.getElementById('jsonInput')?.click()}>
+                <Text style={styles.filterOptionText}>Subir JSON</Text>
+              </TouchableOpacity>
+              <input id="excelInput" type="file" accept=".xlsx" onChange={handleExcelUpload} style={{ display: 'none' }} />
+              <input id="jsonInput" type="file" accept=".json,application/json" onChange={handleJSONUpload} style={{ display: 'none' }} />
             </>
           )}
         </View>
       )}
+
       <View style={{ flex: 1, padding: 24, paddingTop: insets.top + 60, zIndex: 0 }}>
         {loading ? (
           <ActivityIndicator size="large" color="#5E1DE6" />
@@ -452,6 +386,7 @@ export default function TodasLasFrasesScreen() {
           />
         )}
       </View>
+
       <Modal
         visible={modalVisible}
         animationType="slide"
@@ -484,7 +419,7 @@ export default function TodasLasFrasesScreen() {
                       onPress={() => {
                         setEditFrase(selectedFrase.frase);
                         setEditTipo(selectedFrase.tipo || '');
-                        setEditCastigo(selectedFrase.castigo || '');
+                        setEditCastigo(String(selectedFrase.castigo ?? ''));
                         setEditVisible(selectedFrase.visible === true);
                         setEditMode(true);
                       }}
@@ -493,45 +428,25 @@ export default function TodasLasFrasesScreen() {
                     </TouchableOpacity>
                   )}
                 </View>
+
                 {editMode ? (
                   <>
                     <TextInput
-                      style={{
-                        borderWidth: 1,
-                        borderColor: '#E2D6FF',
-                        borderRadius: 8,
-                        padding: 8,
-                        marginBottom: 10,
-                        fontSize: 18,
-                      }}
+                      style={{ borderWidth: 1, borderColor: '#E2D6FF', borderRadius: 8, padding: 8, marginBottom: 10, fontSize: 18 }}
                       value={editFrase}
                       onChangeText={setEditFrase}
                       placeholder="Frase"
                     />
                     <Text style={{ fontWeight: 'bold', marginTop: 12 }}>Tipo</Text>
                     <TextInput
-                      style={{
-                        borderWidth: 1,
-                        borderColor: '#E2D6FF',
-                        borderRadius: 8,
-                        padding: 8,
-                        marginBottom: 10,
-                        fontSize: 18,
-                      }}
+                      style={{ borderWidth: 1, borderColor: '#E2D6FF', borderRadius: 8, padding: 8, marginBottom: 10, fontSize: 18 }}
                       value={editTipo}
                       onChangeText={setEditTipo}
                       placeholder="Tipo"
                     />
                     <Text style={{ fontWeight: 'bold', marginTop: 12 }}>Castigo</Text>
                     <TextInput
-                      style={{
-                        borderWidth: 1,
-                        borderColor: '#E2D6FF',
-                        borderRadius: 8,
-                        padding: 8,
-                        marginBottom: 10,
-                        fontSize: 16,
-                      }}
+                      style={{ borderWidth: 1, borderColor: '#E2D6FF', borderRadius: 8, padding: 8, marginBottom: 10, fontSize: 16 }}
                       value={editCastigo}
                       onChangeText={setEditCastigo}
                       placeholder="Castigo"
@@ -539,34 +454,18 @@ export default function TodasLasFrasesScreen() {
                     />
                     <Text style={{ fontWeight: 'bold', marginTop: 12 }}>Visible</Text>
                     <TouchableOpacity
-                      style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        marginBottom: 16,
-                        marginTop: 4,
-                      }}
+                      style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 16, marginTop: 4 }}
                       onPress={() => setEditVisible(!editVisible)}
                     >
-                      <View
-                        style={{
-                          width: 36,
-                          height: 22,
-                          borderRadius: 12,
-                          backgroundColor: editVisible ? '#5E1DE6' : '#ccc',
-                          justifyContent: 'center',
-                          marginRight: 10,
-                          padding: 2,
-                        }}
-                      >
-                        <View
-                          style={{
-                            width: 18,
-                            height: 18,
-                            borderRadius: 9,
-                            backgroundColor: '#fff',
-                            marginLeft: editVisible ? 14 : 2,
-                          }}
-                        />
+                      <View style={{
+                        width: 36, height: 22, borderRadius: 12,
+                        backgroundColor: editVisible ? '#5E1DE6' : '#ccc',
+                        justifyContent: 'center', marginRight: 10, padding: 2
+                      }}>
+                        <View style={{
+                          width: 18, height: 18, borderRadius: 9, backgroundColor: '#fff',
+                          marginLeft: editVisible ? 14 : 2
+                        }} />
                       </View>
                       <Text style={{ fontSize: 16 }}>{editVisible ? 'Sí' : 'No'}</Text>
                     </TouchableOpacity>
@@ -577,7 +476,7 @@ export default function TodasLasFrasesScreen() {
                     <Text style={{ fontWeight: 'bold', marginTop: 12 }}>Tipo</Text>
                     <Text style={{ marginBottom: 8 }}>{selectedFrase.tipo || 'Sin tipo'}</Text>
                     <Text style={{ fontWeight: 'bold', marginTop: 12 }}>Castigo</Text>
-                    <Text style={{ marginBottom: 8 }}>{selectedFrase.castigo || 'Sin castigo'}</Text>
+                    <Text style={{ marginBottom: 8 }}>{selectedFrase.castigo ?? 'Sin castigo'}</Text>
                     <Text style={{ fontWeight: 'bold', marginTop: 12 }}>Visible</Text>
                     <Text style={{ marginBottom: 16 }}>
                       Visible: {selectedFrase.visible === true ? 'Sí' : 'No'}
@@ -586,52 +485,36 @@ export default function TodasLasFrasesScreen() {
                 )}
               </>
             )}
+
             {editMode ? (
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 8 }}>
                 <TouchableOpacity
-                  style={{
-                    backgroundColor: '#5E1DE6',
-                    borderRadius: 8,
-                    paddingVertical: 10,
-                    paddingHorizontal: 18,
-                    alignItems: 'center',
-                    marginRight: 8,
-                    flex: 1,
-                  }}
-                  onPress={async () => {
-                    // Guardar cambios
-                    try {
-                      await updateDoc(doc(db, 'frases', selectedFrase.id), {
-                        frase: editFrase,
-                        tipo: editTipo,
-                        castigo: editCastigo,
-                        visible: editVisible,
-                      });
-                      // Refrescar lista, cerrar modal y salir de edición
-                      await refrescarFrases();
-                      setModalVisible(false);
-                      setEditMode(false);
-                      setSelectedFrase(null);
-                    } catch (err) {
-                      Alert.alert('Error', 'No se pudo guardar la frase.');
-                    }
+                  style={{ backgroundColor: '#5E1DE6', borderRadius: 8, paddingVertical: 10, paddingHorizontal: 18, alignItems: 'center', marginRight: 8, flex: 1 }}
+                  onPress={() => {
+                    // ✅ Guardar cambios en memoria
+                    setFrases(prev =>
+                      prev.map(f =>
+                        f.id === selectedFrase.id
+                          ? {
+                              ...f,
+                              frase: editFrase,
+                              tipo: editTipo,
+                              castigo: isFinite(editCastigo) ? Number(editCastigo) : editCastigo,
+                              visible: editVisible
+                            }
+                          : f
+                      )
+                    );
+                    setModalVisible(false);
+                    setEditMode(false);
+                    setSelectedFrase(null);
                   }}
                 >
                   <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>Guardar</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style={{
-                    backgroundColor: '#ccc',
-                    borderRadius: 8,
-                    paddingVertical: 10,
-                    paddingHorizontal: 18,
-                    alignItems: 'center',
-                    marginLeft: 8,
-                    flex: 1,
-                  }}
-                  onPress={() => {
-                    setEditMode(false);
-                  }}
+                  style={{ backgroundColor: '#ccc', borderRadius: 8, paddingVertical: 10, paddingHorizontal: 18, alignItems: 'center', marginLeft: 8, flex: 1 }}
+                  onPress={() => { setEditMode(false); }}
                 >
                   <Text style={{ color: '#333', fontWeight: 'bold', fontSize: 16 }}>Cancelar</Text>
                 </TouchableOpacity>
@@ -639,58 +522,33 @@ export default function TodasLasFrasesScreen() {
             ) : (
               <>
                 <TouchableOpacity
-                  style={{
-                    backgroundColor: '#5E1DE6',
-                    borderRadius: 8,
-                    paddingVertical: 10,
-                    alignItems: 'center',
-                    marginTop: 8,
-                  }}
+                  style={{ backgroundColor: '#5E1DE6', borderRadius: 8, paddingVertical: 10, alignItems: 'center', marginTop: 8 }}
                   onPress={() => setModalVisible(false)}
                 >
                   <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: 16 }}>Cerrar</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style={{
-                    backgroundColor: '#ff3b30',
-                    borderRadius: 8,
-                    paddingVertical: 10,
-                    alignItems: 'center',
-                    marginTop: 12,
-                  }}
-                  onPress={async () => {
+                  style={{ backgroundColor: '#ff3b30', borderRadius: 8, paddingVertical: 10, alignItems: 'center', marginTop: 12 }}
+                  onPress={() => {
+                    const confirmar = Platform.OS === 'web'
+                      ? window.confirm('¿Seguro que quieres borrar esta frase? No se podrá recuperar después')
+                      : true;
+
+                    const doDelete = () => {
+                      setFrases(prev => prev.filter(f => f.id !== selectedFrase.id));
+                      setModalVisible(false);
+                      setSelectedFrase(null);
+                    };
+
                     if (Platform.OS === 'web') {
-                      const confirmDelete = window.confirm('¿Seguro que quieres borrar esta frase? No se podrá recuperar después');
-                      if (confirmDelete) {
-                        try {
-                          await deleteDoc(doc(db, 'frases', selectedFrase.id));
-                          setModalVisible(false);
-                          setSelectedFrase(null);
-                          refrescarFrases();
-                        } catch (err) {
-                          alert('Error: No se pudo borrar la frase.');
-                        }
-                      }
+                      if (confirmar) doDelete();
                     } else {
                       Alert.alert(
                         'Confirmar borrado',
                         '¿Seguro que quieres borrar esta frase? No se podrá recuperar después',
                         [
                           { text: 'Cancelar', style: 'cancel' },
-                          {
-                            text: 'Borrar',
-                            style: 'destructive',
-                            onPress: async () => {
-                              try {
-                                await deleteDoc(doc(db, 'frases', selectedFrase.id));
-                                setModalVisible(false);
-                                setSelectedFrase(null);
-                                refrescarFrases();
-                              } catch (err) {
-                                Alert.alert('Error', 'No se pudo borrar la frase.');
-                              }
-                            }
-                          }
+                          { text: 'Borrar', style: 'destructive', onPress: doDelete }
                         ]
                       );
                     }

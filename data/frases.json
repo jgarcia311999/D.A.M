@@ -1,0 +1,2722 @@
+[
+  {
+    "id": "0127b61c-202e-4072-a",
+    "castigo": 1,
+    "frase": "{Jugador} y el jugador de enfrente deben contar juntos una historia inventada palabra por palabra, uno y uno. Si se bloquean o se pisan, ambos beben.",
+    "timestamp": 1752657290341,
+    "visible": true,
+    "tipo": "Prueba"
+  },
+  {
+    "id": "012fac34-6db7-4bba-8",
+    "visible": true,
+    "castigo": 1,
+    "tipo": "Castigos",
+    "frase": "El ultimo que se haya depilado sus partes, bebe",
+    "timestamp": 0
+  },
+  {
+    "id": "01e006ee-fca0-452b-9",
+    "tipo": "Prueba",
+    "timestamp": 1752657290412,
+    "visible": true,
+    "castigo": 1,
+    "frase": "Cada persona debe decir un lugar donde ha dormido que no sea su casa sin repetir. El que no diga nada en 5 segundos, bebe."
+  },
+  {
+    "id": "0255dd9d-e041-4d3a-b",
+    "tipo": "Preguntas",
+    "visible": true,
+    "timestamp": 1752657290485,
+    "castigo": 3,
+    "frase": "{Jugador}, ¿has engañado a alguien?"
+  },
+  {
+    "id": "02a06ff9-a115-425c-9",
+    "castigo": 1,
+    "tipo": "Yo nunca",
+    "visible": true,
+    "timestamp": 1752657290521,
+    "frase": "... he tenido una cita a ciegas."
+  },
+  {
+    "id": "02e61160-c95e-4501-8",
+    "frase": "... he sido detenido",
+    "timestamp": 1752657290590,
+    "castigo": 1,
+    "tipo": "Yo nunca",
+    "visible": true
+  },
+  {
+    "id": "0363b776-2036-408b-a",
+    "tipo": "Castigos",
+    "castigo": 1,
+    "visible": true,
+    "frase": "{Jugador}, ¿cuántas veces has dicho ‘no soy así normalmente’ después de hacer algo fuerte?",
+    "timestamp": 0
+  },
+  {
+    "id": "03c0089e-407d-44ca-a",
+    "visible": true,
+    "frase": "Palabras o expresiones sinónimas de “p*ne”, ¡el jugador que repita o que no encuentre ninguna tendrá que recibir 3 tragos! Empieza {jugador}.",
+    "timestamp": 1752657290615,
+    "castigo": 1,
+    "tipo": "Prueba"
+  },
+  {
+    "id": "04682bf0-8a38-40d7-8",
+    "tipo": "Vota a",
+    "frase": "quien crees que ha tenido peores p*lvos",
+    "timestamp": 1752657290677,
+    "visible": true,
+    "castigo": 1
+  },
+  {
+    "id": "05272ebf-7a0d-4aa0-a",
+    "castigo": 1,
+    "frase": "Bebe quien alguna vez salió sin colonia.",
+    "tipo": "Castigos",
+    "timestamp": 1752657290733,
+    "visible": false
+  },
+  {
+    "id": "078f22c6-f4f3-42b5-8",
+    "tipo": "Reparte",
+    "frase": "El jugador más alto reparte 6 tragos",
+    "visible": true,
+    "castigo": 6,
+    "timestamp": 1752657290758
+  },
+  {
+    "id": "07f6f2ae-ad36-4230-9",
+    "tipo": "Castigos",
+    "visible": true,
+    "castigo": 2,
+    "timestamp": 1752657290828,
+    "frase": "Enseñar vuestros ultimos stickers, el que tenga el mas turbio, castigo"
+  },
+  {
+    "id": "08a07a83-0b87-4311-a",
+    "tipo": "Prueba",
+    "visible": true,
+    "timestamp": 1752657290856,
+    "castigo": 3,
+    "frase": "{Jugador}, elige a tu gymbro de confianza. Por cada 5 sentadillas que haga, reparte un castigo"
+  },
+  {
+    "id": "08be58d7-be5d-4fbb-a",
+    "frase": "{Jugador}, ¿alguna vez hiciste un ‘rapidin’ en una situación absurda?",
+    "visible": true,
+    "tipo": "Pregunta",
+    "timestamp": 1752657290915,
+    "castigo": 1
+  },
+  {
+    "id": "0967ce3b-fb0f-4b83-9",
+    "visible": true,
+    "tipo": "Castigos",
+    "castigo": 1,
+    "frase": "Si te has colado contentillo a una piscina, castigo",
+    "timestamp": 1752657290969
+  },
+  {
+    "id": "0DsL5UwVIt1HmDwA7hac",
+    "tipo": "Castigos",
+    "castigo": 1,
+    "visible": true,
+    "frase": "{Jugador} debe elegir entre darte un pico con el jugador de enfrente tuya o decirle algo que nunca le has contado",
+    "timestamp": 1752660544246
+  },
+  {
+    "id": "0a2da1bb-148e-4df0-9",
+    "tipo": "Castigos",
+    "visible": true,
+    "timestamp": 1752580695717,
+    "castigo": 1,
+    "frase": "{Jugador}  hidalgo"
+  },
+  {
+    "id": "0a8920b8-650c-4b8b-b",
+    "tipo": "Castigos",
+    "frase": "Si te has sentido atraído por alguien que sabías que no debías, castigo.",
+    "castigo": 1,
+    "timestamp": 1752657291256,
+    "visible": true
+  },
+  {
+    "id": "0c555e30-bd67-49bc-b",
+    "tipo": "Castigos",
+    "frase": "{Jugador}, ¿te has acostado con alguien sabiendo que era una muy mala idea?",
+    "castigo": 1,
+    "visible": true,
+    "timestamp": 0
+  },
+  {
+    "id": "0cdb7c30-1e01-4fe6-a",
+    "timestamp": 1752657291332,
+    "tipo": "Vota a",
+    "visible": true,
+    "frase": "¿Quién es más probable que cambie de idea tres veces en una misma cita?",
+    "castigo": 1
+  },
+  {
+    "id": "0d4951c6-ff6a-4d9c-8",
+    "tipo": "Castigos",
+    "frase": "{Jugador}, si has hecho captura de un chat solo para pasarlo a otro grupo, trago.",
+    "timestamp": 1752657291359,
+    "castigo": 1,
+    "visible": false
+  },
+  {
+    "id": "103ccce3-52e8-4e27-a",
+    "castigo": 1,
+    "timestamp": 1752657291410,
+    "visible": false,
+    "frase": "¿Quién sería capaz de pedir un taxi y no recordar dónde vive?",
+    "tipo": "Vota a"
+  },
+  {
+    "id": "107230eb-d8fc-40cd-8",
+    "visible": true,
+    "timestamp": 1752657291435,
+    "frase": "Alzad la copa y brindad",
+    "castigo": 1,
+    "tipo": "Castigos"
+  },
+  {
+    "id": "10870ade-8d6f-4104-8",
+    "tipo": "Vota a",
+    "castigo": 1,
+    "frase": "¿Quién ha fingido un orgasmo solo por acabar?",
+    "timestamp": 1752657291529,
+    "visible": true
+  },
+  {
+    "id": "109e9c85-0779-451e-a",
+    "visible": true,
+    "frase": "Que acabe en el hospital tras una noche de fiesta",
+    "timestamp": 1752657291586,
+    "tipo": "Castigos",
+    "castigo": 1
+  },
+  {
+    "id": "10bd1294-827c-4bd4-8",
+    "visible": true,
+    "frase": "Nueva regla, a quien pillen con el movil en la mano, trago",
+    "timestamp": 1752657291613,
+    "castigo": 1,
+    "tipo": "Castigos"
+  },
+  {
+    "id": "13699a16-f749-4aa9-a",
+    "visible": true,
+    "timestamp": 1752657291641,
+    "castigo": 1,
+    "frase": "... he hecho un trío.",
+    "tipo": "Yo nunca"
+  },
+  {
+    "id": "144197d9-3135-4060-a",
+    "castigo": 1,
+    "frase": "Si tuviste que buscar cómo quitar una marca en el cuello, castigo",
+    "timestamp": 1752657291697,
+    "visible": true,
+    "tipo": "Castigos"
+  },
+  {
+    "id": "1687306d-c5a5-4cbc-a",
+    "frase": "Tantos tragos como personas que esten jugando besarias",
+    "tipo": "Castigos",
+    "visible": true,
+    "castigo": 1,
+    "timestamp": 1752657291782
+  },
+  {
+    "id": "173d9af1-3f78-4f01-b",
+    "visible": true,
+    "tipo": "Castigos",
+    "castigo": 1,
+    "timestamp": 1752580696057,
+    "frase": "{Jugador} y el de su izquierda comparten una maldición: si alguien dice su nombre, ambos beben"
+  },
+  {
+    "id": "17846a50-9ac8-4d19-9",
+    "visible": true,
+    "tipo": "Castigos",
+    "castigo": 1,
+    "frase": "{Jugador}, ¿alguna vez seguiste con alguien solo por el sexo?",
+    "timestamp": 0
+  },
+  {
+    "id": "185602f7-a27d-43fc-8",
+    "tipo": "Castigos",
+    "castigo": 1,
+    "visible": true,
+    "frase": "Si alguna vez has fingido un orgasmo, castigo",
+    "timestamp": 1752657291849
+  },
+  {
+    "id": "194a98b1-b833-43d7-9",
+    "frase": "{Jugador}, ¿te han pillado en plena acción alguna vez? ¿Quién era?",
+    "tipo": "Vota a",
+    "visible": true,
+    "timestamp": 1752657291877,
+    "castigo": 1
+  },
+  {
+    "id": "19511136-baf6-42b9-9",
+    "timestamp": 1752657291926,
+    "tipo": "Castigos",
+    "visible": true,
+    "frase": "Si alguien ha tenido sus 3 minutitos de pasion esta semana 2 veces, castigo",
+    "castigo": 2
+  },
+  {
+    "id": "1ae29585-bea7-4b06-8",
+    "frase": "... me he sentido avergonzado por lo que un amigo me contó que pasó en una noche de fiesta.",
+    "visible": true,
+    "tipo": "Yo nunca",
+    "castigo": 1,
+    "timestamp": 1752657291955
+  },
+  {
+    "id": "1dccdea2-1417-440f-8",
+    "frase": "En ronda, cada persona debe decir una app que haya usado para ligar. El que no conteste, trago",
+    "castigo": 1,
+    "visible": true,
+    "tipo": "Castigos",
+    "timestamp": 1752657292020
+  },
+  {
+    "id": "1df6bb95-a762-4daa-a",
+    "castigo": 1,
+    "frase": "... quien más desaparece y solo aparece cuando le conviene",
+    "timestamp": 1752657292074,
+    "tipo": "Vota a",
+    "visible": true
+  },
+  {
+    "id": "1ea1b48c-4cff-4975-a",
+    "frase": "Bebe si alguna vez te han pillado haciéndolo",
+    "visible": false,
+    "tipo": "Castigos",
+    "timestamp": 1752657292109,
+    "castigo": 1
+  },
+  {
+    "id": "201a4376-2196-4eec-a",
+    "tipo": "Castigos",
+    "castigo": 1,
+    "timestamp": 1752657292135,
+    "frase": "{Jugador}, si alguna vez has dicho 'confía en mí' y tú mismo dudabas... trago",
+    "visible": false
+  },
+  {
+    "id": "2052b076-f531-4c32-8",
+    "visible": true,
+    "tipo": "Vota a",
+    "castigo": 1,
+    "frase": "... ¿Quién ha tenido una fantasía con un profesor o jefe?",
+    "timestamp": 1752657292182
+  },
+  {
+    "id": "2117f409-3627-429e-a",
+    "tipo": "Vota a",
+    "timestamp": 1752657292250,
+    "castigo": 1,
+    "visible": true,
+    "frase": "... quien crees que tiene más fantasías raras"
+  },
+  {
+    "id": "21400a55-ff69-4e3e-b",
+    "frase": "{Jugador}, ¿te has vengado de alguien... en la cama?",
+    "tipo": "Castigos",
+    "visible": true,
+    "castigo": 1,
+    "timestamp": 0
+  },
+  {
+    "id": "2269719d-5d8f-4da0-a",
+    "tipo": "Castigos",
+    "frase": "Si tienes un ex que aún te stalkea, trago. Si tú también lo haces, todo de una",
+    "timestamp": 1752657292273,
+    "castigo": 1,
+    "visible": true
+  },
+  {
+    "id": "22d11d3a-bf98-4dbb-a",
+    "frase": "Tu, si si tu, el que esta leyendo esto, trago que te noto con la garganta seca",
+    "castigo": 1,
+    "visible": true,
+    "timestamp": 1752657292300,
+    "tipo": "Castigo"
+  },
+  {
+    "id": "230a66ac-ff76-4ffc-b",
+    "castigo": 1,
+    "visible": true,
+    "tipo": "Vota a",
+    "frase": "... quien más probable es que haya usado esposas",
+    "timestamp": 1752657292373
+  },
+  {
+    "id": "23cfcb94-0942-4dfc-9",
+    "visible": true,
+    "tipo": "Castigos",
+    "castigo": 1,
+    "timestamp": 1752580696380,
+    "frase": "{Jugador}, si alguna vez te has dormido en un baño ajeno, trago fuerte."
+  },
+  {
+    "id": "255c1835-3fbf-4969-b",
+    "frase": "... quien más veces ha dicho “no me voy a liar con nadie”... y mintió",
+    "castigo": 1,
+    "tipo": "Vota a",
+    "visible": true,
+    "timestamp": 1752657292427
+  },
+  {
+    "id": "257f343d-4d4b-4080-9",
+    "visible": true,
+    "timestamp": 1752657292454,
+    "tipo": "Yo nunca",
+    "castigo": 1,
+    "frase": "Yo nunca me he liado con alguien por pura venganza"
+  },
+  {
+    "id": "263eb394-6e6f-4751-8",
+    "tipo": "Castigos",
+    "visible": true,
+    "castigo": 1,
+    "frase": "{Jugador} debe elegir entre darte un pico con el jugador de enfrente tuya o decirle algo que nunca le has contado",
+    "timestamp": 1752657292479
+  },
+  {
+    "id": "27f7a0ea-1bdb-43f5-9",
+    "frase": "... ¿Quién es más probable que vuelva con su ex por tercera vez?",
+    "timestamp": 1752657292568,
+    "visible": true,
+    "tipo": "Vota a",
+    "castigo": 1
+  },
+  {
+    "id": "28e0ceee-fcff-4487-8",
+    "frase": "...¿Quién ha sido infiel y aún se siente víctima?",
+    "tipo": "Vota a",
+    "timestamp": 1752657292618,
+    "castigo": 1,
+    "visible": true
+  },
+  {
+    "id": "2995c26d-f58c-4237-a",
+    "frase": "{Jugador} solo puede beber con tu mano mala",
+    "timestamp": 1752657292642,
+    "tipo": "Castigos",
+    "visible": true,
+    "castigo": 1
+  },
+  {
+    "id": "2bca4bb1-b691-4a41-a",
+    "timestamp": 1752581548058,
+    "frase": "{Jugador}  Levantate un ratito, no te sientes hasta dentro de 3 rondas",
+    "visible": true,
+    "tipo": "Castigos",
+    "castigo": 1
+  },
+  {
+    "id": "2e3ff44b-15ed-4a70-b",
+    "tipo": "Castigos",
+    "timestamp": 1752581548131,
+    "visible": true,
+    "castigo": 1,
+    "frase": "{Jugador} está infectado. Cada vez que el beba, decide con quien beber"
+  },
+  {
+    "id": "2e764c5d-17da-4bec-b",
+    "visible": true,
+    "tipo": "Castigos",
+    "castigo": 1,
+    "frase": "Bebe quien tenga menos de 100€ en la cuenta ahora mismo.",
+    "timestamp": 0
+  },
+  {
+    "id": "2ec05a10-4dd2-46e2-a",
+    "tipo": "Castigos",
+    "castigo": 1,
+    "frase": "{Jugador}, ¿has fantaseado con alguien de este grupo? Di el nombre o trago.",
+    "timestamp": 1752657292790,
+    "visible": true
+  },
+  {
+    "id": "2f790ff4-3fef-4bde-b",
+    "frase": "Yo nunca he usado el 'ven solo a dormir' sabiendo que no solo ibamos a dormir",
+    "castigo": 1,
+    "visible": true,
+    "timestamp": 1752580696587,
+    "tipo": "Castigos"
+  },
+  {
+    "id": "305fc46a-397a-4096-b",
+    "castigo": 1,
+    "frase": "Si te has liado con dos personas en la misma nochetrago, pero, si se conocían... ¡trago triple!",
+    "visible": true,
+    "tipo": "Castigo",
+    "timestamp": 1752657292868
+  },
+  {
+    "id": "30813749-14b2-4579-9",
+    "castigo": 1,
+    "timestamp": 1752657292927,
+    "tipo": "Vota a",
+    "frase": "...¿Quién es más probable que use frases motivacionales en historias?",
+    "visible": true
+  },
+  {
+    "id": "309067a2-ba96-4e3c-9",
+    "visible": true,
+    "castigo": 1,
+    "frase": "Todos leen en alto las ultimas busquedas de Instagram, el mas cochino, castigo",
+    "timestamp": 1752657292947,
+    "tipo": "Castigos"
+  },
+  {
+    "id": "30ee19c6-05d7-4ccb-b",
+    "timestamp": 1752657292974,
+    "frase": "{Jugador}, ¿alguna vez hiciste un ‘aquí te pillo, aquí te mato’ en un lugar público?",
+    "visible": true,
+    "castigo": 1,
+    "tipo": "Castigos"
+  },
+  {
+    "id": "334166c9-9b13-4162-9",
+    "frase": "Bebe si te has liado con dos personas del mismo grupo. Por cada persona de mas, un trago extra",
+    "visible": true,
+    "castigo": 1,
+    "tipo": "Castigos",
+    "timestamp": 0
+  },
+  {
+    "id": "33841db1-2231-4584-8",
+    "tipo": "Vota a",
+    "timestamp": 1752657293028,
+    "castigo": 1,
+    "visible": true,
+    "frase": "¿Quién tiene más de un contacto guardado con nombre falso para despistar?"
+  },
+  {
+    "id": "349f37cd-2cee-455c-8",
+    "castigo": 1,
+    "visible": true,
+    "tipo": "Vota a",
+    "timestamp": 1752657293078,
+    "frase": "...¿Quién ha usado la excusa 'se me acabó la batería' y era mentira descarada?"
+  },
+  {
+    "id": "34d2e71a-081e-42f6-8",
+    "frase": "{Jugador}, ¿cuántos nombres de tu pasado deberían estar en una lista de ‘prohibidos’?",
+    "castigo": 1,
+    "tipo": "Reglas locas",
+    "visible": true,
+    "timestamp": 0
+  },
+  {
+    "id": "34f1087f-d839-4065-8",
+    "castigo": 1,
+    "tipo": "Castigos",
+    "timestamp": 1752657293125,
+    "visible": true,
+    "frase": "{Jugador}, si tienes notas en el móvil que nadie debe leer, trago silencioso."
+  },
+  {
+    "id": "3587d1b5-1f0f-4180-a",
+    "timestamp": 1752657293152,
+    "frase": "Quien tenga secretos de otro jugador, trago",
+    "tipo": "Castigos",
+    "castigo": 1,
+    "visible": true
+  },
+  {
+    "id": "361b15d1-d647-4b99-8",
+    "timestamp": 1752657293245,
+    "visible": true,
+    "tipo": "Castigos",
+    "castigo": 1,
+    "frase": "{Jugador}, ¿has tenido una fantasía con alguien del trabajo o la uni?"
+  },
+  {
+    "id": "3665c557-5201-4ac6-8",
+    "timestamp": 1752657293310,
+    "tipo": "Vota a",
+    "frase": "... quién es más probable que finja una llamada para escapar de una cita?",
+    "castigo": 1,
+    "visible": true
+  },
+  {
+    "id": "366a5c6c-9b45-4193-b",
+    "frase": "Si alguna vez has atropellado un animal, bebe 2 tragos",
+    "visible": true,
+    "castigo": 1,
+    "tipo": "Castigos",
+    "timestamp": 0
+  },
+  {
+    "id": "37786525-06dc-439f-8",
+    "castigo": 1,
+    "frase": "Si has usado a tu perro/gato como excusa para huir de un plan... trago.",
+    "visible": true,
+    "tipo": "Castigos",
+    "timestamp": 0
+  },
+  {
+    "id": "38a2295a-c1c5-4b8f-8",
+    "frase": "... quién es mas probable que haya tenido una fantasía con un desconocido en el transporte público",
+    "tipo": "Vota a",
+    "visible": true,
+    "castigo": 1,
+    "timestamp": 1752657293332
+  },
+  {
+    "id": "39dfbe3c-7979-43aa-9",
+    "timestamp": 1752657293363,
+    "castigo": 1,
+    "tipo": "Castigos",
+    "visible": true,
+    "frase": "Si no tienes a alguno de aqui guardado, castigo"
+  },
+  {
+    "id": "3a2a8b51-fa15-45fa-b",
+    "timestamp": 1752657293385,
+    "tipo": "Vota a",
+    "visible": true,
+    "castigo": 1,
+    "frase": "... quien parece que finge gemidos"
+  },
+  {
+    "id": "3b2a9d33-77a2-49e5-a",
+    "visible": true,
+    "frase": "¡Pausa para hidratarse! 5 tragos cada uno",
+    "timestamp": 1752657293541,
+    "tipo": "Castigos",
+    "castigo": 5
+  },
+  {
+    "id": "3bbce4f4-68bf-41c1-b",
+    "timestamp": 1752657293589,
+    "tipo": "Yo nunca",
+    "castigo": 1,
+    "frase": "... he fingido que me gustaba algo en la cama solo por acabar antes",
+    "visible": true
+  },
+  {
+    "id": "3d569b9c-2f6a-439c-b",
+    "tipo": "Castigos",
+    "timestamp": 1752657293612,
+    "castigo": 2,
+    "visible": true,
+    "frase": "Si alguna vez has terminado desnudo y no sabes cómo ocurrió, castigo."
+  },
+  {
+    "id": "3e66d207-a85b-4d01-a",
+    "timestamp": 1752657293660,
+    "tipo": "Pregunta",
+    "frase": "{Jugador}, ¿qué es lo más sucio que alguien te ha dicho... y te gustó?",
+    "visible": true,
+    "castigo": 1
+  },
+  {
+    "id": "3e8a76a0-9788-432c-a",
+    "timestamp": 1752657293705,
+    "tipo": "Yo nunca",
+    "frase": "... he fingido un orgasmo.",
+    "visible": true,
+    "castigo": 1
+  },
+  {
+    "id": "400c52c4-548e-405b-9",
+    "frase": "En ronda, todos deben decir su mayor red flag, el que no diga nada, castigo",
+    "timestamp": 1752657293726,
+    "tipo": "Castigos",
+    "castigo": 1,
+    "visible": true
+  },
+  {
+    "id": "40904518-acbd-473d-9",
+    "tipo": "Yo nunca",
+    "timestamp": 1752657293752,
+    "frase": "... he fingido estar pajarito",
+    "visible": true,
+    "castigo": 1
+  },
+  {
+    "id": "41d3e616-53ab-4678-8",
+    "tipo": "Castigos",
+    "timestamp": 1752657293799,
+    "visible": true,
+    "castigo": 1,
+    "frase": "{Jugador}, si alguna vez te has liado con alguien por no saber cómo decir que no... Trago"
+  },
+  {
+    "id": "42a7bed2-89bf-4785-9",
+    "timestamp": 1752657293843,
+    "castigo": 1,
+    "tipo": "Vota a",
+    "frase": "... ¿Quién es más probable que tenga una playlist secreta para momentos sucios?",
+    "visible": true
+  },
+  {
+    "id": "42ba4b18-54e1-4935-b",
+    "visible": true,
+    "frase": "Si te has tocado hoy, doble trago",
+    "timestamp": 1752657293862,
+    "tipo": "Castigos",
+    "castigo": 2
+  },
+  {
+    "id": "43497e45-f782-4443-8",
+    "frase": "Cada persona debe decir una parte del cuerpo. El que dude, repita o diga algo que ya se dijo, bebe.",
+    "timestamp": 1752657293886,
+    "castigo": 1,
+    "tipo": "Castigos",
+    "visible": false
+  },
+  {
+    "id": "43c5dcd1-c51c-4fde-8",
+    "visible": true,
+    "tipo": "Castigos",
+    "castigo": 1,
+    "frase": "{Jugador}, ¿has tenido una aventura de una noche que aún recuerdas con cariño?",
+    "timestamp": 0
+  },
+  {
+    "id": "44955f9a-8880-4c9a-b",
+    "frase": "... quien se apunta a todo pero nunca organiza nada",
+    "visible": true,
+    "timestamp": 1752657293905,
+    "castigo": 1,
+    "tipo": "Vota a"
+  },
+  {
+    "id": "455fe3a3-febd-43f8-b",
+    "castigo": 1,
+    "tipo": "Castigos",
+    "visible": false,
+    "timestamp": 1752657293926,
+    "frase": "{Jugador}, ¿alguna vez fingiste estar más borracho/a para justificar algo que hiciste?"
+  },
+  {
+    "id": "45611dc6-c5e7-45ca-8",
+    "tipo": "Vota a",
+    "timestamp": 1752657293972,
+    "visible": true,
+    "castigo": 1,
+    "frase": "¿Quién sería capaz de decir 'te quiero' en la primera cita... y estar convencido?"
+  },
+  {
+    "id": "459bdb06-96f8-41e4-9",
+    "timestamp": 1752657294040,
+    "tipo": "Castigos",
+    "castigo": 1,
+    "visible": true,
+    "frase": "{Jugador}, ¿has tenido fantasías con alguien de esta misma habitación?"
+  },
+  {
+    "id": "45a7592b-e348-4062-9",
+    "tipo": "Castigos",
+    "timestamp": 1752657294061,
+    "frase": "Si {Jugador} hace contacto visual con el jugador de enfrente, castigo para los dos",
+    "castigo": 1,
+    "visible": true
+  },
+  {
+    "id": "47b5045c-7e9c-4815-b",
+    "castigo": 1,
+    "frase": "¿Ron limon? Si no eres dominicano, bebe",
+    "visible": true,
+    "tipo": "Castigos",
+    "timestamp": 0
+  },
+  {
+    "id": "4827b4c2-3c00-4052-8",
+    "timestamp": 1752657294102,
+    "frase": "Si {Jugador} bebe, la persona a su derecha debe gritar “¡Salud, mi rey/reina!” y dar un trago también",
+    "visible": true,
+    "tipo": "Castigos",
+    "castigo": 1
+  },
+  {
+    "id": "4833cb5f-f6c7-489d-9",
+    "castigo": 1,
+    "tipo": "Castigos",
+    "visible": true,
+    "frase": "Bebe si hiciste ghosting y reapareciste como si nada.",
+    "timestamp": 0
+  },
+  {
+    "id": "4844f0b1-1876-44d2-a",
+    "tipo": "Vota a",
+    "visible": true,
+    "castigo": 1,
+    "frase": "{Jugador} quien crees que es más probable que acabe debajo de un puente",
+    "timestamp": 1752657294152
+  },
+  {
+    "id": "4863acfa-e22b-4b11-a",
+    "frase": "... he hecho ghosting a alguien.",
+    "tipo": "Yo nunca",
+    "castigo": 1,
+    "visible": true,
+    "timestamp": 1752657294173
+  },
+  {
+    "id": "48b5568a-1217-411f-8",
+    "visible": true,
+    "tipo": "Castigos",
+    "timestamp": 1752657294197,
+    "castigo": 1,
+    "frase": "Pitipausa, tomaros un minuto y fumaros un cigarritoa mi salud va"
+  },
+  {
+    "id": "49c92e50-cabd-4b83-a",
+    "tipo": "Castigos",
+    "timestamp": 1752657294218,
+    "visible": false,
+    "castigo": 1,
+    "frase": "Cada persona debe imitar un sonido de cama. El que no lo haga o se pase, trago."
+  },
+  {
+    "id": "4a202238-582b-426d-a",
+    "tipo": "Ronda",
+    "visible": true,
+    "timestamp": 1752657294240,
+    "castigo": 1,
+    "frase": "Por turnos, un trago por cada punto del carnet que os hayan quitado, empieza {jugador}."
+  },
+  {
+    "id": "4a5b7c4e-a955-4772-9",
+    "timestamp": 1752657294262,
+    "tipo": "Yo nunca",
+    "castigo": 1,
+    "frase": "... he besado al ex de un amigo.",
+    "visible": true
+  },
+  {
+    "id": "4b6f0da2-8a99-4857-b",
+    "visible": true,
+    "tipo": "Castigos",
+    "frase": "{Jugador}, ¿has tenido una aventura con alguien sabiendo que era un/a ex de un/a amigo/a?",
+    "castigo": 1,
+    "timestamp": 1752657294345
+  },
+  {
+    "id": "4c897ad9-34c4-4779-a",
+    "frase": "{Jugador}, ¿has tenido una noche de pasión que luego contaste como leyenda?",
+    "tipo": "Castigos",
+    "visible": true,
+    "castigo": 1,
+    "timestamp": 1752657294391
+  },
+  {
+    "id": "4e5bc953-0c43-4a11-a",
+    "visible": true,
+    "castigo": 3,
+    "timestamp": 1752657294413,
+    "frase": "{jugador}, reparte 3 castigos a un jugador que esté más blanco que tú, si es posible… Si no, los recibes tú.",
+    "tipo": "Castigos"
+  },
+  {
+    "id": "504b73d3-802e-4009-b",
+    "castigo": 1,
+    "tipo": "Yo nunca",
+    "frase": "... le he meado a alguien.",
+    "visible": true,
+    "timestamp": 1752657294435
+  },
+  {
+    "id": "519c847f-26ae-4930-8",
+    "visible": true,
+    "tipo": "Vota a",
+    "castigo": 1,
+    "timestamp": 1752657294491,
+    "frase": "... quien creais que sera el pimero en tener un chiquillo? a partir de ahora todos le llamareis papi/mami"
+  },
+  {
+    "id": "52d9226c-cbef-4476-9",
+    "tipo": "Vota a",
+    "visible": true,
+    "timestamp": 1752657294512,
+    "castigo": 1,
+    "frase": "... quien tiene pinta de mandar mensajes calientes... mal escritos"
+  },
+  {
+    "id": "54a33ae1-a3ad-410c-a",
+    "timestamp": 1752657294573,
+    "visible": true,
+    "frase": "... quien querais que se se acabe su vaso de un trago",
+    "tipo": "Vota a",
+    "castigo": 1
+  },
+  {
+    "id": "558b3360-9c81-47f0-9",
+    "castigo": 1,
+    "visible": true,
+    "timestamp": 1752657294616,
+    "frase": "... quien te imaginas que hace las mejores mamadas",
+    "tipo": "Vota a"
+  },
+  {
+    "id": "564228af-f0a0-46c1-b",
+    "tipo": "Castigos",
+    "timestamp": 1752580697246,
+    "castigo": 1,
+    "frase": "{Jugador} no puede decir ninguna palabra sin mirar a al borracho de su derecha. Si no lo hace, ambos beben",
+    "visible": true
+  },
+  {
+    "id": "57f75652-b6f8-425c-9",
+    "castigo": 1,
+    "timestamp": 1752580697295,
+    "tipo": "Castigos",
+    "frase": "{Jugador}, bebe si alguna vez has dicho 'ahora vuelvo' y no volviste nunca",
+    "visible": true
+  },
+  {
+    "id": "58284c57-aab5-4f20-b",
+    "castigo": 1,
+    "frase": "... he robado en una tienda",
+    "timestamp": 1752657294639,
+    "tipo": "Yo nunca",
+    "visible": true
+  },
+  {
+    "id": "5850a5c0-6afa-4f0e-8",
+    "frase": "Quien crea que hoy va a f***ar, bebe tres tragos",
+    "castigo": 1,
+    "visible": true,
+    "tipo": "Castigos",
+    "timestamp": 0
+  },
+  {
+    "id": "58b2b9ef-be93-4756-a",
+    "tipo": "Pregunta",
+    "visible": true,
+    "timestamp": 1752657294661,
+    "castigo": 1,
+    "frase": "{Jugador}, ¿cuál es el objeto más raro que has usado en un momento íntimo?"
+  },
+  {
+    "id": "59a2e197-5ef9-4970-a",
+    "frase": "{Jugador} debe hablar durante 3 rondas como si estuviera seduciendo al jugador de su izquierda. Si alguien se ríe, trago.",
+    "castigo": 1,
+    "visible": true,
+    "timestamp": 1752657294683,
+    "tipo": "Castigos"
+  },
+  {
+    "id": "5a1931ff-c0d5-4ada-8",
+    "visible": true,
+    "castigo": 1,
+    "frase": "{jugador}, reparte 3 castigos a un jugador que esté menos entonado que tú, si es posible… Si no, los recibes tú.",
+    "tipo": "Castigos",
+    "timestamp": 1752657294704
+  },
+  {
+    "id": "5b15b011-b557-4802-9",
+    "tipo": "Pregunta",
+    "castigo": 1,
+    "timestamp": 1752657294774,
+    "frase": "{Jugador}, ¿qué es lo más vergonzoso que te ha pasado desnudo/a?",
+    "visible": true
+  },
+  {
+    "id": "5b89d28c-f5a3-4b92-a",
+    "frase": "{Jugador}, ¿has escrito algo muy subido de tono a alguien y luego te arrepentiste?",
+    "visible": true,
+    "castigo": 1,
+    "tipo": "Castigos",
+    "timestamp": 0
+  },
+  {
+    "id": "5bb4ab44-8af7-4bb1-9",
+    "frase": "Palabras o expresiones sinónimas de “vagina”, ¡el jugador que repita o que no encuentre ninguna tendrá que recibir 3 castigos! Empieza {Jugador}.",
+    "tipo": "Castigos",
+    "timestamp": 1752657294837,
+    "castigo": 1,
+    "visible": true
+  },
+  {
+    "id": "5cd30839-7975-497e-a",
+    "castigo": 1,
+    "frase": "Bebe si alguna vez has hecho sexting en horario laboral.",
+    "tipo": "Castigos",
+    "visible": true,
+    "timestamp": 0
+  },
+  {
+    "id": "5d1cde54-0c73-467f-9",
+    "castigo": 1,
+    "tipo": "Yo nunca",
+    "frase": "... he hecho sexting.",
+    "visible": true,
+    "timestamp": 1752657294884
+  },
+  {
+    "id": "5e1d94d4-cb0b-4208-8",
+    "frase": "... quien tiene más posibilidades de liarse con un/a ex de alguien presente",
+    "castigo": 1,
+    "tipo": "Vota a",
+    "visible": true,
+    "timestamp": 1752657294905
+  },
+  {
+    "id": "5f2d5ddc-6a5d-4232-8",
+    "castigo": 1,
+    "visible": true,
+    "tipo": "Castigos",
+    "frase": "Todos deben decir en ronda algo que no harían nunca en la cama. El que dude o repita, bebe.",
+    "timestamp": 0
+  },
+  {
+    "id": "603e651a-f1c4-4afa-b",
+    "castigo": 1,
+    "tipo": "Castigos",
+    "frase": "{Jugador}, ¿alguna vez alguien lloró después de acostarse contigo?",
+    "visible": true,
+    "timestamp": 0
+  },
+  {
+    "id": "61950828-5a1c-4dec-9",
+    "frase": "... la persona que vaya menos cucu del grupo, y ¡que le pegue un buen trago!",
+    "tipo": "Vota a",
+    "visible": true,
+    "castigo": 1,
+    "timestamp": 1752657294928
+  },
+  {
+    "id": "61ebc125-fcd5-4418-a",
+    "castigo": 1,
+    "frase": "Nueva regla, ya no se puede beber con la mano derecha, si te pillan. 3 tragos",
+    "tipo": "Castigos",
+    "visible": true,
+    "timestamp": 0
+  },
+  {
+    "id": "620bddc9-24a6-4a35-8",
+    "frase": "{Jugador}, ¿has compartido alguna vez contenido subido de tono de otra persona?",
+    "castigo": 1,
+    "tipo": "Pregunta",
+    "timestamp": 1752657294972,
+    "visible": true
+  },
+  {
+    "id": "6220e95e-3ef4-41d6-8",
+    "frase": "... quien más chances tiene de enamorarse en una noche de fiesta",
+    "visible": true,
+    "timestamp": 1752657295019,
+    "castigo": 1,
+    "tipo": "Vota a"
+  },
+  {
+    "id": "628888a0-92f8-4ede-8",
+    "castigo": 1,
+    "timestamp": 1752657295040,
+    "visible": true,
+    "tipo": "Vota a",
+    "frase": "... ¿Quién se tatuaría algo sin saber lo que significa?"
+  },
+  {
+    "id": "62e5ab1d-769e-4443-b",
+    "tipo": "Vota a",
+    "castigo": 1,
+    "timestamp": 1752657295062,
+    "visible": true,
+    "frase": "... ¿Quién es más probable que se ponga intenso con dos copas?"
+  },
+  {
+    "id": "63531865-f8d7-4be5-8",
+    "visible": false,
+    "castigo": 1,
+    "timestamp": 1752660544579,
+    "frase": "¡Mujeres, hidalgo!",
+    "tipo": "Castigos"
+  },
+  {
+    "id": "63552a26-fdf8-46e6-b",
+    "castigo": 1,
+    "tipo": "Castigos",
+    "timestamp": 1752657295136,
+    "frase": "{Jugador} haz 10 sentadillas, o pega 3 tragos",
+    "visible": true
+  },
+  {
+    "id": "64566667-95b1-4ac9-b",
+    "visible": true,
+    "tipo": "Castigos",
+    "frase": "El que tenga mas de dos tatuajes, pega 2 tragos",
+    "timestamp": 1752657295156,
+    "castigo": 2
+  },
+  {
+    "id": "6509a8be-5a61-4f37-8",
+    "tipo": "Congelados",
+    "frase": "{Jugador} no puede negar nada que diga {Jugador} durante 3 rondas",
+    "timestamp": 1752657295177,
+    "castigo": 1,
+    "visible": false
+  },
+  {
+    "id": "6672f6dc-0a1a-49f9-9",
+    "castigo": 1,
+    "frase": "{Jugador}, ¿alguna vez lo hiciste algo sabiendo que no deberías, solo por la adrenalina?",
+    "tipo": "Castigos",
+    "timestamp": 1752657295196,
+    "visible": true
+  },
+  {
+    "id": "677dee7d-4ffd-4121-8",
+    "timestamp": 1752657295255,
+    "castigo": 1,
+    "frase": "... he dado un baile erótico.",
+    "visible": true,
+    "tipo": "Yo nunca"
+  },
+  {
+    "id": "686a6b27-a56a-453b-b",
+    "castigo": 1,
+    "visible": true,
+    "tipo": "Castigos",
+    "frase": "Todos deben compartir el nombre de su último crush. El que no quiera, bebe.",
+    "timestamp": 0
+  },
+  {
+    "id": "68e79d9b-d740-4938-8",
+    "castigo": 1,
+    "visible": true,
+    "frase": "Las mujeres, hidalgo!",
+    "tipo": "Castigos",
+    "timestamp": 0
+  },
+  {
+    "id": "6911d2a3-bb7c-4be5-9",
+    "tipo": "Vota a",
+    "timestamp": 1752657295308,
+    "visible": true,
+    "frase": "... ¿Quién es más probable que haga un trío... y luego se arrepienta?",
+    "castigo": 1
+  },
+  {
+    "id": "69a99ceb-2d0d-45cf-8",
+    "visible": true,
+    "castigo": 1,
+    "frase": "El que esta leyendo, reparte tragos",
+    "tipo": "Castigos",
+    "timestamp": 0
+  },
+  {
+    "id": "69e76eb2-4dad-4095-b",
+    "timestamp": 1752660544648,
+    "tipo": "Castigos",
+    "visible": true,
+    "castigo": 1,
+    "frase": "Pegale un trago si has tenido una noche... que prefieres no recordar."
+  },
+  {
+    "id": "6a7f16d9-d690-45b1-9",
+    "tipo": "Castigos",
+    "castigo": 1,
+    "visible": true,
+    "frase": "Todos votan por un jugador, y que haga la plancha durante un minuto completo.",
+    "timestamp": 1752657295349
+  },
+  {
+    "id": "6b4763fd-d223-4732-a",
+    "frase": "{Jugador}, ¿te has grabado alguna vez? ¿Conservas ese video?",
+    "castigo": 1,
+    "timestamp": 1752657295406,
+    "tipo": "Castigos",
+    "visible": true
+  },
+  {
+    "id": "6bdeb6e4-03a4-4a07-9",
+    "castigo": 1,
+    "frase": "Bebe si alguna vez has empezado algo con ‘solo es una amiga’.",
+    "visible": true,
+    "tipo": "Castigos",
+    "timestamp": 0
+  },
+  {
+    "id": "6cb0b9f9-07ac-45a5-8",
+    "frase": "El ultimo en sacarse el carnet de conducir, trago",
+    "tipo": "Castigos",
+    "timestamp": 1752660544713,
+    "visible": true,
+    "castigo": 1
+  },
+  {
+    "id": "6d0305da-0439-4419-a",
+    "tipo": "Castigos",
+    "visible": false,
+    "frase": "{Jugador}, reparte 3 castigos a un jugador que esté más blanco que tú, si es posible… Si no, los recibes tú.",
+    "timestamp": 1752660544770,
+    "castigo": 1
+  },
+  {
+    "id": "6f63b708-9f62-4941-9",
+    "tipo": "Yo nunca",
+    "timestamp": 1752660544826,
+    "castigo": 1,
+    "frase": "... tendria un grupo de WhatsApp donde critico a la gente de aqui",
+    "visible": true
+  },
+  {
+    "id": "6f8eacf0-9b99-4703-9",
+    "visible": false,
+    "timestamp": 1752660544881,
+    "tipo": "Castigos",
+    "castigo": 1,
+    "frase": "{Jugador} y {Jugador} deben turnarse para decir piropos absurdos. El que se quede sin ideas, bebe."
+  },
+  {
+    "id": "6fd65c2d-3641-4969-a",
+    "visible": true,
+    "frase": "... ¿Quién tiene guardado un regalo de su ex... y no piensa devolverlo?",
+    "castigo": 1,
+    "timestamp": 1752660544908,
+    "tipo": "Vota a"
+  },
+  {
+    "id": "6hiLJLGRwBBkB7cahIY1",
+    "tipo": "Finish him",
+    "visible": true,
+    "castigo": 1,
+    "timestamp": 1752657291161,
+    "frase": "{Jugador} todo de una"
+  },
+  {
+    "id": "6zFSDs1TptsbPecPJDCL",
+    "frase": "Cambio de copa. Todo el mundo le pega un trago de la copa del jugador de su izquierda",
+    "castigo": 1,
+    "visible": true,
+    "timestamp": 1752660547978,
+    "tipo": "Prueba"
+  },
+  {
+    "id": "70e8b705-7ae9-40df-9",
+    "tipo": "Castigos",
+    "frase": "{Jugador}  tómate tu bebida",
+    "timestamp": 1752660544962,
+    "castigo": 1,
+    "visible": false
+  },
+  {
+    "id": "714e25a7-2385-40dd-9",
+    "tipo": "Vota a",
+    "frase": "¿Quién es más probable que se líe con alguien del grupo... otra vez?",
+    "timestamp": 1752657295509,
+    "visible": true,
+    "castigo": 1
+  },
+  {
+    "id": "7165e2db-5af0-4949-b",
+    "frase": "Si {Jugador} bebe, {Jugador} debe gritar “¡Salud, mi rey/reina!” y beber también",
+    "tipo": "Castigos",
+    "timestamp": 1752660545033,
+    "castigo": 1,
+    "visible": false
+  },
+  {
+    "id": "71880e53-a812-4931-9",
+    "castigo": 1,
+    "timestamp": 1752660545060,
+    "tipo": "Vota a",
+    "visible": true,
+    "frase": "... ¿Quién es más probable que empiece una pelea en un grupo por algo absurdo?"
+  },
+  {
+    "id": "71b2320c-a6a9-47d8-b",
+    "timestamp": 1752660545086,
+    "castigo": 1,
+    "visible": true,
+    "tipo": "Castigos",
+    "frase": "Cada persona debe inventar una regla para esta ronda. La mejor, la aplicamos, el resto, trago"
+  },
+  {
+    "id": "721f5181-7daf-4a7d-8",
+    "visible": false,
+    "castigo": 1,
+    "frase": "{Jugador} y {Jugador} deben hacerse una pregunta incómoda. Si alguno no responde, bebe.",
+    "tipo": "Castigos",
+    "timestamp": 1752660545110
+  },
+  {
+    "id": "750f6b79-3e94-4961-a",
+    "visible": true,
+    "frase": "Los hombres, hidalgo!",
+    "tipo": "Castigos",
+    "castigo": 1,
+    "timestamp": 0
+  },
+  {
+    "id": "757c34bc-d57d-476b-9",
+    "tipo": "Pregunta",
+    "visible": true,
+    "timestamp": 1752660545163,
+    "castigo": 1,
+    "frase": "{Jugador}, ¿qué es lo más extraño que has tenido que decir que sí para no cortar el rollo?"
+  },
+  {
+    "id": "77cb1ca6-ee9b-4955-8",
+    "frase": "Bebe si te has arrepentido de escribir un mensaje antes incluso de enviarlo.",
+    "tipo": "Castigos",
+    "castigo": 1,
+    "visible": true,
+    "timestamp": 0
+  },
+  {
+    "id": "781dc35f-615a-4d10-a",
+    "timestamp": 1752660545221,
+    "castigo": 1,
+    "visible": false,
+    "tipo": "Castigos",
+    "frase": "Si has salido de una cita por 'emergencia familiar inventada', trago."
+  },
+  {
+    "id": "785a772c-793a-43b7-9",
+    "timestamp": 1752657295593,
+    "castigo": 1,
+    "frase": "¿Quién se ha liado con alguien y después bloqueado para no tener que hablarlo?",
+    "tipo": "Vota a",
+    "visible": true
+  },
+  {
+    "id": "79542e07-5201-4262-9",
+    "castigo": 1,
+    "tipo": "Pregunta",
+    "timestamp": 1752660545248,
+    "visible": true,
+    "frase": "{Jugador}, ¿has hecho sexting con alguien del grupo?"
+  },
+  {
+    "id": "7b0b44e5-3c2c-446a-8",
+    "timestamp": 1752660545274,
+    "frase": "{Jugador} y el jugador de su derecha, poneros de pie. A la de 3, todo el mundo vota quien es el mas atractiv",
+    "tipo": "Vota a",
+    "castigo": 1,
+    "visible": false
+  },
+  {
+    "id": "7d9be49f-f1ad-489c-b",
+    "tipo": "Castigos",
+    "frase": "Si tienes más de 3 chats sin abrir, trago. Si son de ligues, dos tragos.",
+    "timestamp": 1752660545328,
+    "visible": true,
+    "castigo": 1
+  },
+  {
+    "id": "7df42ad4-9fa7-4af1-8",
+    "visible": true,
+    "tipo": "Yo nunca",
+    "frase": "... le he enviado a alguien una foto p***a o un nude.",
+    "timestamp": 1752660545395,
+    "castigo": 1
+  },
+  {
+    "id": "7e384238-f1cb-4035-9",
+    "visible": true,
+    "castigo": 1,
+    "frase": "¿Quién es más probable que desaparezca sin avisar y luego aparezca con resaca?",
+    "tipo": "Vota a",
+    "timestamp": 1752657295632
+  },
+  {
+    "id": "7f7ba449-9429-4443-a",
+    "visible": true,
+    "castigo": 1,
+    "frase": "Si has tenido una cita que terminó en urgencias, trago doble.",
+    "tipo": "Castigos",
+    "timestamp": 1752660545514
+  },
+  {
+    "id": "7ff91a6d-0097-43b2-b",
+    "visible": true,
+    "timestamp": 1752660545544,
+    "tipo": "Yo nunca",
+    "castigo": 1,
+    "frase": "... he probado las drogas duras"
+  },
+  {
+    "id": "7g8mZmIC78OMY17Yg1Qx",
+    "visible": true,
+    "castigo": 3,
+    "timestamp": 1752660544551,
+    "frase": "Formas de decir que andas pajarito ¡Tiempo!",
+    "tipo": "Prueba"
+  },
+  {
+    "id": "80116d14-5565-4e1a-9",
+    "frase": "... quien más probablemente se ha liado con más gente",
+    "visible": true,
+    "timestamp": 1752660545576,
+    "castigo": 1,
+    "tipo": "Vota a"
+  },
+  {
+    "id": "8027b075-2144-42b7-9",
+    "frase": "... he usado objetos cotidianos para tocarme",
+    "timestamp": 1752660545634,
+    "visible": true,
+    "castigo": 1,
+    "tipo": "Yo nunca"
+  },
+  {
+    "id": "82812645-98eb-4611-b",
+    "timestamp": 1752660545682,
+    "frase": "Trago si alguna vez quisiste ligar con un/a ex de un/a amigx.",
+    "visible": true,
+    "castigo": 1,
+    "tipo": "Castigos"
+  },
+  {
+    "id": "82e7a6bc-3f11-4cc9-a",
+    "castigo": 1,
+    "visible": false,
+    "frase": "{Jugador} y {Jugador} comparten una maldición: si alguien dice su nombre, ambos beben",
+    "timestamp": 1752660545738,
+    "tipo": "Castigos"
+  },
+  {
+    "id": "85bcfdf8-1b20-4e65-8",
+    "frase": "{Jugador} lanza una pregunta fuerte al grupo. Quien no responda con sinceridad, bebe.",
+    "timestamp": 1752660545795,
+    "castigo": 1,
+    "tipo": "Castigos",
+    "visible": false
+  },
+  {
+    "id": "8653ca09-dd06-44d8-b",
+    "frase": "Trago si tienes un vibrador",
+    "visible": true,
+    "timestamp": 1752660545821,
+    "castigo": 1,
+    "tipo": "Castigos"
+  },
+  {
+    "id": "8815281b-3119-489b-b",
+    "visible": true,
+    "castigo": 1,
+    "tipo": "Castigos",
+    "timestamp": 1752660545888,
+    "frase": "{Jugador}, estas muy mallito... ¡solo puedes curarte si tomas sin usar las manos!"
+  },
+  {
+    "id": "8868033e-e96b-4ac5-a",
+    "visible": true,
+    "castigo": 1,
+    "frase": "Bebe si has llamado por error a alguien con el nombre de tu ex durante el sexo.",
+    "tipo": "Castigos",
+    "timestamp": 0
+  },
+  {
+    "id": "89711551-28d7-47af-a",
+    "frase": "...¿Quién es más probable que suba una historia llorando solo para que alguien le escriba?",
+    "visible": true,
+    "castigo": 1,
+    "timestamp": 1752660545943,
+    "tipo": "Vota a"
+  },
+  {
+    "id": "8972e407-ae05-47ad-b",
+    "frase": "... la persona que tenga mas dinero y al que menos. El ricachon, que se enrolle y le haga un bizum va",
+    "timestamp": 1752660546049,
+    "visible": true,
+    "castigo": 1,
+    "tipo": "Vota a"
+  },
+  {
+    "id": "89b4ca99-0a04-487b-a",
+    "timestamp": 1752660546074,
+    "visible": true,
+    "castigo": 1,
+    "tipo": "Yo nunca",
+    "frase": "... he dicho que una copa y a casa y acabe cerrando la fiesta"
+  },
+  {
+    "id": "8a0a7a3b-8216-4f01-b",
+    "frase": "..¿Quién se ha liado con alguien y no recuerda ni el nombre?",
+    "timestamp": 1752660546095,
+    "castigo": 1,
+    "tipo": "Vota a",
+    "visible": true
+  },
+  {
+    "id": "8a3f610f-4d29-496f-a",
+    "frase": "Todos deben hacer una pose sensual. El más votado como ‘menos sexy’, trago",
+    "visible": true,
+    "timestamp": 1752660546156,
+    "castigo": 1,
+    "tipo": "Castigos"
+  },
+  {
+    "id": "8b557398-416c-43b5-8",
+    "timestamp": 1752660546185,
+    "tipo": "Castigos",
+    "castigo": 1,
+    "frase": "Alguna vez te has olido el sobaco para comprobar si olías",
+    "visible": true
+  },
+  {
+    "id": "8c1d2a62-2368-4583-8",
+    "tipo": "Castigos",
+    "castigo": 1,
+    "timestamp": 1752660546211,
+    "frase": "Trago si alguna vez intentaste hablar sexy y te dio vergüenza ajena.",
+    "visible": true
+  },
+  {
+    "id": "8c8da397-0877-41f8-9",
+    "frase": "Por turnos, recibid el número de puntos que os han quitado en el carné de conducir, empieza {Jugador}.",
+    "visible": false,
+    "timestamp": 1752660546275,
+    "castigo": 1,
+    "tipo": "Castigos"
+  },
+  {
+    "id": "8cea21aa-9b41-4dd7-8",
+    "timestamp": 1752660546300,
+    "tipo": "Castigos",
+    "frase": "{Jugador} no puede decir ninguna palabra sin mirar a {Jugador}. Si lo hace, ambos beben",
+    "castigo": 1,
+    "visible": false
+  },
+  {
+    "id": "8cf34b81-05b4-4b71-9",
+    "tipo": "Pregunta",
+    "visible": true,
+    "frase": "{Jugador}, ¿has fantaseado con la pareja de alguien cercano?",
+    "castigo": 1,
+    "timestamp": 0
+  },
+  {
+    "id": "8d0ba957-db58-4ee3-9",
+    "frase": "...¿Quién se ha hecho el dormido para no ayudar a limpiar después de una fiesta?",
+    "castigo": 1,
+    "timestamp": 1752660546365,
+    "tipo": "Vota a",
+    "visible": true
+  },
+  {
+    "id": "8dc41a08-4f88-482c-8",
+    "frase": "{Jugador} y {Jugador} deben inventar una palabra clave para algo muy caliente. Si no la recuerdan en la siguiente ronda, beben.",
+    "timestamp": 1752660546418,
+    "visible": false,
+    "castigo": 1,
+    "tipo": "Castigos"
+  },
+  {
+    "id": "8e106e52-65b5-48ca-a",
+    "timestamp": 1752660546467,
+    "castigo": 1,
+    "visible": true,
+    "frase": "Todos tomen un trago sin usar las manos.",
+    "tipo": "Prueba"
+  },
+  {
+    "id": "8f2679b1-661b-4297-a",
+    "castigo": 1,
+    "timestamp": 1752660546518,
+    "frase": "... ¿Quién se subiría a cantar en karaoke sin saber la letra?",
+    "tipo": "Vota a",
+    "visible": true
+  },
+  {
+    "id": "92992ec4-52f5-48d7-8",
+    "visible": true,
+    "timestamp": 1752660546571,
+    "tipo": "Vota a",
+    "frase": "... quien tiene más chances de tener un OnlyFans secreto",
+    "castigo": 1
+  },
+  {
+    "id": "92f4726f-2006-4a69-a",
+    "timestamp": 1752660546594,
+    "frase": "{Jugador}, tu y yo vamos a recrear la escena del titanic... ¡Abrazame Jack!",
+    "visible": true,
+    "tipo": "Castigos",
+    "castigo": 1
+  },
+  {
+    "id": "9487b94d-decc-4b9e-a",
+    "visible": false,
+    "frase": "... he tenido",
+    "tipo": "Yo nunca",
+    "timestamp": 1752660546617,
+    "castigo": 1
+  },
+  {
+    "id": "94890c0f-d344-4d0e-b",
+    "castigo": 1,
+    "visible": true,
+    "frase": "... quien te imaginas que puede durar menos de 5 minutos en la cama",
+    "tipo": "Vota a",
+    "timestamp": 1752660546640
+  },
+  {
+    "id": "95acb02e-f151-4c21-9",
+    "tipo": "Yo nunca",
+    "timestamp": 1752660546688,
+    "visible": true,
+    "frase": "... he pensado mientras lo hacia, ¿Esto cuando acaba?",
+    "castigo": 1
+  },
+  {
+    "id": "97b9b296-5133-4a5b-8",
+    "timestamp": 1752660546748,
+    "castigo": 1,
+    "tipo": "Castigos",
+    "frase": "{Jugador} y {Jugador} deben improvisar una discusión de pareja. Si no lo hacen, beben los dos.",
+    "visible": false
+  },
+  {
+    "id": "99a54bd5-74f3-439d-9",
+    "castigo": 1,
+    "frase": "Bebe si alguna vez te has despertado y no sabías en qué casa estabas.",
+    "tipo": "Castigos",
+    "visible": true,
+    "timestamp": 0
+  },
+  {
+    "id": "9Cyn8i6sBjH9aj945Xdh",
+    "castigo": 1,
+    "visible": true,
+    "frase": "... le he enviado a alguien una foto t*tas o un nude.",
+    "tipo": "Yo nunca",
+    "timestamp": 1752660545455
+  },
+  {
+    "id": "9a9fbaf6-61ac-4393-8",
+    "timestamp": 1752660546783,
+    "visible": true,
+    "castigo": 1,
+    "tipo": "Prueba",
+    "frase": "{Jugador} estas muy malo, solo puedes curarte si cantas una una canción de niños"
+  },
+  {
+    "id": "9b871b49-1852-43ce-9",
+    "timestamp": 1752660546805,
+    "visible": true,
+    "castigo": 1,
+    "tipo": "Vota a",
+    "frase": "... quien sería un/a ex tóxic@ de manual"
+  },
+  {
+    "id": "9dea92d6-588c-49ab-a",
+    "visible": true,
+    "castigo": 1,
+    "tipo": "Castigos",
+    "frase": "Bebe si has enviado algun nude, bebe el doble si esta aqui esa persona!",
+    "timestamp": 0
+  },
+  {
+    "id": "9e62ed43-3129-4362-9",
+    "frase": "{Jugador}, ¿cuál es la frase más hot que te han dicho en la cama y nunca olvidaste?",
+    "castigo": 1,
+    "timestamp": 1752660546866,
+    "tipo": "Pregunta",
+    "visible": true
+  },
+  {
+    "id": "9e7db2ee-88e6-4a40-8",
+    "frase": "... quien ya se peleó con medio grupo… y dice que “todo bien”",
+    "castigo": 1,
+    "visible": true,
+    "timestamp": 1752660546921,
+    "tipo": "Vota a"
+  },
+  {
+    "id": "9ef28046-e849-4004-b",
+    "frase": "{Jugador}, ¿cuál es tu mayor fetiche que aún no has probado?",
+    "castigo": 1,
+    "timestamp": 1752660546945,
+    "tipo": "Pregunta",
+    "visible": true
+  },
+  {
+    "id": "AU5ydMyMANDRzaEInWUe",
+    "tipo": "Castigos",
+    "frase": "{Jugador} debe elegir entre darte un pico con el jugador de enfrente tuya o decirle algo que nunca le has contado",
+    "visible": true,
+    "castigo": 1,
+    "timestamp": 1752657292499
+  },
+  {
+    "id": "D3kWCV610EhK0l5YW2Fv",
+    "timestamp": 1752657292522,
+    "tipo": "Castigos",
+    "castigo": 1,
+    "visible": true,
+    "frase": "{Jugador} debe elegir entre darte un pico con el jugador de enfrente tuya o decirle algo que nunca le has contado"
+  },
+  {
+    "id": "EpL5toTyGIAFN7UtsGzI",
+    "frase": "{Jugador} todo de una",
+    "timestamp": 1752657291107,
+    "castigo": 1,
+    "tipo": "Finish him",
+    "visible": true
+  },
+  {
+    "id": "GPB6mWP5TNiVbfFPaxAF",
+    "visible": true,
+    "timestamp": 1752660544434,
+    "castigo": 1,
+    "frase": "{Jugador}, ¿has fantaseado con alguien de este grupo? Di el nombre o trago.",
+    "tipo": "Castigos"
+  },
+  {
+    "id": "H25BMhIMqFFuS5hM2L66",
+    "timestamp": 1752660544042,
+    "visible": true,
+    "frase": "{Jugador} todo de una",
+    "tipo": "Finish him",
+    "castigo": 1
+  },
+  {
+    "id": "HFb7aixLnPIXztK2Pgqi",
+    "frase": "{Jugador} maulla",
+    "visible": true,
+    "castigo": 1,
+    "timestamp": 1752660544494,
+    "tipo": "Castigo"
+  },
+  {
+    "id": "JOkslNYbVuEBV5CN1FOE",
+    "castigo": 3,
+    "timestamp": 1752657293771,
+    "frase": "Formas de decir que andas pajarito ¡Tiempo!",
+    "visible": true,
+    "tipo": "Prueba"
+  },
+  {
+    "id": "KfBkjEgtUKmMnleOCLoS",
+    "frase": "{Jugador} todo de una",
+    "visible": true,
+    "timestamp": 1752660543965,
+    "castigo": 1,
+    "tipo": "Finish him"
+  },
+  {
+    "id": "MajepLonbW0tgSw4tN1Q",
+    "castigo": 1,
+    "frase": "{Jugador} debe elegir entre darte un pico con el jugador de enfrente tuya o decirle algo que nunca le has contado",
+    "timestamp": 1752660544319,
+    "visible": true,
+    "tipo": "Castigos"
+  },
+  {
+    "id": "MziSnhiKERcTb28WLtG2",
+    "frase": "{Jugador}, ¿has fantaseado con alguien de este grupo? Di el nombre o trago.",
+    "tipo": "Castigos",
+    "castigo": 1,
+    "timestamp": 1752657292839,
+    "visible": true
+  },
+  {
+    "id": "O9RNBWjVxb9T73J5yzUb",
+    "frase": "{Jugador} está infectado. Cada vez que el beba, decide con quien beber",
+    "timestamp": 1752660544374,
+    "tipo": "Castigos",
+    "visible": true,
+    "castigo": 1
+  },
+  {
+    "id": "OZ8IXWo2RO2UoZ1chf9y",
+    "timestamp": 1752660544168,
+    "tipo": "Finish him",
+    "castigo": 1,
+    "frase": "{Jugador} todo de una",
+    "visible": true
+  },
+  {
+    "id": "RzshDVAAVadPsnjNm0Hy",
+    "tipo": "Prueba",
+    "frase": "Bebe si has llegado tarde",
+    "visible": false,
+    "castigo": 1,
+    "timestamp": 1752660546971
+  },
+  {
+    "id": "YIzgd05ikzR9sPSKwLIF",
+    "visible": true,
+    "tipo": "Yo nunca",
+    "frase": "... lo he hecho con amigos en la habitación de al lado",
+    "timestamp": 1752660549837,
+    "castigo": 3
+  },
+  {
+    "id": "a0fa7f0d-8626-4ee6-8",
+    "frase": "{Jugador} debe mirar al interlocutor y decirle tres cosas que le haría en una noche loca. Si se arrepiente, trago doble.",
+    "tipo": "Castigos",
+    "timestamp": 1752660546990,
+    "visible": true,
+    "castigo": 1
+  },
+  {
+    "id": "a1a1597d-235d-4546-8",
+    "frase": "... quien crees que ya se ha liado con alguien de aquí… y no lo ha dicho",
+    "visible": true,
+    "tipo": "Vota a",
+    "timestamp": 1752660547034,
+    "castigo": 1
+  },
+  {
+    "id": "a22d4fa9-15eb-49ba-b",
+    "timestamp": 1752660547054,
+    "castigo": 1,
+    "visible": true,
+    "tipo": "Vota a",
+    "frase": "... ¿Quién ha sido bloqueado en más redes y aún no sabe por qué?"
+  },
+  {
+    "id": "a26d2b07-6154-447e-a",
+    "frase": "... ¿Quién ha enviado pantallazo... al mismo chat del que hablaba?",
+    "timestamp": 1752660547104,
+    "tipo": "Vota a",
+    "castigo": 1,
+    "visible": true
+  },
+  {
+    "id": "a4f2fd44-c1b4-4303-b",
+    "castigo": 1,
+    "timestamp": 1752660547126,
+    "tipo": "Pregunta",
+    "frase": "{Jugador}, ¿has repetido con alguien solo por costumbre aunque no te gustaba tanto?",
+    "visible": true
+  },
+  {
+    "id": "a5dcb278-3af2-4ad3-a",
+    "visible": true,
+    "castigo": 1,
+    "frase": "{Jugador}, ¿has tenido una experiencia con alguien que luego no pudiste mirar a la cara?",
+    "timestamp": 1752660547150,
+    "tipo": "Pregunta"
+  },
+  {
+    "id": "a5ef1b23-a191-4633-a",
+    "visible": true,
+    "castigo": 1,
+    "tipo": "Pregunta",
+    "frase": "{Jugador}, ¿alguna vez dijiste que te gustaba algo solo para impresionar en el momento?",
+    "timestamp": 1752660547202
+  },
+  {
+    "id": "a631c503-9484-4490-b",
+    "timestamp": 1752660547258,
+    "frase": "... quien más probablemente se haya grabado teniendo sexo.",
+    "visible": true,
+    "tipo": "Vota a",
+    "castigo": 1
+  },
+  {
+    "id": "a646123a-cb12-434a-9",
+    "frase": "{Jugador}, elige un objeto de la sala. El primer jugador que lo toque, repartirá 3 castigos.",
+    "visible": true,
+    "castigo": 1,
+    "timestamp": 1752660547280,
+    "tipo": "Castigos"
+  },
+  {
+    "id": "a81377b6-cfff-4584-9",
+    "castigo": 1,
+    "frase": "{Jugador}, ¿cuántas veces has mentido para no tener que repetir con alguien?",
+    "timestamp": 1752660547308,
+    "tipo": "Pregunta",
+    "visible": true
+  },
+  {
+    "id": "a81693e8-9833-4131-8",
+    "frase": "¿Roncola? Basico, bebe",
+    "tipo": "Castigos",
+    "visible": true,
+    "castigo": 1,
+    "timestamp": 0
+  },
+  {
+    "id": "a861660e-182f-41f4-a",
+    "frase": "... ¿Quién ha dicho 'estoy de chill' y terminó vomitando en un portal?",
+    "timestamp": 1752660547334,
+    "visible": true,
+    "castigo": 1,
+    "tipo": "Vota a"
+  },
+  {
+    "id": "a8ae2640-7b85-4dcf-9",
+    "castigo": 1,
+    "frase": "{Jugador} elige a tu contrincante... piedra, papel o tijeras, el que pierda que se acabe su vaso",
+    "timestamp": 1752660547390,
+    "tipo": "Castigos",
+    "visible": true
+  },
+  {
+    "id": "a8cf1574-87b7-40f2-a",
+    "tipo": "Vota a",
+    "castigo": 1,
+    "visible": true,
+    "timestamp": 1752660547452,
+    "frase": "... quien tiene más pinta de haber usado juguetes sexuales"
+  },
+  {
+    "id": "a8f4c255-61a0-4959-8",
+    "castigo": 1,
+    "frase": "{Jugador}, ¿te has liado con alguien aquí sin que el resto lo sepa?",
+    "tipo": "Pregunta",
+    "visible": true,
+    "timestamp": 1752660547510
+  },
+  {
+    "id": "a953a791-a433-4e33-8",
+    "frase": "Todos eligen un gesto para brindar. En la próxima ronda, quien no lo haga correctamente, se acaba su copa",
+    "castigo": 1,
+    "visible": true,
+    "timestamp": 1752660547531,
+    "tipo": "Castigos"
+  },
+  {
+    "id": "aOXS4nk6O0Cxtb1MJUJt",
+    "timestamp": 1752660544100,
+    "visible": true,
+    "tipo": "Finish him",
+    "castigo": 1,
+    "frase": "{Jugador} todo de una"
+  },
+  {
+    "id": "aa34054f-656f-46d8-a",
+    "visible": true,
+    "frase": "El que tenga los ojos marrones, 3 tragos",
+    "castigo": 3,
+    "timestamp": 1752660547555,
+    "tipo": "Castigos"
+  },
+  {
+    "id": "aa927b2f-f586-488d-9",
+    "frase": "Trago quien haya tenido sexo con su ex",
+    "tipo": "Castigos",
+    "castigo": 2,
+    "timestamp": 1752660547582,
+    "visible": true
+  },
+  {
+    "id": "ab6dc6f7-06fb-4734-b",
+    "tipo": "Pregunta",
+    "castigo": 1,
+    "frase": "{Jugador}, ¿tienes una carpeta o nota con cosas que quieres probar?",
+    "visible": true,
+    "timestamp": 1752660547605
+  },
+  {
+    "id": "ae5c26b2-7089-40e5-b",
+    "castigo": 1,
+    "tipo": "Yo nunca",
+    "timestamp": 1752660547662,
+    "visible": true,
+    "frase": "... me he bañado desnudo en la playa."
+  },
+  {
+    "id": "axvupyBgHTkq5iGN3VAL",
+    "tipo": "N/A",
+    "timestamp": 1752057399090,
+    "visible": false,
+    "castigo": "1",
+    "frase": "Prueba"
+  },
+  {
+    "id": "b0487666-05f5-40f2-b",
+    "visible": true,
+    "castigo": 1,
+    "frase": "{Jugador}, ¿alguna vez dijiste ‘te amo’ solo para llegar a la cama?",
+    "timestamp": 1752660547728,
+    "tipo": "Pregunta"
+  },
+  {
+    "id": "b26317b3-d1f8-490c-9",
+    "timestamp": 1752660547779,
+    "visible": true,
+    "tipo": "Vota a",
+    "castigo": 1,
+    "frase": "... ¿Quién sigue stalkeando a alguien que dice que ya superó?"
+  },
+  {
+    "id": "b5675642-31e1-4c5d-8",
+    "tipo": "Vota a",
+    "castigo": 1,
+    "frase": "... ¿Quién ha dicho 'odio el drama' y vive por y para el drama?",
+    "timestamp": 1752660547803,
+    "visible": true
+  },
+  {
+    "id": "b6a4bcf9-6bb8-455f-9",
+    "visible": false,
+    "timestamp": 1752660547861,
+    "frase": "{Jugador} debe mirar el último emoji que usó y explicarlo. Si no quiere, trago.",
+    "castigo": 1,
+    "tipo": "Castigos"
+  },
+  {
+    "id": "b78aa6ee-75bc-4938-9",
+    "castigo": 1,
+    "frase": "{Jugador} debe poner un apodo a cada persona del grupo, ademas, cada uno pega un trago",
+    "timestamp": 1752660547928,
+    "visible": true,
+    "tipo": "Castigos"
+  },
+  {
+    "id": "bc2ecd3a-1ee0-43ff-a",
+    "visible": true,
+    "timestamp": 1752660548036,
+    "castigo": 1,
+    "tipo": "Vota a",
+    "frase": "...¿Quién es más probable que tenga un archivo oculto con fotos que no debería tener?"
+  },
+  {
+    "id": "bca178f7-65f3-4955-8",
+    "visible": true,
+    "castigo": 1,
+    "timestamp": 1752660548174,
+    "frase": "... he besado a mi mejor amigo.",
+    "tipo": "Yo nunca"
+  },
+  {
+    "id": "bda49e88-c4ae-49ef-8",
+    "castigo": 1,
+    "frase": "{Jugador}, elige dos personas que no se pueden mirar durante 2 rondas. Si fallan, castigo.",
+    "timestamp": 1752660548199,
+    "tipo": "Castigos",
+    "visible": true
+  },
+  {
+    "id": "be77de22-aff4-4e8d-8",
+    "castigo": 1,
+    "visible": true,
+    "tipo": "Pregunta",
+    "frase": "{Jugador}, ¿cuántas personas hay en tu historial con nombre guardado como emoji o apodo sospechoso?",
+    "timestamp": 1752660548223
+  },
+  {
+    "id": "beb7bf42-8648-4682-a",
+    "tipo": "Castigos",
+    "castigo": 1,
+    "frase": "{Jugador}, ¿qué es lo más fuerte que alguien te ha pedido y te negaste a hacer?",
+    "visible": true,
+    "timestamp": 0
+  },
+  {
+    "id": "bfcf210f-1a44-403b-a",
+    "visible": true,
+    "castigo": 1,
+    "frase": "Trago quien haya ligado por Tinder o similar",
+    "timestamp": 1752660548245,
+    "tipo": "Castigos"
+  },
+  {
+    "id": "bfdd0c01-acb4-4684-9",
+    "visible": true,
+    "timestamp": 1752660548272,
+    "tipo": "Castigos",
+    "frase": "El que haya bebido en la ultima carta, reparte 6 tragos cada uno",
+    "castigo": 1
+  },
+  {
+    "id": "c000ee1a-8269-45c5-9",
+    "castigo": 2,
+    "frase": "Todos deben decir una manía rara que tienen antes o después del sexo. El que se pase de básico, bebe.",
+    "timestamp": 1752660548299,
+    "visible": true,
+    "tipo": "Castigos"
+  },
+  {
+    "id": "c007dd79-ae04-4f81-a",
+    "castigo": 3,
+    "visible": true,
+    "tipo": "Pregunta",
+    "timestamp": 1752660548356,
+    "frase": "{Jugador}, ¿alguna vez hiciste algo que luego te juraste no volver a hacer... y lo repetiste?"
+  },
+  {
+    "id": "c0221405-10c2-44fd-9",
+    "visible": true,
+    "timestamp": 1752660548436,
+    "tipo": "Yo nunca",
+    "castigo": 5,
+    "frase": "... estaba cagando y mi suegro se me quedo mirando a los ojos"
+  },
+  {
+    "id": "c16d850d-8372-442d-b",
+    "tipo": "Prueba",
+    "castigo": 1,
+    "frase": "{Jugador}, tienes que decir “en mi maleta hay…”, empieza añadiendo cualquier cosa, cada jugador repite y añade un elemento. El primero que se equivoque tendrá que recibir 2 castigos.",
+    "timestamp": 1752660548458,
+    "visible": true
+  },
+  {
+    "id": "c2496cfa-ee43-4fd0-8",
+    "tipo": "Castigos",
+    "castigo": 1,
+    "frase": "Trago si alguna vez te han bloqueado por algo que dijiste borracho.",
+    "visible": true,
+    "timestamp": 1752660548486
+  },
+  {
+    "id": "c2639dcb-c182-4d82-b",
+    "castigo": 1,
+    "frase": "{Jugador}, si alguna vez dijiste ‘yo no mando nudes’ y luego... bueno, trago.",
+    "tipo": "Castigos",
+    "visible": true,
+    "timestamp": 0
+  },
+  {
+    "id": "c2eaabf4-c371-49e8-b",
+    "visible": true,
+    "castigo": 1,
+    "frase": "{Jugador}, elige una prenda que le jugador de enfrente debe quitarse. Si se niega, dos tragos.",
+    "timestamp": 1752660548526,
+    "tipo": "Prueba"
+  },
+  {
+    "id": "c3ec3b57-6528-46ef-a",
+    "timestamp": 1752660548579,
+    "tipo": "Castigos",
+    "visible": true,
+    "castigo": 1,
+    "frase": "{Jugador} debe describir cómo sería una cita con el tercero a tu izquierda usando solo 5 palabras"
+  },
+  {
+    "id": "c47732cc-8c18-425e-9",
+    "frase": "{Jugador} debe hacer una declaración de amor falsa al tercer jugador por tu izquierda.",
+    "tipo": "Castigos",
+    "visible": true,
+    "castigo": 1,
+    "timestamp": 1752660548637
+  },
+  {
+    "id": "c662cc2f-ab3e-40ad-9",
+    "visible": true,
+    "frase": "Trago quien haya comido algo del suelo con la excusa de los 5 segundos.",
+    "timestamp": 1752660548662,
+    "castigo": 1,
+    "tipo": "Castigos"
+  },
+  {
+    "id": "c6f3d621-9ac1-4372-b",
+    "timestamp": 1752660548710,
+    "castigo": 1,
+    "tipo": "Vota a",
+    "visible": true,
+    "frase": "... ¿Quién terminará la noche besando a alguien inesperado?"
+  },
+  {
+    "id": "c7569e3b-a975-4af9-a",
+    "castigo": 1,
+    "timestamp": 1752660548731,
+    "tipo": "Vota a",
+    "frase": "... ¿Quién mandaría una nota de voz de 4 minutos borracho/a a su ex?",
+    "visible": true
+  },
+  {
+    "id": "c8e71e8f-b5d8-4d7f-9",
+    "timestamp": 1752660548754,
+    "frase": "{Jugador} y {Jugador} se miran fijamente. El primero que parpadee o se ría, bebe.",
+    "castigo": 1,
+    "visible": false,
+    "tipo": "Castigos"
+  },
+  {
+    "id": "c9b8f35b-b456-4ab9-a",
+    "visible": true,
+    "timestamp": 1752660548777,
+    "tipo": "Yo nunca",
+    "frase": "... me he besado con alguien del mismo sexo.",
+    "castigo": 1
+  },
+  {
+    "id": "c9e771a2-49b0-456b-a",
+    "timestamp": 1752660548832,
+    "visible": false,
+    "tipo": "Castigos",
+    "castigo": 1,
+    "frase": "Todos deben enviar un emoji al chat grupal sin contexto. El más raro bebe."
+  },
+  {
+    "id": "caa9c13e-cb9f-47f2-8",
+    "castigo": 1,
+    "visible": true,
+    "frase": "... ¿Quién es más probable que tenga un historial de búsquedas que da miedo?",
+    "timestamp": 1752660548882,
+    "tipo": "Vota a"
+  },
+  {
+    "id": "cb33b171-0920-4801-a",
+    "castigo": 1,
+    "frase": "Bebe si alguna vez has dicho: 'nunca más bebo'... y no duraste ni 24 horas.",
+    "tipo": "Castigos",
+    "visible": true,
+    "timestamp": 0
+  },
+  {
+    "id": "cbaf09b7-41e9-444e-8",
+    "tipo": "Castigos",
+    "timestamp": 1752660548937,
+    "castigo": 1,
+    "visible": false,
+    "frase": "Bebe si guardas regalos de alguien que ya no está en tu vida."
+  },
+  {
+    "id": "cbb57760-21b5-4505-9",
+    "visible": false,
+    "timestamp": 1752660548999,
+    "castigo": 1,
+    "frase": "{Jugador}, improvisa una historia erótica de 4 frases con {Jugador} como protagonista. Si no puedes, bebe.",
+    "tipo": "Castigos"
+  },
+  {
+    "id": "cbdab9b3-5df7-448b-9",
+    "castigo": 1,
+    "visible": true,
+    "frase": "{Jugador}, ¿has tenido sexo con alguien cuyo nombre no supiste jamás?",
+    "timestamp": 1752660549071,
+    "tipo": "Pregunta"
+  },
+  {
+    "id": "cbe196ab-cc2e-457c-8",
+    "frase": "Nuevo tema y 3 castigos en juego: “cantantes que están súper buenas”, empieza {Jugador}.",
+    "timestamp": 1752660549133,
+    "castigo": 1,
+    "visible": false,
+    "tipo": "Castigos"
+  },
+  {
+    "id": "cc47a158-8bb9-4237-8",
+    "visible": true,
+    "tipo": "Castigos",
+    "frase": "¿Ginebra limon? Princesita, bebe",
+    "castigo": 1,
+    "timestamp": 0
+  },
+  {
+    "id": "cd26bc8f-4201-450f-a",
+    "visible": true,
+    "timestamp": 1752660549153,
+    "tipo": "Yo nunca",
+    "frase": "... he recibido una multa por exceso de velocidad.",
+    "castigo": 1
+  },
+  {
+    "id": "cd8b1d54-f3bb-41fb-b",
+    "visible": true,
+    "timestamp": 1752660549173,
+    "castigo": 1,
+    "frase": "{Jugador} está infectado. Cada vez que beba, debe elegir a alguien más para contagiarlo esa ronda",
+    "tipo": "Castigos"
+  },
+  {
+    "id": "ce287682-09e2-4ab9-8",
+    "frase": "Bebe por cada persona poco agraciada que este jugando",
+    "timestamp": 1752660549202,
+    "tipo": "Castigos",
+    "visible": false,
+    "castigo": 1
+  },
+  {
+    "id": "cef38078-89be-4cd8-b",
+    "tipo": "Castigos",
+    "castigo": 1,
+    "visible": true,
+    "frase": "Bebe si has hecho ghosting a alguien buena gente",
+    "timestamp": 0
+  },
+  {
+    "id": "cf5bd030-48f1-4516-b",
+    "castigo": 1,
+    "frase": "{Jugador}, ¿cuál fue la peor experiencia sexual que tuviste?",
+    "visible": true,
+    "timestamp": 1752660549257,
+    "tipo": "Pregunta"
+  },
+  {
+    "id": "cfa97ffc-299b-4fa9-b",
+    "frase": "{Jugador} y {Jugador} no pueden estar en silencio más de 5 segundos entre ellos durante 3 rondas. Si pasa, beben",
+    "visible": false,
+    "tipo": "Castigos",
+    "castigo": 1,
+    "timestamp": 1752660549305
+  },
+  {
+    "id": "cfe13e39-366e-47e1-b",
+    "frase": "Bebe si alguna vez hablaste mal de alguien presente",
+    "tipo": "Castigos",
+    "visible": false,
+    "castigo": 1,
+    "timestamp": 1752660549325
+  },
+  {
+    "id": "cfe7dfb5-4a11-41d1-9",
+    "timestamp": 1752660549369,
+    "frase": "{Jugador} se convierte en juez. Cada vez que tengais que votar por alguien, {Jugador} podra decidir por su cuenta y tomaran los dos",
+    "visible": true,
+    "tipo": "Castigos",
+    "castigo": 1
+  },
+  {
+    "id": "d01f5c78-b638-4c6f-9",
+    "tipo": "Vota a",
+    "timestamp": 1752660549390,
+    "castigo": 1,
+    "frase": "... ¿Quién tiene una lista mental de personas con las que no debería repetir... y repitió?",
+    "visible": false
+  },
+  {
+    "id": "d089a255-aafc-4797-b",
+    "tipo": "Castigos",
+    "castigo": 1,
+    "visible": true,
+    "frase": "Bebe si alguna vez has dicho 'no fue tan malo' sabiendo que fue terrible.",
+    "timestamp": 0
+  },
+  {
+    "id": "d0b59621-9ca3-494b-9",
+    "frase": "En ronda, todos dicen una fantasía. El que se niegue, bebe.",
+    "visible": true,
+    "tipo": "Castigos",
+    "castigo": 1,
+    "timestamp": 0
+  },
+  {
+    "id": "d24dbd6a-3af8-4faf-8",
+    "frase": "... ¿Quién es más probable que finja estar sobrio cuando claramente no lo está?",
+    "visible": true,
+    "tipo": "Vota a",
+    "timestamp": 1752660549422,
+    "castigo": 1
+  },
+  {
+    "id": "d255bc0d-9018-47f4-a",
+    "timestamp": 1752660549442,
+    "visible": false,
+    "frase": "Todos deben escribir en su móvil una palabra sucia. A la cuenta de tres, todos la muestran. El más suave, bebe.",
+    "castigo": 1,
+    "tipo": "Castigos"
+  },
+  {
+    "id": "d2974d3f-5f93-4792-b",
+    "tipo": "Prueba",
+    "timestamp": 1752660549464,
+    "visible": true,
+    "castigo": 1,
+    "frase": "Si alguien enseña los pez*nes, reparte 3 tragos"
+  },
+  {
+    "id": "d4cb670f-b13b-42ce-a",
+    "visible": true,
+    "tipo": "Castigos",
+    "castigo": 1,
+    "frase": "Bebe si alguna vez has querido desaparecer del grupo por vergüenza ajena.",
+    "timestamp": 0
+  },
+  {
+    "id": "d6d29918-d486-4630-a",
+    "frase": "En ronda, todos deben hacer una confesión incómoda. El que se niegue, bebe doble.",
+    "castigo": 1,
+    "tipo": "Castigos",
+    "visible": false,
+    "timestamp": 1752660549505
+  },
+  {
+    "id": "d6f774bd-0cbf-4ea3-b",
+    "visible": true,
+    "castigo": 1,
+    "timestamp": 1752660549526,
+    "tipo": "Vota a",
+    "frase": "... ¿Quién ha usado la frase 'no es lo que parece' en una discusión?"
+  },
+  {
+    "id": "d76fd3a7-5ef5-4e31-b",
+    "timestamp": 1752660549571,
+    "castigo": 1,
+    "visible": true,
+    "tipo": "Vota a",
+    "frase": "... quien más probable es que hable mal de ti cuando no estás"
+  },
+  {
+    "id": "d87a4370-2348-4ad8-8",
+    "frase": "{Jugador} y {Jugador} deben decir en ronda lo primero que les excita. Si coincide, reparten tragos.",
+    "castigo": 1,
+    "visible": false,
+    "timestamp": 1752660549590,
+    "tipo": "Castigos"
+  },
+  {
+    "id": "d8b42434-bcc0-4015-9",
+    "visible": true,
+    "tipo": "Castigos",
+    "castigo": 1,
+    "frase": "Bebe quien aún revisa el perfil de alguien sin seguirlo.",
+    "timestamp": 0
+  },
+  {
+    "id": "d9eaf425-efb3-4371-9",
+    "tipo": "Vota a",
+    "visible": true,
+    "castigo": 1,
+    "frase": "... ¿Quién se enamora con solo dos mensajes y un sticker?",
+    "timestamp": 1752660549612
+  },
+  {
+    "id": "dMM65Wyub86WI6UJUKg4",
+    "frase": "{Jugador} maulla",
+    "castigo": 1,
+    "visible": true,
+    "tipo": "Castigo",
+    "timestamp": 1752657293405
+  },
+  {
+    "id": "db075901-9ffa-4175-8",
+    "tipo": "Castigos",
+    "castigo": 1,
+    "timestamp": 1752660549635,
+    "frase": "trago si tu ex te sigue viendo las historias.",
+    "visible": true
+  },
+  {
+    "id": "db41b947-315c-4f7b-9",
+    "frase": "Trago si alguna vez te han tenido que llevar arrastras por borracho",
+    "tipo": "Castigos",
+    "timestamp": 1752660549657,
+    "castigo": 1,
+    "visible": true
+  },
+  {
+    "id": "db4de42a-8a1f-4997-8",
+    "timestamp": 1752660549723,
+    "castigo": 1,
+    "frase": "{Jugador}, si tu historial de navegación se hiciera público ahora... ¿qué es lo peor que veríamos?",
+    "visible": true,
+    "tipo": "Pregunta"
+  },
+  {
+    "id": "db768d04-91ee-4e63-a",
+    "tipo": "Trago",
+    "frase": "¡Hombres, acabaros vuestra bebidas!",
+    "visible": true,
+    "timestamp": 1752660549771,
+    "castigo": 1
+  },
+  {
+    "id": "db774743-8c78-4948-a",
+    "visible": true,
+    "frase": "Todos deben decir una mentira que hayan dicho en la cama. El que no tenga, trago.",
+    "timestamp": 1752660549794,
+    "castigo": 1,
+    "tipo": "Ronda"
+  },
+  {
+    "id": "dbd51723-ef98-4f92-a",
+    "timestamp": 1752660549815,
+    "castigo": 3,
+    "frase": "Trago quien haya tenido sexo en un baño que no sea el de su casa",
+    "tipo": "Castigos",
+    "visible": true
+  },
+  {
+    "id": "dbe6fd6a-f622-4959-9",
+    "visible": true,
+    "tipo": "Castigos",
+    "frase": "Bebe quien se haya reído de un meme en voz alta estando solo.",
+    "castigo": 1,
+    "timestamp": 0
+  },
+  {
+    "id": "df601e40-38e1-4e2e-9",
+    "tipo": "Vota a",
+    "castigo": 1,
+    "frase": "... ¿Quién sería capaz de enviar un nude sin querer a un grupo familiar?",
+    "visible": true,
+    "timestamp": 1752660549872
+  },
+  {
+    "id": "e1a8a510-1750-4b89-b",
+    "visible": true,
+    "frase": "... ¿Quién sería el primero en acabar llorando esta noche (otra vez)?",
+    "timestamp": 1752660549902,
+    "castigo": 1,
+    "tipo": "Vota a"
+  },
+  {
+    "id": "e1d1abcb-5765-4564-a",
+    "timestamp": 1752660549932,
+    "visible": true,
+    "castigo": 1,
+    "frase": "Todos dicen un apodo que les hayan puesto en la cama. El que no tenga, inventa uno o bebe.",
+    "tipo": "Ronda"
+  },
+  {
+    "id": "e5b0e904-0aa9-4599-9",
+    "visible": false,
+    "frase": "Si {Jugador} hace contacto visual con {Jugador}, ambos beben",
+    "castigo": 1,
+    "tipo": "Castigos",
+    "timestamp": 1752660549955
+  },
+  {
+    "id": "e5b5f42d-e96a-4b7d-b",
+    "castigo": 1,
+    "tipo": "Castigos",
+    "timestamp": 1752660549977,
+    "visible": true,
+    "frase": "Trago si alguna vez has besado a dos personas del mismo grupo de amigxs"
+  },
+  {
+    "id": "e5c54aaf-2097-4513-8",
+    "visible": true,
+    "frase": "{Jugador}, ¿cuál es el sitio más raro donde lo has hecho?",
+    "castigo": 1,
+    "tipo": "Castigos",
+    "timestamp": 0
+  },
+  {
+    "id": "e66f9475-c20d-4097-9",
+    "visible": true,
+    "frase": "{Jugador}, ¿alguna vez tuviste algo con una persona comprometida?",
+    "castigo": 1,
+    "tipo": "Castigos",
+    "timestamp": 0
+  },
+  {
+    "id": "e9f6c454-418f-4e63-a",
+    "castigo": 1,
+    "tipo": "Castigos",
+    "frase": "{Jugador}, ¿has querido volver con tu ex solo por el buen sexo?",
+    "visible": true,
+    "timestamp": 0
+  },
+  {
+    "id": "eb205a74-8226-4121-9",
+    "castigo": 1,
+    "timestamp": 1752660550027,
+    "frase": "Trago si alguna vez has gritado el nombre equivocado en la cama.",
+    "tipo": "Castigos",
+    "visible": true
+  },
+  {
+    "id": "ed992636-8202-4b14-9",
+    "visible": true,
+    "tipo": "Castigos",
+    "frase": "{Jugador} elige a alguien para tener una conversación absurda solo con gestos. Si alguien habla antes de 3 rondas, bebe.",
+    "castigo": 1,
+    "timestamp": 0
+  },
+  {
+    "id": "ehfr2owQpgbq6j2bypCK",
+    "visible": true,
+    "castigo": 1,
+    "frase": "{Jugador} está infectado. Cada vez que el beba, decide con quien beber",
+    "tipo": "Castigos",
+    "timestamp": 1752657292670
+  },
+  {
+    "id": "f069a715-c62b-4c26-8",
+    "timestamp": 1752660550046,
+    "tipo": "Castigos",
+    "visible": true,
+    "castigo": 4,
+    "frase": "Si has estado pajarito en algún momento de los últimos 3 días, pega 4 tragos"
+  },
+  {
+    "id": "f1c3dce6-5380-45ac-8",
+    "castigo": 1,
+    "visible": true,
+    "tipo": "Vota a",
+    "frase": "... ¿Quién es más probable que grite el nombre de su ex en medio del sexo?",
+    "timestamp": 1752660550068
+  },
+  {
+    "id": "f24f55ec-8e4c-43b2-9",
+    "visible": true,
+    "timestamp": 1752660550091,
+    "castigo": 1,
+    "frase": "... ¿Quién acabaría en la cárcel por una tontería como robar conos de tráfico borracho?",
+    "tipo": "Vota a"
+  },
+  {
+    "id": "f325c6e6-7994-4a8d-a",
+    "frase": "{Jugador} es el representante de {Jugador}. {Jugador} no puede hablar sin preguntarle a {Jugador}",
+    "timestamp": 1752660550391,
+    "visible": false,
+    "tipo": "Congelados",
+    "castigo": 1
+  },
+  {
+    "id": "f377e087-8ecc-453c-b",
+    "tipo": "Castigos",
+    "frase": "El que tenga los ojos azules, 3 tragos",
+    "visible": true,
+    "castigo": 1,
+    "timestamp": 0
+  },
+  {
+    "id": "f4264bce-4330-4871-9",
+    "visible": true,
+    "tipo": "Castigos",
+    "timestamp": 1752574504358,
+    "castigo": 1,
+    "frase": "Si alguna vez usaste esposas o cuerdas en la cama, reparte 5 tragos"
+  },
+  {
+    "id": "f4e5ccbb-dda7-45cc-8",
+    "visible": true,
+    "frase": "{Jugador} debe actuar como pareja con la persona de su derecha durante 3 rondas. Si rompen el personaje, beben.",
+    "castigo": 1,
+    "timestamp": 1752574477270,
+    "tipo": "Castigos"
+  },
+  {
+    "id": "f5739df9-eb7a-4e71-b",
+    "visible": true,
+    "frase": "Bebe si alguna vez has hecho match con alguien solo por aburrimiento.",
+    "castigo": 1,
+    "tipo": "Castigos",
+    "timestamp": 0
+  },
+  {
+    "id": "f62c965b-102b-48dd-8",
+    "visible": true,
+    "frase": "{Jugador} elige a alguien que debe imitar cómo cree que es su forma de ligar. Si no lo hace, bebe.",
+    "tipo": "Castigos",
+    "castigo": 1,
+    "timestamp": 0
+  },
+  {
+    "id": "f6c6842b-796a-46dc-b",
+    "tipo": "Prueba",
+    "visible": true,
+    "castigo": 3,
+    "frase": "La persona más baja tiene que rapear delante del grupo.",
+    "timestamp": 1752660550413
+  },
+  {
+    "id": "f746da42-601e-463f-9",
+    "castigo": 1,
+    "tipo": "Pregunta",
+    "timestamp": 1752660550443,
+    "visible": true,
+    "frase": "{Jugador}, ¿cuál es la mayor locura sexual que has hecho... y volverías a hacer?"
+  },
+  {
+    "id": "f766eefd-5506-403c-9",
+    "visible": true,
+    "timestamp": 1752660550464,
+    "frase": "Si has mentido con descaro en una app de citas, trago por cada mentira.",
+    "castigo": 1,
+    "tipo": "Pregunta"
+  },
+  {
+    "id": "f8180176-22d4-4afc-8",
+    "visible": false,
+    "frase": "¿Quién está en más grupos de WhatsApp que nunca mira pero no sale por no quedar mal?",
+    "timestamp": 1752660550487,
+    "tipo": "Vota a",
+    "castigo": 1
+  },
+  {
+    "id": "f83983e1-3337-4c06-9",
+    "tipo": "Castigos",
+    "timestamp": 1752660550549,
+    "visible": true,
+    "frase": "Trago si alguna vez te has molestado por 'la amiga' de tu pareja",
+    "castigo": 1
+  },
+  {
+    "id": "f9736ee3-30e7-4f94-b",
+    "visible": true,
+    "timestamp": 1752660550596,
+    "frase": "Trago si alguna vez has dicho ‘no pasa nada’ mientras ardías por dentro.",
+    "tipo": "Castigos",
+    "castigo": 1
+  },
+  {
+    "id": "fb4c324f-6b16-481e-8",
+    "castigo": 1,
+    "frase": "... ¿Quién tiene más probabilidades de tener una cuenta secreta en redes sociales?",
+    "visible": true,
+    "tipo": "Vota a",
+    "timestamp": 1752660550616
+  },
+  {
+    "id": "fc06472b-f9bc-4b52-9",
+    "timestamp": 1752660550637,
+    "frase": "Todos deben decir con quién del grupo tendrían una cita. El que se niegue, trago.",
+    "castigo": 1,
+    "tipo": "Vota a",
+    "visible": false
+  },
+  {
+    "id": "fcf34800-be81-42a6-8",
+    "frase": "Ronda rápida de verdades: todos hacen una pregunta. {Jugador} debe contestar todas o pegar 3 tragos.",
+    "visible": true,
+    "castigo": 3,
+    "timestamp": 1752660550657,
+    "tipo": "Castigos"
+  },
+  {
+    "id": "fda690bd-add5-439d-b",
+    "visible": true,
+    "timestamp": 1752660550709,
+    "tipo": "Castigos",
+    "castigo": 3,
+    "frase": "Bebe si tienes una carpeta de fotos que nadie debe ver."
+  },
+  {
+    "id": "ff0b2239-69b0-4104-a",
+    "tipo": "Castigos",
+    "visible": false,
+    "frase": "¡{jugador}, eres insociable! Solo hablas con {jugador}, porque es tu único amigo/a.",
+    "castigo": "",
+    "timestamp": 1752660550731
+  },
+  {
+    "id": "ff3e495f-8d2a-4f15-8",
+    "frase": "... quien creáis que es un maquina en la cama",
+    "castigo": 2,
+    "visible": true,
+    "timestamp": 1752660550764,
+    "tipo": "Vota a"
+  },
+  {
+    "id": "j2zrl2sQrLAutiBf67ey",
+    "visible": true,
+    "timestamp": 1752657293486,
+    "tipo": "Castigo",
+    "frase": "{Jugador} ladra",
+    "castigo": 1
+  },
+  {
+    "id": "oLVYuaZROPMT3mzB53Yb",
+    "castigo": 1,
+    "frase": "{Jugador} todo de una",
+    "tipo": "Finish him",
+    "visible": true,
+    "timestamp": 1752657291031
+  },
+  {
+    "id": "r4biEwkDLpEzEGVwLdOe",
+    "frase": "{Jugador} ladra",
+    "visible": true,
+    "timestamp": 1752660544523,
+    "tipo": "Castigo",
+    "castigo": 1
+  },
+  {
+    "id": "synzlaSs32XOWK3PFtS5",
+    "frase": "{Jugador} todo de una",
+    "visible": true,
+    "castigo": 1,
+    "timestamp": 1752657291186,
+    "tipo": "Finish him"
+  }
+]
