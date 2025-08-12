@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Image, SafeAreaVi
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Swiper from 'react-native-deck-swiper';
 // import { frases as frasesEstáticas } from '../data/frases';
-import { getTodasLasFrases } from '../data/getFrases';
+import frasesLocal from '../data/frases.json';
 import { useEffect } from 'react';
 import * as Haptics from 'expo-haptics';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -37,41 +37,29 @@ const PruebaGameFourScreen = ({ route, navigation }) => {
   };
 
 useEffect(() => {
-  let timeoutId;
-
-  const cargar = async () => {
+  const cargar = () => {
     try {
-      timeoutId = setTimeout(() => {
-        alert('No tienes conexion a internet');
-        if (navigation.canGoBack()) {
-            navigation.goBack();
-          } else {
-            navigation.navigate('Inicio');
-          }
-      }, 30000);
-
-      const todas = await getTodasLasFrases();
-      clearTimeout(timeoutId);
-
-      if (!Array.isArray(todas)) {
-        console.error("getTodasLasFrases no devolvió un array:", todas);
-        return;
-      }
+      // Normalizar desde JSON local: solo visibles y con frase válida
+      const todas = (frasesLocal || [])
+        .filter((f) => f && f.frase && (f.visible === undefined || f.visible === true))
+        .map((f) => ({
+          id: f.id,
+          frase: String(f.frase).trim(),
+          tipo: f.tipo ? String(f.tipo) : '',
+          castigo: Number.isFinite(f.castigo) ? Number(f.castigo) : f.castigo ?? '',
+          visible: f.visible === undefined ? true : !!f.visible,
+          timestamp: typeof f.timestamp === 'number' ? f.timestamp : 0,
+        }));
 
       const mezcladas = shuffleArray(todas);
       setFrasesCombinadas(todas);
       setFrasesToUse(mezcladas);
     } catch (error) {
-      clearTimeout(timeoutId);
-      console.error("Error al cargar frases dinámicas:", error);
+      console.error('Error al cargar frases desde JSON local:', error);
     }
   };
 
   cargar();
-
-  return () => {
-    clearTimeout(timeoutId);
-  };
 }, []);
 
   const procesarFrase = (frase) => {
