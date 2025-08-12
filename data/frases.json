@@ -58,7 +58,7 @@
   {
     "id": "03c0089e-407d-44ca-a",
     "visible": true,
-    "frase": "Palabras o expresiones sinónimas de “p*ne”, ¡el jugador que repita o que no encuentre ninguna tendrá que recibir 3 tragos! Empieza {jugador}.",
+    "frase": "Palabras o expresiones sinónimas de “p*ne”, ¡el jugador que repita o que no encuentre ninguna tendrá que recibir 3 tragos! Empieza {Jugador}.",
     "timestamp": 1752657290615,
     "castigo": 1,
     "tipo": "Prueba"
@@ -789,7 +789,7 @@
     "visible": true,
     "timestamp": 1752657294240,
     "castigo": 1,
-    "frase": "Por turnos, un trago por cada punto del carnet que os hayan quitado, empieza {jugador}."
+    "frase": "Por turnos, un trago por cada punto del carnet que os hayan quitado, empieza {Jugador}."
   },
   {
     "id": "4a5b7c4e-a955-4772-9",
@@ -820,7 +820,7 @@
     "visible": true,
     "castigo": 3,
     "timestamp": 1752657294413,
-    "frase": "{jugador}, reparte 3 castigos a un jugador que esté más blanco que tú, si es posible… Si no, los recibes tú.",
+    "frase": "{Jugador}, reparte 3 castigos a un jugador que esté más blanco que tú, si es posible… Si no, los recibes tú.",
     "tipo": "Castigos"
   },
   {
@@ -915,7 +915,7 @@
     "id": "5a1931ff-c0d5-4ada-8",
     "visible": true,
     "castigo": 1,
-    "frase": "{jugador}, reparte 3 castigos a un jugador que esté menos entonado que tú, si es posible… Si no, los recibes tú.",
+    "frase": "{Jugador}, reparte 3 castigos a un jugador que esté menos entonado que tú, si es posible… Si no, los recibes tú.",
     "tipo": "Castigos",
     "timestamp": 1752657294704
   },
@@ -2675,7 +2675,7 @@
     "id": "ff0b2239-69b0-4104-a",
     "tipo": "Castigos",
     "visible": false,
-    "frase": "¡{jugador}, eres insociable! Solo hablas con {jugador}, porque es tu único amigo/a.",
+    "frase": "¡{Jugador}, eres insociable! Solo hablas con {jugador}, porque es tu único amigo/a.",
     "castigo": "",
     "timestamp": 1752660550731
   },
