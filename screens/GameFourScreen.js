@@ -120,12 +120,14 @@ useEffect(() => {
         }}>
           <Ionicons name="arrow-back" size={28} color="#000" />
         </TouchableOpacity>
+        {/*
         <TouchableOpacity
           style={styles.tuFraseBtn}
           onPress={() => navigation.navigate('CreaFrase')}
         >
           <Text style={styles.tuFraseBtnText}>Tu frase</Text>
         </TouchableOpacity>
+        */}
       </View>
       <View style={styles.container}>
         {/* <Image source={require('../assets/chapas/chapa_flor.png')} style={styles.imageBackground} /> */}
